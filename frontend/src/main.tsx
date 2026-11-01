@@ -7,6 +7,7 @@ import i18n from './lib/i18n';
 import { App } from './app/app';
 import { ThemeProvider } from './app/theme-provider';
 import { ErrorBoundary } from './app/error-boundary';
+import { AuthProvider } from './features/auth/auth-provider';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -14,7 +15,9 @@ createRoot(document.getElementById('root')!).render(
       <ThemeProvider>
         <ErrorBoundary>
           <BrowserRouter>
-            <App />
+            <AuthProvider>
+              <App />
+            </AuthProvider>
           </BrowserRouter>
         </ErrorBoundary>
       </ThemeProvider>

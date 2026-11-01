@@ -1,0 +1,69 @@
+﻿
+> ianalyze-academy-frontend@0.0.0 validate
+> npm run check:types && npm run lint && npm test && npm run format:check && npm run build && npm run check:production && npm run check:phase-02
+
+
+> ianalyze-academy-frontend@0.0.0 check:types
+> tsc -b
+
+
+> ianalyze-academy-frontend@0.0.0 lint
+> eslint .
+
+
+> ianalyze-academy-frontend@0.0.0 test
+> node --test tests/*.test.ts
+
+✔ public translations preserve Unicode rather than replacement characters (3.1662ms)
+✔ Arabic public content is translated, with the owner-supplied profile names preserved (0.8963ms)
+✔ src/locales: Arabic and English have complete matching translation keys (10.0713ms)
+✔ src/dev/locales: Arabic and English have complete matching translation keys (1.4745ms)
+✔ English phrases with punctuation remain in one LTR run in Arabic context (1.2434ms)
+✔ Arabic words stay outside technical terms and numeric ranges (0.2023ms)
+✔ valid saved preferences are restored; invalid values use the configured default (0.6849ms)
+✔ unavailable or blocked storage never prevents using the interface (0.2711ms)
+✔ saving a preference uses only its explicit key (0.6172ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 113.6842
+
+> ianalyze-academy-frontend@0.0.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> ianalyze-academy-frontend@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 2306 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                              1.53 kB │ gzip:   0.69 kB
+dist/assets/khaled-amireh-BNLiYV0g.webp     64.15 kB
+dist/assets/yomna-al-jabiri-DTUZca0y.webp  394.94 kB
+dist/assets/Cairo-gF84A2Tc.ttf             599.54 kB
+dist/assets/ianalyze-logo-D3Fy89Ya.png     716.33 kB
+dist/assets/iteam-logo-_Xu9_kEx.png        813.88 kB
+dist/assets/Inter-VF2RPR_K.ttf             876.57 kB
+dist/assets/index-DdupjAs1.css              64.87 kB │ gzip:  13.22 kB
+dist/assets/index-BkpaZwHu.js              479.43 kB │ gzip: 151.22 kB
+
+✓ built in 445ms
+
+> ianalyze-academy-frontend@0.0.0 check:production
+> node scripts/check-production.mjs
+
+Production boundary verified across 11 build files; 122 Phase 00 files unchanged; both logos byte-identical.
+
+> ianalyze-academy-frontend@0.0.0 check:phase-02
+> node scripts/check-phase-02.mjs
+
+Phase 02 integrity verified: 152 prior files preserved; both supplied portraits unchanged; dependency lock unchanged.

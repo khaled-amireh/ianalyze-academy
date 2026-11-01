@@ -1,0 +1,4 @@
+# Preserve the exact bytes of completed archives, assets, and supplied documents.
+# The existing preservation checks hash file bytes, including mixed line endings.
+# Frontend formatting remains enforced by its existing Prettier configuration.
+* -text

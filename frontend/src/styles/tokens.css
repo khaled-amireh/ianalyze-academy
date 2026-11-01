@@ -1,0 +1,113 @@
+@font-face {
+  font-family: Inter;
+  src: url('../assets/fonts/Inter.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: Cairo;
+  src: url('../assets/fonts/Cairo.ttf') format('truetype');
+  font-weight: 200 1000;
+  font-display: swap;
+}
+@custom-variant dark (&:is(.dark *));
+:root {
+  --brand-navy: #08546f;
+  --brand-teal: #429eab;
+  --brand-orange: #df8a48;
+  --brand-red: #9e2619;
+  --background: #f3f7fa;
+  --foreground: #142e3a;
+  --card: #fff;
+  --card-foreground: #142e3a;
+  --popover: #fff;
+  --popover-foreground: #142e3a;
+  --primary: #08546f;
+  --primary-foreground: #fff;
+  --primary-hover: #063f53;
+  --secondary: #eaf3f5;
+  --secondary-foreground: #08546f;
+  --muted: #eaf1f5;
+  --muted-foreground: #526875;
+  --accent: #eaf3f5;
+  --accent-foreground: #08546f;
+  --destructive: #9e2619;
+  --destructive-foreground: #fff;
+  --border: #d7e2e7;
+  --input: #738894;
+  --ring: #08546f;
+  --success: #216344;
+  --success-surface: #e9f5ed;
+  --warning: #784319;
+  --warning-surface: #fbf2e9;
+  --error-surface: #fbeeea;
+  --chart-bar: #b7d9de;
+  --chart-line: #08546f;
+  --shadow: 0 10px 30px #142e3a08;
+  --shadow-raised: 0 18px 46px #142e3a12;
+  --radius: 0.875rem;
+  --ease: cubic-bezier(0.22, 0.7, 0.2, 1);
+  --font-ui: Inter, Arial, sans-serif;
+}
+.dark {
+  --background: #0f1d27;
+  --foreground: #e5eef2;
+  --card: #162c39;
+  --card-foreground: #e5eef2;
+  --popover: #162c39;
+  --popover-foreground: #e5eef2;
+  --primary: #a5d9e2;
+  --primary-foreground: #0a303e;
+  --primary-hover: #b8e3ea;
+  --secondary: #223e4c;
+  --secondary-foreground: #d2e8ed;
+  --muted: #213b49;
+  --muted-foreground: #acc1cc;
+  --accent: #223e4c;
+  --accent-foreground: #d2e8ed;
+  --destructive: #ffb6ab;
+  --destructive-foreground: #482a27;
+  --border: #33515e;
+  --input: #71909d;
+  --ring: #9bd5df;
+  --success: #a8e0bd;
+  --success-surface: #193d30;
+  --warning: #f6c89f;
+  --warning-surface: #3c3023;
+  --error-surface: #482a27;
+  --chart-bar: #3c6c7a;
+  --chart-line: #a5d9e2;
+  --shadow: 0 10px 30px #00000015;
+  --shadow-raised: 0 18px 46px #00000026;
+}
+:lang(ar) {
+  --font-ui: Cairo, Arial, sans-serif;
+}
+@theme inline {
+  --font-sans: var(--font-ui);
+  --font-heading: var(--font-ui);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+}

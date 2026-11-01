@@ -1,0 +1,52 @@
+{
+  "originalPlanningAndReviewFilesUnchanged": [
+    "docs/phase-00/component-inventory.md",
+    "docs/phase-00/data-architecture.md",
+    "docs/phase-00/design-system.md",
+    "docs/phase-00/file-inventory.md",
+    "docs/phase-00/missing-assets.md",
+    "docs/phase-00/phase-00-review.md",
+    "docs/phase-00/product-requirements.md",
+    "docs/phase-00/qa-results.json",
+    "docs/phase-00/sitemap.md",
+    "docs/phase-00/student-syllabus-source.md",
+    "docs/phase-00/user-flows.md",
+    "docs/phase-00/wireframes.md",
+    "docs/phase-00/screenshots/activity-ar-320.png",
+    "docs/phase-00/screenshots/admin-en-1440.png",
+    "docs/phase-00/screenshots/home-ar-1440.png",
+    "docs/phase-00/screenshots/home-ar-390.png",
+    "docs/phase-00/screenshots/home-en-1440.png",
+    "docs/phase-00/screenshots/home-en-390.png",
+    "docs/phase-00/screenshots/index.html",
+    "docs/phase-00/screenshots/leaderboard-ar-390.png",
+    "docs/phase-00/screenshots/organizer-ar-390.png",
+    "docs/phase-00/screenshots/student-ar-390.png",
+    "docs/phase-00/screenshots/student-en-1440.png",
+    "docs/phase-00/screenshots/syllabus-ar-768.png",
+    "docs/phase-00/screenshots/wireframes-en-1440.png"
+  ],
+  "originalTranslationValuesUnchanged": {
+    "ar": true,
+    "en": true
+  },
+  "originalAssetFilesUnchanged": [
+    "design-preview/assets/ianalyze-logo.png",
+    "design-preview/assets/iteam-logo.png",
+    "design-preview/assets/fonts/Cairo-OFL.txt",
+    "design-preview/assets/fonts/Cairo.ttf",
+    "design-preview/assets/fonts/Inter-OFL.txt",
+    "design-preview/assets/fonts/Inter.ttf"
+  ],
+  "modifiedExistingPreviewFiles": [
+    "design-preview/index.html",
+    "design-preview/locales.js",
+    "design-preview/README.md",
+    "design-preview/script.js",
+    "design-preview/styles.css",
+    "design-preview/locales/ar.json",
+    "design-preview/locales/en.json"
+  ],
+  "matchedScreenshotPairs": 29,
+  "privateTeamSyllabusFileInRepository": false
+}

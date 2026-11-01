@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-31",
+  "checks": {
+    "heroStagger": true,
+    "boundedDecorativeMotion": true,
+    "heroSettlesVisible": true,
+    "buttonHoverLift": true,
+    "buttonPressedState": true,
+    "navigationHoverUnderline": true,
+    "scrollReveal": true,
+    "cardHoverLift": true,
+    "progressAnimation": true,
+    "progressEndpoint": true,
+    "accordionAnimates": true,
+    "accordionOpenEndpoint": true,
+    "rapidAccordionReversal": true,
+    "menuAnimates": true,
+    "openMenuAccessible": true,
+    "closedMenuInert": true,
+    "rapidMenuReversal": true,
+    "resizeRestoresDesktopNav": true,
+    "preferenceChangeStopsMotion": true,
+    "reducedMotionImmediate": true,
+    "reducedAccordionImmediate": true,
+    "focusStopsAncestorMotion": true
+  },
+  "exceptions": []
+}

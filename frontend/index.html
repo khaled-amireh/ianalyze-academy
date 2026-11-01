@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="iAnalyze Academy — a student-led AI and Data Science learning community at Al-Zaytoonah University of Jordan, under iTeam."
+    />
+    <title>iAnalyze Academy</title>
+    <script>
+      // Keep defaults in sync with src/app/config.ts. Safe when storage is unavailable.
+      (() => {
+        let language = 'ar',
+          theme = 'light';
+        try {
+          const storedLanguage = localStorage.getItem('ianalyze.language');
+          const storedTheme = localStorage.getItem('ianalyze.theme');
+          if (storedLanguage === 'ar' || storedLanguage === 'en') language = storedLanguage;
+          if (storedTheme === 'light' || storedTheme === 'dark') theme = storedTheme;
+        } catch {
+          /* Use defaults in restricted browser contexts. */
+        }
+        document.documentElement.lang = language;
+        document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

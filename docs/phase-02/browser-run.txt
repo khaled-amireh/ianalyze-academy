@@ -1,0 +1,28 @@
+Layout matrix completed: 160 cases; 20 screenshots.
+{
+  "cases": 160,
+  "failed": [],
+  "failedInteractions": [],
+  "contrastFailures": [],
+  "exceptions": [],
+  "failedLocalRequests": [],
+  "videoAttempt": {
+    "responses": [
+      {
+        "url": "https://drive.google.com/file/d/147puYxGioHyoYjSwxktgGP4RRWeM_qn4/preview",
+        "status": 200
+      }
+    ],
+    "screenshot": "video-embed-attempt.png",
+    "playControlFound": true,
+    "playback": [
+      {
+        "readyState": 4,
+        "paused": true,
+        "currentTime": 0,
+        "videoWidth": 1280
+      }
+    ],
+    "playbackVerified": false
+  }
+}

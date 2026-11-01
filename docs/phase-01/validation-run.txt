@@ -1,0 +1,60 @@
+
+> ianalyze-academy-frontend@0.0.0 validate
+> npm run check:types && npm run lint && npm test && npm run format:check && npm run build && npm run check:production
+
+
+> ianalyze-academy-frontend@0.0.0 check:types
+> tsc -b
+
+
+> ianalyze-academy-frontend@0.0.0 lint
+> eslint .
+
+
+> ianalyze-academy-frontend@0.0.0 test
+> node --test tests/*.test.ts
+
+✔ src/locales: Arabic and English have complete matching translation keys (9.5849ms)
+✔ src/dev/locales: Arabic and English have complete matching translation keys (2.4548ms)
+✔ English phrases with punctuation remain in one LTR run in Arabic context (0.9492ms)
+✔ Arabic words stay outside technical terms and numeric ranges (0.2499ms)
+✔ valid saved preferences are restored; invalid values use the configured default (0.6267ms)
+✔ unavailable or blocked storage never prevents using the interface (0.2762ms)
+✔ saving a preference uses only its explicit key (0.501ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 125.4612
+
+> ianalyze-academy-frontend@0.0.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> ianalyze-academy-frontend@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 2291 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                           1.53 kB │ gzip:   0.69 kB
+dist/assets/Cairo-gF84A2Tc.ttf          599.54 kB
+dist/assets/ianalyze-logo-D3Fy89Ya.png  716.33 kB
+dist/assets/iteam-logo-_Xu9_kEx.png     813.88 kB
+dist/assets/Inter-VF2RPR_K.ttf          876.57 kB
+dist/assets/index-V5wcQlTM.css           48.21 kB │ gzip:  10.28 kB
+dist/assets/index-CaNiCIqZ.js           408.33 kB │ gzip: 133.26 kB
+
+✓ built in 966ms
+
+> ianalyze-academy-frontend@0.0.0 check:production
+> node scripts/check-production.mjs
+
+Production boundary verified across 9 build files; 122 Phase 00 files unchanged; both logos byte-identical.

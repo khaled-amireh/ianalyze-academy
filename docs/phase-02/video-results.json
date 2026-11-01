@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-01",
+  "method": "Muted playback in the nested video element, using a headless user gesture",
+  "playback": [
+    {
+      "readyState": 0,
+      "paused": false,
+      "currentTime": 0,
+      "videoWidth": 0,
+      "muted": true
+    }
+  ],
+  "playbackVerified": false,
+  "initialized": true,
+  "start": {
+    "started": false,
+    "error": "Playback startup timed out"
+  },
+  "screenshot": "screenshots/video-playback.png"
+}

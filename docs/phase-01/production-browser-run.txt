@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-31",
+  "checks": [
+    {
+      "locale": "ar",
+      "path": "/_preview/components",
+      "notFound": true,
+      "noFixture": true,
+      "noPreviewLink": true
+    },
+    {
+      "locale": "ar",
+      "path": "/_preview/student",
+      "notFound": true,
+      "noFixture": true,
+      "noPreviewLink": true
+    },
+    {
+      "locale": "ar",
+      "path": "/_preview/organizer",
+      "notFound": true,
+      "noFixture": true,
+      "noPreviewLink": true
+    },
+    {
+      "locale": "ar",
+      "path": "/_preview/admin",
+      "notFound": true,
+      "noFixture": true,
+      "noPreviewLink": true
+    },
+    {
+      "locale": "ar",
+      "path": "/student",
+      "notFound": true,
+      "noFixture": true,
+      "noPreviewLink": true
+    },
+    {
+      "locale": "ar",
+      "path": "/organizer",
+      "notFound": true,
+      "noFixture": true,
+      "noPreviewLink": true
+    },
+    {
+      "locale": "ar",
+      "path": "/admin",
+      "notFound": true,
+      "noFixture": true,
+      "noPreviewLink": true
+    },
+    {
+      "locale": "en",
+      "path": "/_preview/components",
+      "notFound": true,
+      "noFixture": true,
+      "noPreviewLink": true
+    },
+    {
+      "locale": "en",
+      "path": "/_preview/student",
+      "notFound": true,
+      "noFixture": true,
+      "noPreviewLink": true
+    },
+    {
+      "locale": "en",
+      "path": "/_preview/organizer",
+      "notFound": true,
+      "noFixture": true,
+      "noPreviewLink": true
+    },
+    {
+      "locale": "en",
+      "path": "/_preview/admin",
+      "notFound": true,
+      "noFixture": true,
+      "noPreviewLink": true
+    },
+    {
+      "locale": "en",
+      "path": "/student",
+      "notFound": true,
+      "noFixture": true,
+      "noPreviewLink": true
+    },
+    {
+      "locale": "en",
+      "path": "/organizer",
+      "notFound": true,
+      "noFixture": true,
+      "noPreviewLink": true
+    },
+    {
+      "locale": "en",
+      "path": "/admin",
+      "notFound": true,
+      "noFixture": true,
+      "noPreviewLink": true
+    }
+  ],
+  "interactions": {
+    "preferencesPersist": true,
+    "navigation": true,
+    "firstTabSkipLink": true,
+    "blockedStorageRendersDefaults": true,
+    "blockedStorageStillSwitches": true
+  },
+  "exceptions": []
+}

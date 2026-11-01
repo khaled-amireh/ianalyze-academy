@@ -24,10 +24,39 @@ const frontendBefore = JSON.parse(
   readFileSync(new URL('docs/phase-02/frontend-before.json', root), 'utf8'),
 );
 assert.equal(
-  hash('frontend/package-lock.json'),
+  hash('docs/phase-03/baseline/frontend-package-lock.json'),
   frontendBefore['frontend/package-lock.json'],
-  'Dependency lock changed',
+  'Historical dependency lock changed',
 );
+const oldLock = JSON.parse(
+  readFileSync(new URL('docs/phase-03/baseline/frontend-package-lock.json', root), 'utf8'),
+);
+const currentLock = JSON.parse(readFileSync(new URL('frontend/package-lock.json', root), 'utf8'));
+const additions = JSON.parse(
+  readFileSync(new URL('docs/phase-03/approved-dependencies.json', root), 'utf8'),
+);
+for (const [path, entry] of Object.entries(oldLock.packages)) {
+  if (path)
+    assert.deepEqual(currentLock.packages[path], entry, `Existing dependency changed: ${path}`);
+}
+for (const section of ['dependencies', 'devDependencies']) {
+  assert.deepEqual(currentLock.packages[''][section], {
+    ...oldLock.packages[''][section],
+    ...additions[section],
+  });
+}
+const added = Object.keys(currentLock.packages).filter((path) => !(path in oldLock.packages));
+assert.deepEqual(
+  added.sort(),
+  Object.keys(additions.lockEntries).sort(),
+  'Unapproved dependency additions',
+);
+for (const path of added)
+  assert.equal(
+    createHash('sha256').update(JSON.stringify(currentLock.packages[path])).digest('hex'),
+    additions.lockEntries[path],
+    `New dependency drift: ${path}`,
+  );
 console.log(
-  `Phase 02 integrity verified: ${Object.keys(baseline).length} prior files preserved; both supplied portraits unchanged; dependency lock unchanged.`,
+  `Phase 02 integrity verified: ${Object.keys(baseline).length} prior files and portraits unchanged; historical lock and existing dependencies preserved; approved additions verified.`,
 );

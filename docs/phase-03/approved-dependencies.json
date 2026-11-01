@@ -1,0 +1,42 @@
+{
+  "dependencies": {
+    "@supabase/supabase-js": "2.118.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.14",
+    "supabase": "2.122.0",
+    "postgres": "4.0.0"
+  },
+  "lockEntries": {
+    "node_modules/@ecies/ciphers": "3faaaf5b1b6af7bc9a7df9158355b971b55b72367a180245048348cf49ea5240",
+    "node_modules/@electric-sql/pglite": "d5d151c863dbe2a7681b6d27d72cee2d40157180f3454448a0437a1a81eed20d",
+    "node_modules/@noble/ciphers": "06878d403f872c685c01aecad2cad9c81ea537603af0f5ec9c5156fdea1a1422",
+    "node_modules/@noble/curves": "52a9c9fa623d030f1e507280de3d822f887586e3d3cf7a470749f8030ebf90ae",
+    "node_modules/@noble/hashes": "5fbf4bf65d12f281b5ed3923e9420ae7c9aa3107a1802fee9de1178c26c5d54c",
+    "node_modules/@supabase/auth-js": "b496527bd6a1e5bfe53b6e1ab498242e755432cb52bf7931aafff386dda3fee7",
+    "node_modules/@supabase/auth-js/node_modules/tslib": "96cebed71f605f6e14f18424656451b51f57a08f46993d065798bbb31b14626d",
+    "node_modules/@supabase/cli-darwin-arm64": "947154585ae8652d1ecfc925e8fde4ee16bfadc59fca4c8b0b0347e820aa3ffb",
+    "node_modules/@supabase/cli-darwin-x64": "2bf9ba901d658cd5591b307887ff10a8360004eda7f5e23e484aa17b39a2aca7",
+    "node_modules/@supabase/cli-linux-arm64": "88b30634c5fd522a549f681504134b486e3becae12a9b5d68eb329bdce006b6d",
+    "node_modules/@supabase/cli-linux-arm64-musl": "2ac987de6711de7f8d3efae4e58325d8a916812ff2aabc92bdf5413891b465e1",
+    "node_modules/@supabase/cli-linux-x64": "023c113f4a2054aa6ffe3cb59ae81ed8be161af3e8c32a98974021cdfa29084e",
+    "node_modules/@supabase/cli-linux-x64-musl": "c25cbef8d50e673f5efe7e8a55680a1ffa81c8ad1241e1020343c6e87a05e496",
+    "node_modules/@supabase/cli-windows-arm64": "8324a250caef04657cd1469e56428c902a60b81731419faa26b0c00ccf434ab3",
+    "node_modules/@supabase/cli-windows-x64": "268ce64162b811065390463d8dd3f7b767c036ff87e7742ab7bcf117a795fb50",
+    "node_modules/@supabase/functions-js": "86333808ed698e322ac4e9b00c130d3910be746b7100c49be163631add009279",
+    "node_modules/@supabase/functions-js/node_modules/tslib": "96cebed71f605f6e14f18424656451b51f57a08f46993d065798bbb31b14626d",
+    "node_modules/@supabase/phoenix": "5a3f3e6107d6f099a0ad7bdd056af8b190a994f1e4f6d27ae15398bd72051b88",
+    "node_modules/@supabase/postgrest-js": "da000897821e3b90b0fd7400cb46291ff774e325d7912e089ef5cbee62496619",
+    "node_modules/@supabase/postgrest-js/node_modules/tslib": "96cebed71f605f6e14f18424656451b51f57a08f46993d065798bbb31b14626d",
+    "node_modules/@supabase/realtime-js": "7895672b3ce7115cc834b796e34116cee5a047a7af151821c6b365666f42734c",
+    "node_modules/@supabase/realtime-js/node_modules/tslib": "96cebed71f605f6e14f18424656451b51f57a08f46993d065798bbb31b14626d",
+    "node_modules/@supabase/storage-js": "1252ff14b958031120f9f0a80d32a9749204c20bcc5f5969fe1c0af22bd61876",
+    "node_modules/@supabase/storage-js/node_modules/tslib": "96cebed71f605f6e14f18424656451b51f57a08f46993d065798bbb31b14626d",
+    "node_modules/@supabase/supabase-js": "4fa2226604a4582ebf324dbf41b95fc297563956fc165f27a7c6992ed768b246",
+    "node_modules/eciesjs": "b11721bd4936be9e6161fbb9ccb1a31db54e2f22e4725de33746921fe1275e22",
+    "node_modules/iceberg-js": "42bc6620a3cef6de73cec3debbf3c14e3432e1712e0e8d5c12642740eae92b6c",
+    "node_modules/jose": "e0e256a8fcd0c1b3b212f20c31f7f8c9ec4ca73d2fced081f2f75d8836cf77c1",
+    "node_modules/postgres": "1f973db8d054cccf4f8741bd310aa3afe653f0a5d0827e1b9f34b3a6c4185acc",
+    "node_modules/supabase": "f98009c42d60db0e6cc75b5af54dc29f04f02e6cdded2f206e0aae98fad4bf3d"
+  }
+}

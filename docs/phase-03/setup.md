@@ -20,8 +20,9 @@ drift check, dependency provenance, frontend preservation and source secret-patt
 Embedded PGlite runs in memory and does not connect to Supabase.
 
 Docker Desktop or another compatible runtime is required for the real local Supabase
-stack. Install/start that runtime when ready. The pinned CLI is already a frontend dev
-dependency; no global CLI installation or Supabase login is needed for local work.
+stack. Docker Desktop is now installed, and the real local suites passed on 2026-11-01.
+Start its Linux engine before repeating the tests. The pinned CLI is already a frontend
+dev dependency; no global CLI installation or Supabase login is needed for local work.
 
 ```powershell
 $env:SUPABASE_TELEMETRY_DISABLED = '1'
@@ -35,7 +36,7 @@ Treat this stack as disposable. Never run database reset commands against a host
 
 Run `npm.cmd --prefix frontend run test:database:supabase` for the pgTAP checks. The
 script explicitly uses `--local`. Do not pass a hosted `--db-url` or `--linked` flag.
-Its 12 assertions remain unexecuted until the real local stack is available.
+All 12 assertions passed against the disposable local stack; see [validation.md](validation.md).
 
 For Auth/REST/Storage integration, copy `supabase/.env.example` to ignored
 `supabase/.env.local` and populate values from **local** CLI status. Keep the local DB
@@ -52,6 +53,16 @@ before opening connections. It requires an initialized, fresh local academy sche
 It creates synthetic users/files and removes only its own UUID-scoped test fixtures.
 Fixture teardown temporarily disables immutability triggers in one local transaction;
 this is not an application capability or a production cleanup procedure.
+
+After testing, stop only this disposable stack and discard its data volumes:
+
+```powershell
+# Repository root. Never use --all or target another local project.
+.\frontend\node_modules\.bin\supabase.cmd stop --no-backup --workdir .
+```
+
+The completed validation run used this cleanup. Restarting applies the migrations to a
+fresh local database; refresh ignored local test credentials from the new CLI status.
 
 Without opt-in, `npm.cmd --prefix frontend run test:integration` reports the suite skipped,
 with **zero integration tests executed**. A skipped suite is not a security pass.
@@ -72,13 +83,14 @@ cannot be claimed when the request fails.
 
 `npm.cmd --prefix frontend run db:types` regenerates types from migration metadata using
 the embedded PostgreSQL fixture, including public foreign-key relationships. It is not
-hosted CLI type generation. Before hosted activation, compare with actual local Supabase
-CLI-generated types and managed Auth/Storage behavior.
+hosted CLI type generation. The real local CLI types were checked against the eight public
+table shapes and three RPC call signatures, and the managed Auth/Storage suites passed.
+Repeat those checks after future schema changes; they do not replace a hosted preflight.
 
 ## Owner actions that remain
 
-1. Make a Docker-compatible runtime available, then run/review real local Supabase and
-   pgTAP results. Backend verification is incomplete until these execute successfully.
+1. Review the completed real local Supabase and pgTAP results in [validation.md](validation.md).
+   Docker is available; six integration scenarios and all 12 pgTAP assertions passed.
 2. Review this branch/PR. Before any hosted application, separately approve the exact
    migrations and inspect current hosted tables, functions, triggers, grants, policies,
    existing Auth accounts, migration history and PostgreSQL version. Local defaults use

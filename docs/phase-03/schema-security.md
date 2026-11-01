@@ -53,8 +53,9 @@ precision, ranges and completeness, and writes a new revision plus its audit eve
 atomically. Drafts remain hidden. There is no separate leader approval permission.
 
 Published rubric/criterion changes and maximum-score changes after publication are rejected.
-The full-stack suite is still required to verify this against Supabase's actual managed
-schemas and API behavior; embedded tests use a small compatibility fixture.
+The full-stack suite now passes against the local Supabase managed schemas and APIs;
+see [validation.md](validation.md) for its exact scope and remaining launch limits.
+Embedded tests separately use a small compatibility fixture.
 
 ## Storage
 

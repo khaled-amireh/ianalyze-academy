@@ -2,7 +2,8 @@
 
 ## Executed successfully
 
-`npm.cmd --prefix frontend run validate` completed successfully after implementation:
+Validation was rerun on **2026-11-01** on `codex/phase-03-supabase`, with Docker Desktop
+available. `npm.cmd --prefix frontend run validate` completed successfully:
 
 | Check                        | Actual result                                                                                                                               |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -18,6 +19,9 @@
 | Database types               | Regeneration/drift check passed against the embedded migration catalog                                                                      |
 | Phase 03 preservation        | 96 prior frontend/Yomna files unchanged; permitted integration edits excluded explicitly                                                    |
 | Source safety                | No tracked/new real environment files or matching high-confidence secret patterns found                                                     |
+| Real local Auth/REST/Storage | Six scenarios passed; zero failures, cancellations or skips                                                                                 |
+| Local pgTAP                  | All 12 assertions passed against the real local Supabase database                                                                           |
+| Local CLI database types     | All eight public table Row/Insert/Update shapes and the three RPC call signatures are compatible with the committed frontend types          |
 
 The embedded suite executes both migrations in actual in-memory PostgreSQL (PGlite).
 Its small Auth/Storage fixtures are test code, not a second hosted project or real user
@@ -27,7 +31,7 @@ invalid/stale scores, private file policies, the closed upload gate and Team rev
 Future upload eligibility is tested by a disposable-database-only function override; the
 committed migrations still return false and never expose that override to a client.
 
-The final production browser sweep passed **64 combinations**: eight routes × Arabic/English
+The earlier production browser sweep passed **64 combinations**: eight routes × Arabic/English
 × light/dark × 390/1440-pixel viewports. Checks covered route rendering, direction/language,
 theme, horizontal overflow, disabled registration, both original portrait dimensions and
 the exact video embed URL. No application exceptions or unexpected Supabase requests were
@@ -40,31 +44,87 @@ sweep writes only ignored artifacts instead of overwriting archived Phase 02 scr
 
 Browser details and npm audit output are in ignored `frontend/artifacts/` files, not commits.
 
-## Implemented but NOT executed against real Supabase
+## Real local Supabase results
 
-| Suite                  | Status and evidence                                                                                           |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Local pgTAP            | 12 assertions implemented; `supabase test db --local` could not connect to port 54322; no assertions executed |
-| Real Auth/REST/Storage | Six scenarios implemented; opt-in suite reported skipped, with zero tests executed                            |
-| Hosted integration     | Not attempted or authorized                                                                                   |
+The original delivery could not execute the full-stack suites because Docker was absent.
+That environment blocker is now resolved; the results below replace the earlier skipped
+integration suite and connection-refused pgTAP result.
 
-Docker/Podman was not detected. Local CLI status reported no linked project and no container
-runtime; the database test command reported connection refused and suggested starting the
-local stack. These are unavailable-environment results, not passing integration tests.
+Docker's Linux engine **29.9.2** started a fresh `ianalyze-academy-local` stack through the
+pinned Supabase CLI **2.122.0**. Both migrations applied successfully to **PostgreSQL 17.11**.
+The service images included GoTrue **v2.197.0**, PostgREST **v16.5** and Storage API
+**v1.84.19**. No Supabase login or hosted project link was used.
 
-The real API suite covers email-confirmation requirements, metadata escalation, REST
-ownership/protected columns, grading publication, private downloads, denied uploads and
-Team revocation with an existing session. The harness verifies both API and database
-targets are local before networking. Only synthetic local fixtures are created/removed.
+Executed from `frontend/`:
 
-Embedded tests do **not** verify GoTrue token issuance/signatures, PostgREST permission
-translation, Storage's actual upload/MIME/size handling or managed-schema compatibility.
-Those require the local full stack. Email delivery/confirmation-link and recovery journeys,
-multi-session concurrency, OAuth and Team MFA flows remain later validation work.
+```powershell
+node --env-file=../supabase/.env.local --test tests/supabase.integration.test.mjs
+```
+
+| Scenario                        | Actual result                                                                                                                              |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Email confirmation and metadata | Unconfirmed password sign-in rejected; forged Team metadata still produced a Student role                                                  |
+| REST ownership and columns      | Anonymous reads denied; Student A could not read B; registration timestamp changes denied; Team saw the three registered fixtures          |
+| Grade publication               | Student grading denied; draft hidden; authorized Team revision published; only the owning Student could read the published grade           |
+| Private downloads               | Owner and Team downloads succeeded; other Student, anonymous and public-URL access failed; Team materials stayed Team-only                 |
+| Upload restrictions             | Student uploads/overwrites failed; privileged test uploads independently confirmed rejection of 262,145-byte notebooks and HTML MIME types |
+| Team revocation                 | Changing the database role removed Team profile/file access with the existing Auth session                                                 |
+
+**Result: 6 tests passed, 0 failed, 0 cancelled, 0 skipped.** Bucket MIME/size rejection
+was tested independently of the closed Student upload gate. The suite used only synthetic
+`.test` accounts and disposable notebook/PDF fixtures. Its API/database target guards ran
+before networking and accepted only loopback ports 54321/54322.
+
+Executed from the repository root:
+
+```powershell
+$env:SUPABASE_TELEMETRY_DISABLED = '1'
+npm.cmd --prefix frontend run test:database:supabase
+```
+
+**Result: Files=1, Tests=12, Result: PASS.** The assertions verified RLS on all ten
+application tables; anonymous profile denial; denied role updates, audit inserts, grade
+updates and profile-email changes; permitted contact updates; invoker-only public
+functions; the closed upload gate; both private buckets; the 256 KiB notebook cap; and
+the absence of client overwrite/delete policies. The pgTAP transaction rolled back.
+
+Post-test SQL inspection confirmed **zero Auth users, profiles, roles, learning records,
+submissions, grades, criterion scores and Storage objects**. The upload gate still returned
+false. Fixture-created audit events were confined to the disposable database. The local
+stack was then stopped with `supabase stop --no-backup --workdir .`, removing its test
+data volumes. Local credentials/logs remained ignored and were not committed.
+
+Actual local CLI-generated types were compared using strict TypeScript checks against
+all eight public table Row/Insert/Update shapes and the three public RPC signatures.
+The committed role return type deliberately includes `null`, which is safer than the
+CLI's inferred `string` for accounts without a verified role. No type or migration change
+was necessary. These comparisons do not activate browser authentication flows.
+
+No application, migration or test-harness defect was discovered in these runs. Only
+Phase 03 validation/setup documentation was updated.
+
+## Remaining security and launch limits
+
+The real local stack now verifies managed-schema compatibility and the exercised Auth,
+PostgREST and Storage paths. These results are scoped to the listed assertions; they
+are not a hosted-project audit or a complete penetration test. Hosted integration was
+not attempted or authorized.
+
+End-to-end signup confirmation-link delivery, password recovery, multi-session/concurrent
+request races, OAuth and Team MFA journeys remain outside these six scenarios. The
+public authentication UI and callback handling are deferred to Phase 04. Owner approval
+of privacy/consent text, production URLs, SMTP/sender configuration, abuse protection
+and the Team MFA approach is still required before launch.
+
+Uploads remain disabled. MIME/size policies do not validate notebook bytes or JSON
+structure; trusted validation/finalization, quotas, retention and orphan reporting must
+be implemented and reviewed before a future migration opens that gate. Reviewed work
+must not be automatically deleted. See [setup.md](setup.md) for the hosted approval
+and remaining owner actions.
 
 ## Dependency audit
 
-The full npm audit reported **17 advisories: two low, fifteen moderate, zero high/critical**.
+The refreshed full npm audit reported **17 advisories: two low, fifteen moderate, zero high/critical**.
 Every affected package node exists unchanged in the original lock. None of the added
 Supabase, PGlite or PostgreSQL-driver packages was listed as vulnerable. No automatic audit
 fix or unrelated dependency upgrade was applied. These existing development-tool advisories
@@ -77,6 +137,6 @@ advisories**.
 No hosted migration, hosted settings change, external SMTP enablement, real account
 creation, application deployment, main-branch push or PR merge was performed.
 
-This is a locally implemented and partially verified foundation. Full Supabase security
-verification and hosted readiness are **pending**, not complete. See [setup.md](setup.md)
-for the remaining owner actions and separate hosted approval boundary.
+The pending six local integration scenarios and 12 pgTAP assertions are now verified.
+The foundation is ready for PR review; hosted activation and student-launch readiness
+remain separate, unapproved work.

@@ -1,3 +1,13 @@
+.header-account {
+  color: var(--foreground);
+  font-size: 12px;
+  white-space: nowrap;
+}
+@media (max-width: 1119px) {
+  .header-account {
+    display: none;
+  }
+}
 .portal-page {
   padding-block: 2rem 5rem;
 }

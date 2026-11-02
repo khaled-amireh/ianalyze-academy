@@ -1,0 +1,85 @@
+{
+  "functionalCommit": "4019e9c844549c989e4fb4f8122397663f761bb8",
+  "redesignCommit": "a877b40ddd60480b08124e2c8ab55a932717e3e8",
+  "baseCommit": "5bd93830d7732d5315fa6ec3135cdc720cf90cb4",
+  "resolvedFiles": {
+    "frontend/package.json": {
+      "reason": "Preserve union of scripts/dependencies; validate safe public build and all applicable frontend/backend integrity checks.",
+      "sha256": "a16d360673ef0e9e35e7989d1f443f773b177640a07de0bb5ade49a424c57d71"
+    },
+    "frontend/src/app/app.tsx": {
+      "reason": "Automatic route merge retains functional portals and redesigned lazy public pages.",
+      "sha256": "373cd62c045ddbb6985b35e6c8eaf47354856991ad9fc49afdcc04410089cb0b"
+    },
+    "frontend/src/components/layout/navbar.tsx": {
+      "reason": "Preserve redesigned header with configured account access; remove conflicted utility bar.",
+      "sha256": "a478d8600c61cc291cf1907fb663ef16681b6ff1f6101ed3ea3dbf6dfc2f1f71"
+    },
+    "frontend/src/components/layout/mobile-navigation.tsx": {
+      "reason": "Add configured account access to existing dialog with closure/focus handling.",
+      "sha256": "d3468ebd15e26dabb69de35e518e451bf42a1c48cff36a968d6277ec11f701ae"
+    },
+    "frontend/src/app/route-effects.tsx": {
+      "reason": "Preserve redesigned focus/anchors; localize real portal route titles.",
+      "sha256": "020b3e181c4f17abda57d900a4d6d16e1d6e09c1a03619ed50cad7852c1d051c"
+    },
+    "frontend/src/features/portal/auth-pages.tsx": {
+      "reason": "Account link placement props and focusable heading IDs.",
+      "sha256": "54437274031b4bea2b1520c677207a56149dff06b7694f3bc08d0527f70113b6"
+    },
+    "frontend/src/features/portal/student-page.tsx": {
+      "reason": "Focusable heading IDs only.",
+      "sha256": "6afce6560e67b64c5807607b73882ea7ab534d0d027a58bb8a709725916b61d8"
+    },
+    "frontend/src/features/portal/team-page.tsx": {
+      "reason": "Focusable heading IDs only.",
+      "sha256": "0c682b7c70825765d886097cd9d48b39afe97e97f73876c56f861cba2fbc597c"
+    },
+    "frontend/src/features/portal/leaderboard.tsx": {
+      "reason": "Focusable heading ID only.",
+      "sha256": "f03fde1ef5ac4448256ef299cec4027c3273924a3c346ba99da656fc3e732c14"
+    },
+    "frontend/src/features/portal/privacy-page.tsx": {
+      "reason": "Focusable heading ID only.",
+      "sha256": "ad09656cd3fa470ea788fb622c8c5c757c161fa2294f650af09cd26041695772"
+    },
+    "frontend/src/features/portal/portal.css": {
+      "reason": "Style account access within existing header/dialog breakpoints.",
+      "sha256": "65d4ba1abb7ec12944797cd09425690d85d4e7b24fabd9ba6b528736cdc89070"
+    },
+    "frontend/public/_headers": {
+      "reason": "Match CSP inline-script hash to redesigned preference initialization.",
+      "sha256": "532d9625d9f6fe45c24991c7ab0508faed6cd46c77228c1611cf4fead2e3b7fa"
+    },
+    "frontend/scripts/check-phase-02.mjs": {
+      "reason": "Verify both sets of pinned approved dependency additions.",
+      "sha256": "591b93223b71d96d6fdf94a4d2b0aff23ce6ef3e8034f1a84ed77e74ce1ccb1e"
+    },
+    "frontend/scripts/check-phase-03.mjs": {
+      "reason": "Keep historical/source secret checks and pin approved integration resolutions.",
+      "sha256": "ff86fab7f46bbba6fa12cf6eb62467ef441a5fec669cbeaa234f9a61a91ac9b7"
+    },
+    "frontend/scripts/check-redesign.mjs": {
+      "reason": "Verify both parent trees and inherited functional backend boundaries.",
+      "sha256": "6e4935580f59959f136726de67d609737ec76e55388b20f18952315113beb061"
+    },
+    "frontend/scripts/verify-merge-preservation.mjs": {
+      "reason": "New exact preservation checks against both parents and explicitly reviewed resolutions.",
+      "sha256": "e38bdf72fe1ae45c5713cbdbed8b0197b1791da4870927ea773feb7d9eb610d7",
+      "added": true
+    },
+    "frontend/scripts/redesign-browser-qa.mjs": {
+      "reason": "Isolated origins/output; updated protected-route redirect assertion.",
+      "sha256": "66e3fa498f1262dd948e4d71e086815d3044b4c32d8e1867c09c5fe35c1c32eb"
+    },
+    "frontend/scripts/theme-brand-browser-qa.mjs": {
+      "reason": "Isolated origins/output while preserving all theme assertions.",
+      "sha256": "69f2a5516044f2a88c80d71c9e0b14e569364a935c30f435ed60bfd1309af406"
+    },
+    "frontend/scripts/merge-browser-qa.mjs": {
+      "reason": "New account/route/focus/RTL/responsive browser integration checks.",
+      "sha256": "c8704908f9c77ddb873722f02043f29e30f6f8166d22eac1098efa47649c0b25",
+      "added": true
+    }
+  }
+}

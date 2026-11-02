@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { root } from './database-fixture.mjs';
+import { mergeResolution, verifyMergePreservation } from './verify-merge-preservation.mjs';
 
 const manifest = JSON.parse(
   readFileSync(new URL('docs/phase-03/baseline/preserved-frontend.json', root), 'utf8'),
@@ -16,7 +17,13 @@ assert.deepEqual(Object.keys(integration).sort(), [
   'frontend/src/app/app.tsx',
   'frontend/src/components/layout/navbar.tsx',
 ]);
-for (const [path, hash] of Object.entries(manifest))
+const redesign = JSON.parse(
+  readFileSync(new URL('docs/ui-redesign/approved-presentation-changes.json', root), 'utf8'),
+);
+verifyMergePreservation();
+for (const [path, hash] of Object.entries(manifest)) {
+  if (redesign.replacedFrontendFiles.includes(path) || mergeResolution.resolvedFiles[path])
+    continue;
   assert.equal(
     createHash('sha256')
       .update(readFileSync(new URL(integration[path] ?? path, root)))
@@ -24,6 +31,7 @@ for (const [path, hash] of Object.entries(manifest))
     hash,
     `Unrelated frontend/Yomna file changed: ${path}`,
   );
+}
 const files = execFileSync(
   'git',
   ['ls-files', '--cached', '--others', '--exclude-standard', '-z'],
@@ -51,5 +59,5 @@ assert.match(example, /^VITE_ENABLE_DEV_PREVIEWS=false$/m);
 assert.match(example, /^VITE_SUPABASE_URL=$/m);
 assert.match(example, /^VITE_SUPABASE_PUBLISHABLE_KEY=$/m);
 console.log(
-  `Phase 03 boundary verified: ${Object.keys(manifest).length} frontend/Yomna files preserved; tracked/new source secret-pattern scan clean.`,
+  'Phase 03 boundaries verified: unchanged historical files preserved; approved redesign/integration resolutions hash-pinned; source secret-pattern scan clean.',
 );

@@ -8,12 +8,20 @@ import { Input } from '@/components/ui/input';
 import { usePortalCopy } from './copy';
 import './portal.css';
 
-export function AccountLink() {
+export function AccountLink({
+  className,
+  onNavigate,
+}: {
+  className?: string;
+  onNavigate?: () => void;
+}) {
   const auth = useAuth();
   const { c } = usePortalCopy();
   if (!academyClient) return null;
   return (
     <Link
+      className={className}
+      onClick={onNavigate}
       to={
         auth.status === 'signed-in' ? (auth.role === 'team' ? '/workspace' : '/student') : '/login'
       }
@@ -98,7 +106,9 @@ export function AuthPage({ mode }: { mode: 'login' | 'signup' | 'recover' | 'res
   return (
     <PageContainer className="portal-page">
       <section className="content-card portal-auth">
-        <h1>{title}</h1>
+        <h1 id="page-title" tabIndex={-1}>
+          {title}
+        </h1>
         {!available ? (
           <p>{c.unavailable}</p>
         ) : (
@@ -244,7 +254,9 @@ export function AuthCallback() {
   }, [refresh, navigate, callbackParams]);
   return (
     <PageContainer className="portal-page">
-      <h1>{c.login}</h1>
+      <h1 id="page-title" tabIndex={-1}>
+        {c.login}
+      </h1>
       <p role="status">{failed ? c.expired : c.wait}</p>
       {failed && <Link to="/login">{c.backLogin}</Link>}
     </PageContainer>

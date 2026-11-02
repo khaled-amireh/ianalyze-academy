@@ -528,7 +528,9 @@ export function TeamPageLive() {
   if (!data)
     return (
       <PageContainer className="portal-page">
-        <h1>{c.team}</h1>
+        <h1 id="page-title" tabIndex={-1}>
+          {c.team}
+        </h1>
         <p role="status">{error ? c.error : c.wait}</p>
         <Button onClick={reload}>{c.retry}</Button>
       </PageContainer>
@@ -540,7 +542,9 @@ export function TeamPageLive() {
   const currentPage = Math.min(reviewPage, pageCount - 1);
   return (
     <PageContainer className="portal-page">
-      <h1>{c.team}</h1>
+      <h1 id="page-title" tabIndex={-1}>
+        {c.team}
+      </h1>
       <nav className="portal-actions">
         <Link to="/student">{c.profile}</Link>
         <a href="#students">{c.students}</a>

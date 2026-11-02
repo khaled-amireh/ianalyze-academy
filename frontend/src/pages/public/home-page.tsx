@@ -1,107 +1,87 @@
-import { ArrowRight, Check, BookOpen, Play, Users, Code2, ChartNoAxesCombined } from 'lucide-react';
+import { ArrowRight, Play, BookOpen, Users } from 'lucide-react';
 import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { PageContainer } from '@/components/shared/page-container';
 import { MixedText } from '@/components/shared/mixed-text';
 import { DataStory } from '@/components/shared/data-story';
 import { Reveal } from '@/components/shared/reveal';
-import {
-  JoinCallout,
-  ModuleCards,
-  ProgramFacts,
-  TextLink,
-} from '@/components/shared/academy-content';
+import { JoinCallout, ProgramFacts, TextLink } from '@/components/shared/academy-content';
+import { CurriculumCarousel } from '@/components/shared/curriculum-carousel';
 import { SectionHeading } from '@/components/shared/section-heading';
-import { syllabus } from '@/content/public-content';
+import { leaders, syllabus } from '@/content/public-content';
 
 export function HomePage() {
   const { t } = useTranslation();
   return (
     <PageContainer>
       <section className="hero">
-        <div
-          className="hero-copy stagger-enter"
-          onFocusCapture={(event) =>
-            event.currentTarget
-              .getAnimations({ subtree: true })
-              .forEach((animation) => animation.cancel())
-          }
-        >
-          <p className="eyebrow line-label">{t('home.eyebrow')}</p>
+        <div className="hero-copy">
+          <p className="eyebrow">{t('redesign.heroEyebrow')}</p>
           <h1 id="page-title" tabIndex={-1}>
             <span>{t('home.titleFirst')}</span>
             <span className="hero-emphasis">{t('home.titleSecond')}</span>
           </h1>
-          <p className="lede">{t('home.description')}</p>
+          <p className="lede">
+            <MixedText>{t('home.description')}</MixedText>
+          </p>
           <div className="hero-actions">
-            <Button asChild>
-              <Link to="/join">
-                <span>
-                  <MixedText>{t('home.primary')}</MixedText>
-                </span>
+            <Button asChild size="lg">
+              <Link to="/eda">
+                <MixedText>{t('home.secondary')}</MixedText>
                 <ArrowRight className="directional" aria-hidden="true" />
               </Link>
             </Button>
-            <Button asChild variant="outline">
-              <Link to="/eda">
-                <span>
-                  <MixedText>{t('home.secondary')}</MixedText>
-                </span>
+            <Button asChild variant="ghost">
+              <Link to="/about">
+                {t('nav.about')}
                 <ArrowRight className="directional" aria-hidden="true" />
               </Link>
             </Button>
           </div>
-          <p className="check-note">
-            <Check aria-hidden="true" />
-            <span>
-              <MixedText>{t('home.beginner')}</MixedText>
-            </span>
-          </p>
         </div>
-        <DataStory />
+        <Reveal>
+          <DataStory />
+        </Reveal>
+      </section>
+      <section className="course-facts" aria-label={t('home.factsLabel')}>
+        <div className="course-facts-intro">
+          <BookOpen aria-hidden="true" />
+          <span>
+            <MixedText>{t('home.factsLabel')}</MixedText>
+          </span>
+        </div>
+        <ProgramFacts />
+      </section>
+      <section className="public-section curriculum-section">
+        <SectionHeading
+          title={t('academy.home.journeyTitle')}
+          description={t('academy.home.journeyText')}
+        />
+        <CurriculumCarousel />
+        <div className="curriculum-footer">
+          <p>{t('home.beginner')}</p>
+          <TextLink to="/eda">{t('academy.fullSyllabus')}</TextLink>
+        </div>
       </section>
       <Reveal>
-        <section className="facts-strip" aria-label={t('home.factsLabel')}>
-          <div className="fact-intro">
-            <BookOpen aria-hidden="true" />
-            <span>
-              <MixedText>{t('home.factsLabel')}</MixedText>
+        <section className="resource-feature">
+          <Link to="/videos" className="resource-art" aria-label={t('academy.watch')}>
+            <span className="resource-symbol" aria-hidden="true">
+              <Play />
             </span>
-          </div>
-          {[syllabus.teachingWeeks, syllabus.plannedHours, syllabus.bufferWeeks].map((value, i) => (
-            <div key={value}>
-              <strong dir="ltr">{String(value).padStart(2, '0')}</strong>
-              <span>{t('home.facts', { returnObjects: true })[i]}</span>
-            </div>
-          ))}
-        </section>
-      </Reveal>
-      <Reveal>
-        <section className="public-section about-preview split-section">
+            <span className="resource-art-title">
+              <MixedText>{t('redesign.videoTitle')}</MixedText>
+            </span>
+            <span className="resource-art-caption">{t('redesign.videoType')}</span>
+          </Link>
           <div>
-            <p className="eyebrow line-label">{t('academy.home.aboutEyebrow')}</p>
-            <h2>{t('academy.home.aboutTitle')}</h2>
-          </div>
-          <div>
+            <h2>{t('academy.home.resourceTitle')}</h2>
             <p>
-              <MixedText>{t('academy.home.aboutText')}</MixedText>
+              <MixedText>{t('academy.home.resourceText')}</MixedText>
             </p>
-            <TextLink to="/about">{t('academy.readMore')}</TextLink>
-          </div>
-        </section>
-      </Reveal>
-      <Reveal>
-        <section className="featured-program">
-          <div className="program-visual" aria-hidden="true">
-            <div className="program-orbit">
-              <Code2 />
-              <span>01</span>
-              <ChartNoAxesCombined />
-            </div>
-            <p>{t('academy.home.programCaption')}</p>
-            <div className="tool-chips">
+            <TextLink to="/videos">{t('academy.watch')}</TextLink>
+            <div className="resource-tools" aria-label={t('academy.syllabus.toolsTitle')}>
               {syllabus.tools.map((tool) => (
                 <bdi key={tool} dir="ltr">
                   {tool}
@@ -109,54 +89,37 @@ export function HomePage() {
               ))}
             </div>
           </div>
-          <div className="program-copy">
-            <p className="eyebrow">{t('academy.home.programEyebrow')}</p>
-            <Badge variant="secondary">{t('academy.home.beginnerLabel')}</Badge>
-            <h2>
-              <MixedText>{t('academy.home.programTitle')}</MixedText>
-            </h2>
-            <p>
-              <MixedText>{t('academy.home.programText')}</MixedText>
-            </p>
-            <ProgramFacts />
-            <TextLink to="/eda">{t('academy.fullSyllabus')}</TextLink>
-          </div>
         </section>
       </Reveal>
-      <section className="public-section">
-        <SectionHeading
-          eyebrow={t('academy.home.journeyEyebrow')}
-          title={t('academy.home.journeyTitle')}
-          description={t('academy.home.journeyText')}
-        />
-        <ModuleCards />
-      </section>
-      <Reveal>
-        <section className="resource-feature">
-          <div className="resource-art" aria-hidden="true">
-            <Play />
-            <span>Data Science</span>
-            <i />
-            <i />
-          </div>
-          <div>
-            <p className="eyebrow">{t('academy.home.resourceEyebrow')}</p>
-            <h2>{t('academy.home.resourceTitle')}</h2>
-            <p>
-              <MixedText>{t('academy.home.resourceText')}</MixedText>
-            </p>
-            <TextLink to="/videos">{t('academy.watch')}</TextLink>
-          </div>
-        </section>
-      </Reveal>
-      <Reveal>
-        <section className="public-section community-section">
+      <section className="public-section community-feature">
+        <div className="community-copy">
           <Users className="icon-tile" aria-hidden="true" />
-          <p className="eyebrow">{t('academy.home.communityEyebrow')}</p>
           <h2>{t('academy.home.communityTitle')}</h2>
           <p>{t('academy.home.communityText')}</p>
-        </section>
-      </Reveal>
+          <TextLink to="/team">{t('redesign.meetTeam')}</TextLink>
+        </div>
+        <div className="community-portraits">
+          {leaders.map((leader) => (
+            <Link to="/team" key={leader.id} className={`community-person leader-${leader.id}`}>
+              <div>
+                <img
+                  src={leader.photo}
+                  alt={t('academy.team.portrait', { name: t(`academy.team.${leader.id}`) })}
+                  width={leader.width}
+                  height={leader.height}
+                  loading="lazy"
+                />
+              </div>
+              <span>
+                <MixedText>{t(`academy.team.${leader.id}`)}</MixedText>
+              </span>
+              <small>
+                {t(leader.id === 'yomna' ? 'academy.team.positionFemale' : 'academy.team.position')}
+              </small>
+            </Link>
+          ))}
+        </div>
+      </section>
       <JoinCallout />
     </PageContainer>
   );

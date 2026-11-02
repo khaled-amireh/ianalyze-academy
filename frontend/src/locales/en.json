@@ -1,7 +1,7 @@
 {
   "brand": {
     "name": "iAnalyze Academy",
-    "home": "iAnalyze — Home",
+    "home": "iAnalyze - Home",
     "logoAlt": "iAnalyze AI & DS Club by iTeam",
     "parentAlt": "iTeam",
     "initiative": "An iTeam Initiative",
@@ -41,12 +41,12 @@
     "retry": "Try again"
   },
   "home": {
-    "eyebrow": "Learn. Explore. Belong.",
+    "eyebrow": "Learn with iAnalyze",
     "titleFirst": "Start with data.",
-    "titleSecond": "Discover what’s possible.",
-    "description": "A student community for AI and data science under iTeam at Al-Zaytoonah University of Jordan. Learn by doing, explore together, and turn data into meaningful insights.",
+    "titleSecond": "Build understanding.",
+    "description": "Learn Python and data analysis through guided practice, real questions, and a student community that learns together.",
     "primary": "Join iAnalyze",
-    "secondary": "Explore EDA Syllabus",
+    "secondary": "Explore the syllabus",
     "beginner": "No Python experience needed",
     "journey": "From a question to an insight",
     "illustration": "Illustrative data · Not program results",
@@ -66,7 +66,7 @@
     },
     "eda": {
       "title": "Your path from zero to insights.",
-      "description": "Exploratory Data Analysis — From Zero to Insights, a practical program for beginners."
+      "description": "Exploratory Data Analysis - From Zero to Insights, a practical program for beginners."
     },
     "videos": {
       "title": "Start with the bigger picture.",
@@ -119,7 +119,7 @@
       "aboutTitle": "A space to ask. A community to learn with.",
       "aboutText": "iAnalyze is the AI & Data Science Club under iTeam. We bring students together to explore ideas, practice new skills, and understand what data can tell us.",
       "programEyebrow": "Our beginner program",
-      "programTitle": "Exploratory Data Analysis — From Zero to Insights",
+      "programTitle": "Exploratory Data Analysis - From Zero to Insights",
       "programText": "Start with your first line of Python. Learn to read, clean, explore and visualize data, then bring it all together in a small team project.",
       "beginnerLabel": "Beginner-friendly",
       "programCaption": "One question. Many discoveries.",
@@ -157,7 +157,7 @@
       "pastText": "Explore Introduction to Data Science as a foundational resource in our Video Library. The club has also offered Power BI training."
     },
     "syllabus": {
-      "title": "Exploratory Data Analysis — From Zero to Insights",
+      "title": "Exploratory Data Analysis - From Zero to Insights",
       "draft": "Draft v1.0 · Subject to updates",
       "overviewTitle": "Course overview",
       "overviewText": "A practical introduction to exploratory data analysis. Begin with essential Python, then read, understand and clean data before turning it into clear charts and insights.",
@@ -176,7 +176,7 @@
       "language": "Arabic explanations with English technical terms.",
       "weeklyTitle": "Your weekly learning path",
       "weeklyText": "Open each week to see what you will explore.",
-      "bufferTitle": "Weeks 07–08 · Optional buffer / support",
+      "bufferTitle": "Weeks 07-08 · Optional buffer / support",
       "bufferText": "Two optional weeks for catch-up, review, or an extra activity, depending on the program’s progress.",
       "outcomesTitle": "What you will be able to do",
       "outcomesText": "Work through a beginner EDA task: open a dataset, understand its structure, address common issues, create simple visualizations, and explain the findings.",
@@ -186,7 +186,7 @@
       "projectTitle": "Your first team EDA project",
       "projectText": "In Week 06, teams explore a simple dataset, carry out a basic analysis, create charts, and share their findings. Submission requirements and assessment details will be explained before the project begins.",
       "scheduleTitle": "Make room for learning",
-      "schedule": "Thursdays · 10:00 AM–1:00 PM",
+      "schedule": "Thursdays · 10:00 AM-1:00 PM",
       "scheduleText": "Six teaching weeks, 18 planned teaching hours, plus two optional buffer weeks. Start date and location will be announced later.",
       "toolsTitle": "Your toolkit"
     },
@@ -230,8 +230,8 @@
     "team": {
       "khaled": "Khaled Amireh",
       "yomna": "Yomna Al-jabiri",
-      "education": "AI Student — 4th Year",
-      "educationFemale": "AI Student — 4th Year",
+      "education": "AI Student - 4th Year",
+      "educationFemale": "AI Student - 4th Year",
       "position": "Member",
       "positionFemale": "Member",
       "portrait": "Portrait of {{name}}",
@@ -302,7 +302,7 @@
       },
       "beginner": {
         "question": "Is the EDA program beginner-friendly?",
-        "answer": "Yes. Exploratory Data Analysis — From Zero to Insights starts with Python fundamentals and builds toward a small practical project."
+        "answer": "Yes. Exploratory Data Analysis - From Zero to Insights starts with Python fundamentals and builds toward a small practical project."
       },
       "python": {
         "question": "Do I need Python experience?",
@@ -314,7 +314,7 @@
       },
       "schedule": {
         "question": "When are sessions held?",
-        "answer": "Sessions are planned for Thursdays, 10:00 AM–1:00 PM. The start date and location will be announced later."
+        "answer": "Sessions are planned for Thursdays, 10:00 AM-1:00 PM. The start date and location will be announced later."
       },
       "laptop": {
         "question": "Do I need a laptop?",
@@ -333,5 +333,24 @@
         "answer": "Yes. Watch Introduction to Data Science in the Video Library, with a fallback link to Google Drive. It is an optional foundational learning resource for iAnalyze students."
       }
     }
+  },
+  "redesign": {
+    "heroEyebrow": "iAnalyze Academy",
+    "courseTitle": "Your first steps in data.",
+    "courseDescription": "A practical introduction to exploratory data analysis.",
+    "path": {
+      "python1": "Python essentials",
+      "pandas": "Explore & prepare data",
+      "visualization": "Make patterns visible",
+      "project": "Your team project"
+    },
+    "videoTitle": "Introduction to Data Science",
+    "videoType": "Recorded learning resource",
+    "meetTeam": "Meet the team",
+    "previous": "Previous modules",
+    "next": "Next modules",
+    "carouselRole": "carousel",
+    "slideRole": "slide",
+    "slideLabel": "Module {{current}} of {{total}}"
   }
 }

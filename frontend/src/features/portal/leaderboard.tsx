@@ -10,7 +10,9 @@ export function LiveLeaderboard() {
   const { data, error } = useRemote(load);
   return (
     <PageContainer className="portal-page">
-      <h1>{c.leaderboard}</h1>
+      <h1 id="page-title" tabIndex={-1}>
+        {c.leaderboard}
+      </h1>
       <p>{c.rules}</p>
       <div className="portal-table">
         <table>

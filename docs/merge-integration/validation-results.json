@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-02",
+  "timezone": "Asia/Amman",
+  "functionalCommit": "4019e9c844549c989e4fb4f8122397663f761bb8",
+  "redesignCommit": "a877b40ddd60480b08124e2c8ab55a932717e3e8",
+  "npmCi": {
+    "passed": true,
+    "packages": 461
+  },
+  "validate": {
+    "passed": true,
+    "unitPassed": 25,
+    "unitSkipped": 0,
+    "embeddedTestsPassed": 20,
+    "embeddedChildScenarios": 18,
+    "inheritedFilesVerified": 404,
+    "explicitResolutions": 19,
+    "artifactFiles": 46
+  },
+  "browser": {
+    "layoutCases": 160,
+    "interactionAssertions": 38,
+    "contrastCases": 32,
+    "contrastSamples": 2256,
+    "contrastFailures": 0,
+    "themeAssertions": 17,
+    "themePassed": true,
+    "mergeNavigationCases": 23,
+    "exceptions": 0,
+    "failedLocalRequests": 0,
+    "videoPlaybackVerified": false,
+    "realBackendTested": false
+  },
+  "secretScan": {
+    "textFiles": 208,
+    "findings": 0,
+    "stagedContentMatchedWorkingFiles": true
+  },
+  "preservationNegativeProbes": {
+    "backendRejected": true,
+    "stylesheetRejected": true,
+    "navbarRejected": true,
+    "originalBytesRestored": true
+  },
+  "notExecuted": [
+    "Real local Auth/REST/Storage integration: suite skipped; Docker engine unavailable",
+    "Real captured-email/Edge delivery integration: suites skipped; Docker engine unavailable",
+    "pgTAP against local Supabase",
+    "Full authenticated delivery browser journey",
+    "Hosted/staging Auth, RLS, SMTP or Edge tests",
+    "Fresh Lighthouse audit"
+  ],
+  "productionModified": false,
+  "pushed": false,
+  "sourceEvidenceDirectory": "frontend/artifacts/merge-validation/",
+  "artifactManifestSha256": "1cedbbac7169accc3a79f061112a93f454a14da239fdda7b5d93c3b77310150a"
+}

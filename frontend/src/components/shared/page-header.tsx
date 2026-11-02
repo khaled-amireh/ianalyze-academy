@@ -35,11 +35,6 @@ export function PageHeader({
           <MixedText>{description}</MixedText>
         </p>
       </div>
-      <div className="heading-art" aria-hidden="true">
-        <Icon />
-        <i />
-        <i />
-      </div>
     </header>
   );
 }

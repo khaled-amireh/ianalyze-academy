@@ -13,11 +13,13 @@ export function ThemeToggle() {
       variant="ghost"
       size="icon"
       className="theme-toggle"
+      data-theme-state={theme}
       onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
       aria-label={label}
       title={label}
     >
-      {theme === 'light' ? <Moon aria-hidden="true" /> : <Sun aria-hidden="true" />}
+      <Moon className="theme-icon theme-icon-moon" aria-hidden="true" />
+      <Sun className="theme-icon theme-icon-sun" aria-hidden="true" />
     </Button>
   );
 }

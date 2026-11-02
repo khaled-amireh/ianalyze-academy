@@ -225,7 +225,9 @@ export function StudentPage() {
   if (!data)
     return (
       <PageContainer className="portal-page">
-        <h1>{c.dashboard}</h1>
+        <h1 id="page-title" tabIndex={-1}>
+          {c.dashboard}
+        </h1>
         <p role="status">{error ? c.error : c.wait}</p>
         <Button onClick={reload}>{c.retry}</Button>
       </PageContainer>
@@ -233,7 +235,9 @@ export function StudentPage() {
   const profile = data.profiles.find((p) => p.id === auth.user?.id);
   return (
     <PageContainer className="portal-page">
-      <h1>{c.dashboard}</h1>
+      <h1 id="page-title" tabIndex={-1}>
+        {c.dashboard}
+      </h1>
       <nav className="portal-actions">
         <Button onClick={() => void auth.signOut()}>{c.logout}</Button>
         <Button variant="outline" onClick={reload}>

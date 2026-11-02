@@ -6,7 +6,9 @@ export function PrivacyPage() {
   const { c, arabic } = usePortalCopy();
   return (
     <PageContainer className="portal-page">
-      <h1>{c.privacy}</h1>
+      <h1 id="page-title" tabIndex={-1}>
+        {c.privacy}
+      </h1>
       {!privacyApproved && <p className="portal-draft">{c.draft}</p>}
       {arabic ? (
         <section className="content-card" lang="ar" dir="rtl">

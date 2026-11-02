@@ -15,18 +15,6 @@ export function Navbar() {
   const { t } = useTranslation();
   return (
     <>
-      <div className="utility-bar">
-        <PageContainer className="utility-inner">
-          <span className="utility-name">
-            <MixedText>{t('brand.name')}</MixedText>
-          </span>
-          <div className="utility-actions">
-            <AccountLink />
-            <LanguageSwitcher />
-            <ThemeToggle />
-          </div>
-        </PageContainer>
-      </div>
       <header className="site-header">
         <PageContainer className="navbar-inner">
           <BrandLogo />
@@ -37,15 +25,22 @@ export function Navbar() {
               </NavLink>
             ))}
           </nav>
-          <Button asChild className="desktop-join">
-            <Link to="/join">
-              <span>
-                <MixedText>{t('nav.join')}</MixedText>
-              </span>
-              <ArrowRight className="directional" aria-hidden="true" />
-            </Link>
-          </Button>
-          <MobileNavigation />
+          <div className="header-actions">
+            <AccountLink className="header-account" />
+            <div className="header-preferences">
+              <LanguageSwitcher />
+              <ThemeToggle />
+            </div>
+            <Button asChild className="desktop-join" size="sm">
+              <Link to="/join">
+                <span>
+                  <MixedText>{t('nav.join')}</MixedText>
+                </span>
+                <ArrowRight className="directional" aria-hidden="true" />
+              </Link>
+            </Button>
+            <MobileNavigation />
+          </div>
         </PageContainer>
       </header>
     </>

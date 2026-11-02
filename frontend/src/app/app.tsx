@@ -3,16 +3,8 @@ import { Route, Routes } from 'react-router';
 import { Direction } from 'radix-ui';
 import { useTranslation } from 'react-i18next';
 import { DEV_PREVIEWS } from './config';
-import { RouteEffects } from './route-effects';
 import { PublicLayout } from '@/components/layout/public-layout';
 import { HomePage } from '@/pages/public/home-page';
-import { AboutPage } from '@/pages/public/about-page';
-import { SyllabusPage } from '@/pages/public/syllabus-page';
-import { VideosPage } from '@/pages/public/videos-page';
-import { TeamPage } from '@/pages/public/team-page';
-import { JoinPage } from '@/pages/public/join-page';
-import { LeaderboardPage } from '@/pages/public/leaderboard-page';
-import { ContactPage } from '@/pages/public/contact-page';
 import { NotFoundPage } from '@/pages/public/not-found-page';
 import { LoadingIndicator } from '@/components/shared/loading-indicator';
 import {
@@ -37,12 +29,32 @@ const Rankings = lazy(() =>
 );
 
 const DevelopmentPreview = import.meta.env.DEV ? lazy(() => import('@/dev/dev-routes')) : null;
+const AboutPage = lazy(() =>
+  import('@/pages/public/about-page').then((m) => ({ default: m.AboutPage })),
+);
+const SyllabusPage = lazy(() =>
+  import('@/pages/public/syllabus-page').then((m) => ({ default: m.SyllabusPage })),
+);
+const VideosPage = lazy(() =>
+  import('@/pages/public/videos-page').then((m) => ({ default: m.VideosPage })),
+);
+const TeamPage = lazy(() =>
+  import('@/pages/public/team-page').then((m) => ({ default: m.TeamPage })),
+);
+const JoinPage = lazy(() =>
+  import('@/pages/public/join-page').then((m) => ({ default: m.JoinPage })),
+);
+const LeaderboardPage = lazy(() =>
+  import('@/pages/public/leaderboard-page').then((m) => ({ default: m.LeaderboardPage })),
+);
+const ContactPage = lazy(() =>
+  import('@/pages/public/contact-page').then((m) => ({ default: m.ContactPage })),
+);
 
 export function App() {
   const { i18n } = useTranslation();
   return (
     <Direction.Provider dir={i18n.resolvedLanguage === 'ar' ? 'rtl' : 'ltr'}>
-      <RouteEffects />
       <Routes>
         <Route element={<PublicLayout />}>
           <Route index element={<HomePage />} />

@@ -15,6 +15,7 @@ import { publicNavigation, secondaryNavigation } from '@/app/navigation';
 import { MixedText } from '@/components/shared/mixed-text';
 import { LanguageSwitcher } from './language-switcher';
 import { ThemeToggle } from './theme-toggle';
+import { AccountLink } from '@/features/portal/auth-pages';
 
 export function MobileNavigation() {
   const { t } = useTranslation();
@@ -57,6 +58,12 @@ export function MobileNavigation() {
           <DialogDescription>{t('common.mobileDescription')}</DialogDescription>
         </DialogHeader>
         <nav className="mobile-nav-links" aria-label={t('common.navigation')}>
+          <AccountLink
+            onNavigate={() => {
+              navigated.current = true;
+              setOpen(false);
+            }}
+          />
           {[...publicNavigation, ...secondaryNavigation, { id: 'join', to: '/join' } as const].map(
             (item) => (
               <NavLink

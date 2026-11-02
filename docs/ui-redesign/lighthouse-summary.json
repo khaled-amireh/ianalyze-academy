@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-02",
+  "url": "http://127.0.0.1:4174/",
+  "lighthouseVersion": "13.6.0",
+  "mode": "Local simulated mobile; lab results, not field metrics",
+  "scores": {
+    "performance": 99,
+    "accessibility": 100,
+    "best-practices": 100,
+    "seo": 92
+  },
+  "metrics": {
+    "first-contentful-paint": {
+      "display": "0.9 s",
+      "value": 911.7904000000001
+    },
+    "largest-contentful-paint": {
+      "display": "0.9 s",
+      "value": 911.7904000000001
+    },
+    "total-blocking-time": {
+      "display": "110 ms",
+      "value": 106.5
+    },
+    "cumulative-layout-shift": {
+      "display": "0.005",
+      "value": 0.005201011344718441
+    },
+    "speed-index": {
+      "display": "2.0 s",
+      "value": 2013.7248327762736
+    }
+  },
+  "limitations": [
+    "Existing preview SPA fallback serves HTML at /robots.txt; SEO score 92.",
+    "No field INP or production-user measurements.",
+    "One CSS-only accordion border refinement followed this audit."
+  ]
+}

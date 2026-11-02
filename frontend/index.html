@@ -12,7 +12,7 @@
       // Keep defaults in sync with src/app/config.ts. Safe when storage is unavailable.
       (() => {
         let language = 'ar',
-          theme = 'light';
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         try {
           const storedLanguage = localStorage.getItem('ianalyze.language');
           const storedTheme = localStorage.getItem('ianalyze.theme');

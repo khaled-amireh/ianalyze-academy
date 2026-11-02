@@ -12,7 +12,10 @@ function apply(theme: Theme) {
 
 export function ThemeProvider({ children }: PropsWithChildren) {
   const [theme, updateTheme] = useState<Theme>(() => {
-    const initial = readPreference(THEME_KEY, ['light', 'dark'] as const, DEFAULT_THEME);
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : DEFAULT_THEME;
+    const initial = readPreference(THEME_KEY, ['light', 'dark'] as const, systemTheme);
     apply(initial);
     return initial;
   });

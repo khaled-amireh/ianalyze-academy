@@ -44,9 +44,9 @@ export function LeaderboardPage() {
           </thead>
           <tbody>
             <tr>
-              <td>—</td>
+              <td>-</td>
               <td>{t('academy.leaderboard.reserved')}</td>
-              <td>—</td>
+              <td>-</td>
             </tr>
           </tbody>
         </table>

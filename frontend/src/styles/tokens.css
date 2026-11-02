@@ -1,40 +1,28 @@
-@font-face {
-  font-family: Inter;
-  src: url('../assets/fonts/Inter.ttf') format('truetype');
-  font-weight: 100 900;
-  font-display: swap;
-}
-@font-face {
-  font-family: Cairo;
-  src: url('../assets/fonts/Cairo.ttf') format('truetype');
-  font-weight: 200 1000;
-  font-display: swap;
-}
 @custom-variant dark (&:is(.dark *));
 :root {
   --brand-navy: #08546f;
   --brand-teal: #429eab;
   --brand-orange: #df8a48;
   --brand-red: #9e2619;
-  --background: #f3f7fa;
-  --foreground: #142e3a;
-  --card: #fff;
-  --card-foreground: #142e3a;
-  --popover: #fff;
-  --popover-foreground: #142e3a;
+  --background: #f8faf9;
+  --foreground: #172e32;
+  --card: #ffffff;
+  --card-foreground: #172e32;
+  --popover: #ffffff;
+  --popover-foreground: #172e32;
   --primary: #08546f;
   --primary-foreground: #fff;
   --primary-hover: #063f53;
-  --secondary: #eaf3f5;
+  --secondary: #eaf2f1;
   --secondary-foreground: #08546f;
-  --muted: #eaf1f5;
-  --muted-foreground: #526875;
+  --muted: #eff3f2;
+  --muted-foreground: #55686b;
   --accent: #eaf3f5;
   --accent-foreground: #08546f;
   --destructive: #9e2619;
   --destructive-foreground: #fff;
-  --border: #d7e2e7;
-  --input: #738894;
+  --border: #dce5e3;
+  --input: #7b8e8f;
   --ring: #08546f;
   --success: #216344;
   --success-surface: #e9f5ed;
@@ -43,31 +31,31 @@
   --error-surface: #fbeeea;
   --chart-bar: #b7d9de;
   --chart-line: #08546f;
-  --shadow: 0 10px 30px #142e3a08;
-  --shadow-raised: 0 18px 46px #142e3a12;
+  --shadow: 0 4px 16px #172e3206;
+  --shadow-raised: 0 18px 48px #172e320a;
   --radius: 0.875rem;
   --ease: cubic-bezier(0.22, 0.7, 0.2, 1);
-  --font-ui: Inter, Arial, sans-serif;
+  --font-ui: 'Manrope Variable', Arial, sans-serif;
 }
 .dark {
-  --background: #0f1d27;
-  --foreground: #e5eef2;
-  --card: #162c39;
-  --card-foreground: #e5eef2;
-  --popover: #162c39;
-  --popover-foreground: #e5eef2;
+  --background: #111b1e;
+  --foreground: #e9f0ee;
+  --card: #182629;
+  --card-foreground: #e9f0ee;
+  --popover: #182629;
+  --popover-foreground: #e9f0ee;
   --primary: #a5d9e2;
   --primary-foreground: #0a303e;
   --primary-hover: #b8e3ea;
-  --secondary: #223e4c;
+  --secondary: #203638;
   --secondary-foreground: #d2e8ed;
-  --muted: #213b49;
-  --muted-foreground: #acc1cc;
+  --muted: #203033;
+  --muted-foreground: #acc0be;
   --accent: #223e4c;
   --accent-foreground: #d2e8ed;
   --destructive: #ffb6ab;
   --destructive-foreground: #482a27;
-  --border: #33515e;
+  --border: #35494b;
   --input: #71909d;
   --ring: #9bd5df;
   --success: #a8e0bd;
@@ -81,7 +69,7 @@
   --shadow-raised: 0 18px 46px #00000026;
 }
 :lang(ar) {
-  --font-ui: Cairo, Arial, sans-serif;
+  --font-ui: 'IBM Plex Sans Arabic', 'Manrope Variable', Arial, sans-serif;
 }
 @theme inline {
   --font-sans: var(--font-ui);

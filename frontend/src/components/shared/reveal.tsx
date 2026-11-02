@@ -1,6 +1,7 @@
 import { useEffect, useRef, type PropsWithChildren } from 'react';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { cn } from '@/lib/utils';
+import { animate } from 'motion/mini';
 
 export function Reveal({ children, className }: PropsWithChildren<{ className?: string }>) {
   const ref = useRef<HTMLDivElement>(null);
@@ -8,17 +9,15 @@ export function Reveal({ children, className }: PropsWithChildren<{ className?: 
   useEffect(() => {
     const element = ref.current;
     if (!element || reduced || !('IntersectionObserver' in window)) return;
-    let animation: Animation | undefined;
+    let animation: ReturnType<typeof animate> | undefined;
     const observer = new IntersectionObserver(
       (entries) => {
         if (!entries.some((entry) => entry.isIntersecting)) return;
         if (!element.contains(document.activeElement))
-          animation = element.animate(
-            [
-              { opacity: 0, transform: 'translateY(12px)' },
-              { opacity: 1, transform: 'translateY(0)' },
-            ],
-            { duration: 520, easing: 'cubic-bezier(.22,.7,.2,1)' },
+          animation = animate(
+            element,
+            { opacity: [0, 1], transform: ['translateY(12px)', 'translateY(0)'] },
+            { duration: 0.42, ease: [0.22, 0.7, 0.2, 1] },
           );
         observer.disconnect();
       },
@@ -27,7 +26,7 @@ export function Reveal({ children, className }: PropsWithChildren<{ className?: 
     observer.observe(element);
     return () => {
       observer.disconnect();
-      animation?.cancel();
+      animation?.stop();
     };
   }, [reduced]);
   return (

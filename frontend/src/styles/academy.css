@@ -170,7 +170,7 @@ pre {
   min-width: 44px;
   min-height: 44px;
   font:
-    600 12px Inter,
+    600 12px 'Manrope Variable',
     sans-serif;
   border-radius: 7px;
   transition:
@@ -276,7 +276,7 @@ pre {
   color: var(--primary);
 }
 bdi[lang='en'] {
-  font-family: Inter, Arial, sans-serif;
+  font-family: 'Manrope Variable', Arial, sans-serif;
 }
 .academy-button[data-variant='outline']:hover,
 .academy-button[data-variant='ghost']:hover {
@@ -473,7 +473,7 @@ bdi[lang='en'] {
 }
 .journey-steps b {
   font:
-    600 11px Inter,
+    600 11px 'Manrope Variable',
     sans-serif;
   color: var(--primary);
 }
@@ -485,7 +485,7 @@ bdi[lang='en'] {
   background: var(--muted);
   border-block-start: 1px solid var(--border);
   font:
-    500 10px Inter,
+    500 10px 'Manrope Variable',
     sans-serif;
   flex-wrap: wrap;
 }
@@ -513,7 +513,7 @@ bdi[lang='en'] {
   margin-inline-start: 14px;
   color: var(--muted-foreground);
   font:
-    11px Inter,
+    11px 'Manrope Variable',
     sans-serif;
 }
 .notebook-note small {
@@ -576,7 +576,7 @@ bdi[lang='en'] {
 }
 .facts-strip strong {
   font:
-    600 30px Inter,
+    600 30px 'Manrope Variable',
     sans-serif;
   letter-spacing: -0.06em;
 }
@@ -903,7 +903,7 @@ bdi[lang='en'] {
 }
 .card-number {
   font:
-    600 12px Inter,
+    600 12px 'Manrope Variable',
     sans-serif;
   color: var(--primary);
   background: var(--secondary);
@@ -1147,7 +1147,7 @@ bdi[lang='en'] {
   display: block;
   color: var(--primary);
   font:
-    500 36px Inter,
+    500 36px 'Manrope Variable',
     sans-serif;
   margin-block-end: 10px;
 }

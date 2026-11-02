@@ -1,4 +1,7 @@
 import { Outlet } from 'react-router';
+import { Suspense } from 'react';
+import { RouteEffects } from '@/app/route-effects';
+import { LoadingIndicator } from '@/components/shared/loading-indicator';
 import { useTranslation } from 'react-i18next';
 import { Navbar } from './navbar';
 import { Footer } from './footer';
@@ -12,7 +15,10 @@ export function PublicLayout() {
       </a>
       <Navbar />
       <main id="main" tabIndex={-1}>
-        <Outlet />
+        <Suspense fallback={<LoadingIndicator />}>
+          <RouteEffects />
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
     </div>

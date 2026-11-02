@@ -97,7 +97,6 @@ export function JoinCallout() {
     <Reveal>
       <section className="join-callout">
         <div>
-          <p className="eyebrow">{t('academy.cta.eyebrow')}</p>
           <h2>{t('academy.cta.title')}</h2>
           <p>{t('academy.cta.text')}</p>
         </div>

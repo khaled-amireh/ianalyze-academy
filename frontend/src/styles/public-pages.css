@@ -119,7 +119,7 @@
 }
 .program-orbit > span {
   font:
-    500 74px/1 Inter,
+    500 74px/1 'Manrope Variable',
     sans-serif;
   letter-spacing: -0.07em;
   color: var(--primary);
@@ -178,7 +178,7 @@
 }
 .program-facts strong {
   font:
-    600 30px/1.2 Inter,
+    600 30px/1.2 'Manrope Variable',
     sans-serif;
   letter-spacing: -0.04em;
   color: var(--primary);
@@ -210,7 +210,7 @@
 }
 .module-week bdi {
   font:
-    600 24px/1 Inter,
+    600 24px/1 'Manrope Variable',
     sans-serif;
   color: var(--primary);
 }
@@ -254,7 +254,7 @@
 }
 .resource-art > span {
   font:
-    500 12px Inter,
+    500 12px 'Manrope Variable',
     sans-serif;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -432,7 +432,7 @@
 }
 .week-marker bdi {
   font:
-    600 27px/1.2 Inter,
+    600 27px/1.2 'Manrope Variable',
     sans-serif;
   color: var(--primary);
 }
@@ -726,7 +726,7 @@
   color: var(--primary);
   border-radius: 50%;
   font:
-    600 11px Inter,
+    600 11px 'Manrope Variable',
     sans-serif;
 }
 .prepare-card > .icon-tile {
@@ -778,7 +778,7 @@
   inset-inline-end: 12px;
   top: 0;
   font:
-    600 90px/1.2 Inter,
+    600 90px/1.2 'Manrope Variable',
     sans-serif;
   letter-spacing: -0.08em;
   color: var(--muted);

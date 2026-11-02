@@ -1,0 +1,43 @@
+{
+  "baseCommit": "5bd9383",
+  "dependencies": {
+    "@fontsource-variable/manrope": "5.3.0",
+    "@fontsource/ibm-plex-sans-arabic": "5.3.0",
+    "embla-carousel-react": "8.6.0",
+    "motion": "14.9.0"
+  },
+  "lockEntries": {
+    "node_modules/@fontsource-variable/manrope": "f24a7ce3c8e9066f4254c7e3e361b01f2b808b638c49be8a3a611d0ac822394a",
+    "node_modules/@fontsource/ibm-plex-sans-arabic": "ce499b89081da7e933810f67d14334ff47691400c3a36920c6e3fcebae833bfe",
+    "node_modules/embla-carousel": "54b58daa15e761e158578dd016ff6d759f518a9756bf4aef4d3b039d2c7382fb",
+    "node_modules/embla-carousel-react": "d311a0731c10f36edbb214d721ff4b91f755387f41bc6d0ecf0c60ec48b189ef",
+    "node_modules/embla-carousel-reactive-utils": "9f2bcde59feed6233b914f39dd993b9a3e85063c6f4dc9a59be38f9b7eff6976",
+    "node_modules/framer-motion": "2002c8ec814d974946bf4ad24129d99f08856fefcfa334cc272f1dda26d3d084",
+    "node_modules/motion": "8963bc5f3dd163a7c773ae9db2d8dbca7e1d366b1c7ff1f7fbe5dad8ae4c7364",
+    "node_modules/motion-dom": "72a77164a8a8470ab9ed0fe4e417b6eb01e3c007492d2b19a6ea456e9e43af43",
+    "node_modules/motion-utils": "2e54676af51a05b92e1c6996eafc11692516a7975f7fa6776a99b60d80c14dc4"
+  },
+  "replacedFrontendFiles": [
+    "frontend/index.html",
+    "frontend/src/app/app.tsx",
+    "frontend/src/app/route-effects.tsx",
+    "frontend/src/app/theme-provider.tsx",
+    "frontend/src/components/layout/brand-logo.tsx",
+    "frontend/src/components/layout/theme-toggle.tsx",
+    "frontend/src/components/layout/navbar.tsx",
+    "frontend/src/components/layout/public-layout.tsx",
+    "frontend/src/components/shared/academy-content.tsx",
+    "frontend/src/components/shared/data-story.tsx",
+    "frontend/src/components/shared/page-header.tsx",
+    "frontend/src/components/shared/reveal.tsx",
+    "frontend/src/index.css",
+    "frontend/src/locales/ar.json",
+    "frontend/src/locales/en.json",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/public/home-page.tsx",
+    "frontend/src/pages/public/leaderboard-page.tsx",
+    "frontend/src/styles/academy.css",
+    "frontend/src/styles/public-pages.css",
+    "frontend/src/styles/tokens.css"
+  ]
+}

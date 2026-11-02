@@ -1,0 +1,30 @@
+[
+  {
+    "source": "logo dark(ianalyze).png",
+    "original": "frontend/src/assets/brand/ianalyze-on-light-original.png",
+    "originalSha256": "904e72ba552dba2dc98cbb91dacd7ed00dddc4705d5d1df11813b5019b5cb00e",
+    "display": "frontend/src/assets/brand/ianalyze-on-light.png",
+    "displaySha256": "1a75432e399067949cefdba1b621b3bf5bf009394cae64546acb3c6cdb61b9e1"
+  },
+  {
+    "source": "ianalyze_light_for_dark_bg.png",
+    "original": "frontend/src/assets/brand/ianalyze-on-dark-original.png",
+    "originalSha256": "613f4723128b94aeb31f0dadc7055aeeda0f08f609e38773dc471287809be4e3",
+    "display": "frontend/src/assets/brand/ianalyze-on-dark.png",
+    "displaySha256": "d2b299cc36cc41643b7815c7d34851b4e956487b1f805135e66656db0af98590"
+  },
+  {
+    "source": "logo dark(iteam).png",
+    "original": "frontend/src/assets/brand/iteam-on-light-original.png",
+    "originalSha256": "69794b023681b1948dfe9fd4c2419117c91e53340ed05a0797a2a472dd2cf83d",
+    "display": "frontend/src/assets/brand/iteam-on-light.png",
+    "displaySha256": "705fd2fd59795a0db6110b3754aedab5809a1da0e789feb6ed3606573775d8e7"
+  },
+  {
+    "source": "iteam_light_for_dark_bg.png",
+    "original": "frontend/src/assets/brand/iteam-on-dark-original.png",
+    "originalSha256": "1fbdee8544bf579509c6ec9ffce2a0ca6dd9c8f6667b49b0a7a962bb2a090cc4",
+    "display": "frontend/src/assets/brand/iteam-on-dark.png",
+    "displaySha256": "029c4ae06b6bfa8b085dc3917af876abaa031546236b500911eec87b02e204eb"
+  }
+]

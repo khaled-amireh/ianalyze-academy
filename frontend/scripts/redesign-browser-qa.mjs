@@ -50,6 +50,13 @@ async function evaluate(expression) {
   return result.result.value;
 }
 const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+async function waitFor(expression) {
+  for (let attempt = 0; attempt < 100; attempt++) {
+    if (await evaluate(expression)) return;
+    await pause(30);
+  }
+  throw new Error(`Browser state did not settle: ${expression}`);
+}
 async function settle() {
   await evaluate(
     'Promise.race([document.fonts.ready,new Promise((_,reject)=>setTimeout(()=>reject(new Error("Font loading exceeded 8 seconds")),8000))]).then(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r(true)))))',
@@ -221,7 +228,7 @@ for (const locale of ['ar', 'en'])
           themeApplied:root.dataset.theme===${JSON.stringify(theme)},
           noOverflow:root.scrollWidth<=innerWidth+1,
           overflowing,
-          imagesHaveAlt:[...document.images].every(e=>e.hasAttribute('alt')&&e.alt.trim()),
+          imagesHaveAlt:[...document.images].every(e=>e.hasAttribute('alt')&&(e.alt.trim()||e.getAttribute('aria-hidden')==='true'))&&[...document.querySelectorAll('.theme-logo')].every(e=>e.getAttribute('role')==='img'&&!!e.getAttribute('aria-label')?.trim()),
           noBrokenLoadedImages:[...document.images].every(e=>!e.complete||e.naturalWidth>0),
           noPreviewLinks:![...document.querySelectorAll('a')].some(e=>e.getAttribute('href')?.startsWith('/_preview/')),
           noForms:document.querySelectorAll('form').length===0,
@@ -273,7 +280,7 @@ interactions.preferencesPersist = await evaluate(
   `document.documentElement.lang==='en'&&document.documentElement.dir==='ltr'&&document.documentElement.dataset.theme===${JSON.stringify(savedTheme)}`,
 );
 await evaluate('document.querySelector(".desktop-nav a[href$=eda]").click()');
-await pause(70);
+await waitFor('location.pathname==="/eda"&&document.activeElement.id==="page-title"');
 interactions.routeFocus = await evaluate(
   'location.pathname==="/eda"&&document.activeElement.id==="page-title"',
 );
@@ -303,7 +310,9 @@ interactions.menuEscapeRestoresFocus = await evaluate(
 );
 await key('Enter');
 await evaluate('document.querySelector(".mobile-nav-links a[href$=contact]").click()');
-await pause(70);
+await waitFor(
+  'location.pathname==="/contact"&&document.querySelectorAll("[data-slot=accordion-trigger]").length===9&&document.activeElement.id==="page-title"',
+);
 interactions.mobileNavigation = await evaluate(
   'location.pathname==="/contact"&&!document.querySelector("[role=dialog]")&&document.activeElement.id==="page-title"',
 );
@@ -447,7 +456,7 @@ interactions.carouselLiveRtlSwitch = await evaluate(
   "document.documentElement.dir==='rtl'&&document.querySelector('.carousel-status').textContent==='الوحدة 2 من 6'",
 );
 await evaluate("document.querySelectorAll('[data-slide] a')[1].click()");
-await pause(100);
+await waitFor("location.pathname==='/eda'&&document.activeElement.id==='weekly-modules'");
 interactions.curriculumAnchor = await evaluate(
   "location.pathname==='/eda'&&location.hash==='#weekly-modules'&&document.activeElement.id==='weekly-modules'&&document.querySelector('#weekly-modules').getBoundingClientRect().top>=70",
 );

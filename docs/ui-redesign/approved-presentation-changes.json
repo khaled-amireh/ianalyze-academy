@@ -23,6 +23,7 @@
     "frontend/src/app/route-effects.tsx",
     "frontend/src/app/theme-provider.tsx",
     "frontend/src/components/layout/brand-logo.tsx",
+    "frontend/src/components/layout/theme-toggle.tsx",
     "frontend/src/components/layout/navbar.tsx",
     "frontend/src/components/layout/public-layout.tsx",
     "frontend/src/components/shared/academy-content.tsx",

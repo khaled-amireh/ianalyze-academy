@@ -2,6 +2,8 @@
 
 Work branch: `design/ultimate-ui-ux-redesign`, based on the requested `origin/design/zain-ui-ux-redesign`. Both the original Zain branch and `main` pointed to `5bd9383` at inspection. See the [pre-implementation audit](audit.md).
 
+The subsequent [theme/logo update](theme-brand-update.md) applies the owner's blue light palette, violet/cyan dark palette and four supplied logo variants. Browser screenshots and layout evidence reflect that update. Lighthouse numbers below describe the original redesign build before this palette update.
+
 The public website now uses a compact shared header, a syllabus-led homepage, a touch curriculum carousel, clearer page headings, quieter information panels, original team portraits, and consistent light/dark surfaces. Manrope and IBM Plex Sans Arabic replace the previous font downloads; fonts ship locally with their licenses. Arabic/English switching updates both document direction and the carousel. Saved theme preferences override the initial system-theme fallback.
 
 Motion's mini API handles short, one-time entrances; CSS handles hover/focus feedback; Embla handles touch dragging and explicit navigation. Reduced motion removes the entrances and makes carousel button navigation immediate. All content remains rendered before animation and available to assistive technology.

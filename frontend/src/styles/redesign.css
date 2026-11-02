@@ -34,9 +34,108 @@ h3 {
   gap: 24px;
 }
 .brand-logo {
-  width: 157px;
-  padding: 3px 7px;
-  border-radius: 8px;
+  width: 180px;
+  padding: 0;
+  background: transparent;
+  border-radius: 4px;
+}
+.parent-logo,
+.site-footer .parent-logo {
+  width: 220px;
+  max-width: 100%;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+.theme-logo {
+  display: grid;
+  width: 100%;
+  aspect-ratio: 640 / 213;
+}
+.theme-logo img {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 160ms var(--ease);
+}
+.theme-logo-dark {
+  opacity: 0;
+}
+.dark .theme-logo-light {
+  opacity: 0;
+}
+.dark .theme-logo-dark {
+  opacity: 1;
+}
+.theme-toggle {
+  position: relative;
+  color: var(--primary);
+  background: var(--secondary);
+  border: 1px solid var(--border);
+}
+.theme-toggle .theme-icon {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  transition:
+    transform 180ms var(--ease),
+    opacity 140ms var(--ease);
+}
+.theme-toggle .theme-icon-sun {
+  opacity: 0;
+  transform: rotate(-35deg) scale(0.65);
+}
+.theme-toggle[data-theme-state='dark'] .theme-icon-moon {
+  opacity: 0;
+  transform: rotate(35deg) scale(0.65);
+}
+.theme-toggle[data-theme-state='dark'] .theme-icon-sun {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .theme-changing :where(h1, h2, h3, p, a, span, small, strong, label, bdi) {
+    transition: color 180ms var(--ease);
+  }
+  .theme-changing .academy-button {
+    transition:
+      background-color 180ms var(--ease),
+      color 180ms var(--ease),
+      border-color 180ms var(--ease),
+      box-shadow 180ms var(--ease),
+      transform 180ms var(--ease);
+  }
+  .theme-changing
+    :where(
+      body,
+      .site-header,
+      .site-footer,
+      .learning-preview,
+      .course-level,
+      .curriculum-card,
+      .resource-art,
+      .join-callout,
+      .content-card,
+      .parent-story,
+      .leader-card,
+      .podium-card,
+      .ranking-panel,
+      .registration-notice,
+      .registration-preview,
+      .academy-dialog,
+      .language-switcher,
+      .language-switcher button,
+      .icon-tile,
+      .learning-path li > svg,
+      [data-slot='accordion'],
+      [data-slot='accordion-item']
+    ) {
+    transition:
+      background-color 180ms var(--ease),
+      color 180ms var(--ease),
+      border-color 180ms var(--ease);
+  }
 }
 .header-actions,
 .header-preferences {
@@ -645,7 +744,7 @@ h3 {
   margin-block-start: 32px;
 }
 .site-footer .parent-logo {
-  width: 135px;
+  width: 220px;
 }
 .mobile-dialog .mobile-nav-links a {
   min-height: 46px;
@@ -656,7 +755,7 @@ h3 {
     gap: 16px;
   }
   .brand-logo {
-    width: 157px;
+    width: 180px;
   }
 }
 @media (max-width: 1119px) {
@@ -688,9 +787,12 @@ h3 {
     gap: 10px;
   }
   .brand-logo {
-    width: 140px;
+    width: 158px;
   }
   .header-preferences {
+    display: flex;
+  }
+  .header-preferences .language-switcher {
     display: none;
   }
   .hero {

@@ -557,7 +557,7 @@ export function TeamPageLive() {
       </nav>
       <section id="students" className="content-card">
         <h2>{c.students}</h2>
-        <div className="portal-table">
+        <div className="portal-table" role="region" aria-label={c.students} tabIndex={0}>
           <table>
             <thead>
               <tr>

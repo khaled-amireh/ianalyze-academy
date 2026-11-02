@@ -7,6 +7,9 @@ const root = new URL('../../', import.meta.url);
 export const mergeResolution = JSON.parse(
   readFileSync(new URL('docs/merge-integration/resolution.json', root), 'utf8'),
 );
+export const authIntegration = JSON.parse(
+  readFileSync(new URL('docs/supabase-auth-integration/approved-changes.json', root), 'utf8'),
+);
 const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
 function tree(commit) {
   return new Map(
@@ -23,7 +26,11 @@ function tree(commit) {
 }
 
 export function verifyMergePreservation() {
-  const { functionalCommit, redesignCommit, baseCommit, resolvedFiles } = mergeResolution;
+  const { functionalCommit, redesignCommit, baseCommit } = mergeResolution;
+  assert.equal(git('merge-base', authIntegration.baseCommit, 'HEAD'), authIntegration.baseCommit);
+  const resolvedFiles = { ...mergeResolution.resolvedFiles };
+  for (const [path, resolution] of Object.entries(authIntegration.files))
+    resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };
   assert.equal(git('merge-base', functionalCommit, redesignCommit), baseCommit);
   const base = tree(baseCommit);
   const functional = tree(functionalCommit);

@@ -1,7 +1,17 @@
 import { writeFileSync, readFileSync } from 'node:fs';
 import { createDatabase } from './database-fixture.mjs';
+import { localTestTarget } from './local-test-target.mjs';
 
-const db = await createDatabase();
+const live = process.argv.includes('--local');
+let db;
+if (live) {
+  const { default: postgres } = await import('postgres');
+  const sql = postgres(localTestTarget(process.env.LOCAL_SUPABASE_DB_URL, 'database'), {
+    max: 1,
+    connect_timeout: 5,
+  });
+  db = { query: async (query) => ({ rows: await sql.unsafe(query) }), close: () => sql.end() };
+} else db = await createDatabase();
 try {
   const { rows } = await db.query(`
     select table_name, column_name, data_type, is_nullable, column_default,
@@ -60,7 +70,45 @@ try {
       return `    ${name}: {\n      Row: {\n${fields('Row')}\n      };\n      Insert: {\n${fields('Insert')}\n      };\n      Update: {\n${fields('Update')}\n      };\n      Relationships: ${JSON.stringify(relationships)};\n    };`;
     })
     .join('\n');
-  const output = `// Generated from the migration catalog by npm run db:types. Do not edit.\n// Embedded PostgreSQL catalog; compare with real Supabase CLI types after schema changes.\nexport type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];\nexport type Database = {\n  public: {\n    Tables: {\n${tableTypes}\n    };\n    Views: { [_ in never]: never };\n    Functions: {\n      current_academy_role: { Args: Record<string, never>; Returns: string | null };\n      complete_registration: { Args: { p_consent_version: string }; Returns: undefined };\n      save_grade: { Args: { p_submission_id: string; p_scores: Json; p_feedback: string; p_publish: boolean; p_expected_revision: number }; Returns: string };\n      claim_submission_request: { Args: { p_student_id: string }; Returns: undefined };\n      create_draft_rubric: { Args: { p_activity_id: string; p_criteria: Json }; Returns: string };\n      save_draft_rubric: { Args: { p_rubric_id: string; p_criteria: Json }; Returns: undefined };\n      academy_capabilities: { Args: Record<string, never>; Returns: Json };\n      academy_leaderboard: { Args: Record<string, never>; Returns: Json };\n      request_resubmission: { Args: { p_submission_id: string }; Returns: undefined };\n      reserve_notebook: { Args: { p_student_id: string; p_activity_id: string; p_request_id: string; p_sha256: string; p_bytes: number }; Returns: Json };\n      finalize_notebook: { Args: { p_submission_id: string; p_sha256: string }; Returns: undefined };\n    };\n    Enums: { [_ in never]: never };\n    CompositeTypes: { [_ in never]: never };\n  };\n};\n`;
+  const { rows: functions } = await db.query(`
+    select p.proname as name, pg_get_function_result(p.oid) as result,
+      p.pronargdefaults as defaults,
+      coalesce((select jsonb_agg(jsonb_build_object('name', p.proargnames[a.ordinality],
+        'type', format_type(a.type, null)) order by a.ordinality)
+        from unnest(p.proargtypes) with ordinality a(type, ordinality)), '[]'::jsonb) as arguments
+    from pg_proc p join pg_namespace n on n.oid=p.pronamespace
+    where n.nspname='public' and p.prokind='f'
+      and p.prorettype not in ('trigger'::regtype, 'event_trigger'::regtype)
+    order by p.proname
+  `);
+  const sqlType = (name) => {
+    if (['uuid', 'text', 'character varying'].includes(name)) return 'string';
+    if (['smallint', 'integer', 'bigint', 'numeric', 'real', 'double precision'].includes(name))
+      return 'number';
+    if (name === 'boolean') return 'boolean';
+    if (name === 'json' || name === 'jsonb') return 'Json';
+    if (name === 'void') return 'undefined';
+    throw new Error(`Unsupported RPC catalog type requires review: ${name}`);
+  };
+  if (new Set(functions.map((fn) => fn.name)).size !== functions.length)
+    throw new Error('Overloaded public RPCs require an explicit type review');
+  const functionTypes = functions
+    .map((fn) => {
+      const args = fn.arguments.length
+        ? `{ ${fn.arguments
+            .map((arg, index) => {
+              if (!arg.name) throw new Error(`Named RPC argument required: ${fn.name}`);
+              return `${arg.name}${index >= fn.arguments.length - fn.defaults ? '?' : ''}: ${sqlType(arg.type)}`;
+            })
+            .join('; ')} }`
+        : 'Record<string, never>';
+      // PostgreSQL does not describe scalar function nullability; this role RPC denies
+      // unverified/unknown identities by returning NULL, so retain its conservative type.
+      const result = sqlType(fn.result) + (fn.name === 'current_academy_role' ? ' | null' : '');
+      return `      ${fn.name}: { Args: ${args}; Returns: ${result} };`;
+    })
+    .join('\n');
+  const output = `// Generated from the migration catalog by npm run db:types. Do not edit.\n// PostgreSQL tables, relationships and RPC catalog; verify live local schema with check:database-types:local.\nexport type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];\nexport type Database = {\n  public: {\n    Tables: {\n${tableTypes}\n    };\n    Views: { [_ in never]: never };\n    Functions: {\n${functionTypes}\n    };\n    Enums: { [_ in never]: never };\n    CompositeTypes: { [_ in never]: never };\n  };\n};\n`;
   const { format } = await import('prettier');
   const formatted = await format(output, {
     parser: 'typescript',
@@ -72,7 +120,9 @@ try {
   if (process.argv.includes('--check')) {
     if (readFileSync(path, 'utf8') !== formatted)
       throw new Error('Database types drifted; run npm run db:types');
-    console.log('Database types match migration catalog.');
+    console.log(
+      `Database tables, relationships and RPC types match the ${live ? 'real local Supabase' : 'embedded migration'} catalog.`,
+    );
   } else {
     writeFileSync(path, formatted);
     console.log('Database types generated from local migration catalog.');

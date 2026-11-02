@@ -13,8 +13,8 @@ export function PrivacyPage() {
       {arabic ? (
         <section className="content-card" lang="ar" dir="rtl">
           <p>
-            هذه مسودة إشعار الخصوصية لأكاديمية iAnalyze، إحدى مبادرات iTeam. لا تمثل سياسة معتمدة
-            قبل مراجعة المالك وفتح التسجيل رسميًا.
+            يوضح هذا الإشعار استخدام بيانات الحساب والتسجيل في أكاديمية iAnalyze، إحدى مبادرات
+            iTeam.
           </p>
           <h2>البيانات والغرض منها</h2>
           <p>
@@ -43,22 +43,22 @@ export function PrivacyPage() {
           </p>
           <h2>الاحتفاظ والحقوق</h2>
           <p>
-            لا تُحذف التسليمات المراجعة تلقائيًا. يجب اعتماد فترة الاحتفاظ وإجراءات التصحيح والحذف
-            قبل الإطلاق. لطلب الوصول أو التصحيح أو مناقشة الحذف، تواصل مع الفريق عبر صفحة التواصل.
-            قد يرتبط الحذف بالتزامات الاحتفاظ بسجل التقييم التي يجب توضيحها في النسخة النهائية.
+            تُحفظ بيانات الحساب والتسجيل لإدارة المشاركة والتقييم في الأكاديمية. لطلب الوصول أو
+            التصحيح أو الحذف، تواصل مع الفريق عبر صفحة التواصل. يراجع الفريق الطلب ويشرح أي حاجة
+            للاحتفاظ بسجلات التقييم؛ لا تُحذف التسليمات المراجعة تلقائيًا.
           </p>
           <h2>موافقة التسجيل</h2>
           <p>
-            يُسجل إصدار الموافقة ووقتها في الخادم بعد التحقق من البريد وإكمال الملف. لا يُفتح
-            التسجيل قبل اعتماد هذه المسودة، جهة التواصل، فترة الاحتفاظ، أهلية الأعمار وإجراءات طلبات
-            الخصوصية.
+            يُسجل إصدار الموافقة ووقتها في الخادم بعد تأكيد البريد وإكمال الملف. يحصل الطلاب على
+            صلاحية المشاركة مباشرة بعد اكتمال التسجيل دون انتظار موافقة قائد. يقتصر الاطلاع على
+            أرقام واتساب والبيانات الخاصة على صاحب الحساب والفريق المخول.
           </p>
         </section>
       ) : (
         <section className="content-card" lang="en" dir="ltr">
           <p>
-            This is a draft privacy notice for iAnalyze Academy, an iTeam initiative. It becomes an
-            approved policy only after owner review and an explicit registration launch decision.
+            This notice explains how iAnalyze Academy, an iTeam initiative, uses account and
+            registration information.
           </p>
           <h2>Data and purpose</h2>
           <p>
@@ -89,16 +89,17 @@ export function PrivacyPage() {
           </p>
           <h2>Retention and requests</h2>
           <p>
-            Reviewed submissions are not automatically deleted. The owner must approve retention
-            periods and correction/erasure procedures before launch. Contact the Team through the
-            contact page to request access, corrections or discuss deletion. Any need to retain
-            assessment records must be explained in the final policy.
+            Account and registration records are retained for academy participation and assessment
+            administration. Contact the Team through the contact page to request access, corrections
+            or deletion. The Team reviews the request and explains any need to retain assessment
+            records. Reviewed submissions are not automatically deleted.
           </p>
           <h2>Registration consent</h2>
           <p>
             The server records the consent version and time after email verification and profile
-            completion. Registration stays closed until this draft, the responsible contact,
-            retention period, age eligibility and privacy request procedure are approved.
+            completion. Students receive access immediately after registration, without Leader
+            approval. Private contact details are accessible only to the account holder and
+            authorized Team members.
           </p>
         </section>
       )}

@@ -30,7 +30,16 @@
     "check:redesign": "node scripts/check-redesign.mjs",
     "test:browser:redesign": "node scripts/redesign-browser-qa.mjs",
     "test:browser:theme": "node scripts/theme-brand-browser-qa.mjs",
-    "test:browser:merge": "node scripts/merge-browser-qa.mjs"
+    "test:browser:merge": "node scripts/merge-browser-qa.mjs",
+    "local:prepare": "node scripts/prepare-local-supabase.mjs",
+    "dev:local": "node --env-file=artifacts/supabase-auth-integration/frontend.env node_modules/vite/bin/vite.js",
+    "test:local": "node --env-file=artifacts/supabase-auth-integration/stack.env --test --test-concurrency=1 tests/supabase.integration.test.mjs tests/auth-email.integration.test.mjs tests/delivery.integration.test.mjs",
+    "check:database-types:local": "node --env-file=artifacts/supabase-auth-integration/stack.env scripts/generate-database-types.mjs --local --check",
+    "build:production": "node scripts/build-pages-production.mjs",
+    "check:pages:production": "node scripts/check-pages-artifact.mjs --configured",
+    "release:check": "npm run validate && npm run build:production && npm run check:pages:production",
+    "release:pages": "node scripts/deploy-pages.mjs",
+    "release:edge": "node scripts/deploy-supabase-edge.mjs"
   },
   "dependencies": {
     "@fontsource-variable/manrope": "5.3.0",
@@ -68,10 +77,18 @@
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.0",
     "typescript-eslint": "^8.72.1",
-    "vite": "^8.3.5"
+    "vite": "^8.3.5",
+    "wrangler": "4.156.0"
   },
   "engines": {
     "node": ">=24.0.0",
     "npm": ">=11.0.0"
+  },
+  "overrides": {
+    "minimatch": "11.0.1"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "workerd": true
   }
 }

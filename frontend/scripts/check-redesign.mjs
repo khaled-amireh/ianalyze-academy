@@ -2,7 +2,11 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
-import { mergeResolution, verifyMergePreservation } from './verify-merge-preservation.mjs';
+import {
+  authIntegration,
+  mergeResolution,
+  verifyMergePreservation,
+} from './verify-merge-preservation.mjs';
 const root = new URL('../../', import.meta.url);
 const json = (path) => JSON.parse(readFileSync(new URL(path, root), 'utf8'));
 const hash = (content) => createHash('sha256').update(content).digest('hex');
@@ -25,18 +29,36 @@ const previous = JSON.parse(
   }),
 );
 const current = json('frontend/package-lock.json');
-for (const [path, entry] of Object.entries(previous.packages)) {
-  if (path) assert.deepEqual(current.packages[path], entry, `Existing dependency drift: ${path}`);
+// Preserve the original lock freeze except for individually reviewed release/security deltas.
+for (const path of new Set([
+  ...Object.keys(previous.packages),
+  ...Object.keys(current.packages),
+  ...Object.keys(authIntegration.dependencyChanges ?? {}),
+])) {
+  if (!path) continue;
+  const reviewed = Object.hasOwn(authIntegration.dependencyChanges ?? {}, path)
+    ? authIntegration.dependencyChanges[path]
+    : (approved.lockEntries[path] ??
+      (previous.packages[path] ? hash(JSON.stringify(previous.packages[path])) : undefined));
+  assert.notEqual(reviewed, undefined, `Unreviewed dependency addition: ${path}`);
+  if (reviewed === null)
+    assert.equal(current.packages[path], undefined, `Reviewed dependency removal changed: ${path}`);
+  else
+    assert.equal(
+      hash(JSON.stringify(current.packages[path])),
+      reviewed,
+      `Dependency drift: ${path}`,
+    );
 }
 assert.deepEqual(current.packages[''].dependencies, {
   ...previous.packages[''].dependencies,
   ...approved.dependencies,
 });
-assert.deepEqual(current.packages[''].devDependencies, previous.packages[''].devDependencies);
+assert.deepEqual(
+  current.packages[''].devDependencies,
+  authIntegration.releaseDevDependencies ?? previous.packages[''].devDependencies,
+);
 const added = Object.keys(current.packages).filter((path) => !(path in previous.packages));
-assert.deepEqual(added.sort(), Object.keys(approved.lockEntries).sort());
-for (const path of added)
-  assert.equal(hash(JSON.stringify(current.packages[path])), approved.lockEntries[path]);
 const paths = execFileSync(
   'git',
   ['ls-files', '--cached', '--others', '--exclude-standard', '-z'],
@@ -68,9 +90,10 @@ const changed = execFileSync('git', ['diff', mergeResolution.functionalCommit, '
   .filter(Boolean);
 for (const path of changed)
   assert.ok(
-    !/^(supabase\/|frontend\/src\/(features\/auth\/|lib\/(academy-data|supabase)|types\/database)|frontend\/\.env|\.github\/|.*wrangler)/.test(
-      path,
-    ),
+    authIntegration.files[path] ||
+      !/^(supabase\/|frontend\/src\/(features\/auth\/|lib\/(academy-data|supabase)|types\/database)|frontend\/\.env|\.github\/|.*wrangler)/.test(
+        path,
+      ),
     `Protected integration changed: ${path}`,
   );
 console.log(

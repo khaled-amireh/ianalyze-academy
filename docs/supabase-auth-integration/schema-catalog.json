@@ -1,0 +1,1609 @@
+{
+  "grants": [
+    {
+      "grantee": "authenticated",
+      "table_name": "academy_weeks",
+      "table_schema": "public",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "academy_weeks",
+      "table_schema": "public",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "academy_weeks",
+      "table_schema": "public",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "academy_weeks",
+      "table_schema": "public",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "academy_weeks",
+      "table_schema": "public",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "academy_weeks",
+      "table_schema": "public",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "academy_weeks",
+      "table_schema": "public",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "activities",
+      "table_schema": "public",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "activities",
+      "table_schema": "public",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "activities",
+      "table_schema": "public",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "activities",
+      "table_schema": "public",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "activities",
+      "table_schema": "public",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "activities",
+      "table_schema": "public",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "activities",
+      "table_schema": "public",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "grade_criterion_scores",
+      "table_schema": "public",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "grade_criterion_scores",
+      "table_schema": "public",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "grade_criterion_scores",
+      "table_schema": "public",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "grade_criterion_scores",
+      "table_schema": "public",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "grades",
+      "table_schema": "public",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "grades",
+      "table_schema": "public",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "grades",
+      "table_schema": "public",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "grades",
+      "table_schema": "public",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "profiles",
+      "table_schema": "public",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "profiles",
+      "table_schema": "public",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "profiles",
+      "table_schema": "public",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "profiles",
+      "table_schema": "public",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "rubric_criteria",
+      "table_schema": "public",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "rubric_criteria",
+      "table_schema": "public",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "rubric_criteria",
+      "table_schema": "public",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "rubric_criteria",
+      "table_schema": "public",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "rubric_criteria",
+      "table_schema": "public",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "rubric_criteria",
+      "table_schema": "public",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "rubric_criteria",
+      "table_schema": "public",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "rubrics",
+      "table_schema": "public",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "rubrics",
+      "table_schema": "public",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "rubrics",
+      "table_schema": "public",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "rubrics",
+      "table_schema": "public",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "rubrics",
+      "table_schema": "public",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "rubrics",
+      "table_schema": "public",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "rubrics",
+      "table_schema": "public",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "submissions",
+      "table_schema": "public",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "submissions",
+      "table_schema": "public",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "submissions",
+      "table_schema": "public",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "submissions",
+      "table_schema": "public",
+      "privilege_type": "TRUNCATE"
+    }
+  ],
+  "buckets": [
+    {
+      "id": "student-submissions",
+      "name": "student-submissions",
+      "public": false,
+      "file_size_limit": 262144,
+      "allowed_mime_types": [
+        "application/x-ipynb+json",
+        "application/json"
+      ]
+    },
+    {
+      "id": "team-materials",
+      "name": "team-materials",
+      "public": false,
+      "file_size_limit": 1048576,
+      "allowed_mime_types": [
+        "text/markdown",
+        "application/pdf"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "data_type": "bigint",
+      "table_name": "audit_events",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "table_schema": "app_private"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "audit_events",
+      "column_name": "actor_id",
+      "is_nullable": "YES",
+      "table_schema": "app_private"
+    },
+    {
+      "data_type": "text",
+      "table_name": "audit_events",
+      "column_name": "action",
+      "is_nullable": "NO",
+      "table_schema": "app_private"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "audit_events",
+      "column_name": "target_id",
+      "is_nullable": "NO",
+      "table_schema": "app_private"
+    },
+    {
+      "data_type": "timestamp with time zone",
+      "table_name": "audit_events",
+      "column_name": "created_at",
+      "is_nullable": "NO",
+      "table_schema": "app_private"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "user_roles",
+      "column_name": "user_id",
+      "is_nullable": "NO",
+      "table_schema": "app_private"
+    },
+    {
+      "data_type": "text",
+      "table_name": "user_roles",
+      "column_name": "role",
+      "is_nullable": "NO",
+      "table_schema": "app_private"
+    },
+    {
+      "data_type": "text",
+      "table_name": "user_roles",
+      "column_name": "grant_reason",
+      "is_nullable": "NO",
+      "table_schema": "app_private"
+    },
+    {
+      "data_type": "timestamp with time zone",
+      "table_name": "user_roles",
+      "column_name": "changed_at",
+      "is_nullable": "NO",
+      "table_schema": "app_private"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "academy_weeks",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "smallint",
+      "table_name": "academy_weeks",
+      "column_name": "week_number",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "academy_weeks",
+      "column_name": "kind",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "academy_weeks",
+      "column_name": "title_ar",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "academy_weeks",
+      "column_name": "title_en",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "academy_weeks",
+      "column_name": "description_ar",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "academy_weeks",
+      "column_name": "description_en",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "academy_weeks",
+      "column_name": "status",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "activities",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "activities",
+      "column_name": "week_id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "activities",
+      "column_name": "title_ar",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "activities",
+      "column_name": "title_en",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "activities",
+      "column_name": "instructions_ar",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "activities",
+      "column_name": "instructions_en",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "numeric",
+      "table_name": "activities",
+      "column_name": "max_score",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "timestamp with time zone",
+      "table_name": "activities",
+      "column_name": "due_at",
+      "is_nullable": "YES",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "activities",
+      "column_name": "status",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "grade_criterion_scores",
+      "column_name": "grade_id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "grade_criterion_scores",
+      "column_name": "rubric_id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "grade_criterion_scores",
+      "column_name": "criterion_id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "numeric",
+      "table_name": "grade_criterion_scores",
+      "column_name": "points",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "grades",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "grades",
+      "column_name": "submission_id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "grades",
+      "column_name": "rubric_id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "grades",
+      "column_name": "reviewer_id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "integer",
+      "table_name": "grades",
+      "column_name": "revision",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "grades",
+      "column_name": "feedback",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "grades",
+      "column_name": "status",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "timestamp with time zone",
+      "table_name": "grades",
+      "column_name": "created_at",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "timestamp with time zone",
+      "table_name": "grades",
+      "column_name": "published_at",
+      "is_nullable": "YES",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "profiles",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "profiles",
+      "column_name": "email",
+      "is_nullable": "YES",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "profiles",
+      "column_name": "full_name",
+      "is_nullable": "YES",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "profiles",
+      "column_name": "whatsapp",
+      "is_nullable": "YES",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "profiles",
+      "column_name": "major",
+      "is_nullable": "YES",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "smallint",
+      "table_name": "profiles",
+      "column_name": "academic_year",
+      "is_nullable": "YES",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "profiles",
+      "column_name": "python_experience",
+      "is_nullable": "YES",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "profiles",
+      "column_name": "university_id",
+      "is_nullable": "YES",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "profiles",
+      "column_name": "locale",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "profiles",
+      "column_name": "consent_version",
+      "is_nullable": "YES",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "timestamp with time zone",
+      "table_name": "profiles",
+      "column_name": "consent_at",
+      "is_nullable": "YES",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "timestamp with time zone",
+      "table_name": "profiles",
+      "column_name": "registered_at",
+      "is_nullable": "YES",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "timestamp with time zone",
+      "table_name": "profiles",
+      "column_name": "created_at",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "timestamp with time zone",
+      "table_name": "profiles",
+      "column_name": "updated_at",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "rubric_criteria",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "rubric_criteria",
+      "column_name": "rubric_id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "rubric_criteria",
+      "column_name": "label_ar",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "rubric_criteria",
+      "column_name": "label_en",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "numeric",
+      "table_name": "rubric_criteria",
+      "column_name": "max_points",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "integer",
+      "table_name": "rubric_criteria",
+      "column_name": "sort_order",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "rubrics",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "rubrics",
+      "column_name": "activity_id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "integer",
+      "table_name": "rubrics",
+      "column_name": "version",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "rubrics",
+      "column_name": "status",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "submissions",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "submissions",
+      "column_name": "student_id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "submissions",
+      "column_name": "activity_id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "submissions",
+      "column_name": "rubric_id",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "integer",
+      "table_name": "submissions",
+      "column_name": "attempt",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "submissions",
+      "column_name": "object_path",
+      "is_nullable": "YES",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "submissions",
+      "column_name": "status",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "timestamp with time zone",
+      "table_name": "submissions",
+      "column_name": "submitted_at",
+      "is_nullable": "YES",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "timestamp with time zone",
+      "table_name": "submissions",
+      "column_name": "created_at",
+      "is_nullable": "NO",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "text",
+      "table_name": "submissions",
+      "column_name": "notebook_sha256",
+      "is_nullable": "YES",
+      "table_schema": "public"
+    },
+    {
+      "data_type": "integer",
+      "table_name": "submissions",
+      "column_name": "notebook_bytes",
+      "is_nullable": "YES",
+      "table_schema": "public"
+    }
+  ],
+  "schemas": [
+    "app_private",
+    "auth",
+    "public",
+    "storage",
+    "supabase_migrations"
+  ],
+  "policies": [
+    {
+      "cmd": "ALL",
+      "qual": "app_private.is_team()",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "academy_weeks",
+      "policyname": "week_manage",
+      "schemaname": "public",
+      "with_check": "app_private.is_team()"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(app_private.is_team() OR (app_private.is_registered() AND (status = 'published'::text)))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "academy_weeks",
+      "policyname": "week_read",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "ALL",
+      "qual": "app_private.is_team()",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "activities",
+      "policyname": "activity_manage",
+      "schemaname": "public",
+      "with_check": "app_private.is_team()"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(app_private.is_team() OR (app_private.is_registered() AND (status = 'published'::text) AND (EXISTS ( SELECT 1\n   FROM academy_weeks w\n  WHERE ((w.id = activities.week_id) AND (w.status = 'published'::text))))))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "activities",
+      "policyname": "activity_read",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(EXISTS ( SELECT 1\n   FROM grades g\n  WHERE (g.id = grade_criterion_scores.grade_id)))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "grade_criterion_scores",
+      "policyname": "score_read",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(app_private.is_team() OR ((status = 'published'::text) AND (EXISTS ( SELECT 1\n   FROM submissions s\n  WHERE ((s.id = grades.submission_id) AND (s.student_id = ( SELECT auth.uid() AS uid)) AND app_private.is_registered())))))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "grades",
+      "policyname": "grade_read",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(((id = ( SELECT auth.uid() AS uid)) AND app_private.is_verified()) OR (app_private.is_team() AND (registered_at IS NOT NULL)))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "profiles",
+      "policyname": "profile_read",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "UPDATE",
+      "qual": "((id = ( SELECT auth.uid() AS uid)) AND app_private.is_verified())",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "profiles",
+      "policyname": "profile_update",
+      "schemaname": "public",
+      "with_check": "((id = ( SELECT auth.uid() AS uid)) AND app_private.is_verified())"
+    },
+    {
+      "cmd": "ALL",
+      "qual": "app_private.is_team()",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "rubric_criteria",
+      "policyname": "criterion_manage",
+      "schemaname": "public",
+      "with_check": "app_private.is_team()"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(app_private.is_team() OR (EXISTS ( SELECT 1\n   FROM rubrics r\n  WHERE (r.id = rubric_criteria.rubric_id))))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "rubric_criteria",
+      "policyname": "criterion_read",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "ALL",
+      "qual": "app_private.is_team()",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "rubrics",
+      "policyname": "rubric_manage",
+      "schemaname": "public",
+      "with_check": "app_private.is_team()"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(app_private.is_team() OR ((status = 'published'::text) AND (EXISTS ( SELECT 1\n   FROM activities a\n  WHERE (a.id = rubrics.activity_id)))))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "rubrics",
+      "policyname": "rubric_read",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(app_private.is_team() OR ((student_id = ( SELECT auth.uid() AS uid)) AND app_private.is_registered()))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "submissions",
+      "policyname": "submission_read",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "INSERT",
+      "qual": null,
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "submissions",
+      "policyname": "submission_reserve",
+      "schemaname": "public",
+      "with_check": "(app_private.uploads_enabled() AND app_private.is_registered() AND (student_id = ( SELECT auth.uid() AS uid)) AND (EXISTS ( SELECT 1\n   FROM rubrics r\n  WHERE ((r.id = submissions.rubric_id) AND (r.activity_id = submissions.activity_id) AND (r.status = 'published'::text)))))"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "((bucket_id = 'student-submissions'::text) AND (EXISTS ( SELECT 1\n   FROM submissions s\n  WHERE ((s.object_path = objects.name) AND (app_private.is_team() OR ((s.student_id = ( SELECT auth.uid() AS uid)) AND app_private.is_registered()))))))",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "objects",
+      "policyname": "academy_submission_download",
+      "schemaname": "storage",
+      "with_check": null
+    },
+    {
+      "cmd": "INSERT",
+      "qual": null,
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "objects",
+      "policyname": "academy_submission_upload",
+      "schemaname": "storage",
+      "with_check": "((bucket_id = 'student-submissions'::text) AND app_private.uploads_enabled() AND app_private.is_registered() AND (owner_id = (( SELECT auth.uid() AS uid))::text) AND (EXISTS ( SELECT 1\n   FROM ((submissions s\n     JOIN activities a ON ((a.id = s.activity_id)))\n     JOIN rubrics r ON ((r.id = s.rubric_id)))\n  WHERE ((s.object_path = objects.name) AND (s.student_id = ( SELECT auth.uid() AS uid)) AND (s.status = 'uploading'::text) AND (a.status = 'published'::text) AND (r.status = 'published'::text)))))"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "((bucket_id = 'team-materials'::text) AND app_private.is_team())",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "objects",
+      "policyname": "academy_team_material_read",
+      "schemaname": "storage",
+      "with_check": null
+    }
+  ],
+  "triggers": [
+    {
+      "trigger_name": "roles_audit",
+      "action_statement": "EXECUTE FUNCTION app_private.audit_role()",
+      "event_object_table": "user_roles",
+      "event_object_schema": "app_private"
+    },
+    {
+      "trigger_name": "roles_audit",
+      "action_statement": "EXECUTE FUNCTION app_private.audit_role()",
+      "event_object_table": "user_roles",
+      "event_object_schema": "app_private"
+    },
+    {
+      "trigger_name": "academy_bootstrap",
+      "action_statement": "EXECUTE FUNCTION app_private.bootstrap_user()",
+      "event_object_table": "users",
+      "event_object_schema": "auth"
+    },
+    {
+      "trigger_name": "academy_sync_email",
+      "action_statement": "EXECUTE FUNCTION app_private.sync_email()",
+      "event_object_table": "users",
+      "event_object_schema": "auth"
+    },
+    {
+      "trigger_name": "activity_score_locked",
+      "action_statement": "EXECUTE FUNCTION app_private.lock_activity_score()",
+      "event_object_table": "activities",
+      "event_object_schema": "public"
+    },
+    {
+      "trigger_name": "submission_review_status",
+      "action_statement": "EXECUTE FUNCTION app_private.sync_review_status()",
+      "event_object_table": "grades",
+      "event_object_schema": "public"
+    },
+    {
+      "trigger_name": "profiles_updated",
+      "action_statement": "EXECUTE FUNCTION app_private.touch_updated_at()",
+      "event_object_table": "profiles",
+      "event_object_schema": "public"
+    },
+    {
+      "trigger_name": "criterion_locked",
+      "action_statement": "EXECUTE FUNCTION app_private.lock_criterion()",
+      "event_object_table": "rubric_criteria",
+      "event_object_schema": "public"
+    },
+    {
+      "trigger_name": "criterion_locked",
+      "action_statement": "EXECUTE FUNCTION app_private.lock_criterion()",
+      "event_object_table": "rubric_criteria",
+      "event_object_schema": "public"
+    },
+    {
+      "trigger_name": "criterion_locked",
+      "action_statement": "EXECUTE FUNCTION app_private.lock_criterion()",
+      "event_object_table": "rubric_criteria",
+      "event_object_schema": "public"
+    },
+    {
+      "trigger_name": "rubric_locked",
+      "action_statement": "EXECUTE FUNCTION app_private.lock_rubric()",
+      "event_object_table": "rubrics",
+      "event_object_schema": "public"
+    },
+    {
+      "trigger_name": "rubric_locked",
+      "action_statement": "EXECUTE FUNCTION app_private.lock_rubric()",
+      "event_object_table": "rubrics",
+      "event_object_schema": "public"
+    },
+    {
+      "trigger_name": "rubric_locked",
+      "action_statement": "EXECUTE FUNCTION app_private.lock_rubric()",
+      "event_object_table": "rubrics",
+      "event_object_schema": "public"
+    }
+  ],
+  "functions": [
+    {
+      "name": "academy_leaderboard",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "jsonb",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": true,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "audit_role",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "trigger",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "bootstrap_user",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "trigger",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "claim_submission_request",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "void",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "complete_registration",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "void",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "create_draft_rubric",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "uuid",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "current_role",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "text",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "finalize_notebook",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "void",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "is_registered",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "boolean",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "is_team",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "boolean",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "is_verified",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "boolean",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "leaderboard_enabled",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "boolean",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": true,
+      "security_definer": false,
+      "authenticated_execute": true
+    },
+    {
+      "name": "lock_activity_score",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "trigger",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "lock_criterion",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "trigger",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "lock_rubric",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "trigger",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "request_resubmission",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "void",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "reserve_notebook",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "jsonb",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "save_draft_rubric",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "void",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "save_grade",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "uuid",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": true
+    },
+    {
+      "name": "submission_service_enabled",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "boolean",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": true,
+      "security_definer": false,
+      "authenticated_execute": true
+    },
+    {
+      "name": "sync_email",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "trigger",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "sync_review_status",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "trigger",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": true,
+      "authenticated_execute": false
+    },
+    {
+      "name": "touch_updated_at",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "trigger",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": false,
+      "authenticated_execute": false
+    },
+    {
+      "name": "uploads_enabled",
+      "owner": "postgres",
+      "schema": "app_private",
+      "returns": "boolean",
+      "settings": null,
+      "anon_execute": false,
+      "security_definer": false,
+      "authenticated_execute": true
+    },
+    {
+      "name": "academy_capabilities",
+      "owner": "postgres",
+      "schema": "public",
+      "returns": "jsonb",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": true,
+      "security_definer": false,
+      "authenticated_execute": true
+    },
+    {
+      "name": "academy_leaderboard",
+      "owner": "postgres",
+      "schema": "public",
+      "returns": "jsonb",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": true,
+      "security_definer": false,
+      "authenticated_execute": true
+    },
+    {
+      "name": "claim_submission_request",
+      "owner": "postgres",
+      "schema": "public",
+      "returns": "void",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": false,
+      "authenticated_execute": false
+    },
+    {
+      "name": "complete_registration",
+      "owner": "postgres",
+      "schema": "public",
+      "returns": "void",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": false,
+      "authenticated_execute": true
+    },
+    {
+      "name": "create_draft_rubric",
+      "owner": "postgres",
+      "schema": "public",
+      "returns": "uuid",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": false,
+      "authenticated_execute": true
+    },
+    {
+      "name": "current_academy_role",
+      "owner": "postgres",
+      "schema": "public",
+      "returns": "text",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": false,
+      "authenticated_execute": true
+    },
+    {
+      "name": "finalize_notebook",
+      "owner": "postgres",
+      "schema": "public",
+      "returns": "void",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": false,
+      "authenticated_execute": false
+    },
+    {
+      "name": "request_resubmission",
+      "owner": "postgres",
+      "schema": "public",
+      "returns": "void",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": false,
+      "authenticated_execute": true
+    },
+    {
+      "name": "reserve_notebook",
+      "owner": "postgres",
+      "schema": "public",
+      "returns": "jsonb",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": false,
+      "authenticated_execute": false
+    },
+    {
+      "name": "save_draft_rubric",
+      "owner": "postgres",
+      "schema": "public",
+      "returns": "void",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": false,
+      "authenticated_execute": true
+    },
+    {
+      "name": "save_grade",
+      "owner": "postgres",
+      "schema": "public",
+      "returns": "uuid",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "anon_execute": false,
+      "security_definer": false,
+      "authenticated_execute": true
+    }
+  ],
+  "extensions": [
+    "pg_stat_statements",
+    "pgcrypto",
+    "plpgsql",
+    "supabase_vault",
+    "uuid-ossp"
+  ],
+  "event_triggers": [
+    {
+      "name": "issue_graphql_placeholder",
+      "event": "sql_drop",
+      "enabled": "O",
+      "function": "set_graphql_placeholder"
+    },
+    {
+      "name": "issue_pg_cron_access",
+      "event": "ddl_command_end",
+      "enabled": "O",
+      "function": "grant_pg_cron_access"
+    },
+    {
+      "name": "issue_pg_graphql_access",
+      "event": "ddl_command_end",
+      "enabled": "O",
+      "function": "grant_pg_graphql_access"
+    },
+    {
+      "name": "issue_pg_net_access",
+      "event": "ddl_command_end",
+      "enabled": "O",
+      "function": "grant_pg_net_access"
+    },
+    {
+      "name": "pgrst_ddl_watch",
+      "event": "ddl_command_end",
+      "enabled": "O",
+      "function": "pgrst_ddl_watch"
+    },
+    {
+      "name": "pgrst_drop_watch",
+      "event": "sql_drop",
+      "enabled": "O",
+      "function": "pgrst_drop_watch"
+    }
+  ],
+  "auth_user_count": 0,
+  "postgres_version": "17.11",
+  "application_tables": [
+    {
+      "rls": true,
+      "name": "audit_events",
+      "schema": "app_private"
+    },
+    {
+      "rls": true,
+      "name": "user_roles",
+      "schema": "app_private"
+    },
+    {
+      "rls": true,
+      "name": "academy_weeks",
+      "schema": "public"
+    },
+    {
+      "rls": true,
+      "name": "activities",
+      "schema": "public"
+    },
+    {
+      "rls": true,
+      "name": "grade_criterion_scores",
+      "schema": "public"
+    },
+    {
+      "rls": true,
+      "name": "grades",
+      "schema": "public"
+    },
+    {
+      "rls": true,
+      "name": "profiles",
+      "schema": "public"
+    },
+    {
+      "rls": true,
+      "name": "rubric_criteria",
+      "schema": "public"
+    },
+    {
+      "rls": true,
+      "name": "rubrics",
+      "schema": "public"
+    },
+    {
+      "rls": true,
+      "name": "submissions",
+      "schema": "public"
+    }
+  ],
+  "storage_objects_rls": true,
+  "storage_object_count": 0,
+  "transaction_read_only": "on",
+  "migration_history_table": "supabase_migrations.schema_migrations"
+}

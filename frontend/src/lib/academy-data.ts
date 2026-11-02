@@ -18,11 +18,13 @@ export type ProfilePatch = Partial<
 // RLS remains authoritative; these helpers never accept another student's ID.
 export async function loadOwnProfile(client: AcademyClient) {
   const { data: identity, error } = await client.auth.getUser();
-  if (error || !identity.user) throw new Error('Authentication required');
+  if (error) throw error;
+  if (!identity.user) throw new Error('Authentication required');
   return client.from('profiles').select('*').eq('id', identity.user.id).single();
 }
 export async function updateOwnProfile(client: AcademyClient, patch: ProfilePatch) {
   const { data: identity, error } = await client.auth.getUser();
-  if (error || !identity.user) throw new Error('Authentication required');
+  if (error) throw error;
+  if (!identity.user) throw new Error('Authentication required');
   return client.from('profiles').update(patch).eq('id', identity.user.id).select('*').single();
 }

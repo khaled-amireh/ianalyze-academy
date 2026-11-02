@@ -9,7 +9,7 @@ describe(
   'functional delivery against disposable local Supabase and Edge runtime',
   { skip: process.env.RUN_LOCAL_SUPABASE_TESTS !== '1' },
   () => {
-    let sql, admin, a, b, team, url, key, secret;
+    let sql, admin, a, b, team, organizer, url, key, secret;
     const users = [],
       paths = [],
       ids = {
@@ -78,7 +78,7 @@ describe(
         'Fresh disposable database required',
       );
       admin = createClient(url, secret, options);
-      for (const name of ['a', 'b', 'team']) {
+      for (const name of ['a', 'b', 'team', 'organizer']) {
         const email = `delivery-${name}-${randomUUID()}@example.test`,
           password = `Local-${randomUUID()}-Aa9!`;
         const created = await admin.auth.admin.createUser({ email, password, email_confirm: true });
@@ -110,8 +110,10 @@ describe(
         if (name === 'a') a = user;
         if (name === 'b') b = user;
         if (name === 'team') team = user;
+        if (name === 'organizer') organizer = user;
       }
-      await sql`update app_private.user_roles set role='team',grant_reason='LOCAL TEST ONLY' where user_id=${team.id}`;
+      await sql`update app_private.user_roles set role='team',grant_reason='LOCAL TEST ONLY: Leader' where user_id=${team.id}`;
+      await sql`update app_private.user_roles set role='team',grant_reason='LOCAL TEST ONLY: Organizer' where user_id=${organizer.id}`;
       await sql`insert into public.academy_weeks(id,week_number,kind,title_ar,title_en,status) values(${ids.week},1,'teaching','LOCAL TEST ONLY','LOCAL TEST ONLY','published')`;
       await sql`insert into public.activities(id,week_id,title_ar,title_en,instructions_ar,instructions_en,max_score,status) values(${ids.activity},${ids.week},'LOCAL TEST ONLY','LOCAL TEST ONLY','LOCAL TEST ONLY','LOCAL TEST ONLY',10,'published')`;
       await sql`insert into public.rubrics(id,activity_id,version) values(${ids.rubric},${ids.activity},1)`;
@@ -169,6 +171,37 @@ describe(
           await team.client.rpc('finalize_notebook', {
             p_submission_id: ids.request,
             p_sha256: 'a'.repeat(64),
+          })
+        ).error,
+      );
+    });
+    it('Leader and Organizer share Team permissions; editable metadata never grants them', async () => {
+      for (const member of [team, organizer]) {
+        assert.equal((await member.client.rpc('current_academy_role')).data, 'team');
+        const profiles = await member.client.from('profiles').select('id,whatsapp').eq('id', a.id);
+        assert.equal(profiles.error, null);
+        assert.equal(profiles.data.length, 1);
+        const activity = await member.client
+          .from('activities')
+          .update({ instructions_en: 'LOCAL TEST ONLY' })
+          .eq('id', ids.activity)
+          .select('id');
+        assert.equal(activity.error, null);
+        assert.equal(activity.data.length, 1);
+      }
+      assert.equal(
+        (await a.client.auth.updateUser({ data: { role: 'team', leader: true, organizer: true } }))
+          .error,
+        null,
+      );
+      assert.equal((await a.client.rpc('current_academy_role')).data, 'student');
+      assert.ok(
+        (
+          await a.client.from('activities').insert({
+            week_id: ids.week,
+            title_ar: 'اختبار',
+            title_en: 'LOCAL TEST ONLY',
+            max_score: 10,
           })
         ).error,
       );
@@ -277,14 +310,62 @@ describe(
       assert.equal((await invoke(a, notebook, randomUUID())).status, 409);
     });
     it('publishes real rubric grades and returns pseudonymous deterministic rankings only', async () => {
+      const submission = (
+        await sql`select id from public.submissions where student_id=${a.id} and activity_id=${ids.activity} and attempt=2`
+      )[0];
       const args = {
-        p_submission_id: ids.request,
+        p_submission_id: submission.id,
         p_scores: { [ids.criterion]: 9 },
         p_feedback: 'LOCAL TEST feedback',
         p_expected_revision: 0,
         p_publish: true,
       };
-      assert.equal((await team.client.rpc('save_grade', args)).error, null);
+      assert.equal(
+        (await team.client.rpc('save_grade', { ...args, p_publish: false })).error,
+        null,
+      );
+      assert.equal(
+        (await sql`select status from public.submissions where id=${submission.id}`)[0].status,
+        'under_review',
+      );
+      assert.deepEqual((await a.client.from('grades').select('*')).data, []);
+      assert.equal(
+        (await organizer.client.rpc('save_grade', { ...args, p_expected_revision: 1 })).error,
+        null,
+      );
+      assert.equal(
+        (await sql`select status from public.submissions where id=${submission.id}`)[0].status,
+        'reviewed',
+      );
+      assert.ok(
+        (await a.client.from('submissions').update({ status: 'reviewed' }).eq('id', submission.id))
+          .error,
+      );
+      assert.equal(
+        (await team.client.rpc('save_grade', { ...args, p_publish: false, p_expected_revision: 2 }))
+          .error,
+        null,
+      );
+      assert.equal(
+        (await sql`select status from public.submissions where id=${submission.id}`)[0].status,
+        'reviewed',
+        'An unpublished correction does not hide existing published review',
+      );
+      assert.equal(
+        (
+          await team.client.rpc('save_grade', {
+            ...args,
+            p_submission_id: ids.request,
+            p_publish: false,
+          })
+        ).error,
+        null,
+      );
+      assert.equal(
+        (await sql`select status from public.submissions where id=${ids.request}`)[0].status,
+        'resubmission_required',
+        'Keep the explicit resubmission request',
+      );
       assert.deepEqual((await b.client.from('grades').select('*')).data, []);
       const anonymous = createClient(url, key, options);
       assert.deepEqual((await anonymous.rpc('academy_leaderboard')).data, []);
@@ -303,6 +384,46 @@ describe(
       assert.deepEqual((await anonymous.rpc('academy_leaderboard')).data, first.data);
       assert.equal(JSON.stringify(first.data).includes(a.id), false);
       assert.equal(JSON.stringify(first.data).includes('+962'), false);
+    });
+    it('counts the best attempt once and ranks tied students deterministically without private fields', async () => {
+      const request = randomUUID();
+      assert.equal((await invoke(b, notebook, request)).status, 200);
+      const uploaded = (
+        await sql`select object_path from public.submissions where id=${request}`
+      )[0];
+      paths.push(uploaded.object_path);
+      for (const [id, revision] of [
+        [ids.request, 1],
+        [request, 0],
+      ]) {
+        assert.equal(
+          (
+            await organizer.client.rpc('save_grade', {
+              p_submission_id: id,
+              p_scores: { [ids.criterion]: 9 },
+              p_feedback: 'LOCAL TIE TEST ONLY',
+              p_expected_revision: revision,
+              p_publish: true,
+            })
+          ).error,
+          null,
+        );
+      }
+      const anonymous = createClient(url, key, options);
+      const first = await anonymous.rpc('academy_leaderboard');
+      assert.equal(first.error, null);
+      assert.equal(first.data.length, 2);
+      assert.deepEqual(
+        first.data.map((row) => [row.rank, row.points, row.activities]),
+        [
+          [1, 9, 1],
+          [2, 9, 1],
+        ],
+      );
+      assert.notEqual(first.data[0].alias, first.data[1].alias);
+      for (const row of first.data)
+        assert.deepEqual(Object.keys(row).sort(), ['activities', 'alias', 'points', 'rank']);
+      assert.deepEqual((await anonymous.rpc('academy_leaderboard')).data, first.data);
     });
     it('enforces deadline and request throttling through the database', async () => {
       await sql`update public.activities set due_at=now()-interval '1 hour' where id=${ids.activity}`;

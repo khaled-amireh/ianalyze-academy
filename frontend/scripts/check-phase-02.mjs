@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { authIntegration } from './verify-merge-preservation.mjs';
 const root = new URL('../../', import.meta.url);
 const hash = (path) =>
   createHash('sha256')
@@ -39,25 +40,39 @@ const redesign = JSON.parse(
   readFileSync(new URL('docs/ui-redesign/approved-presentation-changes.json', root), 'utf8'),
 );
 const lockEntries = { ...additions.lockEntries, ...redesign.lockEntries };
-for (const [path, entry] of Object.entries(oldLock.packages)) {
-  if (path)
-    assert.deepEqual(currentLock.packages[path], entry, `Existing dependency changed: ${path}`);
+for (const path of new Set([
+  ...Object.keys(oldLock.packages),
+  ...Object.keys(currentLock.packages),
+  ...Object.keys(authIntegration.dependencyChanges ?? {}),
+])) {
+  if (!path) continue;
+  const expected = Object.hasOwn(authIntegration.dependencyChanges ?? {}, path)
+    ? authIntegration.dependencyChanges[path]
+    : (lockEntries[path] ??
+      (oldLock.packages[path]
+        ? createHash('sha256').update(JSON.stringify(oldLock.packages[path])).digest('hex')
+        : undefined));
+  assert.notEqual(expected, undefined, `Unreviewed dependency addition: ${path}`);
+  if (expected === null)
+    assert.equal(currentLock.packages[path], undefined, `Reviewed removal changed: ${path}`);
+  else
+    assert.equal(
+      createHash('sha256').update(JSON.stringify(currentLock.packages[path])).digest('hex'),
+      expected,
+      `Dependency drift: ${path}`,
+    );
 }
 for (const section of ['dependencies', 'devDependencies']) {
-  assert.deepEqual(currentLock.packages[''][section], {
+  const expected = {
     ...oldLock.packages[''][section],
     ...additions[section],
     ...(section === 'dependencies' ? redesign.dependencies : {}),
-  });
-}
-const added = Object.keys(currentLock.packages).filter((path) => !(path in oldLock.packages));
-assert.deepEqual(added.sort(), Object.keys(lockEntries).sort(), 'Unapproved dependency additions');
-for (const path of added)
-  assert.equal(
-    createHash('sha256').update(JSON.stringify(currentLock.packages[path])).digest('hex'),
-    lockEntries[path],
-    `New dependency drift: ${path}`,
+  };
+  assert.deepEqual(
+    currentLock.packages[''][section],
+    section === 'devDependencies' ? (authIntegration.releaseDevDependencies ?? expected) : expected,
   );
+}
 console.log(
   `Phase 02 integrity verified: ${Object.keys(baseline).length} prior files and portraits unchanged; historical lock and existing dependencies preserved; approved additions verified.`,
 );

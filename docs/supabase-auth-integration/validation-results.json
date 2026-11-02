@@ -1,0 +1,386 @@
+{
+  "date": "2026-11-02",
+  "timezone": "Asia/Amman",
+  "branch": "codex/supabase-auth-integration",
+  "baseCommit": "5baffefee9dbadd876c3fd53033f04fe81d3aa7a",
+  "sourceReviewFiles": 15,
+  "checks": {
+    "typeScript": true,
+    "eslint": true,
+    "formatting": true,
+    "dependencyDeclarationsMatchLockfile": true,
+    "unitTests": {
+      "passed": 25,
+      "failed": 0,
+      "skipped": 0
+    },
+    "embeddedSecurity": {
+      "passed": 21,
+      "childScenarios": 19,
+      "failed": 0,
+      "skipped": 0
+    },
+    "realLocalIntegration": {
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0
+    },
+    "realLocalPgTap": {
+      "passed": 12
+    },
+    "migrationCatalogTypes": true,
+    "liveLocalCatalogTypes": true,
+    "officialCliTypeGeneration": {
+      "passed": true,
+      "tableRowInsertUpdateShapes": 24,
+      "tableRelationships": 8,
+      "rpcContracts": 11,
+      "noArgumentRecordAliasesNormalized": true,
+      "roleNullabilityConservativelyRetained": true,
+      "initialFailureResolved": "Docker API/config access denied in restricted context; generation succeeded in normal owner context"
+    },
+    "authenticatedBrowser": {
+      "signup": true,
+      "emailCallback": true,
+      "emailPkceRecovery": true,
+      "sessionPersistence": true,
+      "sessionRefresh": true,
+      "crossTabLogout": true,
+      "teamLoginDestination": true,
+      "invalidPasswordDenied": true,
+      "invalidEmailLinkDenied": true,
+      "profile": true,
+      "passwordRecoveryCallback": true,
+      "upload": true,
+      "teamGrade": true,
+      "privateOwnFeedback": true,
+      "studentTeamRouteDenied": true,
+      "pseudonymousLeaderboard": true,
+      "responsiveCombinations": 20,
+      "authenticatedLayouts": [
+        {
+          "role": "student",
+          "language": "ar",
+          "theme": "light",
+          "width": 320
+        },
+        {
+          "role": "student",
+          "language": "ar",
+          "theme": "light",
+          "width": 390
+        },
+        {
+          "role": "student",
+          "language": "ar",
+          "theme": "light",
+          "width": 768
+        },
+        {
+          "role": "student",
+          "language": "ar",
+          "theme": "light",
+          "width": 1440
+        },
+        {
+          "role": "student",
+          "language": "ar",
+          "theme": "dark",
+          "width": 320
+        },
+        {
+          "role": "student",
+          "language": "ar",
+          "theme": "dark",
+          "width": 390
+        },
+        {
+          "role": "student",
+          "language": "ar",
+          "theme": "dark",
+          "width": 768
+        },
+        {
+          "role": "student",
+          "language": "ar",
+          "theme": "dark",
+          "width": 1440
+        },
+        {
+          "role": "student",
+          "language": "en",
+          "theme": "light",
+          "width": 320
+        },
+        {
+          "role": "student",
+          "language": "en",
+          "theme": "light",
+          "width": 390
+        },
+        {
+          "role": "student",
+          "language": "en",
+          "theme": "light",
+          "width": 768
+        },
+        {
+          "role": "student",
+          "language": "en",
+          "theme": "light",
+          "width": 1440
+        },
+        {
+          "role": "student",
+          "language": "en",
+          "theme": "dark",
+          "width": 320
+        },
+        {
+          "role": "student",
+          "language": "en",
+          "theme": "dark",
+          "width": 390
+        },
+        {
+          "role": "student",
+          "language": "en",
+          "theme": "dark",
+          "width": 768
+        },
+        {
+          "role": "student",
+          "language": "en",
+          "theme": "dark",
+          "width": 1440
+        },
+        {
+          "role": "team",
+          "language": "ar",
+          "theme": "light",
+          "width": 320
+        },
+        {
+          "role": "team",
+          "language": "ar",
+          "theme": "light",
+          "width": 390
+        },
+        {
+          "role": "team",
+          "language": "ar",
+          "theme": "light",
+          "width": 768
+        },
+        {
+          "role": "team",
+          "language": "ar",
+          "theme": "light",
+          "width": 1440
+        },
+        {
+          "role": "team",
+          "language": "ar",
+          "theme": "dark",
+          "width": 320
+        },
+        {
+          "role": "team",
+          "language": "ar",
+          "theme": "dark",
+          "width": 390
+        },
+        {
+          "role": "team",
+          "language": "ar",
+          "theme": "dark",
+          "width": 768
+        },
+        {
+          "role": "team",
+          "language": "ar",
+          "theme": "dark",
+          "width": 1440
+        },
+        {
+          "role": "team",
+          "language": "en",
+          "theme": "light",
+          "width": 320
+        },
+        {
+          "role": "team",
+          "language": "en",
+          "theme": "light",
+          "width": 390
+        },
+        {
+          "role": "team",
+          "language": "en",
+          "theme": "light",
+          "width": 768
+        },
+        {
+          "role": "team",
+          "language": "en",
+          "theme": "light",
+          "width": 1440
+        },
+        {
+          "role": "team",
+          "language": "en",
+          "theme": "dark",
+          "width": 320
+        },
+        {
+          "role": "team",
+          "language": "en",
+          "theme": "dark",
+          "width": 390
+        },
+        {
+          "role": "team",
+          "language": "en",
+          "theme": "dark",
+          "width": 768
+        },
+        {
+          "role": "team",
+          "language": "en",
+          "theme": "dark",
+          "width": 1440
+        }
+      ],
+      "exceptions": []
+    },
+    "publicBrowser": {
+      "cases": 160,
+      "interactions": 38,
+      "contrastSamples": 2256,
+      "contrastFailures": 0,
+      "exceptions": 0,
+      "failedLocalRequests": 0,
+      "themeAssertions": 17,
+      "themePassed": true,
+      "videoPlaybackVerified": false
+    },
+    "closedPublicBuild": true,
+    "artifactFiles": 46,
+    "inheritedFilesPreserved": 404
+  },
+  "finalLocalState": {
+    "state": {
+      "users": 0,
+      "profiles": 0,
+      "weeks": 0,
+      "submissions": 0,
+      "grades": 0,
+      "objects": 0,
+      "legacy_uploads": false,
+      "submissions_enabled": false,
+      "leaderboard_enabled": false
+    },
+    "history": [
+      {
+        "version": "20261101000100"
+      },
+      {
+        "version": "20261101000200"
+      },
+      {
+        "version": "20261102000100"
+      },
+      {
+        "version": "20261102000200"
+      }
+    ]
+  },
+  "publicDesignModified": false,
+  "originalMigrationsModified": false,
+  "hostedReadOnly": true,
+  "hostedUserFlowsTested": false,
+  "hostedModified": false,
+  "cloudflareModified": false,
+  "pushed": false,
+  "gitVerificationCommand": "git log -1 --format=%H on codex/supabase-auth-integration",
+  "secretScan": {
+    "sourceTextFiles": 217,
+    "findings": 0
+  },
+  "preservationProbes": {
+    "originalMigrationDriftRejected": true,
+    "newApprovedMigrationDriftRejected": true,
+    "originalBytesRestored": true
+  },
+  "hostedExtendedInventoryCompleted": true,
+  "historicalSnapshot": true,
+  "latestReleaseVerification": {
+    "date": "2026-11-02",
+    "unitTests": {
+      "passed": 28,
+      "failed": 0
+    },
+    "embeddedSecurity": {
+      "passed": 21,
+      "failed": 0
+    },
+    "localIntegration": {
+      "passed": 15,
+      "failed": 0
+    },
+    "localPgTap": {
+      "passed": 15,
+      "failed": 0
+    },
+    "restoredPgTap": {
+      "passed": 15,
+      "failed": 0,
+      "negativeControlsRejected": 2
+    },
+    "realLocalBrowser": {
+      "passed": true,
+      "publicAuthLayouts": 20,
+      "authenticatedLayouts": 32,
+      "recoveryTransportFailure": true
+    },
+    "configuredCandidateBrowser": {
+      "passed": 56,
+      "failed": 0,
+      "hostedUserWrites": 0
+    },
+    "linuxCleanInstall": true,
+    "linuxValidate": true,
+    "linuxConfiguredBuild": true,
+    "windowsConfiguredBuild": true,
+    "databaseTypesEmbeddedAndLocal": true,
+    "actionlint": "1.7.12 passed, verified official release checksum",
+    "actionsImmutableCommitsVerified": true,
+    "runtimeDependencyVulnerabilities": 0,
+    "devOnlyLowAdvisories": 3,
+    "hostedUserFlowsTested": false,
+    "actualActionsRunPendingOwnerPush": true
+  },
+  "latestRegistrationVerification": {
+    "date": "2026-11-02",
+    "project": "ocihwiqtgqplwgyhpwjv",
+    "unitTests": 32,
+    "embeddedSecurity": 21,
+    "realLocalIntegration": 15,
+    "publicAuthLayoutCases": 20,
+    "authenticatedLayoutCases": 32,
+    "validationLayoutCases": 24,
+    "validationContrastMinimum": 4.5,
+    "configuredCandidateCases": 56,
+    "configuredBuildFiles": 48,
+    "ownerHostedSignup": true,
+    "ownerEmailReceivedAndConfirmed": true,
+    "ownerPasswordLogin": true,
+    "ownerRealSessionTeamCheck": true,
+    "roleGrantAudited": true,
+    "unverifiedOrEmailOnlyRoleGrant": false,
+    "registrationApprovedForNextPush": true,
+    "publicWebsiteDeployed": false,
+    "hostedRecoveryExchangeTested": false,
+    "teamSyllabusObjects": 0
+  }
+}

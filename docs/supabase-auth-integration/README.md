@@ -1,6 +1,6 @@
-Real local registration and login are implemented and tested. Hosted registration/login have not been tested or activated by this work. The production project was inspected read-only. See [the audit and deployment plan](REPORT.md), [hosted metadata](hosted-readiness.json), [test results](validation-results.json), and [reviewed file manifest](approved-changes.json).
+Production readiness verified on 2026-11-02. The approved database and Auth changes are complete for `ocihwiqtgqplwgyhpwjv`. The frontend and notebook Edge Function have **not** been deployed; the prepared GitHub Actions workflow will release them after the owner's push. Registration, submissions, leaderboard and privacy launch gates remain closed. Hosted registration/login and SMTP delivery have not been tested. See [current report](REPORT.md), [production execution](PRODUCTION-EXECUTION.md), [backup rehearsal](BACKUP-REHEARSAL.md), and [reviewed source/dependency hashes](approved-changes.json).
 
-The working branch is `codex/supabase-auth-integration`, based on main after PR #4 (`5baffef`). No production change, Cloudflare deployment, push or main-branch merge is part of this work.
+The working branch is `codex/supabase-auth-integration`, based on main after PR #4 (`5baffef`). No push, merge or manual frontend/Edge deployment was performed.
 
 **Try registration locally now.** Docker, the project-scoped Supabase services, the local Edge Function and the existing development server were running at completion of testing. Open <http://127.0.0.1:5173/join>. Create a local test account with a password of at least 12 characters. Open captured mail at <http://127.0.0.1:54324> in the same browser profile, follow its confirmation link, and complete the student profile. Then test logout/login and refresh. No external SMTP email is sent by the local stack.
 
@@ -62,4 +62,15 @@ The harness uses only loopback Supabase ports, synthetic `.test` accounts and UU
 
 The ignored test runner uses `RUN_LOCAL_SUPABASE_TESTS`, `LOCAL_SUPABASE_URL`, `LOCAL_SUPABASE_DB_URL`, `LOCAL_SUPABASE_PUBLISHABLE_KEY` and `LOCAL_SUPABASE_SECRET_KEY`. The Edge runtime reads its server-provided `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, plus `ACADEMY_ALLOWED_ORIGINS` and `ACADEMY_UPLOADS_ENABLED`. Do not print, paste into chat, or commit credential values.
 
-**Hosted work requires a separate approval.** The verified production project is `ocihwiqtgqplwgyhpwjv` / `ianalyze-academy` / `iAnalyze Academy`. It has no application schema/migration history or buckets at the audited snapshot. Its Auth Site URL is still localhost:3000 and its redirect list is empty. Do not connect an enabled public frontend until the reviewed migrations, backup, Auth URLs/password settings, privacy review and controlled hosted tests are approved and completed. A configured Cloudflare release is an additional separately approved step.
+**Push-triggered production release.** [.github/workflows/production.yml](../../.github/workflows/production.yml) runs only on pushes to `codex/supabase-auth-integration` or `main`. Both approved source branches publish to the existing Direct Upload Pages project's production label `main`; this does not merge or push Git's main branch. No database migrations run in CI. Source, authorization, preservation and artifact checks must pass before release. CI releases the notebook function with server-side identity verification and uploads closed, verifies anonymous rejection, publishes Pages, then verifies the canonical artifact and callback no-store headers.
+
+GitHub Actions secrets (configured): `CLOUDFLARE_API_TOKEN`, `SUPABASE_ACCESS_TOKEN`. Repository variables (configured): `CLOUDFLARE_ACCOUNT_ID=f25401b10b1826c747cd11739a9410bc`, `CLOUDFLARE_PAGES_PROJECT=ianalyze-academy`, `CLOUDFLARE_PRODUCTION_BRANCH=main`, `SUPABASE_PROJECT_ID=ocihwiqtgqplwgyhpwjv`, `PRODUCTION_ORIGIN=https://ianalyze-academy.pages.dev`, `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`. Credential values are not documented or committed. Server secrets are available only to their deployment steps; builds receive browser-safe variables only. Cloudflare environment dashboard values are not a substitute for Vite build inputs in Direct Upload.
+
+Push from the repository root:
+
+```powershell
+git switch codex/supabase-auth-integration
+git push -u origin codex/supabase-auth-integration
+```
+
+Wait for [GitHub Actions](https://github.com/khaled-amireh/ianalyze-academy/actions) to pass, then open <https://ianalyze-academy.pages.dev>. Check Arabic/English, RTL/LTR, themes, mobile layouts, login/recovery navigation, and Student/Team route denial when signed out. No hosted test user exists. Registration and submissions remain intentionally closed, so a successful release does not authorize launch or permit an end-to-end hosted signup test. Launch activation, approved privacy content and verified Team UUID assignments remain separate owner decisions. The opaque Cloudflare Actions token cannot be read back; CI verifies its access before any release, and insufficient Pages Edit scope will stop deployment.

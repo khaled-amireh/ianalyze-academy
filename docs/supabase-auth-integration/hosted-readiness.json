@@ -76,20 +76,14 @@
         "returns": "event_trigger",
         "schema": "public",
         "security_definer": true,
-        "settings": [
-          "search_path=pg_catalog"
-        ]
+        "settings": ["search_path=pg_catalog"]
       }
     ],
     "grants": [],
     "migration_history_table": null,
     "policies": [],
     "postgres_version": "17.11",
-    "schemas": [
-      "auth",
-      "public",
-      "storage"
-    ],
+    "schemas": ["auth", "public", "storage"],
     "storage_object_count": 0,
     "storage_objects_rls": true,
     "transaction_read_only": "on",
@@ -196,10 +190,7 @@
       "supabase/migrations/20261102000100_functional_delivery.sql",
       "supabase/migrations/20261102000200_assessment_review_status.sql"
     ],
-    "privateBuckets": [
-      "student-submissions",
-      "team-materials"
-    ],
+    "privateBuckets": ["student-submissions", "team-materials"],
     "proposedAuthSettings": {
       "siteUrl": "https://ianalyze-academy.pages.dev",
       "canonicalHostnameRequiresOwnerConfirmation": true,
@@ -214,5 +205,54 @@
     "hostedTestUserRequiresSeparateApproval": true,
     "edgeDeploymentRequiresSeparateApproval": true,
     "cloudflareDeploymentRequiresSeparateApproval": true
+  },
+  "snapshotPurpose": "Historical initial read-only inventory before the approved production migration; latestVerification supersedes its application/Auth/bucket status.",
+  "latestVerification": {
+    "verifiedAt": "2026-11-02T18:06:53.509Z",
+    "project": "ocihwiqtgqplwgyhpwjv",
+    "integrity": {
+      "migrations": 4,
+      "backupFiles": 33
+    },
+    "migrationVersions": [
+      "20261101000100",
+      "20261101000200",
+      "20261102000100",
+      "20261102000200"
+    ],
+    "rls": {
+      "tables": 10,
+      "protected": 10
+    },
+    "buckets": [
+      {
+        "id": "student-submissions",
+        "private": true
+      },
+      {
+        "id": "team-materials",
+        "private": true
+      }
+    ],
+    "gates": {
+      "uploads_enabled": false,
+      "submission_service_enabled": false,
+      "leaderboard_enabled": false
+    },
+    "hostedUsers": 0,
+    "storageObjects": 0,
+    "auth": {
+      "signupEnabled": true,
+      "siteUrl": "https://ianalyze-academy.pages.dev",
+      "redirects": [
+        "https://ianalyze-academy.pages.dev/auth/callback",
+        "https://ianalyze-academy.pages.dev/auth/callback?flow=recovery"
+      ],
+      "minimumPasswordLength": 12,
+      "securePasswordChange": true,
+      "emailConfirmationRequired": true,
+      "smtpAndRateLimitsPreserved": true
+    },
+    "productionWritesPerformed": false
   }
 }

@@ -92,7 +92,8 @@ export function AuthPage({ mode }: { mode: 'login' | 'signup' | 'recover' | 'res
         if (data.session) await auth.refresh();
         else setMessage(c.verificationSent);
       } else if (mode === 'recover') {
-        await academyClient.auth.resetPasswordForEmail(email, { redirectTo });
+        const { error } = await academyClient.auth.resetPasswordForEmail(email, { redirectTo });
+        if (error) throw error;
         // Same response for existing and nonexistent accounts.
         setMessage(c.sent);
       } else {

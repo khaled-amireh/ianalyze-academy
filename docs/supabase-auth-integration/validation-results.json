@@ -312,5 +312,52 @@
     "newApprovedMigrationDriftRejected": true,
     "originalBytesRestored": true
   },
-  "hostedExtendedInventoryCompleted": true
+  "hostedExtendedInventoryCompleted": true,
+  "historicalSnapshot": true,
+  "latestReleaseVerification": {
+    "date": "2026-11-02",
+    "unitTests": {
+      "passed": 28,
+      "failed": 0
+    },
+    "embeddedSecurity": {
+      "passed": 21,
+      "failed": 0
+    },
+    "localIntegration": {
+      "passed": 15,
+      "failed": 0
+    },
+    "localPgTap": {
+      "passed": 15,
+      "failed": 0
+    },
+    "restoredPgTap": {
+      "passed": 15,
+      "failed": 0,
+      "negativeControlsRejected": 2
+    },
+    "realLocalBrowser": {
+      "passed": true,
+      "publicAuthLayouts": 20,
+      "authenticatedLayouts": 32,
+      "recoveryTransportFailure": true
+    },
+    "configuredCandidateBrowser": {
+      "passed": 56,
+      "failed": 0,
+      "hostedUserWrites": 0
+    },
+    "linuxCleanInstall": true,
+    "linuxValidate": true,
+    "linuxConfiguredBuild": true,
+    "windowsConfiguredBuild": true,
+    "databaseTypesEmbeddedAndLocal": true,
+    "actionlint": "1.7.12 passed, verified official release checksum",
+    "actionsImmutableCommitsVerified": true,
+    "runtimeDependencyVulnerabilities": 0,
+    "devOnlyLowAdvisories": 3,
+    "hostedUserFlowsTested": false,
+    "actualActionsRunPendingOwnerPush": true
+  }
 }

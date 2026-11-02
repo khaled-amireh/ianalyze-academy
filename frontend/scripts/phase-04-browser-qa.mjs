@@ -262,6 +262,7 @@ try {
   await send('Page.enable');
   await send('Runtime.enable');
   await send('DOM.enable');
+  await send('Network.enable');
   await navigate('/');
   await evaluate(
     "localStorage.setItem('ianalyze.language','en');localStorage.setItem('ianalyze.theme','light')",
@@ -472,6 +473,20 @@ try {
     'login after captured-email recovery',
   );
   await logout();
+  // A transport failure must not be reported as a successfully requested recovery email.
+  await navigate('/auth/recover');
+  await send('Network.setBlockedURLs', { urls: [api + '/auth/v1/recover*'] });
+  try {
+    await fill('input[name=email]', email);
+    await evaluate("document.querySelector('form').requestSubmit()");
+    await wait(
+      "document.body.innerText.includes('The request could not be completed')",
+      'recovery transport failure shown to the user',
+    );
+    assert.equal(await evaluate("document.body.innerText.includes('If eligible')"), false);
+  } finally {
+    await send('Network.setBlockedURLs', { urls: [] });
+  }
   await navigate('/auth/callback?token_hash=LOCAL_INVALID_EXPIRED_TEST&type=signup');
   await wait(
     'Boolean(document.querySelector(\'main a[href="/login"]\'))',
@@ -524,6 +539,7 @@ try {
         invalidEmailLinkDenied: true,
         profile: true,
         passwordRecoveryCallback: true,
+        recoveryTransportFailure: true,
         upload: true,
         teamGrade: true,
         privateOwnFeedback: true,

@@ -2,12 +2,12 @@
   "baseCommit": "5baffefee9dbadd876c3fd53033f04fe81d3aa7a",
   "files": {
     "frontend/package.json": {
-      "reason": "Add reproducible local preparation, browser-safe local dev and serial real-service test commands; preserve all existing commands/dependencies.",
-      "sha256": "7aa9bd2e3cd3f7e2e0a2aecf10ee769a7635a2af89b386b628b7248c37289c09"
+      "reason": "Preserve existing UI packages, pin release tooling and security overrides; add guarded production build and CI-only release commands.",
+      "sha256": "77f96589bfdd47a9b7475087e829c3986a3f543a629900847c06eeceee4ee569"
     },
     "frontend/scripts/phase-04-browser-qa.mjs": {
-      "reason": "Extend real-service browser tests for role landing, persistence/refresh, cross-tab logout and captured-email PKCE recovery; retain existing flows.",
-      "sha256": "a9e0149d148004ca662ecca5511693753b50b69954cc70c2d4c0b35a17a06085"
+      "reason": "Retain real local Auth and dashboard coverage; add recovery transport-failure regression without hosted test accounts.",
+      "sha256": "bc27ba394d951a21f2bf9deff8e74835c21ef6d3cc6f4fd036c340f251766335"
     },
     "frontend/scripts/prepare-local-supabase.mjs": {
       "reason": "Prepare isolated ignored local test environments without printing credentials or touching existing env files.",
@@ -19,12 +19,12 @@
       "sha256": "d80ff56f9413a123a8949289de178c301bdd378cc18bdfd54954bc6a0495d17a"
     },
     "frontend/scripts/check-redesign.mjs": {
-      "reason": "Retain protected backend and design checks while verifying explicit hash-pinned integration files.",
-      "sha256": "41897bb4cd23c441448fc3037568a5ad289b4d9bfec594aac77202e35d60e41b"
+      "reason": "Retain all design/backend freezes; pin every reviewed CI/security lockfile delta individually while rejecting any unreviewed dependency drift.",
+      "sha256": "4f5cf59d23f7293d42cfa3253697847f40b69de7893ac8887da108593323be88"
     },
     "frontend/src/features/portal/auth-pages.tsx": {
-      "reason": "Handle signup session/no-session responses; show verification guidance and land verified roles on their respective dashboards.",
-      "sha256": "ca824e0a7809b952171ed2561607398c6b45254c2f8b3d6ee183ae0b82dc7927"
+      "reason": "Preserve signup verification and role landing; show the existing localized error when password-recovery transport/API requests fail.",
+      "sha256": "ddeb1ecc1d062c93d7e95581b19115506df5eda9f44c40729937a6befe3781e3"
     },
     "frontend/src/features/portal/copy.ts": {
       "reason": "Add matching English/Arabic signup verification guidance only.",
@@ -63,6 +63,163 @@
     "frontend/src/features/portal/team-page.tsx": {
       "reason": "Make the existing private student-table scroll region keyboard accessible and label it with existing localized copy.",
       "sha256": "98b037c4f46f2cd11e06e3fb50b8d0cce47bed2995aacce26c66ddc319e06c66"
+    },
+    "frontend/package-lock.json": {
+      "reason": "Lock reproducible release tooling and minimatch security patch; preserve the required shadcn stylesheet package.",
+      "sha256": "25998664502b922faea0dad3eb4da66aefadfd16fcb70b53502e9abb67e89261"
+    },
+    "frontend/scripts/check-pages-artifact.mjs": {
+      "reason": "Keep closed-public artifact checks and add a strict configured-production mode allowing only the reviewed browser-safe project configuration.",
+      "sha256": "dd5fed00c6a5aaa6eda88409c0aed723dc26c6d5a29bdd0fb6c66e3aeeac25fb"
+    },
+    "supabase/tests/database/boundaries.test.sql": {
+      "reason": "Allow only the exact verified managed RLS event helper; reject arbitrary or altered public definers; verify invoker RPC and service/trigger authorization.",
+      "sha256": "ac80cfd594edc1ed9fe0eb4e5d0d9a6586817a7217e32cb9572a5b5db1fd4c65"
+    },
+    "frontend/scripts/build-pages-production.mjs": {
+      "reason": "Build the exact hosted project with browser-safe inputs and all launch gates closed; exclude local environment files.",
+      "sha256": "8e57cb000f0bf0607aee95ad78065dd3a523c07992d15a723baa6fe3a3bc7f40",
+      "added": true
+    },
+    "frontend/scripts/release-target.mjs": {
+      "reason": "Fail closed on wrong repository, push event, branch, commit, account, project or production alias.",
+      "sha256": "68a3e5bb9871e2c691c7d75b49eb5c094c9c1b74aef08ecadcff93a9692ba8f9",
+      "added": true
+    },
+    "frontend/scripts/deploy-pages.mjs": {
+      "reason": "Verify the existing Direct Upload target; permit deployment only in reviewed push CI and verify the production artifact and callback headers.",
+      "sha256": "7483d65be6b74d8a3b024597439000be09145da8c613cf7e267c4d9de26b558c",
+      "added": true
+    },
+    "frontend/scripts/deploy-supabase-edge.mjs": {
+      "reason": "Deploy the authenticated notebook handler only on reviewed CI pushes; retain closed upload gates and require unauthorized-request rejection.",
+      "sha256": "017f9a3ada89186202a3876faddc49e20e1cb44ff07974f8b967a3bb474f5ba8",
+      "added": true
+    },
+    "frontend/tests/release-target.test.ts": {
+      "reason": "Test rejection of manual, fork, PR, wrong-branch and incorrect deployment targets.",
+      "sha256": "9713c2430ed541bbcd4dda80ccd59fac5e37c4146381faa52f1fa041f2995ed6",
+      "added": true
+    },
+    ".github/workflows/production.yml": {
+      "reason": "Validate and publish the exact pushed feature/main commit to the existing production Pages alias; isolate secrets to deployment steps and never run migrations.",
+      "sha256": "520082f62be8fdb50e2f79cbc6540248ebcadee99f01d1312de7d253391d8f80",
+      "added": true
+    },
+    "frontend/scripts/check-phase-02.mjs": {
+      "reason": "Preserve historical lock/source checks while accepting only individually hash-pinned CI and security dependency changes.",
+      "sha256": "2fb6d24cbc926e0438b800155406cc8380f590aa2ee612c8fdce9e142fc5e56f"
     }
+  },
+  "dependencyChanges": {
+    "node_modules/conf/node_modules/semver": "2c3c07b9b0e8690b62aa1833d9ac2e4332b70c461903ec2d3ad9ea33e62d8874",
+    "node_modules/minimatch": "2dcca7bb99691bf4c7fd95e98bcd4f2953bcb8295776fbe0bbaf13d3da99ef0a",
+    "node_modules/@cloudflare/kv-asset-handler": "1f29a11911659710ccebc95a901d2ec67cf354abe76dab269b6bb580d8a5410f",
+    "node_modules/@cloudflare/unenv-preset": "7bf29c6347d7edf607c079f4412ad213e6685edde0034f8b8b75643d6fa7958b",
+    "node_modules/@cloudflare/workerd-darwin-64": "ebaf030dd0d2d26715e8b605825e2add97ad2360b5025bcd4745ceba73485842",
+    "node_modules/@cloudflare/workerd-darwin-arm64": "bced05e2119d7e6c42fe9d0a1c55a16f2c1ee2fbbfa9711cc18589fe48e4faf6",
+    "node_modules/@cloudflare/workerd-linux-64": "1c2a2f322c7cf0d4bb8b3521eecfbb66a52576c1a59791a9a0d5e53a1db0ad80",
+    "node_modules/@cloudflare/workerd-linux-arm64": "c09c5bf946c34a018f26e944ec50d6be95d1328d8ca1face42b7f4760b953525",
+    "node_modules/@cloudflare/workerd-windows-64": "7b98dbc5567c40308e0a38e380c586a80b55fc41288920681ed3f609109821cb",
+    "node_modules/@cspotcode/source-map-support": "4cfdbb0fcebdb758800ee94b3c15c2ec458a5580c18048acf749f0e507849858",
+    "node_modules/@cspotcode/source-map-support/node_modules/@jridgewell/trace-mapping": "2bfd47e9cdcf194ab1bfbca1595ea7da7d6c9ab3c087cff47991de8c5ded29db",
+    "node_modules/@emnapi/runtime": "f122fb8af4b87a52c9e9fa2ddf9c2db3b4b3cb34dc4f8b06a340c75a294c4d11",
+    "node_modules/@esbuild/aix-ppc64": "a0d2e645255cfea0d7b0924a8ccafc4416c8d0f1cbc8f769390ab52f67d5a223",
+    "node_modules/@esbuild/android-arm": "c4ca431f292472a9d9b07a89946250f3f11df86f37112569f2b03da2884af6d2",
+    "node_modules/@esbuild/android-arm64": "a3db7b49d43013913914fd8aa000cb223317e5190b5383697848074029ae825f",
+    "node_modules/@esbuild/android-x64": "a90acf9a4875ea1decb726ae49a19e9db8446399063ad26420783b530ebf7a79",
+    "node_modules/@esbuild/darwin-arm64": "e94875429353fb55f0511bf37b2c085aa5b195dcfc461a42a895ac7b88cab91d",
+    "node_modules/@esbuild/darwin-x64": "057c77af14e348b80ac2c866e1c43c23f78feeeeea3e743be57865f3cd1e69b5",
+    "node_modules/@esbuild/freebsd-arm64": "cb7db2c099324fc54edba267ea946b9b9b4504d012f6450ee7b0b3ccd2274ebf",
+    "node_modules/@esbuild/freebsd-x64": "f6429231d801135af4b13c243c9a5801c7fef885d7c13038b54d67cacaa986ae",
+    "node_modules/@esbuild/linux-arm": "2aecba4029dfb4196428c6b8aa58b3102617ac0b03f64a34f420092d5737d84a",
+    "node_modules/@esbuild/linux-arm64": "f7faead7fbe78f25f983ea6b7a15273aac130713817eede3c492da32036bb019",
+    "node_modules/@esbuild/linux-ia32": "0f0c2231cf7e89909e22c01b54427f693a0607b94f11e77c7916a18e5d30a372",
+    "node_modules/@esbuild/linux-loong64": "90d6fd171d72143c27dd954fa24942930bf4353acbb96b7e8929253e3bb6b7e7",
+    "node_modules/@esbuild/linux-mips64el": "613ef7ab796e812ec7abdf85d03e39f00a4ee8c2fa44e60c655d639f26db39ff",
+    "node_modules/@esbuild/linux-ppc64": "968bad9513e6861d5492c82728964e458d65fa4f2bc29d32555810c41060e5f9",
+    "node_modules/@esbuild/linux-riscv64": "56d45fc0a3acf2066a45d34c2ee21e13ee843b65a746b484d37a8ebb9a0bd7c4",
+    "node_modules/@esbuild/linux-s390x": "e7d71ecda4b022e7e3ab6ac8ab2e92666c7fc827af7d1d2a04561278d145c0ee",
+    "node_modules/@esbuild/linux-x64": "b7aa11047349bd87b4b1b783ba188685b79caba940d4aa65b2cd59f435ac77b6",
+    "node_modules/@esbuild/netbsd-arm64": "c86c8bb7e8ad32e73d96d5397f4182aeb2ec9ea1775f12d516dbad9aa9f45f00",
+    "node_modules/@esbuild/netbsd-x64": "47ea59265bc55186e262acb4c98cd4f9e1990ade5ad3b36092e5d0b5b5f4fbc5",
+    "node_modules/@esbuild/openbsd-arm64": "f1a9b225f5dad7d12cf2d4a4860699fc222067132df10db200e865194091e43f",
+    "node_modules/@esbuild/openbsd-x64": "3f89e279e3325ba4f87033675a66209b73397d41723573d3b74a3dfe91a173c7",
+    "node_modules/@esbuild/openharmony-arm64": "a736ace5acbbcbb355179a3f446df8981344b8663398306bb86c6f5461009b4f",
+    "node_modules/@esbuild/sunos-x64": "c1587ab0eda1e12980c7b9ef6c903ff4e2d9051f3816b7e6cacb245ff3d301be",
+    "node_modules/@esbuild/win32-arm64": "e2f11455e0de14be219557beaf98b348fa8bad70d632ae0d12a0052f09b4c4c1",
+    "node_modules/@esbuild/win32-ia32": "94bca11bf4a3de5d375d517d42d2a500b200f47c6211fa7b9e579242b84e3a17",
+    "node_modules/@esbuild/win32-x64": "3e5662028b560c881551726ae5f2698319da5cfa19129339799e8ee67bbcf2f8",
+    "node_modules/@img/colour": "5fb35cac6cf9712b1612121e29fe1bb36c20498c7caa3f468540c26dd4dc3f11",
+    "node_modules/@img/sharp-darwin-arm64": "f1f98f9c4fa12783fcb337472e5c641ec6a3273afbb6935efa3772780ab9dbc4",
+    "node_modules/@img/sharp-darwin-x64": "a5a5a704107301f5da83401bd785631bdc29b8c62866d64386d3d3d046dc11db",
+    "node_modules/@img/sharp-freebsd-wasm32": "1362ed177040ba2663d42864af266bb5b1d61c6bb42f95a50da2eb0a680ff4fb",
+    "node_modules/@img/sharp-libvips-darwin-arm64": "37908c25e5d12c569e4300e9d66befba44cf8692afc00eb2e725f5fb9b1b9a51",
+    "node_modules/@img/sharp-libvips-darwin-x64": "59d233c9cbd5a63a25b2ff882a3038c2c0a977880089f80ae0021cbba3aa2ae2",
+    "node_modules/@img/sharp-libvips-linux-arm": "5d97b1572625c445b8de5610314d634a2235a9af7b5194eeceb0ee26972579bf",
+    "node_modules/@img/sharp-libvips-linux-arm64": "a9be9682f9cf7f1ade0251a022f022580f8893bffa674eaf3395acedc669a409",
+    "node_modules/@img/sharp-libvips-linux-ppc64": "5cb23fabf245da257d16f4bbf23edb10d1f3ac94818da47c7cb375614fc8370b",
+    "node_modules/@img/sharp-libvips-linux-riscv64": "b4f858f5ff14031a7b919d91f400d7965fea0263784df1436ff5ec174cb3fbbe",
+    "node_modules/@img/sharp-libvips-linux-s390x": "4cc1fa14f5991fd823f8fcd6982ac2b747d7246c7112d94c05ec333aa1c9a104",
+    "node_modules/@img/sharp-libvips-linux-x64": "d789eaa30e9be537fe22d2eb75d98c466d0473302b519a893f1588a05bb88469",
+    "node_modules/@img/sharp-libvips-linuxmusl-arm64": "bc64305a97d6ae13a82573e27613c1d8a7b77bf0b50cac1a4de0a817eb06f7ed",
+    "node_modules/@img/sharp-libvips-linuxmusl-x64": "a02d1a6fdf368b86c4e825254add1d33c0dbc350d996e181ee512cbc5d22edb7",
+    "node_modules/@img/sharp-linux-arm": "a46eaacd1a6e7fdc93dd0aeddbca6deb80f513d6447e3b23a9f97eccdc943d30",
+    "node_modules/@img/sharp-linux-arm64": "4ab5c5c46c4b2966b485b354ba6a1d1e69aa3c4dbf2d42ffafb9007c02a1784c",
+    "node_modules/@img/sharp-linux-ppc64": "4575c09b7872968f1a5d5e3bb79d2e1c36e4fe2659b49653410ebcc37baa528f",
+    "node_modules/@img/sharp-linux-riscv64": "01dc33b2bc775d18c6b3bcde8fd3e3fe986ac5f88046035261cb3e494fae7840",
+    "node_modules/@img/sharp-linux-s390x": "44daaf167884c0b25044ce935aef5cc17f02de445dd2dfe4134f989e831020e3",
+    "node_modules/@img/sharp-linux-x64": "3b8d8288dab57e02d3ef676e006551e2d0ba98452fdddfd4578475311432b54b",
+    "node_modules/@img/sharp-linuxmusl-arm64": "c5726a1600beb354deea83638512a9e2bca9762dd210435b4197728994bab8d8",
+    "node_modules/@img/sharp-linuxmusl-x64": "620291b9322c9e656731d24ab2c29fc782a40bca5377fac07dee36529a4a7747",
+    "node_modules/@img/sharp-wasm32": "ca908ffdbed7c3ffb1285deb326f4a92d47f91f46a06897198eaa8927d9dd666",
+    "node_modules/@img/sharp-webcontainers-wasm32": "e0cb6e705a905dfe4e6b1afe39bd0f9a866261b1f4a24867be5109d399f1b076",
+    "node_modules/@img/sharp-win32-arm64": "670ab98a36eb388844d7ad1875ea64952e5e7c9b6aed65143a4ca842680ad9f1",
+    "node_modules/@img/sharp-win32-ia32": "befc02f04f4a8e4ae4935ed8154a6749ba1e488c0d7a0be245238a3d87ec5d90",
+    "node_modules/@img/sharp-win32-x64": "fcf07c0ab57aea7fcc936c35213982d7769d0ce79e262072b941732e58411c97",
+    "node_modules/@isaacs/nonrecursive-glob-match": "6dc9b8a3d7a184e8cc315393588593377eff0ec8bb574192f6291200eecbfe2e",
+    "node_modules/@poppinss/colors": "63caa5b1f090d793675f38e0f8a2d9eeb9dcbc07e5decca3f68c8e58709e03c9",
+    "node_modules/@poppinss/dumper": "e0ce748199c71872c9afeb70622a3653893ff92ef02c9d7407aac028d9cae3ff",
+    "node_modules/@poppinss/exception": "e6b6b8f678a5c67f6f615968cf266289afe50584f91e38c861b28f60139b6401",
+    "node_modules/@sindresorhus/is": "dd8df1fc510c3f15b60c7f2c6c30d32053643de5ff41f368ccacbef36abbc490",
+    "node_modules/@speed-highlight/core": "dc992a123924ebb886c43a06227ef69dd7715a09d197c075e9775e75a53467d0",
+    "node_modules/blake3-wasm": "414c503a508eec016274c2ad352d82e4fd27555459cbdca0ab72b476b09940b0",
+    "node_modules/cookie": "529a9fde49066dd1ca7c40f8f73dd875e3d774cc66badc5e0b7248b0a78aea80",
+    "node_modules/error-stack-parser-es": "5e84d87cf0a177e562e0db6b0a47e5b3e36fec06590599db84a3ee5b6a864323",
+    "node_modules/esbuild": "47ff421ef958f71b3a7124a198662bee35d1c6ab7d8984624717f68d66ec2c83",
+    "node_modules/miniflare": "5f44f04c01bbe2290725c34cd8dd4eaa12fdfd1fd18568a486e9faa68f84a477",
+    "node_modules/path-to-regexp": "584a99fc56176ccaee69e6f0ade4841799a28187ab2fe36f5bc3f868fc03b10e",
+    "node_modules/pathe": "594f94cd8303a452cada801e1119a3278277df05ccbe5dc2b15c8ace8f073351",
+    "node_modules/sharp": "a0680c5e60913afbcc81510e465f5b4f8d4023069e54840008c0f31ea20a61d2",
+    "node_modules/sharp/node_modules/semver": "2c3c07b9b0e8690b62aa1833d9ac2e4332b70c461903ec2d3ad9ea33e62d8874",
+    "node_modules/supports-color": "06e5a936dc49ac5f48cebfba5ed5e5e0e5c54e6229496b0b190c535ec932b940",
+    "node_modules/unenv": "c0e788600e84bb2a1fd2ac04fb00d7c27966cd99d7094e184cc0c2c614e1da01",
+    "node_modules/workerd": "a379490eff769564f54f2b499f908b9c872849c45cb8e07d3ec4ea15707a0984",
+    "node_modules/wrangler": "d08e0299534962557e42af9372bc329c2a3fb765bc592dcb27828c9e1f641170",
+    "node_modules/ws": "ae4c75b74df922947db8a26eb391d8d4b83113a121e9ec80682996af3656d974",
+    "node_modules/youch": "9932416ad420636a26fd1cc25c8a3cda67decf3845c151bb08cb1da7503bfb55",
+    "node_modules/youch-core": "d0a1015137cfc6206344e0349f8bd3ea6229fd5b648b36a26072d7cbc09d0130"
+  },
+  "releaseDevDependencies": {
+    "@electric-sql/pglite": "0.5.14",
+    "@eslint/js": "^10.0.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "eslint": "^10.14.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.13.0",
+    "postgres": "4.0.0",
+    "prettier": "^3.9.10",
+    "shadcn": "^4.23.0",
+    "supabase": "2.122.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.0",
+    "typescript-eslint": "^8.72.1",
+    "vite": "^8.3.5",
+    "wrangler": "4.156.0"
   }
 }

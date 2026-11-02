@@ -9,6 +9,7 @@ import { BrandLogo } from './brand-logo';
 import { LanguageSwitcher } from './language-switcher';
 import { ThemeToggle } from './theme-toggle';
 import { MobileNavigation } from './mobile-navigation';
+import { AccountLink } from '@/features/portal/auth-pages';
 
 export function Navbar() {
   const { t } = useTranslation();
@@ -20,6 +21,7 @@ export function Navbar() {
             <MixedText>{t('brand.name')}</MixedText>
           </span>
           <div className="utility-actions">
+            <AccountLink />
             <LanguageSwitcher />
             <ThemeToggle />
           </div>

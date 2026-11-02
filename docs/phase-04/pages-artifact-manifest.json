@@ -1,0 +1,92 @@
+[
+  {
+    "path": "assets/Cairo-gF84A2Tc.ttf",
+    "bytes": 599548,
+    "sha256": "667c987182391c91f4e57a2f455b1794fb5e3ee6ca4ef3383e86bb690fa9c964"
+  },
+  {
+    "path": "assets/copy-D0bd-zny.js",
+    "bytes": 308822,
+    "sha256": "aa03a111f26812a2c3f254e7816508f4c37a789b700aa2c0242a80dc76a0c627"
+  },
+  {
+    "path": "assets/data-BDphKC4y.js",
+    "bytes": 2638,
+    "sha256": "2a9c2c110b015c3ec144803e5d17307dac05d4f9b5945480142be4eb940877e4"
+  },
+  {
+    "path": "assets/ianalyze-logo-D3Fy89Ya.png",
+    "bytes": 716332,
+    "sha256": "f23e1133a31fc97c76d98a2c8bd95e1f25074d7e2cfb8bae2c469e1e8447666a"
+  },
+  {
+    "path": "assets/index-CrWvkUcQ.js",
+    "bytes": 405390,
+    "sha256": "14db29426fedaa6eaf33ca2aa8e3f2483afdbaf6ad57519bc46e37e0c0607294"
+  },
+  {
+    "path": "assets/index-DHiCXE81.css",
+    "bytes": 66955,
+    "sha256": "0b334d5a49cfeffcaf118d5740f7aa0afb59e1133b94f14162f8f45ca432edf4"
+  },
+  {
+    "path": "assets/Inter-VF2RPR_K.ttf",
+    "bytes": 876576,
+    "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031"
+  },
+  {
+    "path": "assets/iteam-logo-_Xu9_kEx.png",
+    "bytes": 813886,
+    "sha256": "851feca56162a94b055ea9dff4b443ccf9875b96cf643658aa8dd15f9e3bbc96"
+  },
+  {
+    "path": "assets/khaled-amireh-B7V55DRd.webp",
+    "bytes": 83262,
+    "sha256": "30ee5f75ce952c8c8084d76ce0c25e4d8161e1e1e5040ad339a6c9e1041af54b"
+  },
+  {
+    "path": "assets/leaderboard-BqorQhiE.js",
+    "bytes": 1015,
+    "sha256": "cfed0b89743a7e0b8533628ec1d57ef74a40a52f286d87277fd9c5209e7a8f34"
+  },
+  {
+    "path": "assets/rolldown-runtime-WkwZ5CU-.js",
+    "bytes": 599,
+    "sha256": "2629f2ad3cb75a57d98de697127f5af7d777ef572bbcdfa6e3ce8f438cd4527e"
+  },
+  {
+    "path": "assets/student-page-Wu5I_qAU.js",
+    "bytes": 6818,
+    "sha256": "19a3a528389947580a6b428dfc19d8abc9d96f5792fbc38f34dd0175882bab39"
+  },
+  {
+    "path": "assets/team-page-BGE7FNcB.js",
+    "bytes": 12574,
+    "sha256": "da5fa77c3bcc990e165991506ad748b79fc8bf597a9171fae92c7c67a1a6ba19"
+  },
+  {
+    "path": "assets/yomna-al-jabiri-DTUZca0y.webp",
+    "bytes": 394944,
+    "sha256": "442d7971857a335047ea9eecfd061d2897a954db898e966290b3b30b72d6a28c"
+  },
+  {
+    "path": "index.html",
+    "bytes": 1700,
+    "sha256": "4d8abe6bbb98791257930534ba563cdaecf54d19e476f1884e4e8d7a95e4e458"
+  },
+  {
+    "path": "licenses/Cairo-OFL.txt",
+    "bytes": 4473,
+    "sha256": "a4554e1799d42e1405924b61eb0e0722ae1623b1f1f07f995348f96c496362a9"
+  },
+  {
+    "path": "licenses/Inter-OFL.txt",
+    "bytes": 4377,
+    "sha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57"
+  },
+  {
+    "path": "_headers",
+    "bytes": 586,
+    "sha256": "b52087fe33e4672aad2d5cadb5013420248b9adf156be5e835bb631c9f8ae881"
+  }
+]

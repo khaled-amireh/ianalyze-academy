@@ -1,5 +1,5 @@
 // Generated from the migration catalog by npm run db:types. Do not edit.
-// Embedded PostgreSQL fixture; hosted Supabase CLI generation remains a later check.
+// Embedded PostgreSQL catalog; compare with real Supabase CLI types after schema changes.
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 export type Database = {
   public: {
@@ -308,6 +308,8 @@ export type Database = {
           status: string;
           submitted_at: string | null;
           created_at: string;
+          notebook_sha256: string | null;
+          notebook_bytes: number | null;
         };
         Insert: {
           id?: string;
@@ -319,6 +321,8 @@ export type Database = {
           status?: string;
           submitted_at?: string | null;
           created_at?: string;
+          notebook_sha256?: string | null;
+          notebook_bytes?: number | null;
         };
         Update: {
           id?: string;
@@ -330,6 +334,8 @@ export type Database = {
           status?: string;
           submitted_at?: string | null;
           created_at?: string;
+          notebook_sha256?: string | null;
+          notebook_bytes?: number | null;
         };
         Relationships: [
           {
@@ -369,6 +375,26 @@ export type Database = {
           p_expected_revision: number;
         };
         Returns: string;
+      };
+      claim_submission_request: { Args: { p_student_id: string }; Returns: undefined };
+      create_draft_rubric: { Args: { p_activity_id: string; p_criteria: Json }; Returns: string };
+      save_draft_rubric: { Args: { p_rubric_id: string; p_criteria: Json }; Returns: undefined };
+      academy_capabilities: { Args: Record<string, never>; Returns: Json };
+      academy_leaderboard: { Args: Record<string, never>; Returns: Json };
+      request_resubmission: { Args: { p_submission_id: string }; Returns: undefined };
+      reserve_notebook: {
+        Args: {
+          p_student_id: string;
+          p_activity_id: string;
+          p_request_id: string;
+          p_sha256: string;
+          p_bytes: number;
+        };
+        Returns: Json;
+      };
+      finalize_notebook: {
+        Args: { p_submission_id: string; p_sha256: string };
+        Returns: undefined;
       };
     };
     Enums: { [_ in never]: never };

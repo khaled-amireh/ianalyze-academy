@@ -1,0 +1,127 @@
+.portal-page {
+  padding-block: 2rem 5rem;
+}
+.portal-page h1 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  margin-block-end: 1.5rem;
+}
+.portal-page h2 {
+  font-size: 1.35rem;
+  font-weight: 750;
+  margin-block-end: 1rem;
+}
+.portal-page h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.portal-page section {
+  margin-block: 1.25rem;
+}
+.portal-page form {
+  display: grid;
+  gap: 1rem;
+}
+.portal-page label {
+  display: grid;
+  gap: 0.45rem;
+  font-weight: 600;
+}
+.portal-page select,
+.portal-page textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  padding: 0.7rem;
+  background: var(--card);
+  color: var(--foreground);
+}
+.portal-page small {
+  font-weight: 400;
+  color: var(--muted-foreground);
+}
+.portal-auth {
+  max-width: 38rem;
+  margin-inline: auto;
+}
+.portal-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-block: 1rem;
+}
+.portal-actions a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+.portal-page .portal-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-weight: 400;
+}
+.portal-check input {
+  margin-block-start: 0.3rem;
+}
+.portal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 1rem;
+}
+.portal-page table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: start;
+}
+.portal-page td,
+.portal-page th {
+  padding: 0.8rem;
+  border-block-end: 1px solid var(--border);
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+.portal-table {
+  overflow-x: auto;
+}
+.portal-page pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+  direction: inherit;
+  text-align: start;
+  unicode-bidi: plaintext;
+}
+.portal-page [role='status'],
+.portal-page [role='alert'] {
+  padding-block: 0.5rem;
+}
+.portal-page input[type='file'] {
+  max-width: 100%;
+  font-weight: 400;
+}
+.portal-criterion {
+  display: grid;
+  grid-template-columns: 1fr 1fr 6rem;
+  gap: 0.5rem;
+}
+.portal-page fieldset {
+  border: 0;
+  min-width: 0;
+}
+.portal-page .content-card {
+  padding: 1.5rem;
+}
+.portal-draft {
+  border-inline-start: 4px solid var(--primary);
+  padding: 1rem;
+  background: var(--muted);
+}
+@media (max-width: 600px) {
+  .portal-criterion {
+    grid-template-columns: 1fr;
+  }
+  .portal-page .content-card {
+    padding: 1rem;
+  }
+}

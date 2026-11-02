@@ -7,10 +7,19 @@ import { root } from './database-fixture.mjs';
 const manifest = JSON.parse(
   readFileSync(new URL('docs/phase-03/baseline/preserved-frontend.json', root), 'utf8'),
 );
+// Phase 04 explicitly authorizes route wiring and a configured-account navigation link.
+// Preserve the original bytes as well as the untouched manifest hashes.
+const integration = JSON.parse(
+  readFileSync(new URL('docs/phase-04/approved-integration-files.json', root), 'utf8'),
+);
+assert.deepEqual(Object.keys(integration).sort(), [
+  'frontend/src/app/app.tsx',
+  'frontend/src/components/layout/navbar.tsx',
+]);
 for (const [path, hash] of Object.entries(manifest))
   assert.equal(
     createHash('sha256')
-      .update(readFileSync(new URL(path, root)))
+      .update(readFileSync(new URL(integration[path] ?? path, root)))
       .digest('hex'),
     hash,
     `Unrelated frontend/Yomna file changed: ${path}`,

@@ -18,11 +18,13 @@
     "validate": "npm run check:types && npm run lint && npm test && npm run format:check && npm run build && npm run check:production && npm run check:phase-02 && npm run test:database:embedded && npm run check:database-types && npm run check:phase-03",
     "db:types": "node scripts/generate-database-types.mjs",
     "check:database-types": "node scripts/generate-database-types.mjs --check",
-    "test:database:embedded": "node --test tests/database.security.test.mjs",
+    "test:database:embedded": "node --test tests/database.security.test.mjs tests/delivery.security.test.mjs",
     "test:integration": "node --test tests/supabase.integration.test.mjs",
     "check:phase-03": "node scripts/check-phase-03.mjs",
     "test:database:supabase": "supabase test db --local --workdir ..",
-    "test:browser:phase-03": "node scripts/phase-03-browser-qa.mjs"
+    "test:browser:phase-03": "node scripts/phase-03-browser-qa.mjs",
+    "test:delivery:integration": "node --test tests/delivery.integration.test.mjs tests/auth-email.integration.test.mjs",
+    "test:browser:delivery": "node scripts/phase-04-browser-qa.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",

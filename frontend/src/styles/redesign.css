@@ -161,6 +161,11 @@ h3 {
   color: var(--foreground);
   box-shadow: 0 1px 4px #172e3210;
 }
+:root:not(.dark) .language-switcher button[aria-pressed='true'],
+:root:not(.dark) .course-level {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
 .desktop-nav {
   gap: 0;
 }

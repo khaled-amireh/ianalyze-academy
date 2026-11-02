@@ -1,7 +1,7 @@
 @custom-variant dark (&:is(.dark *));
 :root {
   --brand-navy: #0d47a1;
-  --brand-teal: #2196f3;
+  --brand-teal: #52d3d8;
   --brand-orange: #df8a48;
   --brand-red: #9e2619;
   --background: #f5faff;
@@ -17,7 +17,7 @@
   --secondary-foreground: #0d47a1;
   --muted: #edf5fd;
   --muted-foreground: #47617e;
-  --accent: #90caf9;
+  --accent: #52d3d8;
   --accent-foreground: #0d47a1;
   --destructive: #9e2619;
   --destructive-foreground: #fff;
@@ -29,7 +29,7 @@
   --warning: #784319;
   --warning-surface: #fbf2e9;
   --error-surface: #fbeeea;
-  --chart-bar: #90caf9;
+  --chart-bar: #52d3d8;
   --chart-line: #2196f3;
   --shadow: 0 4px 16px #0d47a106;
   --shadow-raised: 0 18px 48px #0d47a10a;

@@ -6,8 +6,8 @@
       "sha256": "77f96589bfdd47a9b7475087e829c3986a3f543a629900847c06eeceee4ee569"
     },
     "frontend/scripts/phase-04-browser-qa.mjs": {
-      "reason": "Retain real local Auth and dashboard coverage; add recovery transport-failure regression without hosted test accounts.",
-      "sha256": "bc27ba394d951a21f2bf9deff8e74835c21ef6d3cc6f4fd036c340f251766335"
+      "reason": "Retain real local flows; add inline field validation, password controls, real confirmation resend/legacy callback and 24 bilingual/theme/responsive error cases.",
+      "sha256": "5fc68cdac73c5e90f725ed61cc9923501a77b7e956db38c529bb057647aece0b"
     },
     "frontend/scripts/prepare-local-supabase.mjs": {
       "reason": "Prepare isolated ignored local test environments without printing credentials or touching existing env files.",
@@ -23,12 +23,12 @@
       "sha256": "4f5cf59d23f7293d42cfa3253697847f40b69de7893ac8887da108593323be88"
     },
     "frontend/src/features/portal/auth-pages.tsx": {
-      "reason": "Preserve signup verification and role landing; show the existing localized error when password-recovery transport/API requests fail.",
-      "sha256": "ddeb1ecc1d062c93d7e95581b19115506df5eda9f44c40729937a6befe3781e3"
+      "reason": "Accessible field validation, password confirmation/visibility, honest resend/errors, duplicate-submit guards, safe legacy callback guidance and preserved PKCE Auth flows.",
+      "sha256": "ab18ff856d09983d28c1b048f692593c18f9d157cf0abbbe415ec02a6173e727"
     },
     "frontend/src/features/portal/copy.ts": {
-      "reason": "Add matching English/Arabic signup verification guidance only.",
-      "sha256": "77e7aa7711cd52127ebbecfa91616bb7517322b966cc9ead5f042d7b40436ff2"
+      "reason": "Translate all validation, confirmation, expired-session, password-control and registration messages into Arabic and English.",
+      "sha256": "a7ac290c7b047b0357a15480861fa21002891069857799eefb7e103059883d60"
     },
     "frontend/tests/delivery.integration.test.mjs": {
       "reason": "Add real Leader/Organizer equivalence, escalation denial, atomic grading-status, best-attempt aggregation and stable tied-ranking privacy regressions.",
@@ -57,8 +57,8 @@
       "sha256": "b583a1c88fd373f028a8f94f24002c162af3dcaab7d47bc715a53b7483e913b1"
     },
     "frontend/src/features/portal/portal.css": {
-      "reason": "Restore intended internal scrolling for the Team contact table instead of squeezing sensitive fields into single-character columns on mobile.",
-      "sha256": "a6fd9e153fab89492822d702405d6b7b2b01a8f7062beba0b622d40e4c0e955d"
+      "reason": "Style scoped error/success notices and password controls with existing accessible brand tokens; preserve unrelated layouts.",
+      "sha256": "8b3bf794a1f99e321a4eab56e3f636d11563b0c17308ac2056838becbe113846"
     },
     "frontend/src/features/portal/team-page.tsx": {
       "reason": "Make the existing private student-table scroll region keyboard accessible and label it with existing localized copy.",
@@ -69,16 +69,16 @@
       "sha256": "25998664502b922faea0dad3eb4da66aefadfd16fcb70b53502e9abb67e89261"
     },
     "frontend/scripts/check-pages-artifact.mjs": {
-      "reason": "Keep closed-public artifact checks and add a strict configured-production mode allowing only the reviewed browser-safe project configuration.",
-      "sha256": "dd5fed00c6a5aaa6eda88409c0aed723dc26c6d5a29bdd0fb6c66e3aeeac25fb"
+      "reason": "Verify the reviewed registration/privacy launch state while rejecting unexpected launch gates and server credentials.",
+      "sha256": "baea732c873fbabdf794624672b68bbd67d38241b43366eed21f6d51acf2b202"
     },
     "supabase/tests/database/boundaries.test.sql": {
       "reason": "Allow only the exact verified managed RLS event helper; reject arbitrary or altered public definers; verify invoker RPC and service/trigger authorization.",
       "sha256": "ac80cfd594edc1ed9fe0eb4e5d0d9a6586817a7217e32cb9572a5b5db1fd4c65"
     },
     "frontend/scripts/build-pages-production.mjs": {
-      "reason": "Build the exact hosted project with browser-safe inputs and all launch gates closed; exclude local environment files.",
-      "sha256": "8e57cb000f0bf0607aee95ad78065dd3a523c07992d15a723baa6fe3a3bc7f40",
+      "reason": "Open only registration/privacy after the owner-approved, freshly verified Leader checkpoint; preserve closed submissions, rankings and development previews.",
+      "sha256": "c8bf2884220170859dd3e45b0e436488ca047400007f409f95ee38e8295838ff",
       "added": true
     },
     "frontend/scripts/release-target.mjs": {
@@ -87,8 +87,8 @@
       "added": true
     },
     "frontend/scripts/deploy-pages.mjs": {
-      "reason": "Verify the existing Direct Upload target; permit deployment only in reviewed push CI and verify the production artifact and callback headers.",
-      "sha256": "7483d65be6b74d8a3b024597439000be09145da8c613cf7e267c4d9de26b558c",
+      "reason": "Keep push-only deployment protections and accurately report the submission/ranking gates after registration launch.",
+      "sha256": "10bf8e28bbb80df8f39b1fa9ec67836e4b975ab38bb968e8c0ad9c4e76577212",
       "added": true
     },
     "frontend/scripts/deploy-supabase-edge.mjs": {
@@ -102,13 +102,58 @@
       "added": true
     },
     ".github/workflows/production.yml": {
-      "reason": "Validate and publish the exact pushed feature/main commit to the existing production Pages alias; isolate secrets to deployment steps and never run migrations.",
-      "sha256": "520082f62be8fdb50e2f79cbc6540248ebcadee99f01d1312de7d253391d8f80",
+      "reason": "Require a fresh SELECT-only verified-owner/Team checkpoint before the explicitly approved registration release; keep service secrets outside build steps.",
+      "sha256": "fa5da6ec40b7c9a0d7ec259edcf6d33dae6e1cfde81aeacded68cc5bc16f5f46",
       "added": true
     },
     "frontend/scripts/check-phase-02.mjs": {
       "reason": "Preserve historical lock/source checks while accepting only individually hash-pinned CI and security dependency changes.",
       "sha256": "2fb6d24cbc926e0438b800155406cc8380f590aa2ee612c8fdce9e142fc5e56f"
+    },
+    "frontend/scripts/check-registration-readiness.mjs": {
+      "reason": "Read-only hosted verification of the encrypted exact owner UUID, confirmed Auth state, Team assignment and unchanged closed unrelated gates; no role writes.",
+      "sha256": "73019f0eddb21c48657e18084afc60305e0ab5831fae6c0dc6cc52e3a91af7c3",
+      "added": true
+    },
+    "frontend/scripts/registration-approval.mjs": {
+      "reason": "Require a short-lived verified Leader proof before producing an open-registration production artifact.",
+      "sha256": "ce30e1629718b3f094b8eae7e164cd24778f83393735efb677c2a8c731b6638d",
+      "added": true
+    },
+    "frontend/src/features/portal/form-feedback.tsx": {
+      "reason": "Reuse existing identity and color tokens for accessible inline password controls and red/green status announcements.",
+      "sha256": "68831c7a0af0426cf36e1716825431b2ad5558b038836aa4fa5573d814c6e53c",
+      "added": true
+    },
+    "frontend/src/features/portal/form-validation.ts": {
+      "reason": "Validate Auth and registration fields against server constraints; map stable SDK errors to safe localized messages without exposing server details.",
+      "sha256": "04b9a58afd4df066746b6962cca2c2f3fb6a2875083fb14c7e1549ec756f7a7a",
+      "added": true
+    },
+    "frontend/src/features/portal/student-page.tsx": {
+      "reason": "Show email-verified participants the academy registration form before dashboard content; validate private fields and consent, preserve data and report confirmed completion.",
+      "sha256": "008c94832f8f600b862da0ce66071306ce7a16d565e20ec42fc3895ae96a5397",
+      "added": false
+    },
+    "frontend/src/features/portal/privacy-page.tsx": {
+      "reason": "Prepare bilingual factual account/data-use and private-contact notice for the owner-authorized registration launch.",
+      "sha256": "6542484cb44161424e8d988965849a337a28cf4ed895fb8acd223ed49350251e",
+      "added": false
+    },
+    "frontend/src/lib/academy-data.ts": {
+      "reason": "Preserve original identity/API failures so form feedback distinguishes unavailable network and expired sessions while retaining RLS-bound own-profile updates.",
+      "sha256": "7d1bb10392cee7ff8590b03aee6c466d70d38403150cb3da13d4256f0b47759b",
+      "added": false
+    },
+    "frontend/tests/form-validation.test.ts": {
+      "reason": "Test invalid/missing/mismatched inputs, privacy consent, server constraint boundaries and safe error categories.",
+      "sha256": "31b1f2ab2a0c1f2c6839865b03965062e5ab6d5da209a4a61dc9a2f86c45b75a",
+      "added": true
+    },
+    "frontend/tests/registration-approval.test.ts": {
+      "reason": "Reject stale, missing, wrong-project or incomplete Leader release proofs and unexpectedly open unrelated gates.",
+      "sha256": "e0f90bd2d1cb34fcff4781dd6c9d4f6d14bde35257b3de30b14f02a3284310fe",
+      "added": true
     }
   },
   "dependencyChanges": {

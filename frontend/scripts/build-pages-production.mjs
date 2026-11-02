@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { build } from 'vite';
 import { readSupabaseConfiguration } from '../src/lib/supabase-config.ts';
+import { registrationApproved } from './registration-approval.mjs';
 
 const configuration = readSupabaseConfiguration(process.env);
 if (
@@ -14,6 +15,7 @@ if (
   throw new Error('The verified production URL and browser-safe publishable key are required.');
 
 const root = fileURLToPath(new URL('../', import.meta.url));
+const registration = registrationApproved();
 const envDirectory = new URL('../artifacts/pages-empty-environment/', import.meta.url);
 mkdirSync(envDirectory, { recursive: true });
 if (readdirSync(envDirectory).length) throw new Error('Build environment directory must be empty.');
@@ -23,10 +25,10 @@ Object.assign(process.env, {
   VITE_SUPABASE_URL: configuration.url,
   VITE_SUPABASE_PUBLISHABLE_KEY: configuration.publishableKey,
   VITE_ENABLE_DEV_PREVIEWS: 'false',
-  VITE_ENABLE_REGISTRATION: 'false',
+  VITE_ENABLE_REGISTRATION: String(registration),
   VITE_ENABLE_SUBMISSIONS: 'false',
   VITE_ENABLE_LEADERBOARD: 'false',
-  VITE_PRIVACY_APPROVED: 'false',
+  VITE_PRIVACY_APPROVED: String(registration),
 });
 execFileSync(process.execPath, ['node_modules/typescript/bin/tsc', '-b'], {
   cwd: root,
@@ -44,10 +46,10 @@ writeFileSync(
     {
       project: 'ocihwiqtgqplwgyhpwjv',
       publishableKeySha256: createHash('sha256').update(configuration.publishableKey).digest('hex'),
-      registration: false,
+      registration,
       submissions: false,
       leaderboard: false,
-      privacyApproved: false,
+      privacyApproved: registration,
       developmentPreviews: false,
     },
     null,
@@ -55,5 +57,5 @@ writeFileSync(
   ) + '\n',
 );
 console.log(
-  'Configured production build complete; only browser-safe inputs used; launch gates closed.',
+  `Configured production build complete; registration ${registration ? 'open after verified Leader approval' : 'closed'}; submissions and leaderboard closed.`,
 );

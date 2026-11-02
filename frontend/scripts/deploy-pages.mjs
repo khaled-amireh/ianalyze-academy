@@ -89,5 +89,7 @@ if (!checkOnly) {
   });
   if (!callback.ok || !callback.headers.get('cache-control')?.includes('no-store'))
     throw new Error('Production callback route or no-store policy failed verification.');
-  console.log(`Production artifact verified at ${target.origin}; feature gates remain closed.`);
+  console.log(
+    `Production artifact verified at ${target.origin}; submission and leaderboard gates remain closed.`,
+  );
 }

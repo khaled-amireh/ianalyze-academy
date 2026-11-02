@@ -138,3 +138,68 @@
     padding: 1rem;
   }
 }
+.portal-fields {
+  display: grid;
+  gap: 1rem;
+  padding: 0;
+}
+.portal-password {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.portal-password input {
+  padding-inline-end: 3rem;
+}
+.portal-password-toggle {
+  position: absolute;
+  inset-inline-end: 0.2rem;
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+.portal-password-toggle:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+.portal-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.85rem 1rem;
+  margin-block: 1rem;
+  border: 1px solid;
+  border-radius: 0.6rem;
+  overflow-wrap: anywhere;
+}
+.portal-notice svg {
+  flex-shrink: 0;
+  margin-block-start: 0.15rem;
+}
+.portal-page .portal-notice p {
+  margin: 0;
+  color: inherit;
+}
+.portal-notice-error {
+  color: var(--destructive);
+  background: var(--error-surface);
+}
+.portal-notice-success {
+  color: var(--success);
+  background: var(--success-surface);
+}
+.portal-notice-info {
+  color: var(--foreground);
+  background: var(--muted);
+}
+.portal-page .field-error {
+  font-weight: 500;
+  color: var(--destructive);
+}
+.portal-page .portal-grid {
+  padding: 0;
+}

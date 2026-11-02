@@ -76,7 +76,12 @@ if (configured) {
     'privacyApproved',
     'developmentPreviews',
   ])
-    assert.equal(inputs[gate], false, `Unapproved production gate: ${gate}`);
+    assert.equal(
+      inputs[gate],
+      (gate === 'registration' || gate === 'privacyApproved') &&
+        process.env.ACADEMY_REGISTRATION_APPROVED === 'true',
+      `Unapproved production gate: ${gate}`,
+    );
 } else assert.equal(publishableKeys.length, 0, 'Unexpected key in unconfigured public artifact');
 for (const forbidden of [
   'http://127.0.0.1:54321',

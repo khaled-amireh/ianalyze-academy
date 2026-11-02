@@ -254,5 +254,34 @@
       "smtpAndRateLimitsPreserved": true
     },
     "productionWritesPerformed": false
+  },
+  "latestRegistrationVerification": {
+    "project": "ocihwiqtgqplwgyhpwjv",
+    "verifiedAt": "2026-11-02T18:56:32.055Z",
+    "integrity": {
+      "migrations": 4,
+      "backupFiles": 33
+    },
+    "summary": {
+      "users": 1,
+      "verified": 1,
+      "team": 1,
+      "objects": 0,
+      "migrations": 4,
+      "rls_tables": 10,
+      "legacy_uploads": false,
+      "submissions": false,
+      "leaderboard": false
+    },
+    "ownerEmailVerification": true,
+    "ownerPasswordLogin": true,
+    "ownerUuidPinned": true,
+    "ownerRole": "team",
+    "ownerRealSessionTeamCheck": true,
+    "smtpAndRateLimitsUnchanged": true,
+    "authConfigUnchanged": true,
+    "publicRegistrationPreparedForPush": true,
+    "productionWebsiteDeployed": false,
+    "teamSyllabusObjects": 0
   }
 }

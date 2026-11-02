@@ -1,4 +1,6 @@
-﻿# Production readiness report — 2026-11-02
+> Current registration/owner status: [REGISTRATION-HANDOFF.md](REGISTRATION-HANDOFF.md) supersedes the earlier closed-registration release status below. The verified owner has Team access; registration is approved for the next push, with a read-only owner/role checkpoint. The live website is unchanged until that push.
+
+# Production readiness report — 2026-11-02
 
 **Database and Auth: complete and read back. Release: prepared locally, awaiting the owner's push.** Existing project `ocihwiqtgqplwgyhpwjv` / `ianalyze-academy`, organization iAnalyze Academy, eu-west-1, PostgreSQL 17.11. No new project, hosted test users, push, merge, manual Edge deployment or Cloudflare deployment was performed. The frontend design is preserved.
 

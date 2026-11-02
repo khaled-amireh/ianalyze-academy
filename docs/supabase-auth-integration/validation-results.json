@@ -359,5 +359,28 @@
     "devOnlyLowAdvisories": 3,
     "hostedUserFlowsTested": false,
     "actualActionsRunPendingOwnerPush": true
+  },
+  "latestRegistrationVerification": {
+    "date": "2026-11-02",
+    "project": "ocihwiqtgqplwgyhpwjv",
+    "unitTests": 32,
+    "embeddedSecurity": 21,
+    "realLocalIntegration": 15,
+    "publicAuthLayoutCases": 20,
+    "authenticatedLayoutCases": 32,
+    "validationLayoutCases": 24,
+    "validationContrastMinimum": 4.5,
+    "configuredCandidateCases": 56,
+    "configuredBuildFiles": 48,
+    "ownerHostedSignup": true,
+    "ownerEmailReceivedAndConfirmed": true,
+    "ownerPasswordLogin": true,
+    "ownerRealSessionTeamCheck": true,
+    "roleGrantAudited": true,
+    "unverifiedOrEmailOnlyRoleGrant": false,
+    "registrationApprovedForNextPush": true,
+    "publicWebsiteDeployed": false,
+    "hostedRecoveryExchangeTested": false,
+    "teamSyllabusObjects": 0
   }
 }

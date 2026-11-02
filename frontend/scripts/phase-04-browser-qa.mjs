@@ -97,7 +97,7 @@ async function wait(expression, label, sessionId) {
 async function navigate(path) {
   await send('Page.navigate', { url: origin + path });
   await wait(
-    `location.pathname===${JSON.stringify(path.split('?')[0])}&&document.readyState==='complete'&&Boolean(document.querySelector('h1'))`,
+    `location.pathname===${JSON.stringify(path.split(/[?#]/)[0])}&&document.readyState==='complete'&&Boolean(document.querySelector('h1'))`,
     path.split('?')[0],
   );
 }
@@ -192,12 +192,15 @@ async function portalMatrix(path, role) {
     'restored dashboard',
   );
 }
-async function capturedLink(type = 'signup') {
+async function capturedLink(type = 'signup', address = email, excluded = new Set()) {
   for (let i = 0; i < 50; i++) {
     const list = await (
-      await fetch(`http://127.0.0.1:54324/api/v1/search?query=${encodeURIComponent(`to:${email}`)}`)
+      await fetch(
+        `http://127.0.0.1:54324/api/v1/search?query=${encodeURIComponent(`to:${address}`)}`,
+      )
     ).json();
     for (const m of list.messages ?? []) {
+      if (excluded.has(m.ID ?? m.id)) continue;
       const body = await (
         await fetch(`http://127.0.0.1:54324/api/v1/message/${m.ID ?? m.id}`)
       ).json();
@@ -269,12 +272,39 @@ try {
   );
   await navigate('/join');
   await wait("Boolean(document.querySelector('input[name=password]'))", 'real signup form');
+  await fill('input[name=email]', '');
+  await evaluate("document.querySelector('form').requestSubmit()");
+  await wait(
+    "Boolean(document.querySelector('input[name=email][aria-invalid=true]'))",
+    'required signup validation',
+  );
+  await fill('input[name=email]', 'invalid');
+  await fill('input[name=password]', 'short');
+  await fill('input[name=confirmation]', 'different');
+  await evaluate("document.querySelector('form').requestSubmit()");
+  await wait(
+    "document.body.innerText.includes('Passwords do not match')",
+    'signup password mismatch',
+  );
+  assert.equal(await evaluate('document.activeElement.name'), 'email');
+  await send('Page.captureScreenshot', { format: 'png' }).then((r) =>
+    writeFileSync(new URL('auth-validation-en.png', artifact), Buffer.from(r.data, 'base64')),
+  );
   await fill('input[name=email]', email);
   await fill('input[name=password]', password);
+  await fill('input[name=confirmation]', password);
+  await evaluate("document.querySelector('[aria-controls][aria-pressed]').click()");
+  assert.equal(await evaluate("document.querySelector('input[name=password]').type"), 'text');
+  await evaluate("document.querySelector('[aria-controls][aria-pressed]').click()");
   await evaluate(
     "document.querySelector('input[type=checkbox]').click();document.querySelector('form').requestSubmit()",
   );
   await wait("document.body.innerText.includes('check your email')", 'confirmation message');
+  const successColor = await evaluate(
+    "getComputedStyle(document.querySelector('.portal-notice-success p')).color",
+  );
+  const successRgb = successColor.match(/[\d.]+/g).map(Number);
+  assert.ok(successRgb[1] > successRgb[0], 'Confirmed success text must use the green token');
   const authUsers = await admin.auth.admin.listUsers();
   const student = authUsers.data.users.find((u) => u.email === email);
   assert.ok(student);
@@ -289,6 +319,23 @@ try {
     'verified signup callback',
   );
   assert.equal(await evaluate("location.search.includes('code=')"), false);
+  await evaluate("document.querySelector('form').requestSubmit()");
+  await wait(
+    "document.body.innerText.includes('Please select your academic year')",
+    'registration required fields',
+  );
+  await fill('input[name=whatsapp]', '0790000001');
+  await evaluate("document.querySelector('form').requestSubmit()");
+  await wait(
+    "document.body.innerText.includes('Please enter a valid phone number')",
+    'registration phone validation',
+  );
+  await send('Page.captureScreenshot', { format: 'png' }).then((r) =>
+    writeFileSync(
+      new URL('registration-validation-en.png', artifact),
+      Buffer.from(r.data, 'base64'),
+    ),
+  );
   for (const [name, value] of Object.entries({
     full_name: 'LOCAL UI STUDENT',
     whatsapp: '+962790000001',
@@ -339,10 +386,7 @@ try {
   await fill('input[name=email]', email);
   await fill('input[name=password]', password + '-wrong');
   await evaluate("document.querySelector('form').requestSubmit()");
-  await wait(
-    "document.body.innerText.includes('The request could not be completed')",
-    'invalid password feedback',
-  );
+  await wait("document.body.innerText.includes('Unable to log in')", 'invalid password feedback');
   assert.equal(await evaluate('location.pathname'), '/login');
   await login(teamEmail);
   await navigate('/workspace');
@@ -428,6 +472,8 @@ try {
   );
   assert.equal(await evaluate("location.search.includes('token_hash')"), false);
   await fill('input[name=password]', password + '-new');
+  if (await evaluate("Boolean(document.querySelector('input[name=confirmation]'))"))
+    await fill('input[name=confirmation]', password + '-new');
   await evaluate("document.querySelector('form').requestSubmit()");
   await wait(
     "location.pathname==='/login'&&document.body.innerText.includes('Saved successfully')",
@@ -460,6 +506,8 @@ try {
   );
   assert.equal(await evaluate('location.search'), '');
   await fill('input[name=password]', password + '-email-reset');
+  if (await evaluate("Boolean(document.querySelector('input[name=confirmation]'))"))
+    await fill('input[name=confirmation]', password + '-email-reset');
   await evaluate("document.querySelector('form').requestSubmit()");
   await wait(
     "location.pathname==='/login'&&document.body.innerText.includes('Saved successfully')",
@@ -480,13 +528,65 @@ try {
     await fill('input[name=email]', email);
     await evaluate("document.querySelector('form').requestSubmit()");
     await wait(
-      "document.body.innerText.includes('The request could not be completed')",
+      "document.body.innerText.includes('Unable to connect')",
       'recovery transport failure shown to the user',
     );
     assert.equal(await evaluate("document.body.innerText.includes('If eligible')"), false);
   } finally {
     await send('Network.setBlockedURLs', { urls: [] });
   }
+  const resendAddress = 'resend-' + suffix + '@example.test';
+  await navigate('/join');
+  await fill('input[name=email]', resendAddress);
+  await fill('input[name=password]', password);
+  await fill('input[name=confirmation]', password);
+  await evaluate(
+    "document.querySelector('input[name=consent]').click();document.querySelector('form').requestSubmit()",
+  );
+  await wait("document.body.innerText.includes('check your email')", 'resend fixture signup');
+  const resendUser = (await admin.auth.admin.listUsers()).data.users.find(
+    (u) => u.email === resendAddress,
+  );
+  assert.ok(resendUser);
+  users.push(resendUser.id);
+  const beforeResend = await (
+    await fetch(
+      'http://127.0.0.1:54324/api/v1/search?query=' + encodeURIComponent('to:' + resendAddress),
+    )
+  ).json();
+  const oldMail = new Set((beforeResend.messages ?? []).map((m) => m.ID ?? m.id));
+  await pause(1100);
+  await navigate('/login');
+  await fill('#resend-confirmation input[name=email]', resendAddress);
+  await evaluate("document.querySelector('#resend-confirmation').requestSubmit()");
+  await wait(
+    "document.body.innerText.includes('a new confirmation email has been requested')",
+    'real resend accepted',
+  );
+  const resent = await fetch(await capturedLink('signup', resendAddress, oldMail), {
+    redirect: 'manual',
+  });
+  assert.equal(resent.status, 303);
+  const resentCallback = new URL(resent.headers.get('location'));
+  assert.equal(resentCallback.origin, origin);
+  await navigate(resentCallback.pathname + resentCallback.search + resentCallback.hash);
+  if (resentCallback.hash.includes('access_token')) {
+    await wait(
+      "document.body.innerText.includes('The email link has returned')",
+      'legacy resend guidance',
+    );
+    assert.equal(await evaluate('location.hash'), '');
+    assert.equal(await evaluate("Boolean(document.querySelector('input[name=full_name]'))"), false);
+    await navigate('/login');
+    await fill('input[name=email]', resendAddress);
+    await fill('input[name=password]', password);
+    await evaluate("document.querySelector('form').requestSubmit()");
+  }
+  await wait(
+    "location.pathname==='/student'&&Boolean(document.querySelector('input[name=full_name]'))",
+    'resent confirmation permits verified login',
+  );
+  await logout();
   await navigate('/auth/callback?token_hash=LOCAL_INVALID_EXPIRED_TEST&type=signup');
   await wait(
     'Boolean(document.querySelector(\'main a[href="/login"]\'))',
@@ -523,6 +623,75 @@ try {
         );
       }
     }
+  let validationLayouts = 0;
+  for (const language of ['ar', 'en'])
+    for (const theme of ['light', 'dark'])
+      for (const width of [320, 1440]) {
+        await evaluate(
+          `localStorage.setItem('ianalyze.language',${JSON.stringify(language)});localStorage.setItem('ianalyze.theme',${JSON.stringify(theme)})`,
+        );
+        await send('Emulation.setDeviceMetricsOverride', {
+          width,
+          height: 1000,
+          deviceScaleFactor: 1,
+          mobile: width === 320,
+        });
+        for (const path of ['/login', '/join', '/auth/recover']) {
+          await navigate(path);
+          await evaluate("document.querySelector('form').requestSubmit()");
+          await wait(
+            "Boolean(document.querySelector('[role=alert]'))",
+            'localized validation announcement',
+          );
+          assert.equal(
+            await evaluate(
+              "[...document.querySelectorAll('[aria-invalid=true]')].every(x=>x.getAttribute('aria-describedby').split(' ').every(id=>document.getElementById(id)?.textContent.trim()))",
+            ),
+            true,
+          );
+          assert.equal(
+            await evaluate("document.querySelector('.field-error').textContent.includes('???')"),
+            false,
+          );
+          const color = await evaluate(
+            "getComputedStyle(document.querySelector('.field-error')).color",
+          );
+          const rgb = color.match(/[\d.]+/g).map(Number);
+          assert.ok(
+            rgb[0] > rgb[1] && rgb[0] > rgb[2],
+            'Error text must use the accessible red token',
+          );
+          const background = await evaluate(
+            "getComputedStyle(document.querySelector('.content-card')).backgroundColor",
+          );
+          const channels = (text) =>
+            text
+              .match(/[\d.]+/g)
+              .slice(0, 3)
+              .map(Number);
+          const luminance = (colors) =>
+            colors
+              .map((x) => x / 255)
+              .map((x) => (x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4))
+              .reduce((a, x, i) => a + x * [0.2126, 0.7152, 0.0722][i], 0);
+          const first = luminance(channels(color)),
+            second = luminance(channels(background));
+          assert.ok(
+            (Math.max(first, second) + 0.05) / (Math.min(first, second) + 0.05) >= 4.5,
+            'Validation text contrast must meet 4.5:1',
+          );
+          assert.equal(await evaluate('document.documentElement.scrollWidth>innerWidth+2'), false);
+          if (path === '/join' && width === 320)
+            await send('Page.captureScreenshot', { format: 'png' }).then((r) =>
+              writeFileSync(
+                new URL('auth-errors-' + language + '-' + theme + '.png', artifact),
+                Buffer.from(r.data, 'base64'),
+              ),
+            );
+          validationLayouts++;
+        }
+      }
+  assert.equal(validationLayouts, 24);
   assert.deepEqual(exceptions, []);
   writeFileSync(
     new URL('mvp-browser-results.json', artifact),
@@ -540,6 +709,11 @@ try {
         profile: true,
         passwordRecoveryCallback: true,
         recoveryTransportFailure: true,
+        inlineValidation: true,
+        validationLayoutCases: 24,
+        confirmationResend: true,
+        legacyResendGuidance: true,
+        passwordVisibility: true,
         upload: true,
         teamGrade: true,
         privateOwnFeedback: true,

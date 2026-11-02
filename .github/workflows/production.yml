@@ -27,6 +27,7 @@ jobs:
       PRODUCTION_ORIGIN: ${{ vars.PRODUCTION_ORIGIN }}
       VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
       VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
+      ACADEMY_REGISTRATION_APPROVED: ${{ vars.ACADEMY_REGISTRATION_APPROVED }}
     steps:
       - name: Check out the pushed commit and preservation history
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -41,6 +42,11 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - name: Install the locked dependencies
         run: npm ci --prefix frontend
+      - name: Verify the confirmed owner UUID before opening registration
+        run: node frontend/scripts/check-registration-readiness.mjs
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          ACADEMY_LEADER_USER_ID: ${{ secrets.ACADEMY_LEADER_USER_ID }}
       - name: Validate source, security boundaries and both production artifacts
         run: npm --prefix frontend run release:check
       - name: Verify Cloudflare credentials and the existing deployment target

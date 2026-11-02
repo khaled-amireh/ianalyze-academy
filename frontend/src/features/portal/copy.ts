@@ -1,6 +1,32 @@
 import { useTranslation } from 'react-i18next';
 
 const en = {
+  confirmationLoginHelp:
+    'The email link has returned to the academy. Log in with your email and password to continue. If your email is not confirmed, request a new confirmation message. Use the browser where you started signup or recovery to finish those links.',
+  requiredField: 'This field is required.',
+  invalidEmail: 'Please enter a valid email address.',
+  shortPassword: 'Password must contain at least 12 characters.',
+  passwordMismatch: 'Passwords do not match.',
+  invalidPhone:
+    'Please enter a valid phone number, including the country code (for example +962790000001).',
+  missingYear: 'Please select your academic year.',
+  invalidYear: 'Please select an academic year from 1 to 8.',
+  consentRequired: 'Please read and accept the privacy notice.',
+  tooLong: 'This value is too long.',
+  networkError: 'Unable to connect. Please try again.',
+  invalidCredentials: 'Unable to log in. Check your email and password.',
+  rateLimited: 'Too many requests. Please wait before trying again.',
+  sessionExpired: 'Your session has expired. Please log in again, or request a new recovery email.',
+  passwordRejected:
+    'This password does not meet the security requirements. Choose a different password with at least 12 characters.',
+  validationSummary: 'Please correct the highlighted fields.',
+  confirmPassword: 'Confirm password',
+  showPassword: 'Show password',
+  hidePassword: 'Hide password',
+  academyRegistration: 'Academy registration',
+  resendSent:
+    'If your account needs confirmation, a new confirmation email has been requested. Check your inbox and spam folder.',
+  registrationNext: 'After confirming your email, log in to complete your academy registration.',
   login: 'Log in',
   signup: 'Create account',
   email: 'Email address',
@@ -106,7 +132,33 @@ const en = {
   next: 'Next',
   allActivities: 'All activities',
 };
-const ar: Record<keyof typeof en, string> = {
+export type PortalCopy = Record<keyof typeof en, string>;
+const ar: PortalCopy = {
+  confirmationLoginHelp:
+    'تمت العودة من رابط البريد. سجّل الدخول بالبريد وكلمة المرور لإكمال التسجيل. إذا لم يُؤكَّد البريد، اطلب رسالة تأكيد جديدة. استخدم المتصفح الذي بدأت فيه التسجيل لإكمال روابط التأكيد والاستعادة.',
+  requiredField: 'هذا الحقل مطلوب.',
+  invalidEmail: 'يرجى إدخال عنوان بريد إلكتروني صالح.',
+  shortPassword: 'يجب أن تتكون كلمة المرور من 12 حرفًا على الأقل.',
+  passwordMismatch: 'كلمتا المرور غير متطابقتين.',
+  invalidPhone: 'يرجى إدخال رقم هاتف صالح مع رمز الدولة (مثل ‎+962790000001).',
+  missingYear: 'يرجى اختيار السنة الدراسية.',
+  invalidYear: 'يرجى اختيار سنة دراسية من 1 إلى 8.',
+  consentRequired: 'يرجى قراءة إشعار الخصوصية والموافقة عليه.',
+  tooLong: 'القيمة المدخلة طويلة جدًا.',
+  networkError: 'تعذر الاتصال. يرجى المحاولة مجددًا.',
+  invalidCredentials: 'تعذر تسجيل الدخول. تحقق من البريد الإلكتروني وكلمة المرور.',
+  rateLimited: 'طلبات كثيرة. يرجى الانتظار قبل المحاولة مجددًا.',
+  sessionExpired: 'انتهت صلاحية الجلسة. سجّل الدخول مجددًا أو اطلب رسالة استعادة جديدة.',
+  passwordRejected:
+    'كلمة المرور لا تستوفي متطلبات الأمان. اختر كلمة مرور مختلفة تتكون من 12 حرفًا على الأقل.',
+  validationSummary: 'يرجى تصحيح الحقول الموضحة أدناه.',
+  confirmPassword: 'تأكيد كلمة المرور',
+  showPassword: 'إظهار كلمة المرور',
+  hidePassword: 'إخفاء كلمة المرور',
+  academyRegistration: 'التسجيل في الأكاديمية',
+  resendSent:
+    'إذا كان الحساب بحاجة إلى التأكيد، فقد طُلبت رسالة تأكيد جديدة. تحقق من البريد والرسائل غير المرغوب فيها.',
+  registrationNext: 'بعد تأكيد البريد الإلكتروني، سجّل الدخول لإكمال التسجيل في الأكاديمية.',
   login: 'تسجيل الدخول',
   signup: 'إنشاء حساب',
   email: 'البريد الإلكتروني',

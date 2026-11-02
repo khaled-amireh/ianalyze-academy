@@ -1,8 +1,15 @@
 /* Focused theme/logo checks against the task-owned Chrome profile. */
 import assert from 'node:assert/strict';
-import { writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 
-const tabs = await (await fetch('http://127.0.0.1:9225/json/list')).json();
+const origin = process.env.ACADEMY_BROWSER_ORIGIN ?? 'http://127.0.0.1:4174';
+const debuggerOrigin = process.env.ACADEMY_BROWSER_DEBUGGER ?? 'http://127.0.0.1:9225';
+const out = new URL(
+  process.env.ACADEMY_BROWSER_OUTPUT ?? '../../docs/ui-redesign/',
+  import.meta.url,
+);
+mkdirSync(out, { recursive: true });
+const tabs = await (await fetch(`${debuggerOrigin}/json/list`)).json();
 assert.equal(tabs.filter((tab) => tab.type === 'page').length, 1);
 const ws = new WebSocket(tabs.find((tab) => tab.type === 'page').webSocketDebuggerUrl);
 await new Promise((resolve) => ws.addEventListener('open', resolve, { once: true }));
@@ -44,7 +51,7 @@ async function waitFor(expression) {
   return false;
 }
 async function load(path = '/') {
-  await send('Page.navigate', { url: `http://127.0.0.1:4174${path}` });
+  await send('Page.navigate', { url: `${origin}${path}` });
   assert.ok(await waitFor("!!document.querySelector('h1')"));
 }
 async function media(scheme, motion = 'reduce') {
@@ -119,7 +126,7 @@ try {
   checks.rapidSwitchesStayConsistent = await evaluate(
     "document.documentElement.dataset.theme==='dark'&&localStorage.getItem('ianalyze.theme')==='dark'&&document.querySelector('.header-preferences .theme-toggle').dataset.themeState==='dark'",
   );
-  secondaryTarget = await send('Target.createTarget', { url: 'http://127.0.0.1:4174/' });
+  secondaryTarget = await send('Target.createTarget', { url: `${origin}/` });
   const attached = await send('Target.attachToTarget', {
     targetId: secondaryTarget.targetId,
     flatten: true,
@@ -127,7 +134,7 @@ try {
   for (let count = 0; count < 100; count++) {
     if (
       await evaluate(
-        "location.origin==='http://127.0.0.1:4174'&&!!document.querySelector('h1')",
+        `location.origin===${JSON.stringify(origin)}&&!!document.querySelector('h1')`,
         attached.sessionId,
       )
     )
@@ -189,7 +196,7 @@ try {
 } finally {
   if (secondaryTarget) await send('Target.closeTarget', { targetId: secondaryTarget.targetId });
   writeFileSync(
-    new URL('../../docs/ui-redesign/theme-brand-results.json', import.meta.url),
+    new URL('theme-brand-results.json', out),
     JSON.stringify({ date: '2026-11-02', checks, errors }, null, 2) + '\n',
   );
   ws.close();

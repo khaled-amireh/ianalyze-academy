@@ -1,10 +1,8 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { createAcademyClient } from '@/lib/supabase';
+import { academyClient as client } from '@/lib/academy-client';
 import { createAuthStore } from './auth-store';
 import { createSupabaseAuthPort } from './supabase-auth-port';
 import { AuthContext } from './auth-context';
-
-const client = createAcademyClient(import.meta.env);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [store] = useState(() => {

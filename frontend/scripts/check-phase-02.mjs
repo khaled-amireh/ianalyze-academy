@@ -35,6 +35,10 @@ const currentLock = JSON.parse(readFileSync(new URL('frontend/package-lock.json'
 const additions = JSON.parse(
   readFileSync(new URL('docs/phase-03/approved-dependencies.json', root), 'utf8'),
 );
+const redesign = JSON.parse(
+  readFileSync(new URL('docs/ui-redesign/approved-presentation-changes.json', root), 'utf8'),
+);
+const lockEntries = { ...additions.lockEntries, ...redesign.lockEntries };
 for (const [path, entry] of Object.entries(oldLock.packages)) {
   if (path)
     assert.deepEqual(currentLock.packages[path], entry, `Existing dependency changed: ${path}`);
@@ -43,18 +47,15 @@ for (const section of ['dependencies', 'devDependencies']) {
   assert.deepEqual(currentLock.packages[''][section], {
     ...oldLock.packages[''][section],
     ...additions[section],
+    ...(section === 'dependencies' ? redesign.dependencies : {}),
   });
 }
 const added = Object.keys(currentLock.packages).filter((path) => !(path in oldLock.packages));
-assert.deepEqual(
-  added.sort(),
-  Object.keys(additions.lockEntries).sort(),
-  'Unapproved dependency additions',
-);
+assert.deepEqual(added.sort(), Object.keys(lockEntries).sort(), 'Unapproved dependency additions');
 for (const path of added)
   assert.equal(
     createHash('sha256').update(JSON.stringify(currentLock.packages[path])).digest('hex'),
-    additions.lockEntries[path],
+    lockEntries[path],
     `New dependency drift: ${path}`,
   );
 console.log(

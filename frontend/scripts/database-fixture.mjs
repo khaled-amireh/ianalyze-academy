@@ -32,7 +32,7 @@ export async function createDatabase() {
     );
     create table storage.objects (
       id uuid primary key default gen_random_uuid(), bucket_id text references storage.buckets(id),
-      name text not null, owner_id text, unique (bucket_id, name)
+      name text not null, owner_id text, metadata jsonb, unique (bucket_id, name)
     );
     alter table storage.objects enable row level security;
     grant usage on schema storage to anon, authenticated;

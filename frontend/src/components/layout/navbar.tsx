@@ -9,6 +9,7 @@ import { BrandLogo } from './brand-logo';
 import { LanguageSwitcher } from './language-switcher';
 import { ThemeToggle } from './theme-toggle';
 import { MobileNavigation } from './mobile-navigation';
+import { AccountLink } from '@/features/portal/auth-pages';
 
 export function Navbar() {
   const { t } = useTranslation();
@@ -25,6 +26,7 @@ export function Navbar() {
             ))}
           </nav>
           <div className="header-actions">
+            <AccountLink className="header-account" />
             <div className="header-preferences">
               <LanguageSwitcher />
               <ThemeToggle />

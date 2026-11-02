@@ -1,10 +1,15 @@
 /* Isolated headless Chrome regression checks. Never attaches to a personal browser. */
 import assert from 'node:assert/strict';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-const out = new URL('../../docs/ui-redesign/', import.meta.url);
+const out = new URL(
+  process.env.ACADEMY_BROWSER_OUTPUT ?? '../../docs/ui-redesign/',
+  import.meta.url,
+);
+const origin = process.env.ACADEMY_BROWSER_ORIGIN ?? 'http://127.0.0.1:4174';
+const debuggerOrigin = process.env.ACADEMY_BROWSER_DEBUGGER ?? 'http://127.0.0.1:9225';
 const captureOnly = process.argv.includes('--screenshots-only');
 mkdirSync(new URL('screenshots/', out), { recursive: true });
-const targets = await (await fetch('http://127.0.0.1:9225/json/list')).json();
+const targets = await (await fetch(`${debuggerOrigin}/json/list`)).json();
 assert.equal(targets.filter((tab) => tab.type === 'page').length, 1);
 const ws = new WebSocket(targets.find((tab) => tab.type === 'page').webSocketDebuggerUrl);
 await new Promise((resolve, reject) => {
@@ -27,7 +32,7 @@ ws.addEventListener('message', ({ data }) => {
     exceptions.push(message.params.exceptionDetails);
   else if (message.method === 'Network.responseReceived') {
     const response = message.params.response;
-    if (response.url.startsWith('http://127.0.0.1:4174') && response.status >= 400)
+    if (response.url.startsWith(origin) && response.status >= 400)
       failedLocalRequests.push({ url: response.url, status: response.status });
     if (response.url.includes('drive.google.com'))
       externalResponses.push({ url: response.url, status: response.status });
@@ -63,7 +68,7 @@ async function settle() {
   );
 }
 async function load(path) {
-  await send('Page.navigate', { url: `http://127.0.0.1:4174${path}` });
+  await send('Page.navigate', { url: `${origin}${path}` });
   for (let n = 0; n < 100; n++) {
     await pause(25);
     if (
@@ -381,7 +386,6 @@ for (const route of [
   '/_preview/organizer',
   '/_preview/admin',
   '/_preview/components',
-  '/student',
   '/organizer',
   '/admin',
   '/unknown',
@@ -391,6 +395,11 @@ for (const route of [
     `document.querySelector('h1').textContent===${JSON.stringify(notFound)}&&!document.querySelector('.dashboard-shell')`,
   );
 }
+await send('Page.navigate', { url: `${origin}/student` });
+await waitFor("location.pathname==='/login'&&!!document.querySelector('#page-title')");
+interactions.studentBoundary = await evaluate(
+  "!document.querySelector('.portal-grid')&&!document.querySelector('input[name=password]')",
+);
 const injection = await send('Page.addScriptToEvaluateOnNewDocument', {
   source:
     "Object.defineProperty(window,'localStorage',{get(){throw new DOMException('Blocked','SecurityError')}})",
@@ -546,7 +555,7 @@ const videoAttempt = {
 };
 const results = {
   date: '2026-11-02',
-  origin: 'http://127.0.0.1:4174',
+  origin,
   checks,
   contrastChecks,
   interactions,

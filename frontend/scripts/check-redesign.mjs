@@ -2,13 +2,16 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
+import { mergeResolution, verifyMergePreservation } from './verify-merge-preservation.mjs';
 const root = new URL('../../', import.meta.url);
 const json = (path) => JSON.parse(readFileSync(new URL(path, root), 'utf8'));
 const hash = (content) => createHash('sha256').update(content).digest('hex');
 const approved = json('docs/ui-redesign/approved-presentation-changes.json');
 const baseline = json('docs/phase-03/baseline/preserved-frontend.json');
+verifyMergePreservation();
 for (const [path, expected] of Object.entries(baseline)) {
-  if (approved.replacedFrontendFiles.includes(path)) continue;
+  if (approved.replacedFrontendFiles.includes(path) || mergeResolution.resolvedFiles[path])
+    continue;
   assert.equal(
     hash(readFileSync(new URL(path, root))),
     expected,
@@ -56,7 +59,7 @@ for (const path of paths) {
   ])
     assert.ok(!pattern.test(content), `Possible secret in ${path}`);
 }
-const changed = execFileSync('git', ['diff', approved.baseCommit, '--name-only'], {
+const changed = execFileSync('git', ['diff', mergeResolution.functionalCommit, '--name-only'], {
   cwd: root,
   encoding: 'utf8',
 })

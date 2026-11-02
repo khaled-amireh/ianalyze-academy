@@ -14,7 +14,7 @@ All existing public URLs and navigation labels remain. The syllabus, real video 
 
 Registration is still a disabled preview. The leaderboard still has no published results. Login, student activities, submissions, grading and operational dashboards remain implementation gaps, with development previews excluded from production. This change does not introduce mock student records or imply those features are functional.
 
-Supabase files, migrations, RLS, generated database types, authentication, authorization, API contracts, environment files, hosting and deployment configuration are unchanged. No cloud operations, push, merge or deployment were performed.
+Supabase files, migrations, RLS, generated database types, authentication, authorization, API contracts, environment files, hosting and deployment configuration are unchanged. Production deployment and cloud-configuration changes are outside this redesign.
 
 ## Review locally
 

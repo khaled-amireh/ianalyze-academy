@@ -17,4 +17,4 @@ Verification: see the refreshed [route/layout/contrast evidence](browser-results
 
 The palette update passed 160 route/language/theme/width cases, 38 existing browser interaction assertions, and all sampled contrast checks. The final mobile quick-switch refinement additionally passed 17 focused theme assertions, including header fit at 320, 390 and 640px in both modes. Type checks, production build, lint, formatting, 17 frontend tests and preservation checks passed. Screenshots were refreshed after the mobile-header refinement.
 
-Backend and authentication/authorization files are unchanged. No package additions, push, merge or deployment.
+Backend and authentication/authorization files are unchanged. This theme update adds no packages or deployment changes.

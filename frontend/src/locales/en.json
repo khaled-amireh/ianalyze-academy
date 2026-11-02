@@ -78,7 +78,7 @@
     },
     "join": {
       "title": "Your curiosity is a good starting point.",
-      "description": "A place for curious students to begin. Direct student registration is coming soon."
+      "description": "Create and verify your account, then complete your academy registration."
     },
     "leaderboard": {
       "title": "Celebrate progress, respectfully.",
@@ -136,7 +136,7 @@
     "cta": {
       "eyebrow": "Your next step",
       "title": "A little curiosity goes a long way.",
-      "text": "Explore how to join. Direct student registration will open in a later release."
+      "text": "Find out how to create your account and complete academy registration."
     },
     "about": {
       "whoTitle": "Who we are",
@@ -181,7 +181,7 @@
       "outcomesTitle": "What you will be able to do",
       "outcomesText": "Work through a beginner EDA task: open a dataset, understand its structure, address common issues, create simple visualizations, and explain the findings.",
       "methodTitle": "How we learn",
-      "methodText": "A short activity is planned for every teaching week. Activity instructions and feedback features will become available when the student platform launches.",
+      "methodText": "A short activity is planned for each teaching week. Published instructions appear in the Student Dashboard; submissions and feedback availability are announced separately.",
       "methodSteps": "Explain → Practice together → Try → Review",
       "projectTitle": "Your first team EDA project",
       "projectText": "In Week 06, teams explore a simple dataset, carry out a basic analysis, create charts, and share their findings. Submission requirements and assessment details will be explained before the project begins.",
@@ -201,7 +201,7 @@
       },
       "pandas": {
         "title": "Introduction to Pandas",
-        "description": "Open your first dataset, understand rows and columns, and explore the information inside a data file."
+        "description": "Get to know the Python library Pandas, open a dataset, understand rows and columns, and explore the file contents."
       },
       "cleaning": {
         "title": "Data Cleaning",
@@ -248,7 +248,7 @@
       "optional": "Optional",
       "fields": {
         "fullName": "Full name",
-        "email": "University email",
+        "email": "Email address",
         "major": "Major",
         "year": "Academic year",
         "whatsapp": "WhatsApp number",
@@ -261,7 +261,7 @@
       "privacyText": "Authorized Team members will use registered phone numbers to manually invite students to the existing WhatsApp group. Phone numbers will not appear publicly.",
       "stepsTitle": "How joining will work",
       "steps": {
-        "account": "Authenticate your account",
+        "account": "Create your account and verify your email",
         "register": "Complete direct registration",
         "participate": "Receive Student / Participant access"
       },
@@ -280,9 +280,9 @@
       "points": "Points",
       "tableCaption": "Rankings · Awaiting approved results",
       "personalTitle": "Your own progress",
-      "personalText": "A personal ranking view will become available with student accounts.",
-      "privacyTitle": "Choose how you appear",
-      "privacyText": "Privacy-friendly aliases will let students participate without displaying their real names.",
+      "personalText": "Your personal ranking will be available when the leaderboard opens.",
+      "privacyTitle": "Your privacy on the leaderboard",
+      "privacyText": "Generated pseudonyms protect students’ privacy without displaying their real names.",
       "badgesTitle": "Achievements to look forward to",
       "badgesText": "Achievement badges are planned. Criteria will be announced before they are awarded.",
       "badgePreview": "Future badge · Not awarded"
@@ -321,12 +321,12 @@
         "answer": "A laptop and a Google account are recommended for hands-on participation in Google Colab. No complicated software installation is needed."
       },
       "registration": {
-        "question": "How will registration work?",
-        "answer": "Registration is coming soon. After authentication, students will register directly and receive Student / Participant access without Leader or Organizer approval. Authorized Team members will manually invite registered students to the WhatsApp group."
+        "question": "How do I register with the academy?",
+        "answer": "Visit the joining page for registration availability. Create your account, verify your email, and complete the registration details. Students receive access immediately without Leader or Organizer approval. Authorized Team members manually invite registered students to the WhatsApp group."
       },
       "activities": {
         "question": "How will weekly activities work?",
-        "answer": "A short activity is planned for each teaching week. Instructions, submission details, and personal feedback will become available when the student platform launches."
+        "answer": "A short activity is planned for each teaching week. Published instructions appear in the Student Dashboard; submissions and feedback availability are announced separately."
       },
       "video": {
         "question": "Can I watch Introduction to Data Science?",

@@ -33,7 +33,7 @@
     "test:browser:merge": "node scripts/merge-browser-qa.mjs",
     "local:prepare": "node scripts/prepare-local-supabase.mjs",
     "dev:local": "node --env-file=artifacts/supabase-auth-integration/frontend.env node_modules/vite/bin/vite.js",
-    "test:local": "node --env-file=artifacts/supabase-auth-integration/stack.env --test --test-concurrency=1 tests/supabase.integration.test.mjs tests/auth-email.integration.test.mjs tests/delivery.integration.test.mjs",
+    "test:local": "node --env-file=artifacts/supabase-auth-integration/stack.env --test --test-concurrency=1 tests/supabase.integration.test.mjs tests/auth-email.integration.test.mjs tests/delivery.integration.test.mjs tests/registration.integration.test.mjs",
     "check:database-types:local": "node --env-file=artifacts/supabase-auth-integration/stack.env scripts/generate-database-types.mjs --local --check",
     "build:production": "node scripts/build-pages-production.mjs",
     "check:pages:production": "node scripts/check-pages-artifact.mjs --configured",

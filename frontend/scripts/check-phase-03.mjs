@@ -3,7 +3,11 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { root } from './database-fixture.mjs';
-import { mergeResolution, verifyMergePreservation } from './verify-merge-preservation.mjs';
+import {
+  authIntegration,
+  mergeResolution,
+  verifyMergePreservation,
+} from './verify-merge-preservation.mjs';
 
 const manifest = JSON.parse(
   readFileSync(new URL('docs/phase-03/baseline/preserved-frontend.json', root), 'utf8'),
@@ -28,7 +32,7 @@ for (const [path, hash] of Object.entries(manifest)) {
     createHash('sha256')
       .update(readFileSync(new URL(integration[path] ?? path, root)))
       .digest('hex'),
-    hash,
+    authIntegration.files[path]?.sha256 ?? hash,
     `Unrelated frontend/Yomna file changed: ${path}`,
   );
 }

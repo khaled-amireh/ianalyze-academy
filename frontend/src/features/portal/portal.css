@@ -203,3 +203,16 @@
 .portal-page .portal-grid {
   padding: 0;
 }
+
+/* Let translated and authored titles wrap without widening their layout. */
+.portal-page h1,
+.portal-page h2,
+.portal-page h3,
+.portal-page summary {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.portal-page .portal-actions > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

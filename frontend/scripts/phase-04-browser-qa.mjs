@@ -28,6 +28,10 @@ const suffix = randomUUID(),
   email = `ui-student-${suffix}@example.test`,
   teamEmail = `ui-team-${suffix}@example.test`;
 const password = `Local-${randomUUID()}-Aa9!`;
+const arabicWeekTitle =
+  'اختبار محلي لعنوان أسبوع طويل: أساسيات Python وتطبيقات مكتبة Pandas وقراءة البيانات وتنظيفها وعرض النتائج بوضوح على الشاشات الصغيرة دون تغيير ترتيب الخطة الدراسية';
+const arabicActivityTitle =
+  'نشاط اختبار محلي طويل: استخدام Pandas لاستكشاف البيانات وتنظيفها وكتابة ملاحظات واضحة ومراجعة النتائج ضمن نشاط تدريبي مخصص لاختبار الواجهة العربية على الهاتف';
 const users = [],
   paths = [],
   exceptions = [],
@@ -118,7 +122,7 @@ async function login(address) {
   await wait(
     address === teamEmail
       ? "location.pathname==='/workspace'&&Boolean(document.querySelector('#students'))"
-      : "location.pathname==='/student'&&Boolean(document.querySelector('input[name=full_name]'))",
+      : "location.pathname==='/student'&&Boolean(document.querySelector('[data-student-dashboard]'))",
     'verified role dashboard',
   );
 }
@@ -144,7 +148,7 @@ async function portalMatrix(path, role) {
         await navigate(path);
         await wait(
           role === 'student'
-            ? "Boolean(document.querySelector('input[name=full_name]'))"
+            ? "Boolean(document.querySelector('[data-student-dashboard]'))"
             : "Boolean(document.querySelector('#students'))",
           'authenticated dashboard data',
         );
@@ -153,6 +157,35 @@ async function portalMatrix(path, role) {
           language === 'ar' ? 'rtl' : 'ltr',
         );
         assert.equal(await evaluate('document.documentElement.dataset.theme'), theme);
+        const headings = await evaluate(
+          "[...document.querySelectorAll('h3')].map(h=>h.textContent)",
+        );
+        const weekTitles =
+          role === 'student'
+            ? headings
+            : await evaluate(
+                "[...document.querySelectorAll('#activities > .portal-actions > span')].map(e=>e.textContent)",
+              );
+        assert.ok(
+          weekTitles.some((text) =>
+            text.includes(language === 'ar' ? arabicWeekTitle : 'LOCAL UI TEST'),
+          ),
+          'Database week title respects selected language',
+        );
+        if (language === 'ar') {
+          assert.ok(
+            headings.some((text) => text.includes(arabicActivityTitle)),
+            'Database activity title is Arabic in Student and Team views',
+          );
+          assert.ok(
+            !headings.some((text) => text.includes('LOCAL UI ACTIVITY')),
+            'No English-only activity headings in Arabic',
+          );
+          assert.ok(
+            headings.some((text) => text.includes('Pandas')),
+            'Official library names remain identifiable',
+          );
+        }
         assert.equal(
           await evaluate('document.documentElement.scrollWidth>innerWidth+2'),
           false,
@@ -187,7 +220,7 @@ async function portalMatrix(path, role) {
   await navigate(path);
   await wait(
     role === 'student'
-      ? "Boolean(document.querySelector('input[name=full_name]'))"
+      ? "Boolean(document.querySelector('[data-student-dashboard]'))"
       : "Boolean(document.querySelector('#students'))",
     'restored dashboard',
   );
@@ -231,8 +264,8 @@ try {
   approved = true;
   await sql`create or replace function app_private.submission_service_enabled() returns boolean language sql immutable set search_path='' as $$select true$$`;
   await sql`create or replace function app_private.leaderboard_enabled() returns boolean language sql immutable set search_path='' as $$select true$$`;
-  await sql`insert into public.academy_weeks(id,week_number,kind,title_ar,title_en,status) values(${ids.week},1,'teaching','اختبار محلي','LOCAL UI TEST','published')`;
-  await sql`insert into public.activities(id,week_id,title_ar,title_en,instructions_ar,instructions_en,max_score,status) values(${ids.activity},${ids.week},'نشاط اختبار محلي','LOCAL UI ACTIVITY','اختبار فقط','LOCAL UI TEST instructions',10,'published')`;
+  await sql`insert into public.academy_weeks(id,week_number,kind,title_ar,title_en,description_ar,description_en,status) values(${ids.week},1,'teaching',${arabicWeekTitle},'LOCAL UI TEST','وصف محلي لاختبار اتجاه Python وPandas في المحتوى المخزن في قاعدة البيانات.','LOCAL DATABASE DESCRIPTION: Python and Pandas.','published')`;
+  await sql`insert into public.activities(id,week_id,title_ar,title_en,instructions_ar,instructions_en,max_score,status) values(${ids.activity},${ids.week},${arabicActivityTitle},'LOCAL UI ACTIVITY','اختبار فقط','LOCAL UI TEST instructions',10,'published')`;
   await sql`insert into public.rubrics(id,activity_id,version) values(${ids.rubric},${ids.activity},1)`;
   await sql`insert into public.rubric_criteria(id,rubric_id,label_ar,label_en,max_points,sort_order) values(${ids.criterion},${ids.rubric},'اختبار محلي','LOCAL UI criterion',10,0)`;
   await sql`update public.rubrics set status='published' where id=${ids.rubric}`;
@@ -344,16 +377,59 @@ try {
     python_experience: 'basic',
   }))
     await fill(`[name=${name}]`, value);
+  const studentSessionBeforeSave = await evaluate(
+    "JSON.parse(localStorage.getItem('ianalyze.auth')).user.id",
+  );
+  await evaluate("document.querySelector('input[name=consent]').click()");
+  await send('Network.setBlockedURLs', { urls: [api + '/rest/v1/rpc/complete_registration*'] });
+  try {
+    await evaluate("document.querySelector('form').requestSubmit()");
+    await wait(
+      "Boolean(document.querySelector('[role=alert]'))",
+      'failed registration remains on form',
+    );
+    assert.equal(
+      await evaluate("document.querySelector('input[name=full_name]').value"),
+      'LOCAL UI STUDENT',
+    );
+    assert.equal(await evaluate('location.pathname'), '/student');
+    assert.equal(
+      (await sql`select registered_at from public.profiles where id=${student.id}`)[0]
+        .registered_at,
+      null,
+    );
+  } finally {
+    await send('Network.setBlockedURLs', { urls: [] });
+  }
   await evaluate(
-    "document.querySelector('input[name=consent]').click();document.querySelector('form').requestSubmit()",
+    "document.querySelector('form').requestSubmit();document.querySelector('form').requestSubmit()",
   );
   await wait(
-    "document.body.innerText.includes('LOCAL UI ACTIVITY')",
-    'completed registration and activities',
+    "Boolean(document.querySelector('[data-student-dashboard]'))&&document.body.innerText.includes('LOCAL UI ACTIVITY')",
+    'confirmed Save opens dashboard without login',
   );
+  assert.equal(
+    await evaluate("Boolean(document.querySelector('input[name=full_name]'))"),
+    false,
+    'Registered users do not see the registration form again',
+  );
+  assert.equal(
+    await evaluate("JSON.parse(localStorage.getItem('ianalyze.auth')).user.id"),
+    studentSessionBeforeSave,
+  );
+  assert.ok(await evaluate("Boolean(document.querySelector('.portal-notice-success'))"));
+  assert.equal(
+    Number(
+      (
+        await sql`select count(*) as n from public.profiles where id=${student.id} and registered_at is not null`
+      )[0].n,
+    ),
+    1,
+  );
+
   await send('Page.reload');
   await wait(
-    "Boolean(document.querySelector('input[name=full_name]'))&&document.body.innerText.includes('LOCAL UI ACTIVITY')",
+    "Boolean(document.querySelector('[data-student-dashboard]'))&&document.body.innerText.includes('LOCAL UI ACTIVITY')",
     'persistent session after document refresh',
   );
   // Expired cache metadata forces the SDK through the real local refresh-token endpoint.
@@ -362,8 +438,30 @@ try {
   );
   await send('Page.reload');
   await wait(
-    "Boolean(document.querySelector('input[name=full_name]'))&&document.body.innerText.includes('LOCAL UI ACTIVITY')",
+    "Boolean(document.querySelector('[data-student-dashboard]'))&&document.body.innerText.includes('LOCAL UI ACTIVITY')",
     'real session refresh',
+  );
+  await send('Network.setBlockedURLs', { urls: [api + '/rest/v1/rpc/current_academy_role*'] });
+  try {
+    await send('Page.reload');
+    await wait(
+      "Boolean(document.querySelector('[role=alert]'))",
+      'session verification failure is retryable',
+    );
+    assert.equal(await evaluate('location.pathname'), '/student');
+    assert.equal(
+      await evaluate("Boolean(document.querySelector('[data-student-dashboard]'))"),
+      false,
+    );
+  } finally {
+    await send('Network.setBlockedURLs', { urls: [] });
+  }
+  await evaluate(
+    "[...document.querySelectorAll('button')].find(b=>b.textContent==='Refresh').click()",
+  );
+  await wait(
+    "Boolean(document.querySelector('[data-student-dashboard]'))",
+    'session retry without password',
   );
   const doc = await send('DOM.getDocument');
   const input = await send('DOM.querySelector', {
@@ -389,6 +487,38 @@ try {
   await wait("document.body.innerText.includes('Unable to log in')", 'invalid password feedback');
   assert.equal(await evaluate('location.pathname'), '/login');
   await login(teamEmail);
+  await navigate('/student');
+  await wait(
+    "Boolean(document.querySelector('input[name=full_name]'))",
+    'Team profile registration',
+  );
+  for (const [name, value] of Object.entries({
+    full_name: 'LOCAL UI TEAM',
+    whatsapp: '+962790000002',
+    major: 'AI',
+    academic_year: '4',
+    python_experience: 'experienced',
+  }))
+    await fill('[name=' + name + ']', value);
+  const teamBeforeSave = await evaluate(
+    "JSON.parse(localStorage.getItem('ianalyze.auth')).user.id",
+  );
+  await evaluate(
+    "document.querySelector('input[name=consent]').click();document.querySelector('form').requestSubmit()",
+  );
+  await wait(
+    "location.pathname==='/workspace'&&Boolean(document.querySelector('#students'))",
+    'Team Save returns to management without login',
+  );
+  assert.equal(
+    await evaluate("JSON.parse(localStorage.getItem('ianalyze.auth')).user.id"),
+    teamBeforeSave,
+  );
+  assert.equal(
+    (await sql`select role from app_private.user_roles where user_id=${teamBeforeSave}::uuid`)[0]
+      .role,
+    'team',
+  );
   await navigate('/workspace');
   await wait("document.body.innerText.includes('LOCAL UI STUDENT')", 'Team student list');
   assert.equal(
@@ -437,13 +567,13 @@ try {
     });
     await send('Runtime.enable', {}, attached.sessionId);
     await wait(
-      "Boolean(document.querySelector('input[name=full_name]'))",
+      "Boolean(document.querySelector('[data-student-dashboard]'))",
       'shared session in second tab',
       attached.sessionId,
     );
     await logout();
     await wait(
-      "location.pathname==='/login'&&!document.querySelector('input[name=full_name]')",
+      "location.pathname==='/login'&&!document.querySelector('input[name=full_name]')&&!document.querySelector('[data-student-dashboard]')",
       'cross-tab logout clears private UI',
       attached.sessionId,
     );
@@ -453,7 +583,7 @@ try {
   await login(email);
   await send('Page.navigate', { url: origin + '/workspace' });
   await wait(
-    "location.pathname==='/student'&&Boolean(document.querySelector('input[name=full_name]'))",
+    "location.pathname==='/student'&&Boolean(document.querySelector('[data-student-dashboard]'))",
     'Student denied Team route',
   );
   await logout();
@@ -483,7 +613,7 @@ try {
   await fill('input[name=password]', password + '-new');
   await evaluate("document.querySelector('form').requestSubmit()");
   await wait(
-    "Boolean(document.querySelector('input[name=full_name]'))",
+    "Boolean(document.querySelector('[data-student-dashboard]'))",
     'profile after password reset',
   );
   await logout();
@@ -517,7 +647,7 @@ try {
   await fill('input[name=password]', password + '-email-reset');
   await evaluate("document.querySelector('form').requestSubmit()");
   await wait(
-    "Boolean(document.querySelector('input[name=full_name]'))",
+    "Boolean(document.querySelector('[data-student-dashboard]'))",
     'login after captured-email recovery',
   );
   await logout();
@@ -576,7 +706,10 @@ try {
       'legacy resend guidance',
     );
     assert.equal(await evaluate('location.hash'), '');
-    assert.equal(await evaluate("Boolean(document.querySelector('input[name=full_name]'))"), false);
+    assert.equal(
+      await evaluate("Boolean(document.querySelector('[data-student-dashboard]'))"),
+      false,
+    );
     await navigate('/login');
     await fill('input[name=email]', resendAddress);
     await fill('input[name=password]', password);
@@ -586,14 +719,24 @@ try {
     "location.pathname==='/student'&&Boolean(document.querySelector('input[name=full_name]'))",
     'resent confirmation permits verified login',
   );
-  await logout();
+  await evaluate(
+    "const saved=JSON.parse(localStorage.getItem('ianalyze.auth'));saved.expires_at=1;saved.refresh_token='LOCAL_EXPIRED_REFRESH_TEST';localStorage.setItem('ianalyze.auth',JSON.stringify(saved))",
+  );
+  await send('Page.reload');
+  await wait(
+    "location.pathname==='/login'&&Boolean(document.querySelector('input[name=password]'))",
+    'actually expired session requires login',
+  );
   await navigate('/auth/callback?token_hash=LOCAL_INVALID_EXPIRED_TEST&type=signup');
   await wait(
     'Boolean(document.querySelector(\'main a[href="/login"]\'))',
     'invalid confirmation link retry',
   );
   assert.equal(await evaluate('location.search'), '');
-  assert.equal(await evaluate("Boolean(document.querySelector('input[name=full_name]'))"), false);
+  assert.equal(
+    await evaluate("Boolean(document.querySelector('[data-student-dashboard]'))"),
+    false,
+  );
   await navigate('/leaderboard');
   await wait("Boolean(document.querySelector('tbody tr'))", 'real leaderboard');
   const ranking = await evaluate("document.querySelector('table').innerText");
@@ -707,6 +850,13 @@ try {
         invalidPasswordDenied: true,
         invalidEmailLinkDenied: true,
         profile: true,
+        serverConfirmedDashboardHandoff: true,
+        studentAndTeamSessionsRetained: true,
+        registrationFailureValuesRetained: true,
+        duplicateRegistrationPrevented: true,
+        existingRegistrationFormHidden: true,
+        sessionVerificationRetryWithoutLogin: true,
+        genuinelyExpiredSessionDenied: true,
         passwordRecoveryCallback: true,
         recoveryTransportFailure: true,
         inlineValidation: true,

@@ -18,7 +18,7 @@ for (const [path, expected] of Object.entries(baseline)) {
     continue;
   assert.equal(
     hash(readFileSync(new URL(path, root))),
-    expected,
+    authIntegration.files[path]?.sha256 ?? expected,
     `Preserved historical file changed: ${path}`,
   );
 }

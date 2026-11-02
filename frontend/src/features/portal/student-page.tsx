@@ -1,12 +1,13 @@
 import { useId, useRef, useState, type FormEvent } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useAuth } from '@/features/auth/use-auth';
 import { privacyApproved, registrationEnabled, submissionsEnabled } from '@/lib/academy-client';
-import { updateOwnProfile } from '@/lib/academy-data';
+import { saveAcademyProfile } from '@/lib/academy-data';
 import { PageContainer } from '@/components/shared/page-container';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { stateText, usePortalCopy } from './copy';
+import { MixedText } from '@/components/shared/mixed-text';
 import { FormField } from '@/components/shared/form-field';
 import { FormNotice } from './form-feedback';
 import {
@@ -28,12 +29,10 @@ import {
 
 function ProfileForm({
   profile,
-  reload,
   onSaved,
 }: {
   profile: Row<'profiles'>;
-  reload: () => void;
-  onSaved: (registered: boolean) => void;
+  onSaved: (profile: Row<'profiles'>, registered: boolean) => void;
 }) {
   const { c, arabic } = usePortalCopy();
   const id = useId(),
@@ -59,24 +58,20 @@ function ProfileForm({
     inFlight.current = true;
     setBusy(true);
     try {
-      const updated = await updateOwnProfile(client(), {
-        full_name: String(form.get('full_name')).trim(),
-        whatsapp: String(form.get('whatsapp')).trim(),
-        major: String(form.get('major')).trim(),
-        academic_year: Number(form.get('academic_year')),
-        python_experience: String(form.get('python_experience')),
-        university_id: String(form.get('university_id') ?? '').trim() || null,
-        locale: arabic ? 'ar' : 'en',
-      });
-      if (updated.error) throw updated.error;
-      if (registering) {
-        const result = await client().rpc('complete_registration', {
-          p_consent_version: 'registration-v1',
-        });
-        if (result.error) throw result.error;
-      }
-      onSaved(registering);
-      reload();
+      const persisted = await saveAcademyProfile(
+        client(),
+        {
+          full_name: String(form.get('full_name')).trim(),
+          whatsapp: String(form.get('whatsapp')).trim(),
+          major: String(form.get('major')).trim(),
+          academic_year: Number(form.get('academic_year')),
+          python_experience: String(form.get('python_experience')),
+          university_id: String(form.get('university_id') ?? '').trim() || null,
+          locale: arabic ? 'ar' : 'en',
+        },
+        registering,
+      );
+      onSaved(persisted, registering);
     } catch (error) {
       setMessage(c[requestError(error)]);
     } finally {
@@ -283,10 +278,25 @@ function NotebookUpload({
 export function StudentPage() {
   const { c, arabic } = usePortalCopy();
   const auth = useAuth();
-  const { data, error, reload } = useRemote(loadPortal);
+  const navigate = useNavigate();
+  const { data, error, reload, update, refresh } = useRemote(loadPortal);
   const [message, setMessage] = useState('');
   const [saved, setSaved] = useState<'registered' | 'saved' | null>(null);
-  const onSaved = (registered: boolean) => setSaved(registered ? 'registered' : 'saved');
+  const [editing, setEditing] = useState(false);
+  const onSaved = (profile: Row<'profiles'>, registered: boolean) => {
+    update((current) => ({
+      ...current,
+      profiles: current.profiles.map((p) => (p.id === profile.id ? profile : p)),
+    }));
+    setSaved(registered ? 'registered' : 'saved');
+    setEditing(false);
+    // Registration changes which learning records RLS releases to this session.
+    refresh();
+    navigate(auth.role === 'team' ? '/workspace' : '/student', {
+      replace: true,
+      state: { profileSaved: registered ? 'registered' : 'saved' },
+    });
+  };
   if (!data)
     return (
       <PageContainer className="portal-page">
@@ -307,11 +317,11 @@ export function StudentPage() {
         <nav className="portal-actions">
           <Button onClick={() => void auth.signOut()}>{c.logout}</Button>
         </nav>
-        <ProfileForm profile={profile} reload={reload} onSaved={onSaved} />
+        <ProfileForm profile={profile} onSaved={onSaved} />
       </PageContainer>
     );
   return (
-    <PageContainer className="portal-page">
+    <PageContainer className="portal-page" data-student-dashboard>
       <h1 id="page-title" tabIndex={-1}>
         {c.dashboard}
       </h1>
@@ -324,9 +334,13 @@ export function StudentPage() {
         <Link to="/privacy">{c.privacy}</Link>
       </nav>
       <FormNotice message={saved ? c[saved] : ''} kind="success" />
-      {profile && (
-        <ProfileForm key={profile.id} profile={profile} reload={reload} onSaved={onSaved} />
+      {error && <FormNotice message={c.error} kind="error" />}
+      {profile && !editing && (
+        <Button variant="outline" onClick={() => setEditing(true)}>
+          {c.editProfile}
+        </Button>
       )}
+      {profile && editing && <ProfileForm key={profile.id} profile={profile} onSaved={onSaved} />}
       <h2>{c.activities}</h2>
       {topics.map((topic, index) => {
         const week = data.weeks.find((w) => w.week_number === index + 1);
@@ -334,8 +348,22 @@ export function StudentPage() {
         return (
           <section className="content-card" key={topic}>
             <h3>
-              {index + 1}. {arabic ? topicsAr[index] : topic}
+              <bdi>{new Intl.NumberFormat(arabic ? 'ar-JO' : 'en-GB').format(index + 1)}</bdi>.{' '}
+              <MixedText>
+                {week
+                  ? arabic
+                    ? week.title_ar
+                    : week.title_en
+                  : arabic
+                    ? topicsAr[index]!
+                    : topic}
+              </MixedText>
             </h3>
+            {week && (arabic ? week.description_ar : week.description_en) && (
+              <p>
+                <MixedText>{arabic ? week.description_ar : week.description_en}</MixedText>
+              </p>
+            )}
             {activities.length === 0 && <p>{c.unpublished}</p>}
             {activities.map((activity) => {
               const rubric = data.rubrics
@@ -346,7 +374,9 @@ export function StudentPage() {
               );
               return (
                 <article key={activity.id}>
-                  <h3>{arabic ? activity.title_ar : activity.title_en}</h3>
+                  <h3>
+                    <MixedText>{arabic ? activity.title_ar : activity.title_en}</MixedText>
+                  </h3>
                   <pre>{arabic ? activity.instructions_ar : activity.instructions_en}</pre>
                   <p>
                     {c.deadline}:{' '}

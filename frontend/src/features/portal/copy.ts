@@ -1,6 +1,10 @@
 import { useTranslation } from 'react-i18next';
 
 const en = {
+  editProfile: 'Edit profile',
+  version: 'Version',
+  sessionVerificationError:
+    'Your session could not be verified. Retry, or log in again if it has expired.',
   confirmationLoginHelp:
     'The email link has returned to the academy. Log in with your email and password to continue. If your email is not confirmed, request a new confirmation message. Use the browser where you started signup or recovery to finish those links.',
   requiredField: 'This field is required.',
@@ -61,7 +65,7 @@ const en = {
   privacy: 'Privacy notice',
   draft: 'Draft — awaiting owner approval',
   complete: 'Complete registration',
-  registered: 'Registration completed. Your account has Student access immediately.',
+  registered: 'Registration completed. Your dashboard is ready.',
   activities: 'Weekly activities',
   instructions: 'Instructions',
   deadline: 'Deadline',
@@ -134,6 +138,9 @@ const en = {
 };
 export type PortalCopy = Record<keyof typeof en, string>;
 const ar: PortalCopy = {
+  editProfile: 'تعديل الملف الشخصي',
+  version: 'الإصدار',
+  sessionVerificationError: 'تعذر التحقق من جلستك. حاول مجددًا، أو سجّل الدخول إذا انتهت صلاحيتها.',
   confirmationLoginHelp:
     'تمت العودة من رابط البريد. سجّل الدخول بالبريد وكلمة المرور لإكمال التسجيل. إذا لم يُؤكَّد البريد، اطلب رسالة تأكيد جديدة. استخدم المتصفح الذي بدأت فيه التسجيل لإكمال روابط التأكيد والاستعادة.',
   requiredField: 'هذا الحقل مطلوب.',
@@ -147,7 +154,7 @@ const ar: PortalCopy = {
   tooLong: 'القيمة المدخلة طويلة جدًا.',
   networkError: 'تعذر الاتصال. يرجى المحاولة مجددًا.',
   invalidCredentials: 'تعذر تسجيل الدخول. تحقق من البريد الإلكتروني وكلمة المرور.',
-  rateLimited: 'طلبات كثيرة. يرجى الانتظار قبل المحاولة مجددًا.',
+  rateLimited: 'تجاوزت الحد المسموح من الطلبات. يرجى الانتظار قبل المحاولة مجددًا.',
   sessionExpired: 'انتهت صلاحية الجلسة. سجّل الدخول مجددًا أو اطلب رسالة استعادة جديدة.',
   passwordRejected:
     'كلمة المرور لا تستوفي متطلبات الأمان. اختر كلمة مرور مختلفة تتكون من 12 حرفًا على الأقل.',
@@ -181,28 +188,28 @@ const ar: PortalCopy = {
   dashboard: 'لوحتي',
   profile: 'ملفي الشخصي',
   fullName: 'الاسم الكامل',
-  whatsapp: 'رقم واتساب بالصيغة الدولية',
+  whatsapp: 'رقم WhatsApp (بصيغة دولية)',
   major: 'التخصص',
   year: 'السنة الدراسية',
-  python: 'الخبرة في بايثون',
-  none: 'لا توجد',
-  basic: 'أساسية',
-  experienced: 'متقدمة',
+  python: 'الخبرة في Python',
+  none: 'لا توجد خبرة سابقة',
+  basic: 'خبرة أساسية',
+  experienced: 'لديّ خبرة',
   universityId: 'الرقم الجامعي (اختياري)',
   consent: 'قرأت إشعار الخصوصية المعتمد وأوافق عليه.',
   privacy: 'إشعار الخصوصية',
   draft: 'مسودة — بانتظار اعتماد المالك',
   complete: 'إكمال التسجيل',
-  registered: 'اكتمل التسجيل. يتم منح صلاحية الطالب مباشرة.',
+  registered: 'اكتمل التسجيل بنجاح. لوحة التحكم جاهزة.',
   activities: 'الأنشطة الأسبوعية',
   instructions: 'التعليمات',
-  deadline: 'موعد التسليم',
+  deadline: 'الموعد النهائي للتسليم',
   noDeadline: 'لم يُعلن موعد التسليم',
   unpublished: 'لم يُنشر نشاط لهذا الأسبوع بعد.',
   rubric: 'معايير التقييم',
   upload: 'تسليم دفتر العمل',
   uploadHint:
-    'ملف ipynb فقط، بحد أقصى 256 كيلوبايت. يُفحص الملف دون تنفيذ شفرته. محاولتان لكل نشاط كحد أقصى؛ المحاولة الثانية تتطلب طلب إعادة تسليم.',
+    'ملفات .ipynb فقط، بحد أقصى 256 KiB. تُفحص الملفات دون تنفيذ الشيفرة. يُسمح بمحاولتين كحد أقصى لكل نشاط، وتتطلب المحاولة الثانية طلب إعادة التسليم.',
   uploadClosed: 'تسليم الدفاتر مغلق حاليًا.',
   submitted: 'تم تسليم دفتر العمل.',
   submissions: 'تسليماتي',
@@ -225,33 +232,33 @@ const ar: PortalCopy = {
   instructionsEn: 'تعليمات إنجليزية معتمدة',
   maximum: 'الدرجة القصوى',
   publish: 'نشر',
-  draftSave: 'حفظ مسودة',
+  draftSave: 'حفظ كمسودة',
   approved: 'أؤكد اعتماد هذا المحتوى ومعايير تقييمه للنشر للطلاب.',
   criteria: 'معايير التقييم',
   addCriterion: 'إضافة معيار',
-  createRubric: 'إنشاء معايير مسودة',
-  publishRubric: 'نشر المعايير',
-  criterionAr: 'المعيار بالعربية',
-  criterionEn: 'المعيار بالإنجليزية',
+  createRubric: 'إنشاء مسودة معايير التقييم',
+  publishRubric: 'نشر معايير التقييم',
+  criterionAr: 'نص المعيار بالعربية',
+  criterionEn: 'نص المعيار بالإنجليزية',
   review: 'مراجعة التسليمات',
-  points: 'الدرجات',
+  points: 'النقاط',
   resubmit: 'طلب إعادة التسليم',
   leaderboard: 'لوحة الترتيب',
   alias: 'الاسم المستعار',
   rank: 'الترتيب',
   total: 'مجموع الدرجات',
   rules:
-    'أفضل درجة منشورة لكل نشاط وفق أحدث مراجعة منشورة لكل محاولة. التعادل: عدد الأنشطة المقيمة ثم أسبقية آخر نشر ثم معرّف داخلي ثابت. لا تُعرض الأسماء الحقيقية أو بيانات التواصل.',
+    'تُحتسب أفضل درجة منشورة لكل نشاط، وفق أحدث إصدار منشور لكل محاولة. يُحسم التعادل بعدد الأنشطة المقيّمة، ثم أسبقية آخر نشر، ثم معرّف داخلي ثابت. لا تُعرض الأسماء الحقيقية أو بيانات التواصل.',
   expired: 'الرابط غير صالح أو منتهي أو استُخدم سابقًا. اطلب رابطًا جديدًا.',
-  backLogin: 'العودة للدخول',
+  backLogin: 'العودة إلى تسجيل الدخول',
   retry: 'تحديث',
   select: 'اختر',
   preview: 'عرض مسودة الخصوصية',
   privacyPending: 'لا يمكن إكمال التسجيل قبل اعتماد المالك لإشعار الخصوصية.',
-  confirmEmail: 'أكد بريدك قبل الدخول. يمكنك طلب رسالة تأكيد جديدة أدناه.',
+  confirmEmail: 'أكّد بريدك الإلكتروني قبل تسجيل الدخول. يمكنك طلب رسالة تأكيد جديدة أدناه.',
   resend: 'إعادة إرسال التأكيد',
   uploading: 'جارٍ الرفع…',
-  roleDenied: 'تتطلب هذه الصفحة حساب أكاديمية مخولًا.',
+  roleDenied: 'تتطلب هذه الصفحة حسابًا مخوّلًا في الأكاديمية.',
   stateDraft: 'مسودة',
   statePublished: 'منشور',
   stateUploading: 'بانتظار اكتمال الرفع',
@@ -283,6 +290,7 @@ export function stateText(status: string | undefined, c: Record<keyof typeof en,
       return '—';
   }
 }
+export const portalTranslations = { en, ar };
 export function usePortalCopy() {
   const { i18n } = useTranslation();
   const arabic = i18n.resolvedLanguage === 'ar';

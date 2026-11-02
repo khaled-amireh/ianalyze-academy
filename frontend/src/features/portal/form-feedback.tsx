@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CircleAlert, CircleCheck, Info, Eye, EyeOff } from 'lucide-react';
+import { MixedText } from '@/components/shared/mixed-text';
 import { FormField } from '@/components/shared/form-field';
 import { Input } from '@/components/ui/input';
 import { errorAttributes, type ValidationCode } from './form-validation';
@@ -22,7 +23,9 @@ export function FormNotice({
       aria-atomic="true"
     >
       <Icon aria-hidden="true" size={18} />
-      <p>{message}</p>
+      <p>
+        <MixedText>{message}</MixedText>
+      </p>
     </div>
   );
 }

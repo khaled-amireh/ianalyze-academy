@@ -50,6 +50,17 @@ export function ProtectedPortal({ team = false }: { team?: boolean }) {
         <p role="status">{c.wait}</p>
       </PageContainer>
     );
+  if (auth.status === 'error')
+    return (
+      <PageContainer className="portal-page">
+        <h1 id="page-title" tabIndex={-1}>
+          {team ? c.team : c.dashboard}
+        </h1>
+        <FormNotice message={c.sessionVerificationError} kind="error" />
+        <Button onClick={() => void auth.refresh()}>{c.retry}</Button>
+        <Link to="/login">{c.login}</Link>
+      </PageContainer>
+    );
   if (auth.status !== 'signed-in') return <Navigate to="/login" replace />;
   if (team && auth.role !== 'team') return <Navigate to="/student" replace />;
   return <Outlet />;

@@ -1,10 +1,12 @@
 import { useCallback, useState, type FormEvent } from 'react';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { useAuth } from '@/features/auth/use-auth';
 import { PageContainer } from '@/components/shared/page-container';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { stateText, usePortalCopy } from './copy';
+import { MixedText } from '@/components/shared/mixed-text';
+import { FormNotice } from './form-feedback';
 import {
   checked,
   client,
@@ -26,7 +28,7 @@ function ActivityEditor({
   reload: () => void;
   activity?: Row<'activities'>;
 }) {
-  const { c } = usePortalCopy();
+  const { c, arabic } = usePortalCopy();
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
   const due = activity?.due_at ? new Date(activity.due_at) : null;
@@ -73,7 +75,11 @@ function ActivityEditor({
   }
   return (
     <form onSubmit={save}>
-      <h3>{activity ? activity.title_en : c.createActivity}</h3>
+      <h3>
+        <MixedText>
+          {activity ? (arabic ? activity.title_ar : activity.title_en) : c.createActivity}
+        </MixedText>
+      </h3>
       <div className="portal-grid">
         <label>
           {c.week}
@@ -81,7 +87,8 @@ function ActivityEditor({
             <option value="">{c.select}</option>
             {data.weeks.map((w) => (
               <option value={w.id} key={w.id}>
-                {w.week_number}. {w.title_en}
+                {new Intl.NumberFormat(arabic ? 'ar-JO' : 'en-GB').format(w.week_number)}.{' '}
+                {arabic ? w.title_ar : w.title_en}
               </option>
             ))}
           </select>
@@ -100,11 +107,23 @@ function ActivityEditor({
         </label>
         <label>
           {c.titleAr}
-          <Input name="title_ar" maxLength={200} defaultValue={activity?.title_ar ?? ''} required />
+          <Input
+            name="title_ar"
+            dir="rtl"
+            maxLength={200}
+            defaultValue={activity?.title_ar ?? ''}
+            required
+          />
         </label>
         <label>
           {c.titleEn}
-          <Input name="title_en" maxLength={200} defaultValue={activity?.title_en ?? ''} required />
+          <Input
+            name="title_en"
+            dir="ltr"
+            maxLength={200}
+            defaultValue={activity?.title_en ?? ''}
+            required
+          />
         </label>
         <label>
           {c.instructionsAr}
@@ -184,14 +203,16 @@ function RubricEditor({
   return (
     <section>
       <h3>
-        {c.rubric}: {activity.title_en}
+        {c.rubric}: <MixedText>{arabic ? activity.title_ar : activity.title_en}</MixedText>
       </h3>
       {data.rubrics
         .filter((r) => r.activity_id === activity.id)
         .map((r) => (
           <div key={r.id}>
             <p>
-              v{r.version} — {stateText(r.status, c)}
+              {c.version}{' '}
+              <bdi>{new Intl.NumberFormat(arabic ? 'ar-JO' : 'en-GB').format(r.version)}</bdi> —{' '}
+              {stateText(r.status, c)}
             </p>
             <ul>
               {data.criteria
@@ -239,6 +260,7 @@ function RubricEditor({
           <div className="portal-criterion" key={i}>
             <Input
               name={`ar${i}`}
+              dir="rtl"
               placeholder={c.criterionAr}
               aria-label={`${c.criterionAr} ${i + 1}`}
               maxLength={300}
@@ -246,6 +268,7 @@ function RubricEditor({
             />
             <Input
               name={`en${i}`}
+              dir="ltr"
               placeholder={c.criterionEn}
               aria-label={`${c.criterionEn} ${i + 1}`}
               maxLength={300}
@@ -408,7 +431,9 @@ function Review({
   return (
     <section className="content-card">
       <h3>
-        {student?.full_name ?? submission.student_id} — {activity?.title_en} — #{submission.attempt}
+        <bdi dir="auto">{student?.full_name ?? submission.student_id}</bdi> —{' '}
+        <MixedText>{(arabic ? activity?.title_ar : activity?.title_en) ?? ''}</MixedText> —{' '}
+        <bdi>#{submission.attempt}</bdi>
       </h3>
       <p>
         {c.status}: {stateText(submission.status, c)}
@@ -521,6 +546,8 @@ function Materials() {
 export function TeamPageLive() {
   const { c, arabic } = usePortalCopy();
   const auth = useAuth();
+  const location = useLocation();
+  const profileSaved = (location.state as { profileSaved?: string } | null)?.profileSaved;
   const { data, error, reload } = useRemote(loadPortal);
   const [message, setMessage] = useState('');
   const [reviewPage, setReviewPage] = useState(0);
@@ -555,6 +582,12 @@ export function TeamPageLive() {
           {c.logout}
         </Button>
       </nav>
+      <FormNotice
+        message={
+          profileSaved === 'registered' ? c.registered : profileSaved === 'saved' ? c.saved : ''
+        }
+        kind="success"
+      />
       <section id="students" className="content-card">
         <h2>{c.students}</h2>
         <div className="portal-table" role="region" aria-label={c.students} tabIndex={0}>
@@ -568,6 +601,11 @@ export function TeamPageLive() {
               </tr>
             </thead>
             <tbody>
+              {!data.profiles.some((p) => p.registered_at) && (
+                <tr>
+                  <td colSpan={4}>{c.noRecords}</td>
+                </tr>
+              )}
               {data.profiles
                 .filter((p) => p.registered_at)
                 .map((p) => (
@@ -589,7 +627,11 @@ export function TeamPageLive() {
           return (
             <div className="portal-actions" key={topic}>
               <span>
-                {i + 1}. {arabic ? topicsAr[i] : topic} — {stateText(week?.status, c)}
+                <bdi>{new Intl.NumberFormat(arabic ? 'ar-JO' : 'en-GB').format(i + 1)}</bdi>.{' '}
+                <MixedText>
+                  {week ? (arabic ? week.title_ar : week.title_en) : arabic ? topicsAr[i]! : topic}
+                </MixedText>{' '}
+                — {stateText(week?.status, c)}
               </span>
               <Button
                 variant="outline"

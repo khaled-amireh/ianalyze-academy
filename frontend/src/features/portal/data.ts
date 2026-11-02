@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { academyClient } from '@/lib/academy-client';
 import type { Database } from '@/types/database';
 import { fetchAll } from '@/lib/fetch-all';
+import { syllabus } from '@/content/public-content';
+import en from '@/locales/en.json';
+import ar from '@/locales/ar.json';
 export type Row<T extends keyof Database['public']['Tables']> =
   Database['public']['Tables'][T]['Row'];
 export function client() {
@@ -108,7 +111,7 @@ export function useRemote<T>(load: () => Promise<T>) {
         if (alive) setState({ data, error: false });
       })
       .catch(() => {
-        if (alive) setState({ error: true });
+        if (alive) setState((current) => ({ ...current, error: true }));
       });
     return () => {
       alive = false;
@@ -116,6 +119,12 @@ export function useRemote<T>(load: () => Promise<T>) {
   }, [load, revision]);
   return {
     ...state,
+    update: (transform: (current: T) => T) => {
+      setState((current) =>
+        current.data ? { data: transform(current.data), error: false } : current,
+      );
+    },
+    refresh: () => setRevision((v) => v + 1),
     reload: () => {
       setState({ error: false });
       setRevision((v) => v + 1);
@@ -132,19 +141,6 @@ export async function downloadNotebook(path: string, bucket = 'student-submissio
   anchor.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
-export const topics = [
-  'Python Fundamentals I',
-  'Python Fundamentals II',
-  'Introduction to Pandas',
-  'Data Cleaning',
-  'EDA & Data Visualization',
-  'Mini Project & Demo Day',
-] as const;
-export const topicsAr = [
-  'أساسيات بايثون ١',
-  'أساسيات بايثون ٢',
-  'مقدمة في باندا',
-  'تنظيف البيانات',
-  'استكشاف البيانات والتصور البياني',
-  'المشروع المصغر وعرض النتائج',
-] as const;
+// One translated source for public syllabus and both authenticated dashboards.
+export const topics = syllabus.modules.map((module) => en.academy.modules[module.id].title);
+export const topicsAr = syllabus.modules.map((module) => ar.academy.modules[module.id].title);

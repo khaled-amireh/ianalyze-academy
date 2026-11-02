@@ -64,6 +64,10 @@ export function AuthPage({ mode }: { mode: 'login' | 'signup' | 'recover' | 'res
     ];
   const available =
     Boolean(academyClient) && (mode !== 'signup' || (registrationEnabled && privacyApproved));
+  useEffect(() => {
+    if ((mode === 'login' || mode === 'signup') && auth.status === 'signed-in')
+      navigate(auth.role === 'team' ? '/workspace' : '/student', { replace: true });
+  }, [mode, auth.status, auth.role, navigate]);
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!academyClient || !available || busy) return;
@@ -78,15 +82,15 @@ export function AuthPage({ mode }: { mode: 'login' | 'signup' | 'recover' | 'res
         const { error } = await academyClient.auth.signInWithPassword({ email, password });
         if (error) throw error;
         await auth.refresh();
-        navigate('/student', { replace: true });
       } else if (mode === 'signup') {
-        const { error } = await academyClient.auth.signUp({
+        const { data, error } = await academyClient.auth.signUp({
           email,
           password,
           options: { emailRedirectTo: redirectTo },
         });
         if (error) throw error;
-        setMessage(c.sent);
+        if (data.session) await auth.refresh();
+        else setMessage(c.verificationSent);
       } else if (mode === 'recover') {
         await academyClient.auth.resetPasswordForEmail(email, { redirectTo });
         // Same response for existing and nonexistent accounts.
@@ -152,7 +156,9 @@ export function AuthPage({ mode }: { mode: 'login' | 'signup' | 'recover' | 'res
             </Button>
           </form>
         )}
-        <p role="status">{message || (resetSucceeded ? c.saved : '')}</p>
+        <p role="status">
+          {message || (auth.status === 'error' ? c.error : resetSucceeded ? c.saved : '')}
+        </p>
         <nav className="portal-actions">
           <Link to="/login">{c.login}</Link>
           <Link to="/join">{c.signup}</Link>

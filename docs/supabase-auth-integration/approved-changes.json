@@ -1,0 +1,68 @@
+{
+  "baseCommit": "5baffefee9dbadd876c3fd53033f04fe81d3aa7a",
+  "files": {
+    "frontend/package.json": {
+      "reason": "Add reproducible local preparation, browser-safe local dev and serial real-service test commands; preserve all existing commands/dependencies.",
+      "sha256": "7aa9bd2e3cd3f7e2e0a2aecf10ee769a7635a2af89b386b628b7248c37289c09"
+    },
+    "frontend/scripts/phase-04-browser-qa.mjs": {
+      "reason": "Extend real-service browser tests for role landing, persistence/refresh, cross-tab logout and captured-email PKCE recovery; retain existing flows.",
+      "sha256": "a9e0149d148004ca662ecca5511693753b50b69954cc70c2d4c0b35a17a06085"
+    },
+    "frontend/scripts/prepare-local-supabase.mjs": {
+      "reason": "Prepare isolated ignored local test environments without printing credentials or touching existing env files.",
+      "sha256": "e6a81a18178ca1b68e615acd332205e8890b8af6d1e157b84fef5895c7c795f9",
+      "added": true
+    },
+    "frontend/scripts/verify-merge-preservation.mjs": {
+      "reason": "Keep historical merge freeze; allow only individually hash-pinned changes authorized for this backend integration.",
+      "sha256": "d80ff56f9413a123a8949289de178c301bdd378cc18bdfd54954bc6a0495d17a"
+    },
+    "frontend/scripts/check-redesign.mjs": {
+      "reason": "Retain protected backend and design checks while verifying explicit hash-pinned integration files.",
+      "sha256": "41897bb4cd23c441448fc3037568a5ad289b4d9bfec594aac77202e35d60e41b"
+    },
+    "frontend/src/features/portal/auth-pages.tsx": {
+      "reason": "Handle signup session/no-session responses; show verification guidance and land verified roles on their respective dashboards.",
+      "sha256": "ca824e0a7809b952171ed2561607398c6b45254c2f8b3d6ee183ae0b82dc7927"
+    },
+    "frontend/src/features/portal/copy.ts": {
+      "reason": "Add matching English/Arabic signup verification guidance only.",
+      "sha256": "77e7aa7711cd52127ebbecfa91616bb7517322b966cc9ead5f042d7b40436ff2"
+    },
+    "frontend/tests/delivery.integration.test.mjs": {
+      "reason": "Add real Leader/Organizer equivalence, escalation denial, atomic grading-status, best-attempt aggregation and stable tied-ranking privacy regressions.",
+      "sha256": "c80d1b2f320dbbcc5335002514668f022015ce099b76e315a8636b940a3b8e09"
+    },
+    "frontend/tests/delivery.security.test.mjs": {
+      "reason": "Add embedded rollback/status and private-trigger authorization assertions.",
+      "sha256": "0053d57c2128df5d90cf6c02c4275e31cc7a76bd3bf3809c3ed30e3907732e60"
+    },
+    "supabase/migrations/20261102000200_assessment_review_status.sql": {
+      "reason": "Add atomic grading-derived submission status with a private fixed-search-path trigger; preserve explicit resubmission requests and prior migration bytes.",
+      "sha256": "f5af6e565227f0d58dfb179536a84a9c008b9e365612887d5e08ea914b272109",
+      "added": true
+    },
+    "supabase/operations/readiness-inventory.sql": {
+      "reason": "Add read-only catalog/count inventory without user data or credentials.",
+      "sha256": "c5f758d731349e4fbc13b61c53d6b63ace33237ca888457a17c1bdaa29c3efb0",
+      "added": true
+    },
+    "frontend/scripts/generate-database-types.mjs": {
+      "reason": "Derive table, relationship and RPC types from catalog metadata and add read-only verification against the actual local Supabase database, with loopback target guards.",
+      "sha256": "737a8b8a5f68f7701616699d78cb0d9502ceaad7e51d8813141f27b139bdd4d0"
+    },
+    "frontend/src/types/database.ts": {
+      "reason": "Regenerate unchanged public contract shapes with catalog-derived RPC declarations and updated provenance comment.",
+      "sha256": "b583a1c88fd373f028a8f94f24002c162af3dcaab7d47bc715a53b7483e913b1"
+    },
+    "frontend/src/features/portal/portal.css": {
+      "reason": "Restore intended internal scrolling for the Team contact table instead of squeezing sensitive fields into single-character columns on mobile.",
+      "sha256": "a6fd9e153fab89492822d702405d6b7b2b01a8f7062beba0b622d40e4c0e955d"
+    },
+    "frontend/src/features/portal/team-page.tsx": {
+      "reason": "Make the existing private student-table scroll region keyboard accessible and label it with existing localized copy.",
+      "sha256": "98b037c4f46f2cd11e06e3fb50b8d0cce47bed2995aacce26c66ddc319e06c66"
+    }
+  }
+}

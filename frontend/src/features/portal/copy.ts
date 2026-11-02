@@ -10,6 +10,8 @@ const en = {
   reset: 'Set a new password',
   send: 'Send recovery email',
   sent: 'If eligible, check your email and spam folder for the next step.',
+  verificationSent:
+    'Please check your email and spam folder for a confirmation link. Verify your email before logging in.',
   confirmed: 'Your email has been verified. Complete your profile to join the academy.',
   error:
     'The request could not be completed. Check your details and try again. If a record changed, refresh before retrying.',
@@ -114,6 +116,8 @@ const ar: Record<keyof typeof en, string> = {
   reset: 'تعيين كلمة مرور جديدة',
   send: 'إرسال رسالة الاستعادة',
   sent: 'إذا كان الحساب مؤهلاً، تحقق من البريد والرسائل غير المرغوب فيها لإكمال الخطوة التالية.',
+  verificationSent:
+    'تحقق من البريد والرسائل غير المرغوب فيها لفتح رابط التأكيد. أكّد بريدك الإلكتروني قبل تسجيل الدخول.',
   confirmed: 'تم تأكيد البريد. أكمل ملفك للانضمام للأكاديمية.',
   error:
     'تعذر إكمال الطلب. تحقق من البيانات وحاول مجددًا. إذا تغير السجل، حدّث البيانات قبل المحاولة.',

@@ -1,0 +1,218 @@
+{
+  "date": "2026-11-02",
+  "timezone": "Asia/Amman",
+  "project": {
+    "id": "ocihwiqtgqplwgyhpwjv",
+    "name": "ianalyze-academy",
+    "status": "ACTIVE_HEALTHY",
+    "region": "eu-west-1",
+    "organization": "iAnalyze Academy",
+    "organization_id": "gzznxrerqhzibzkodlvq",
+    "databaseVersion": "17.11.0.011"
+  },
+  "sqlReadOnly": "on",
+  "inventory": {
+    "application_tables": [],
+    "auth_user_count": 0,
+    "buckets": [],
+    "columns": [],
+    "event_triggers": [
+      {
+        "enabled": "O",
+        "event": "ddl_command_end",
+        "function": "rls_auto_enable",
+        "name": "ensure_rls"
+      },
+      {
+        "enabled": "O",
+        "event": "sql_drop",
+        "function": "set_graphql_placeholder",
+        "name": "issue_graphql_placeholder"
+      },
+      {
+        "enabled": "O",
+        "event": "ddl_command_end",
+        "function": "grant_pg_cron_access",
+        "name": "issue_pg_cron_access"
+      },
+      {
+        "enabled": "O",
+        "event": "ddl_command_end",
+        "function": "grant_pg_graphql_access",
+        "name": "issue_pg_graphql_access"
+      },
+      {
+        "enabled": "O",
+        "event": "ddl_command_end",
+        "function": "grant_pg_net_access",
+        "name": "issue_pg_net_access"
+      },
+      {
+        "enabled": "O",
+        "event": "ddl_command_end",
+        "function": "pgrst_ddl_watch",
+        "name": "pgrst_ddl_watch"
+      },
+      {
+        "enabled": "O",
+        "event": "sql_drop",
+        "function": "pgrst_drop_watch",
+        "name": "pgrst_drop_watch"
+      }
+    ],
+    "extensions": [
+      "pg_stat_statements",
+      "pgcrypto",
+      "plpgsql",
+      "supabase_vault",
+      "uuid-ossp"
+    ],
+    "functions": [
+      {
+        "anon_execute": true,
+        "authenticated_execute": true,
+        "name": "rls_auto_enable",
+        "owner": "postgres",
+        "returns": "event_trigger",
+        "schema": "public",
+        "security_definer": true,
+        "settings": [
+          "search_path=pg_catalog"
+        ]
+      }
+    ],
+    "grants": [],
+    "migration_history_table": null,
+    "policies": [],
+    "postgres_version": "17.11",
+    "schemas": [
+      "auth",
+      "public",
+      "storage"
+    ],
+    "storage_object_count": 0,
+    "storage_objects_rls": true,
+    "transaction_read_only": "on",
+    "triggers": []
+  },
+  "authSettings": {
+    "emailProviderEnabled": true,
+    "phoneProviderEnabled": false,
+    "signupDisabled": false,
+    "emailAutoConfirm": false,
+    "phoneAutoConfirm": false
+  },
+  "configurationDifferences": [
+    {
+      "path": "auth.additional_redirect_urls",
+      "remote": []
+    },
+    {
+      "path": "auth.email.secure_password_change",
+      "remote": false
+    },
+    {
+      "path": "auth.email.smtp.enabled",
+      "remote": true
+    },
+    {
+      "path": "auth.minimum_password_length",
+      "remote": 6
+    },
+    {
+      "path": "auth.rate_limit.sign_in_sign_ups",
+      "remote": 30
+    },
+    {
+      "path": "auth.site_url",
+      "remote": "http://localhost:3000"
+    }
+  ],
+  "configurationAdditionalSettings": [
+    {
+      "field": "auth.additional_redirect_urls",
+      "remote": []
+    },
+    {
+      "field": "auth.email.secure_password_change",
+      "remote": false
+    },
+    {
+      "field": "auth.email.smtp.enabled",
+      "remote": true
+    },
+    {
+      "field": "auth.minimum_password_length",
+      "remote": 6
+    },
+    {
+      "field": "auth.rate_limit.email_sent",
+      "remote": 30
+    },
+    {
+      "field": "auth.rate_limit.sign_in_sign_ups",
+      "remote": 30
+    },
+    {
+      "field": "auth.site_url",
+      "remote": "http://localhost:3000"
+    }
+  ],
+  "configurationPreviewWrote": false,
+  "backups": {
+    "count": 0,
+    "pitrEnabled": false,
+    "walgEnabled": true
+  },
+  "previewBranches": [],
+  "edgeFunctions": [],
+  "hostedUserFlowsTested": false,
+  "hostedModified": false,
+  "extendedOwnershipEventTriggerInventoryPending": false,
+  "pendingMigrationPlan": [
+    {
+      "file": "supabase/migrations/20261101000100_academy.sql",
+      "sha256": "cce65ab93ed9df00b670fcee7c8f63608b9fcabbfd0b871b5839cb891536a36e"
+    },
+    {
+      "file": "supabase/migrations/20261101000200_assessment_storage.sql",
+      "sha256": "af1f2d2a2aff5829299d76634c43790e7c010d51e382bcb0a64157ede9059468"
+    },
+    {
+      "file": "supabase/migrations/20261102000100_functional_delivery.sql",
+      "sha256": "cecd59f1a3e9ae79aab67937a9d5c2d0c123abb9a31d7c954cd6f833af40fbb8"
+    },
+    {
+      "file": "supabase/migrations/20261102000200_assessment_review_status.sql",
+      "sha256": "f5af6e565227f0d58dfb179536a84a9c008b9e365612887d5e08ea914b272109"
+    }
+  ],
+  "productionApprovalRequired": {
+    "backupAndRestorePreflight": true,
+    "temporarySignupPause": true,
+    "applyMigrations": [
+      "supabase/migrations/20261101000100_academy.sql",
+      "supabase/migrations/20261101000200_assessment_storage.sql",
+      "supabase/migrations/20261102000100_functional_delivery.sql",
+      "supabase/migrations/20261102000200_assessment_review_status.sql"
+    ],
+    "privateBuckets": [
+      "student-submissions",
+      "team-materials"
+    ],
+    "proposedAuthSettings": {
+      "siteUrl": "https://ianalyze-academy.pages.dev",
+      "canonicalHostnameRequiresOwnerConfirmation": true,
+      "redirectUrls": [
+        "https://ianalyze-academy.pages.dev/auth/callback",
+        "https://ianalyze-academy.pages.dev/auth/callback?flow=recovery"
+      ],
+      "minimumPasswordLength": 12,
+      "securePasswordChange": true,
+      "emailConfirmationRemainsEnabled": true
+    },
+    "hostedTestUserRequiresSeparateApproval": true,
+    "edgeDeploymentRequiresSeparateApproval": true,
+    "cloudflareDeploymentRequiresSeparateApproval": true
+  }
+}

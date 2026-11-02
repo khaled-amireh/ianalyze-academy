@@ -94,6 +94,9 @@
 .portal-table {
   overflow-x: auto;
 }
+.portal-page #students table {
+  min-width: 40rem;
+}
 .portal-page pre {
   white-space: pre-wrap;
   overflow-wrap: anywhere;

@@ -1,5 +1,5 @@
 // Generated from the migration catalog by npm run db:types. Do not edit.
-// Embedded PostgreSQL catalog; compare with real Supabase CLI types after schema changes.
+// PostgreSQL tables, relationships and RPC catalog; verify live local schema with check:database-types:local.
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 export type Database = {
   public: {
@@ -364,23 +364,16 @@ export type Database = {
     };
     Views: { [_ in never]: never };
     Functions: {
-      current_academy_role: { Args: Record<string, never>; Returns: string | null };
-      complete_registration: { Args: { p_consent_version: string }; Returns: undefined };
-      save_grade: {
-        Args: {
-          p_submission_id: string;
-          p_scores: Json;
-          p_feedback: string;
-          p_publish: boolean;
-          p_expected_revision: number;
-        };
-        Returns: string;
-      };
-      claim_submission_request: { Args: { p_student_id: string }; Returns: undefined };
-      create_draft_rubric: { Args: { p_activity_id: string; p_criteria: Json }; Returns: string };
-      save_draft_rubric: { Args: { p_rubric_id: string; p_criteria: Json }; Returns: undefined };
       academy_capabilities: { Args: Record<string, never>; Returns: Json };
       academy_leaderboard: { Args: Record<string, never>; Returns: Json };
+      claim_submission_request: { Args: { p_student_id: string }; Returns: undefined };
+      complete_registration: { Args: { p_consent_version: string }; Returns: undefined };
+      create_draft_rubric: { Args: { p_activity_id: string; p_criteria: Json }; Returns: string };
+      current_academy_role: { Args: Record<string, never>; Returns: string | null };
+      finalize_notebook: {
+        Args: { p_submission_id: string; p_sha256: string };
+        Returns: undefined;
+      };
       request_resubmission: { Args: { p_submission_id: string }; Returns: undefined };
       reserve_notebook: {
         Args: {
@@ -392,9 +385,16 @@ export type Database = {
         };
         Returns: Json;
       };
-      finalize_notebook: {
-        Args: { p_submission_id: string; p_sha256: string };
-        Returns: undefined;
+      save_draft_rubric: { Args: { p_rubric_id: string; p_criteria: Json }; Returns: undefined };
+      save_grade: {
+        Args: {
+          p_submission_id: string;
+          p_scores: Json;
+          p_feedback: string;
+          p_publish: boolean;
+          p_expected_revision: number;
+        };
+        Returns: string;
       };
     };
     Enums: { [_ in never]: never };

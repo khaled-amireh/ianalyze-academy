@@ -109,4 +109,56 @@ test('functional delivery database boundaries and atomic rubric configuration', 
       2,
     );
   });
+  await t.test(
+    'grading derives status atomically without granting Student status writes',
+    async () => {
+      const id = '30000000-0000-4000-8000-000000000011';
+      await db.query(
+        "insert into public.submissions(id,student_id,activity_id,rubric_id,status) values($1,$2,$3,$4,'submitted')",
+        [id, a, activity, rubric],
+      );
+      const rows = (
+        await db.query('select id,max_points from public.rubric_criteria where rubric_id=$1', [
+          rubric,
+        ])
+      ).rows;
+      const scores = Object.fromEntries(rows.map((row) => [row.id, Number(row.max_points)]));
+      const status = async () =>
+        (await db.query('select status from public.submissions where id=$1', [id])).rows[0].status;
+      const grade = (values, publish, revision) =>
+        call(team, 'select public.save_grade($1,$2,$3,$4,$5)', [
+          id,
+          values,
+          'LOCAL TEST ONLY',
+          publish,
+          revision,
+        ]);
+      await assert.rejects(
+        call(a, "update public.submissions set status='reviewed' where id=$1", [id]),
+      );
+      await grade(scores, false, 0);
+      assert.equal(await status(), 'under_review');
+      await assert.rejects(grade(Object.fromEntries(rows.map((row) => [row.id, 1000])), true, 1));
+      assert.equal(
+        await status(),
+        'under_review',
+        'Failed grading must roll back the status change too',
+      );
+      await grade(scores, true, 1);
+      assert.equal(await status(), 'reviewed');
+      await grade({}, false, 2);
+      assert.equal(await status(), 'reviewed', 'Published review survives a draft correction');
+      await call(team, 'select public.request_resubmission($1)', [id]);
+      await grade({}, false, 3);
+      assert.equal(await status(), 'resubmission_required');
+      assert.equal(
+        (
+          await db.query(
+            "select has_function_privilege('authenticated','app_private.sync_review_status()','EXECUTE') as allowed",
+          )
+        ).rows[0].allowed,
+        false,
+      );
+    },
+  );
 });

@@ -2,7 +2,11 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
-import { mergeResolution, verifyMergePreservation } from './verify-merge-preservation.mjs';
+import {
+  authIntegration,
+  mergeResolution,
+  verifyMergePreservation,
+} from './verify-merge-preservation.mjs';
 const root = new URL('../../', import.meta.url);
 const json = (path) => JSON.parse(readFileSync(new URL(path, root), 'utf8'));
 const hash = (content) => createHash('sha256').update(content).digest('hex');
@@ -68,9 +72,10 @@ const changed = execFileSync('git', ['diff', mergeResolution.functionalCommit, '
   .filter(Boolean);
 for (const path of changed)
   assert.ok(
-    !/^(supabase\/|frontend\/src\/(features\/auth\/|lib\/(academy-data|supabase)|types\/database)|frontend\/\.env|\.github\/|.*wrangler)/.test(
-      path,
-    ),
+    authIntegration.files[path] ||
+      !/^(supabase\/|frontend\/src\/(features\/auth\/|lib\/(academy-data|supabase)|types\/database)|frontend\/\.env|\.github\/|.*wrangler)/.test(
+        path,
+      ),
     `Protected integration changed: ${path}`,
   );
 console.log(

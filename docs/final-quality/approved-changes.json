@@ -1,0 +1,220 @@
+{
+  "baseCommit": "02b2a6cb596d49dbc4805c7814e25302a0137767",
+  "authorization": "User request: final comprehensive quality, branding, registration and authentication update; local implementation only.",
+  "files": {
+    "frontend/package.json": {
+      "reason": "Include focused registration, email and security regression commands.",
+      "previousSha256": "4979790d62bdba611473e49cf7efd67239fc5c42e13b396c4cf115c7b02ac976",
+      "sha256": "cc9d6cbb1b93658650ecded97b18a7040e1d6202d0d1f643b554a6075b212eb7"
+    },
+    "frontend/scripts/check-phase-03.mjs": {
+      "reason": "Recognize the hash-pinned user-authorized quality refinement while retaining historical checks.",
+      "previousSha256": "e249b387f01b6358c83c55244fc80d8a7f136c0c22b027090fec750bfabc4553",
+      "sha256": "ac180646667d7172d8ac4738fd8ed10e146eb9b1acbb4784e105d5e6a5ec3b82"
+    },
+    "frontend/scripts/check-redesign.mjs": {
+      "reason": "Recognize the hash-pinned user-authorized refinement without relaxing asset/dependency preservation.",
+      "previousSha256": "757590239f44889306db27ea82b4e558fd95b9df27b589f49e5acfcec1bbd4dc",
+      "sha256": "2c35b10c9ec9d8ba6859bfcb488de257bbc57711bb603b4eb7f5ea1293256f1f"
+    },
+    "frontend/scripts/database-fixture.mjs": {
+      "reason": "Allow baseline migrations to be replayed before a forward migration preservation test.",
+      "previousSha256": "ec7ede131c1f155d5ce9aaa694eac09e879122a2129c05f29f82b6cacc691097",
+      "sha256": "d41c5676b429d2e2fa63ae08c370583f7f8e57272611e917fc1c180f7f180a23"
+    },
+    "frontend/scripts/phase-04-browser-qa.mjs": {
+      "reason": "Update regression expectations for local phone input and verification copy; allow a dedicated debugger address.",
+      "previousSha256": "f7f7d1bf37ba3cab9297cd170172751b23058b889b5201923a2f2be317edfd72",
+      "sha256": "5bd177043090423cac5549587e43290d20b3d0dbe47cb3f6e033c244769b793f"
+    },
+    "frontend/scripts/redesign-browser-qa.mjs": {
+      "reason": "Date browser evidence using the current Asia/Amman date rather than a historical hardcoded date.",
+      "previousSha256": "66e3fa498f1262dd948e4d71e086815d3044b4c32d8e1867c09c5fe35c1c32eb",
+      "sha256": "09df5c268ec63ec10c1100776895b5354ded1f61fd5764b75ae9114b33438f6f"
+    },
+    "frontend/scripts/verify-merge-preservation.mjs": {
+      "reason": "Layer this authorized scope over previous frozen scopes, checking both baseline and final hashes.",
+      "previousSha256": "d80ff56f9413a123a8949289de178c301bdd378cc18bdfd54954bc6a0495d17a",
+      "sha256": "164c1e44c9572e3e9c1fac1b8501773d75147969e046e6f1a68e001f3e63870a"
+    },
+    "frontend/src/features/portal/auth-pages.tsx": {
+      "reason": "Verification callbacks, role-aware destinations, signup instructions, accessible resend and cooldown.",
+      "previousSha256": "abdc647b49a1d54dc4b5174f152fcca862078a4be71087eef82b2ca72bcc57d0",
+      "sha256": "456bf91d6c5e91b3f4522e171bcc70d1f640196e4a14d731292388e8116ad0e6"
+    },
+    "frontend/src/features/portal/copy.ts": {
+      "reason": "Complete bilingual phone, year, verification, participant and feedback copy.",
+      "previousSha256": "5c88ed3668ccdcad38a9101f6d55e049074159e6d75ecc1fc2b72cea9ac5882e",
+      "sha256": "0ff6c3fc1e335c51bd06bfad0ea6b2d2fd08fc23f80a40901170b095bb0ce67d"
+    },
+    "frontend/src/features/portal/form-validation.ts": {
+      "reason": "Apply Jordanian mobile and year 1?5 validation while preserving unchanged historical values.",
+      "previousSha256": "04b9a58afd4df066746b6962cca2c2f3fb6a2875083fb14c7e1549ec756f7a7a",
+      "sha256": "0949192cd550afaf7c86eb658ac024ea628f1d84cf210d462d51d9dc2db74008"
+    },
+    "frontend/src/features/portal/portal.css": {
+      "reason": "Fix password icon geometry and readable private participant columns.",
+      "previousSha256": "c847412faeabcd0f2e4d2db1ea20c5d52bb25d901db6160106ca5dec8efece4a",
+      "sha256": "f62621d4b528038db905fa4a7d41d0971aaab06ecb9f284e511445a92a46125c"
+    },
+    "frontend/src/features/portal/student-page.tsx": {
+      "reason": "Normalize new/changed phones, restrict year options, preserve profile/session flow and translate feedback live.",
+      "previousSha256": "53309964b5459fbf61e62bb5223bd1a2df40849e71ebd6ea6696dc5757c8b5a7",
+      "sha256": "c4d355cc9d10ebcccd3c053fca069430cfa1dbb798c7bf17112152a1757fce75"
+    },
+    "frontend/src/features/portal/team-page.tsx": {
+      "reason": "Display complete private registration fields and localized accessible form feedback with submission guards.",
+      "previousSha256": "acf8735964b98c3948285deed8365a84a6506342c3607c3084a3a6935043078e",
+      "sha256": "4789c95a88f27ff52e1af5792ee0ecfa02f811dc05b831dabdfec2f9c0651c40"
+    },
+    "frontend/src/locales/ar.json": {
+      "reason": "Use the requested natural Arabic phone label.",
+      "previousSha256": "7c3dfc39ffa3829e7928b733a1fc978af76684ff0b1b5b81fa62f12cae405c70",
+      "sha256": "c250a8a3d408a7b26e8000d73b2259685c07cd8227bd937201120c660a70dbd7"
+    },
+    "frontend/src/locales/en.json": {
+      "reason": "Use the requested English phone label.",
+      "previousSha256": "f252e31aef15caa2fb12bf0a40d63bfdcd89a3ca97d3e91dc479112935b85246",
+      "sha256": "8926ac2635c3d6dbeed685adc3988381e3c4ae1733ad30f4c9de033e626e7101"
+    },
+    "frontend/src/pages/public/join-page.tsx": {
+      "reason": "Keep the registration preview phone/email LTR and use the requested phone placeholder.",
+      "previousSha256": "7ca1df7e5b7ab3cd6be1f3feaa8085a13edaeaa535e1289288360ab3aef754d7",
+      "sha256": "1fec0ae15b09b2a478d20feb50efbd763e0ada3460cff68962ce4028feb70629"
+    },
+    "frontend/tests/form-validation.test.ts": {
+      "reason": "Test the revised phone/year contract and historical profile compatibility.",
+      "previousSha256": "31b1f2ab2a0c1f2c6839865b03965062e5ab6d5da209a4a61dc9a2f86c45b75a",
+      "sha256": "14347557441f7d12ee7a36c1dae9e84b8d4cc9ef36ab6b7e6e9ae9d0c634162f"
+    },
+    "supabase/config.toml": {
+      "reason": "Wire bilingual email templates into local Supabase only; leave hosted configuration untouched.",
+      "previousSha256": "94797b9b1a8f73a6a3285d9b37f1a033b5bec76af18f1ccb29b7923cf5e66c92",
+      "sha256": "2b6b88329351814f272b3922c960157c695f87cc547ab6be0775d25e7d6d0a5c"
+    },
+    "frontend/scripts/theme-brand-browser-qa.mjs": {
+      "reason": "Date theme/logo test evidence using the current Asia/Amman date instead of a fixed historical date.",
+      "previousSha256": "69f2a5516044f2a88c80d71c9e0b14e569364a935c30f435ed60bfd1309af406",
+      "sha256": "090076a54e41a1c2f2b4540d25e59c04917a637d48e7f603832aba29e5819f0a"
+    },
+    "frontend/src/lib/jordanian-phone.ts": {
+      "added": true,
+      "reason": "Bounded Jordanian mobile normalization shared by profile validation and saves.",
+      "sha256": "bc2587b15d8499adad95d3e55477553c58fc57dca748f9e320c5d0d549e5f8d1"
+    },
+    "frontend/src/features/auth/email-callback.ts": {
+      "added": true,
+      "reason": "Untrusted callback parsing and pending-only StrictMode exchange deduplication.",
+      "sha256": "958f942f71d37238c81cc11ecb85dfc40f3189f154062499492621cf40f5f845"
+    },
+    "frontend/src/features/portal/academic-years.ts": {
+      "added": true,
+      "reason": "Five bilingual academic options and safe historical display.",
+      "sha256": "38bff007590d3b8e337ecf3139e1d2b539778aec3d38364cd16389d508784dec"
+    },
+    "frontend/scripts/registration-browser-qa.mjs": {
+      "added": true,
+      "reason": "Focused real local backend, external-browser and mobile form regression coverage.",
+      "sha256": "e5ed3d77c013e5d414dc491a9ca9d4fd97061cdd88b0b323c6c32c9f133ca37b"
+    },
+    "frontend/tests/branding.test.ts": {
+      "added": true,
+      "reason": "Pin all iAnalyze assets and shared logo geometry.",
+      "sha256": "82fb54b2213ea78734bf2af37b8c4e0f5ffa54a124d584e7d50f3fe70c23d34c"
+    },
+    "frontend/tests/email-callback.test.ts": {
+      "added": true,
+      "reason": "Reject invalid callback input and ensure completed single-use credentials are not replayed.",
+      "sha256": "9e11ac0869bbf2a06fcb4b33d6e46ddef5301c157435f3d539e154d614513943"
+    },
+    "frontend/tests/jordanian-phone.test.ts": {
+      "added": true,
+      "reason": "Verify required mobile formats and natural academic labels.",
+      "sha256": "e391b9f7bb7024b6077583f899092f29acee53df3ab28adf7020c7f79cfdd955"
+    },
+    "frontend/tests/fixtures/jordanian-phones.ts": {
+      "added": true,
+      "reason": "One valid/invalid corpus used for both client and SQL checks.",
+      "sha256": "a35c2a43349b09f4eef772f68dc5df9048e81f31a7f9ca9d18d88356e38d4616"
+    },
+    "frontend/tests/registration.security.test.mjs": {
+      "added": true,
+      "reason": "Migration preservation, phone/year consistency and private registration authorization checks.",
+      "sha256": "0fd4be13fccad783dac933ebd20f4d3dffbad7c7caf06da0e806f7300a126c80"
+    },
+    "frontend/tests/verification.integration.test.mjs": {
+      "added": true,
+      "reason": "Real local captured-mail cross-browser, expiration, recovery and rate-limit checks.",
+      "sha256": "41def71ca5bf45a09121a2a01685339e0435fdfe01fe9e37bbe55ada2999507f"
+    },
+    "supabase/migrations/20261103000100_registration_validation.sql": {
+      "added": true,
+      "reason": "Forward-only validation for new/changed values, preserving historical rows and RLS.",
+      "sha256": "60c4dcc9c33c33a16e0bf2dc3d22b11e374416970b7da5854a83715b1ceed28d"
+    },
+    "supabase/templates/confirmation.html": {
+      "added": true,
+      "reason": "Bilingual confirmation email with generated hash and Supabase verification fallback.",
+      "sha256": "b3b1b4f75425c736cdeaf8483c8194f95d0f16fdc48f7f1782c949d7577d7fc2"
+    },
+    "supabase/templates/recovery.html": {
+      "added": true,
+      "reason": "Bilingual recovery email with generated hash and Supabase fallback.",
+      "sha256": "6f99cd82bf8d6ffbbc7cd106282f79da340c4504efcbf5b112c10285d59ddb7f"
+    },
+    "frontend/src/components/layout/brand-logo.tsx": {
+      "reason": "User-approved supplied iTeam 3D logo replacement; preserve iAnalyze branding.",
+      "previousSha256": "dde272fa777873302188d626f2cfce220819779010fd5c20c4632d9aab5d6e7e",
+      "sha256": "9fb10d3e8e4c8d0d90348880e4ce8edae53bd73520dc3de81e12d035f6bbdfe5"
+    },
+    ".github/workflows/production.yml": {
+      "reason": "Skip unrelated Supabase Edge configuration/deployment when its inputs have not changed.",
+      "previousSha256": "fa5da6ec40b7c9a0d7ec259edcf6d33dae6e1cfde81aeacded68cc5bc16f5f46",
+      "sha256": "a588525894de0e140cb03f2650410e8ae4a655f74c24bd8eb74666cd822470fb"
+    },
+    "docs/final-quality/branding-preservation.json": {
+      "reason": "Pin unchanged iAnalyze assets and the user-approved iTeam presentation.",
+      "added": true,
+      "sha256": "affb9ffd6303dc555c4aef35db36a2fd6144bf67147b84727db95a5de56c46cc"
+    },
+    "frontend/src/assets/brand/iteam-logo-light.png": {
+      "reason": "User-approved supplied iTeam 3D logo replacement; preserve iAnalyze branding.",
+      "added": true,
+      "sha256": "65baae5d39a646b09356988da182844d0ac42d5c976d954b786157181f0847fd"
+    },
+    "frontend/src/assets/brand/iteam-logo-transparent-ready.png": {
+      "reason": "User-approved supplied iTeam 3D logo replacement; preserve iAnalyze branding.",
+      "added": true,
+      "sha256": "43c42b2995994fd0eae42435f91ee12a2a592178cdc9182f451b52af8d28d4b6"
+    },
+    "frontend/src/assets/brand/iteam-on-dark-original.png": {
+      "reason": "Remove retired iTeam artwork as part of the user-supplied 3D logo replacement.",
+      "previousSha256": "1fbdee8544bf579509c6ec9ffce2a0ca6dd9c8f6667b49b0a7a962bb2a090cc4",
+      "removed": true,
+      "sha256": null
+    },
+    "frontend/src/assets/brand/iteam-on-dark.png": {
+      "reason": "Remove retired iTeam artwork as part of the user-supplied 3D logo replacement.",
+      "previousSha256": "029c4ae06b6bfa8b085dc3917af876abaa031546236b500911eec87b02e204eb",
+      "removed": true,
+      "sha256": null
+    },
+    "frontend/src/assets/brand/iteam-on-light-original.png": {
+      "reason": "Remove retired iTeam artwork as part of the user-supplied 3D logo replacement.",
+      "previousSha256": "69794b023681b1948dfe9fd4c2419117c91e53340ed05a0797a2a472dd2cf83d",
+      "removed": true,
+      "sha256": null
+    },
+    "frontend/src/assets/brand/iteam-on-light.png": {
+      "reason": "Remove retired iTeam artwork as part of the user-supplied 3D logo replacement.",
+      "previousSha256": "705fd2fd59795a0db6110b3754aedab5809a1da0e789feb6ed3606573775d8e7",
+      "removed": true,
+      "sha256": null
+    },
+    "frontend/src/pages/public/about-page.tsx": {
+      "reason": "Use the existing transparent iTeam artwork only in the Part of iTeam card; preserve its layout and all other logo placements.",
+      "previousSha256": "fe8b129f15620d64402a3eebf8f61d106f024e83bdd66b5263d5b1f6ab79d3b9",
+      "sha256": "30e41c9a61239c04c8630abd86aaacfe593a2e81ac8ee6323eea50586727ce0b"
+    }
+  }
+}

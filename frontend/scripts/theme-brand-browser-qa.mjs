@@ -197,7 +197,18 @@ try {
   if (secondaryTarget) await send('Target.closeTarget', { targetId: secondaryTarget.targetId });
   writeFileSync(
     new URL('theme-brand-results.json', out),
-    JSON.stringify({ date: '2026-11-02', checks, errors }, null, 2) + '\n',
+    JSON.stringify(
+      {
+        date: new Intl.DateTimeFormat('en-CA', {
+          timeZone: 'Asia/Amman',
+          dateStyle: 'short',
+        }).format(new Date()),
+        checks,
+        errors,
+      },
+      null,
+      2,
+    ) + '\n',
   );
   ws.close();
 }

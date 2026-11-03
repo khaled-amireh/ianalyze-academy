@@ -1,3 +1,5 @@
+import { normalizeJordanianMobile } from '../../lib/jordanian-phone.ts';
+
 export type ValidationCode =
   | 'requiredField'
   | 'invalidEmail'
@@ -32,19 +34,25 @@ export function validateAuth(form: FormData, mode: AuthMode): FieldErrors {
   if (mode === 'signup' && form.get('consent') !== 'on') errors.consent = 'consentRequired';
   return errors;
 }
-export function validateProfile(form: FormData, registering: boolean): FieldErrors {
+export function validateProfile(
+  form: FormData,
+  registering: boolean,
+  existing: { whatsapp?: string | null; academic_year?: number | null } = {},
+): FieldErrors {
   const errors: FieldErrors = {};
   for (const field of ['full_name', 'major']) {
     const text = value(form, field).trim();
     if (!text) errors[field] = 'requiredField';
     else if (text.length > 150) errors[field] = 'tooLong';
   }
-  const phone = value(form, 'whatsapp').trim();
-  if (!phone) errors.whatsapp = 'requiredField';
-  else if (!/^\+[1-9][0-9]{6,14}$/.test(phone)) errors.whatsapp = 'invalidPhone';
+  const phone = value(form, 'whatsapp');
+  if (!phone.trim()) errors.whatsapp = 'requiredField';
+  else if (phone.trim() !== existing.whatsapp && !normalizeJordanianMobile(phone))
+    errors.whatsapp = 'invalidPhone';
   const year = value(form, 'academic_year');
   if (!year) errors.academic_year = 'missingYear';
-  else if (!/^[1-8]$/.test(year)) errors.academic_year = 'invalidYear';
+  else if (!/^[1-5]$/.test(year) && (registering || year !== String(existing.academic_year)))
+    errors.academic_year = 'invalidYear';
   if (!['none', 'basic', 'experienced'].includes(value(form, 'python_experience')))
     errors.python_experience = 'requiredField';
   if (value(form, 'university_id').trim().length > 50) errors.university_id = 'tooLong';
@@ -74,6 +82,8 @@ export function requestError(error: unknown) {
   )
     return 'sessionExpired';
   if (e?.code === 'weak_password') return 'passwordRejected';
+  if (e?.code === '23514' && e.message?.includes('Jordanian mobile')) return 'invalidPhone';
+  if (e?.code === '23514' && e.message?.includes('Academic year')) return 'invalidYear';
   if (e?.name === 'TypeError' || e?.name === 'AuthRetryableFetchError' || e?.status === 0)
     return 'networkError';
   return 'error';

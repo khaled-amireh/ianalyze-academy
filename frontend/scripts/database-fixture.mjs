@@ -9,7 +9,7 @@ export const migrations = () =>
     .map((name) => readFileSync(new URL(`supabase/migrations/${name}`, root), 'utf8'));
 
 // Test-only compatibility fixture. This is NOT GoTrue, PostgREST, or Storage API.
-export async function createDatabase() {
+export async function createDatabase(migrationSql = migrations()) {
   const db = new PGlite();
   await db.exec(`
     create role anon nologin;
@@ -38,7 +38,7 @@ export async function createDatabase() {
     grant usage on schema storage to anon, authenticated;
     grant select, insert, update, delete on storage.objects to anon, authenticated;
   `);
-  for (const migration of migrations()) await db.exec(migration);
+  for (const migration of migrationSql) await db.exec(migration);
   return db;
 }
 

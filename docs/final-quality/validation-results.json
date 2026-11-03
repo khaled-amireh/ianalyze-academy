@@ -1,0 +1,94 @@
+{
+  "date": "2026-11-03",
+  "timezone": "Asia/Amman",
+  "node": "24.19.0",
+  "hostedProductionVerified": false,
+  "pushed": false,
+  "merged": false,
+  "deployed": false,
+  "tests": {
+    "unit": {
+      "passed": 40,
+      "failed": 0,
+      "skipped": 0
+    },
+    "embeddedPostgreSQL": {
+      "passed": 29,
+      "failed": 0,
+      "skipped": 0
+    },
+    "realLocalSupabase": {
+      "passed": 23,
+      "failed": 0,
+      "skipped": 0
+    },
+    "localPgTAP": {
+      "passed": 15,
+      "failed": 0
+    }
+  },
+  "checks": {
+    "typescript": "passed",
+    "eslint": "passed",
+    "prettier": "passed",
+    "validate": "passed",
+    "productionPublicBuild": "passed",
+    "configuredLocalProductionBuild": "passed",
+    "productionBoundary": "passed",
+    "pagesArtifact": "passed",
+    "historicalPreservation": "passed",
+    "sourceSecretPatternScan": "passed",
+    "embeddedDatabaseTypes": "passed",
+    "localDatabaseTypes": "passed",
+    "gitDiffWhitespace": "passed"
+  },
+  "browsers": {
+    "public": {
+      "build": "production public",
+      "layoutCases": 160,
+      "interactionAssertions": 38,
+      "contrastCases": 32,
+      "failedCases": 0,
+      "exceptions": 0
+    },
+    "theme": {
+      "assertions": 17,
+      "failed": 0
+    },
+    "delivery": {
+      "build": "configured local production",
+      "publicAuthResponsiveCases": 20,
+      "authenticatedLayoutCases": 32,
+      "validationLayoutCases": 24,
+      "workflowAssertions": 28,
+      "failed": 0,
+      "exceptions": 0
+    },
+    "focusedRegistration": {
+      "build": "configured local production",
+      "checks": 75,
+      "failed": 0,
+      "exceptions": 0
+    },
+    "emailPreviews": {
+      "cases": 4,
+      "failed": 0,
+      "realInboxRendering": false
+    }
+  },
+  "limitations": [
+    "Hosted migration and email-template configuration not applied; hosted deployment not tested.",
+    "Physical mobile mail-app handoffs and Safari/Firefox not tested.",
+    "Gmail/Outlook inbox rendering not tested.",
+    "External Google Drive automatic playback did not advance; fallback link retained.",
+    "Vite warns that the main minified bundle exceeds 500 kB.",
+    "Generated iTeam replacement rejected; current artwork preserved."
+  ],
+  "intermediateIssuesResolved": [
+    "Old local-phone rejection expectation updated.",
+    "Historical Date comparisons corrected to value comparisons.",
+    "Existing Edge runtime served with local test configuration.",
+    "Historical preservation guard extended using baseline and final hash pins for this authorized scope.",
+    "Browser waits account for asynchronous controls and fast production callback navigation."
+  ]
+}

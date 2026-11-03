@@ -1,0 +1,14 @@
+{
+  "scope": "All iAnalyze image assets and shared logo layout with the explicitly approved iTeam-only replacement",
+  "files": {
+    "design-preview/assets/ianalyze-logo.png": "f23e1133a31fc97c76d98a2c8bd95e1f25074d7e2cfb8bae2c469e1e8447666a",
+    "frontend/src/assets/brand/ianalyze-on-dark-original.png": "613f4723128b94aeb31f0dadc7055aeeda0f08f609e38773dc471287809be4e3",
+    "frontend/src/assets/brand/ianalyze-on-dark.png": "d2b299cc36cc41643b7815c7d34851b4e956487b1f805135e66656db0af98590",
+    "frontend/src/assets/brand/ianalyze-on-light-original.png": "904e72ba552dba2dc98cbb91dacd7ed00dddc4705d5d1df11813b5019b5cb00e",
+    "frontend/src/assets/brand/ianalyze-on-light.png": "1a75432e399067949cefdba1b621b3bf5bf009394cae64546acb3c6cdb61b9e1",
+    "frontend/src/assets/ianalyze-logo-small.png": "d2abb283b2c1db23e3f63edbbc231f7962a78c95a1683f47345e510995d44976",
+    "frontend/src/assets/ianalyze-logo.png": "f23e1133a31fc97c76d98a2c8bd95e1f25074d7e2cfb8bae2c469e1e8447666a",
+    "frontend/src/components/layout/brand-logo.tsx": "9fb10d3e8e4c8d0d90348880e4ce8edae53bd73520dc3de81e12d035f6bbdfe5",
+    "frontend/src/styles/redesign.css": "62ee39071e6566e8fd82dcb1863285c1ff2617208171f3ae37341ea97c2c86aa"
+  }
+}

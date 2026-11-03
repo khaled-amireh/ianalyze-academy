@@ -1,0 +1,84 @@
+Branch: codex/supabase-auth-integration
+HEAD: 02b2a6cb596d49dbc4805c7814e25302a0137767
+Modified tracked files: 19
+Untracked new files: 56
+Staged changes: 0
+Deleted files: 0
+New commits, push, merge, deployment: none
+
+Command: git status --porcelain=v1 --untracked-files=all
+ M frontend/package.json
+ M frontend/scripts/check-phase-03.mjs
+ M frontend/scripts/check-redesign.mjs
+ M frontend/scripts/database-fixture.mjs
+ M frontend/scripts/phase-04-browser-qa.mjs
+ M frontend/scripts/redesign-browser-qa.mjs
+ M frontend/scripts/theme-brand-browser-qa.mjs
+ M frontend/scripts/verify-merge-preservation.mjs
+ M frontend/src/features/portal/auth-pages.tsx
+ M frontend/src/features/portal/copy.ts
+ M frontend/src/features/portal/form-validation.ts
+ M frontend/src/features/portal/portal.css
+ M frontend/src/features/portal/student-page.tsx
+ M frontend/src/features/portal/team-page.tsx
+ M frontend/src/locales/ar.json
+ M frontend/src/locales/en.json
+ M frontend/src/pages/public/join-page.tsx
+ M frontend/tests/form-validation.test.ts
+ M supabase/config.toml
+?? docs/final-quality/REPORT.md
+?? docs/final-quality/SUPABASE-EMAIL-SETUP.md
+?? docs/final-quality/approved-changes.json
+?? docs/final-quality/authenticated-browser-results.json
+?? docs/final-quality/branding-preservation.json
+?? docs/final-quality/changed-files.txt
+?? docs/final-quality/email-previews/confirmation-390.png
+?? docs/final-quality/email-previews/confirmation-640.png
+?? docs/final-quality/email-previews/recovery-390.png
+?? docs/final-quality/email-previews/recovery-640.png
+?? docs/final-quality/email-previews/results.json
+?? docs/final-quality/local-state.json
+?? docs/final-quality/public-browser/browser-results.json
+?? docs/final-quality/public-browser/screenshots/about-ar-light-390.png
+?? docs/final-quality/public-browser/screenshots/about-en-light-1440.png
+?? docs/final-quality/public-browser/screenshots/contact-ar-light-390.png
+?? docs/final-quality/public-browser/screenshots/contact-en-light-1440.png
+?? docs/final-quality/public-browser/screenshots/eda-ar-light-390.png
+?? docs/final-quality/public-browser/screenshots/eda-en-light-1440.png
+?? docs/final-quality/public-browser/screenshots/home-ar-dark-1440.png
+?? docs/final-quality/public-browser/screenshots/home-ar-light-390.png
+?? docs/final-quality/public-browser/screenshots/home-en-dark-1440.png
+?? docs/final-quality/public-browser/screenshots/home-en-light-1440.png
+?? docs/final-quality/public-browser/screenshots/join-ar-dark-390.png
+?? docs/final-quality/public-browser/screenshots/join-ar-light-390.png
+?? docs/final-quality/public-browser/screenshots/join-en-dark-390.png
+?? docs/final-quality/public-browser/screenshots/join-en-light-1440.png
+?? docs/final-quality/public-browser/screenshots/leaderboard-ar-light-390.png
+?? docs/final-quality/public-browser/screenshots/leaderboard-en-light-1440.png
+?? docs/final-quality/public-browser/screenshots/team-ar-light-390.png
+?? docs/final-quality/public-browser/screenshots/team-en-light-1440.png
+?? docs/final-quality/public-browser/screenshots/video-embed-attempt.png
+?? docs/final-quality/public-browser/screenshots/videos-ar-light-390.png
+?? docs/final-quality/public-browser/screenshots/videos-en-light-1440.png
+?? docs/final-quality/registration-browser/complete-participants-en.png
+?? docs/final-quality/registration-browser/login-password--login-ar-dark-390.png
+?? docs/final-quality/registration-browser/profile--student-ar-dark-390.png
+?? docs/final-quality/registration-browser/reset-password--auth-reset-ar-dark-390.png
+?? docs/final-quality/registration-browser/results.json
+?? docs/final-quality/registration-browser/signup-password--join-ar-dark-390.png
+?? docs/final-quality/theme-browser/theme-brand-results.json
+?? docs/final-quality/validation-results.json
+?? docs/final-quality/working-tree.txt
+?? frontend/scripts/registration-browser-qa.mjs
+?? frontend/src/features/auth/email-callback.ts
+?? frontend/src/features/portal/academic-years.ts
+?? frontend/src/lib/jordanian-phone.ts
+?? frontend/tests/branding.test.ts
+?? frontend/tests/email-callback.test.ts
+?? frontend/tests/fixtures/jordanian-phones.ts
+?? frontend/tests/jordanian-phone.test.ts
+?? frontend/tests/registration.security.test.mjs
+?? frontend/tests/verification.integration.test.mjs
+?? supabase/migrations/20261103000100_registration_validation.sql
+?? supabase/templates/confirmation.html
+?? supabase/templates/recovery.html

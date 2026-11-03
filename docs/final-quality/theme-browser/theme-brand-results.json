@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-03",
+  "checks": {
+    "lightSystemDefault": true,
+    "allLogoVariantsLoaded": true,
+    "lightLogos": true,
+    "noLogoTiles": true,
+    "liveSystemSwitch": true,
+    "darkLogos": true,
+    "logoSizeStable": true,
+    "manualTransitionStarts": true,
+    "manualTransitionEnds": true,
+    "manualChoiceSaved": true,
+    "manualChoiceOverridesSystemChanges": true,
+    "reducedMotionImmediate": true,
+    "rapidSwitchesStayConsistent": true,
+    "crossTabPreferenceSync": true,
+    "mobileThemeControl": true,
+    "mobileSwitchAndLogos": true,
+    "mobileQuickSwitchAndLayout": true
+  },
+  "errors": []
+}

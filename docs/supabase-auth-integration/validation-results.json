@@ -382,5 +382,57 @@
     "publicWebsiteDeployed": false,
     "hostedRecoveryExchangeTested": false,
     "teamSyllabusObjects": 0
+  },
+  "latestBilingualAudit": {
+    "date": "2026-11-02",
+    "translationPairs": {
+      "public": 264,
+      "development": 69,
+      "portal": 124,
+      "total": 457
+    },
+    "unit": 34,
+    "embeddedSecurity": 21,
+    "localIntegration": 19,
+    "localBrowser": {
+      "publicAuthLayouts": 20,
+      "authenticatedLayouts": 32,
+      "validationLayouts": 24,
+      "serverConfirmedHandoff": true,
+      "sameSession": true,
+      "teamRolePreserved": true,
+      "existingRegistrationFormHidden": true,
+      "failedValuesPreserved": true,
+      "duplicatePrevention": true,
+      "transientVerificationRetry": true,
+      "trueExpiredSessionDenied": true
+    },
+    "publicBrowser": {
+      "cases": 160,
+      "interactions": 38,
+      "failed": 0
+    },
+    "configuredBrowser": {
+      "cases": 56,
+      "appExceptions": 0,
+      "hostedUserWrites": 0
+    },
+    "hostedContentRows": {
+      "weeks": 0,
+      "activities": 0,
+      "criteria": 0
+    },
+    "hostedWritesPerformed": false,
+    "pushed": false,
+    "deployed": false,
+    "hostedRegistrationReadOnly": {
+      "readOnly": true,
+      "profiles": 5,
+      "registered": 3,
+      "invalid_registered_records": 0,
+      "team_assignments": 1,
+      "migration_rows": 4,
+      "noPrivateValuesReturned": true
+    }
   }
 }

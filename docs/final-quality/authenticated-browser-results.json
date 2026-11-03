@@ -1,0 +1,227 @@
+{
+  "signup": true,
+  "emailCallback": true,
+  "emailPkceRecovery": true,
+  "sessionPersistence": true,
+  "sessionRefresh": true,
+  "crossTabLogout": true,
+  "teamLoginDestination": true,
+  "invalidPasswordDenied": true,
+  "invalidEmailLinkDenied": true,
+  "profile": true,
+  "serverConfirmedDashboardHandoff": true,
+  "studentAndTeamSessionsRetained": true,
+  "registrationFailureValuesRetained": true,
+  "duplicateRegistrationPrevented": true,
+  "existingRegistrationFormHidden": true,
+  "sessionVerificationRetryWithoutLogin": true,
+  "genuinelyExpiredSessionDenied": true,
+  "passwordRecoveryCallback": true,
+  "recoveryTransportFailure": true,
+  "inlineValidation": true,
+  "validationLayoutCases": 24,
+  "confirmationResend": true,
+  "legacyResendGuidance": true,
+  "passwordVisibility": true,
+  "upload": true,
+  "teamGrade": true,
+  "privateOwnFeedback": true,
+  "studentTeamRouteDenied": true,
+  "pseudonymousLeaderboard": true,
+  "responsiveCombinations": 20,
+  "authenticatedLayouts": [
+    {
+      "role": "student",
+      "language": "ar",
+      "theme": "light",
+      "width": 320
+    },
+    {
+      "role": "student",
+      "language": "ar",
+      "theme": "light",
+      "width": 390
+    },
+    {
+      "role": "student",
+      "language": "ar",
+      "theme": "light",
+      "width": 768
+    },
+    {
+      "role": "student",
+      "language": "ar",
+      "theme": "light",
+      "width": 1440
+    },
+    {
+      "role": "student",
+      "language": "ar",
+      "theme": "dark",
+      "width": 320
+    },
+    {
+      "role": "student",
+      "language": "ar",
+      "theme": "dark",
+      "width": 390
+    },
+    {
+      "role": "student",
+      "language": "ar",
+      "theme": "dark",
+      "width": 768
+    },
+    {
+      "role": "student",
+      "language": "ar",
+      "theme": "dark",
+      "width": 1440
+    },
+    {
+      "role": "student",
+      "language": "en",
+      "theme": "light",
+      "width": 320
+    },
+    {
+      "role": "student",
+      "language": "en",
+      "theme": "light",
+      "width": 390
+    },
+    {
+      "role": "student",
+      "language": "en",
+      "theme": "light",
+      "width": 768
+    },
+    {
+      "role": "student",
+      "language": "en",
+      "theme": "light",
+      "width": 1440
+    },
+    {
+      "role": "student",
+      "language": "en",
+      "theme": "dark",
+      "width": 320
+    },
+    {
+      "role": "student",
+      "language": "en",
+      "theme": "dark",
+      "width": 390
+    },
+    {
+      "role": "student",
+      "language": "en",
+      "theme": "dark",
+      "width": 768
+    },
+    {
+      "role": "student",
+      "language": "en",
+      "theme": "dark",
+      "width": 1440
+    },
+    {
+      "role": "team",
+      "language": "ar",
+      "theme": "light",
+      "width": 320
+    },
+    {
+      "role": "team",
+      "language": "ar",
+      "theme": "light",
+      "width": 390
+    },
+    {
+      "role": "team",
+      "language": "ar",
+      "theme": "light",
+      "width": 768
+    },
+    {
+      "role": "team",
+      "language": "ar",
+      "theme": "light",
+      "width": 1440
+    },
+    {
+      "role": "team",
+      "language": "ar",
+      "theme": "dark",
+      "width": 320
+    },
+    {
+      "role": "team",
+      "language": "ar",
+      "theme": "dark",
+      "width": 390
+    },
+    {
+      "role": "team",
+      "language": "ar",
+      "theme": "dark",
+      "width": 768
+    },
+    {
+      "role": "team",
+      "language": "ar",
+      "theme": "dark",
+      "width": 1440
+    },
+    {
+      "role": "team",
+      "language": "en",
+      "theme": "light",
+      "width": 320
+    },
+    {
+      "role": "team",
+      "language": "en",
+      "theme": "light",
+      "width": 390
+    },
+    {
+      "role": "team",
+      "language": "en",
+      "theme": "light",
+      "width": 768
+    },
+    {
+      "role": "team",
+      "language": "en",
+      "theme": "light",
+      "width": 1440
+    },
+    {
+      "role": "team",
+      "language": "en",
+      "theme": "dark",
+      "width": 320
+    },
+    {
+      "role": "team",
+      "language": "en",
+      "theme": "dark",
+      "width": 390
+    },
+    {
+      "role": "team",
+      "language": "en",
+      "theme": "dark",
+      "width": 768
+    },
+    {
+      "role": "team",
+      "language": "en",
+      "theme": "dark",
+      "width": 1440
+    }
+  ],
+  "exceptions": []
+}

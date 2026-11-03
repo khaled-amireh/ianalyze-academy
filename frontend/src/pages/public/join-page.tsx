@@ -64,7 +64,10 @@ export function JoinPage() {
                         type={field.type}
                         required={field.required}
                         autoComplete="off"
-                        placeholder={t('academy.join.placeholder')}
+                        placeholder={
+                          field.id === 'whatsapp' ? '07XXXXXXXX' : t('academy.join.placeholder')
+                        }
+                        dir={field.type === 'tel' || field.type === 'email' ? 'ltr' : undefined}
                         aria-describedby={
                           field.id === 'whatsapp' ? `registration-${field.id}-hint` : undefined
                         }

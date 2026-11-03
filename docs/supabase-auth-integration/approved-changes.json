@@ -2,12 +2,12 @@
   "baseCommit": "5baffefee9dbadd876c3fd53033f04fe81d3aa7a",
   "files": {
     "frontend/package.json": {
-      "reason": "Preserve existing UI packages, pin release tooling and security overrides; add guarded production build and CI-only release commands.",
-      "sha256": "77f96589bfdd47a9b7475087e829c3986a3f543a629900847c06eeceee4ee569"
+      "reason": "Include the new guarded registration persistence suite in the existing serial real local Supabase command.",
+      "sha256": "4979790d62bdba611473e49cf7efd67239fc5c42e13b396c4cf115c7b02ac976"
     },
     "frontend/scripts/phase-04-browser-qa.mjs": {
-      "reason": "Retain real local flows; add inline field validation, password controls, real confirmation resend/legacy callback and 24 bilingual/theme/responsive error cases.",
-      "sha256": "5fc68cdac73c5e90f725ed61cc9923501a77b7e956db38c529bb057647aece0b"
+      "reason": "Retain existing real browser security/Auth checks and add server-confirmed role-aware Save navigation, retained sessions, failed-save values, duplicates and actual expiry handling.",
+      "sha256": "f7f7d1bf37ba3cab9297cd170172751b23058b889b5201923a2f2be317edfd72"
     },
     "frontend/scripts/prepare-local-supabase.mjs": {
       "reason": "Prepare isolated ignored local test environments without printing credentials or touching existing env files.",
@@ -19,16 +19,16 @@
       "sha256": "d80ff56f9413a123a8949289de178c301bdd378cc18bdfd54954bc6a0495d17a"
     },
     "frontend/scripts/check-redesign.mjs": {
-      "reason": "Retain all design/backend freezes; pin every reviewed CI/security lockfile delta individually while rejecting any unreviewed dependency drift.",
-      "sha256": "4f5cf59d23f7293d42cfa3253697847f40b69de7893ac8887da108593323be88"
+      "reason": "Retain all historical integrity checks while accepting only separately hash-pinned owner-authorized translation corrections.",
+      "sha256": "757590239f44889306db27ea82b4e558fd95b9df27b589f49e5acfcec1bbd4dc"
     },
     "frontend/src/features/portal/auth-pages.tsx": {
-      "reason": "Accessible field validation, password confirmation/visibility, honest resend/errors, duplicate-submit guards, safe legacy callback guidance and preserved PKCE Auth flows.",
-      "sha256": "ab18ff856d09983d28c1b048f692593c18f9d157cf0abbbe415ec02a6173e727"
+      "reason": "Treat verification errors as retryable and fail closed without automatically redirecting a still-existing session to Login; retain true signed-out route denial.",
+      "sha256": "abdc647b49a1d54dc4b5174f152fcca862078a4be71087eef82b2ca72bcc57d0"
     },
     "frontend/src/features/portal/copy.ts": {
-      "reason": "Translate all validation, confirmation, expired-session, password-control and registration messages into Arabic and English.",
-      "sha256": "a7ac290c7b047b0357a15480861fa21002891069857799eefb7e103059883d60"
+      "reason": "Audit the complete portal catalogue, preserve official technical names and improve role-neutral completion/session-retry copy; expose dictionaries for complete audit tests.",
+      "sha256": "5c88ed3668ccdcad38a9101f6d55e049074159e6d75ecc1fc2b72cea9ac5882e"
     },
     "frontend/tests/delivery.integration.test.mjs": {
       "reason": "Add real Leader/Organizer equivalence, escalation denial, atomic grading-status, best-attempt aggregation and stable tied-ranking privacy regressions.",
@@ -57,12 +57,12 @@
       "sha256": "b583a1c88fd373f028a8f94f24002c162af3dcaab7d47bc715a53b7483e913b1"
     },
     "frontend/src/features/portal/portal.css": {
-      "reason": "Style scoped error/success notices and password controls with existing accessible brand tokens; preserve unrelated layouts.",
-      "sha256": "8b3bf794a1f99e321a4eab56e3f636d11563b0c17308ac2056838becbe113846"
+      "reason": "Let long translated/authored headings wrap within the existing mobile layout without redesign.",
+      "sha256": "c847412faeabcd0f2e4d2db1ea20c5d52bb25d901db6160106ca5dec8efece4a"
     },
     "frontend/src/features/portal/team-page.tsx": {
-      "reason": "Make the existing private student-table scroll region keyboard accessible and label it with existing localized copy.",
-      "sha256": "98b037c4f46f2cd11e06e3fb50b8d0cce47bed2995aacce26c66ddc319e06c66"
+      "reason": "Use the selected database language for all management headings/options/reviews, correct field directions, preserve Team permissions and show confirmed profile-save feedback.",
+      "sha256": "acf8735964b98c3948285deed8365a84a6506342c3607c3084a3a6935043078e"
     },
     "frontend/package-lock.json": {
       "reason": "Lock reproducible release tooling and minimatch security patch; preserve the required shadcn stylesheet package.",
@@ -121,8 +121,8 @@
       "added": true
     },
     "frontend/src/features/portal/form-feedback.tsx": {
-      "reason": "Reuse existing identity and color tokens for accessible inline password controls and red/green status announcements.",
-      "sha256": "68831c7a0af0426cf36e1716825431b2ad5558b038836aa4fa5573d814c6e53c",
+      "reason": "Isolate mixed-direction technical phrases inside existing accessible status notices.",
+      "sha256": "89beb66bd4e81173b0a55466776bc0d7dbff3fa4882c7baaa5d3fe106aa7ff6a",
       "added": true
     },
     "frontend/src/features/portal/form-validation.ts": {
@@ -131,18 +131,18 @@
       "added": true
     },
     "frontend/src/features/portal/student-page.tsx": {
-      "reason": "Show email-verified participants the academy registration form before dashboard content; validate private fields and consent, preserve data and report confirmed completion.",
-      "sha256": "008c94832f8f600b862da0ce66071306ce7a16d565e20ec42fc3895ae96a5397",
+      "reason": "Confirm persisted registration before role-aware dashboard handoff; retain the Auth session and hide completed registration behind explicit profile editing; respect bilingual authored week content.",
+      "sha256": "53309964b5459fbf61e62bb5223bd1a2df40849e71ebd6ea6696dc5757c8b5a7",
       "added": false
     },
     "frontend/src/features/portal/privacy-page.tsx": {
-      "reason": "Prepare bilingual factual account/data-use and private-contact notice for the owner-authorized registration launch.",
-      "sha256": "6542484cb44161424e8d988965849a337a28cf4ed895fb8acd223ed49350251e",
+      "reason": "Keep official Python and WhatsApp names in the equivalent Arabic privacy text.",
+      "sha256": "cef55d78273da8ae518e13adfd6ff898b533c140e366668cc3c04d33e090da5f",
       "added": false
     },
     "frontend/src/lib/academy-data.ts": {
-      "reason": "Preserve original identity/API failures so form feedback distinguishes unavailable network and expired sessions while retaining RLS-bound own-profile updates.",
-      "sha256": "7d1bb10392cee7ff8590b03aee6c466d70d38403150cb3da13d4256f0b47759b",
+      "reason": "Read back persisted own-profile registration before success; preserve existing user identity/session/role and never create another profile or write assignments.",
+      "sha256": "74f56314b5f57aa55a21d26f97f9182d623508d3750bbbffa5f997fc6934d8c9",
       "added": false
     },
     "frontend/tests/form-validation.test.ts": {
@@ -154,6 +154,36 @@
       "reason": "Reject stale, missing, wrong-project or incomplete Leader release proofs and unexpectedly open unrelated gates.",
       "sha256": "e0f90bd2d1cb34fcff4781dd6c9d4f6d14bde35257b3de30b14f02a3284310fe",
       "added": true
+    },
+    "frontend/src/locales/ar.json": {
+      "reason": "Audit and polish all public Arabic copy; preserve official library names, EDA meaning, curriculum order and requirements; correct registration availability wording.",
+      "sha256": "7c3dfc39ffa3829e7928b733a1fc978af76684ff0b1b5b81fa62f12cae405c70"
+    },
+    "frontend/src/locales/en.json": {
+      "reason": "Keep public meanings equivalent to Arabic, clarify Pandas as a Python library and describe current registration and gated activities accurately.",
+      "sha256": "f252e31aef15caa2fb12bf0a40d63bfdcd89a3ca97d3e91dc479112935b85246"
+    },
+    "frontend/src/dev/locales/ar.json": {
+      "reason": "Polish the existing isolated development preview terminology and Arabic grammar without exposing previews in production.",
+      "sha256": "1fce7fb996ae2cce174ea6a4534043be405dad6803f7048b038eef44fef6dafb"
+    },
+    "frontend/src/features/portal/data.ts": {
+      "reason": "Use the public syllabus translations as the shared ordered week-title source and update dashboard data only from confirmed server profile responses.",
+      "sha256": "e200f2657d8987c7bf3950c471338847ef4c541aad5d937e97b6dbb244b1d368"
+    },
+    "frontend/tests/content-audit.test.ts": {
+      "reason": "Audit all public/development/portal dictionaries for duplicate/missing keys, placeholder parity, Unicode and preserved official technical names.",
+      "sha256": "bbe2bb9424a8e0f89088dc47c3ceb6481537f7a99ae6738d29743ac688e4d1dc",
+      "added": true
+    },
+    "frontend/tests/registration.integration.test.mjs": {
+      "reason": "Test real local persisted registration, retained sessions/roles, duplicate idempotence and invalid/ended-session denial.",
+      "sha256": "b8aad78bb9e0418390f5a2380dcb757980e0785a3b17e8577b122253ecd485d0",
+      "added": true
+    },
+    "frontend/scripts/check-phase-03.mjs": {
+      "reason": "Preserve all baseline checks and use individually reviewed hashes for the explicitly authorized translation changes.",
+      "sha256": "e249b387f01b6358c83c55244fc80d8a7f136c0c22b027090fec750bfabc4553"
     }
   },
   "dependencyChanges": {

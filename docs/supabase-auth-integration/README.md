@@ -1,3 +1,5 @@
+> Latest audit: [bilingual content and registration handoff](BILINGUAL-AUDIT.md). Save now confirms persistence, retains the existing session, and opens the role-appropriate dashboard.
+
 > Current registration/owner status: [REGISTRATION-HANDOFF.md](REGISTRATION-HANDOFF.md) supersedes the earlier closed-registration release status below. The verified owner has Team access; registration is approved for the next push, with a read-only owner/role checkpoint. The live website is unchanged until that push.
 
 Production readiness verified on 2026-11-02. The approved database and Auth changes are complete for `ocihwiqtgqplwgyhpwjv`. The frontend and notebook Edge Function have **not** been deployed; the prepared GitHub Actions workflow will release them after the owner's push. Registration, submissions, leaderboard and privacy launch gates remain closed. Hosted registration/login and SMTP delivery have not been tested. See [current report](REPORT.md), [production execution](PRODUCTION-EXECUTION.md), [backup rehearsal](BACKUP-REHEARSAL.md), and [reviewed source/dependency hashes](approved-changes.json).

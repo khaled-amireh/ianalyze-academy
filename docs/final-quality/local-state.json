@@ -1,0 +1,29 @@
+{
+  "localOnly": true,
+  "counts": {
+    "users": 0,
+    "profiles": 0,
+    "weeks": 0,
+    "submissions": 0,
+    "objects": 0
+  },
+  "gates": {
+    "browseruploads": false,
+    "submissionservice": false,
+    "leaderboard": false
+  },
+  "migrationVersions": [
+    "20261101000100",
+    "20261101000200",
+    "20261102000100",
+    "20261102000200",
+    "20261103000100"
+  ],
+  "hostedReadOrModified": false,
+  "teardown": {
+    "projectLocalSupabaseStopped": true,
+    "localVolumesPreserved": true,
+    "ownedPreviewServersStopped": true,
+    "dedicatedTestBrowserClosed": true
+  }
+}

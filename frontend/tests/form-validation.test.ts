@@ -59,7 +59,7 @@ test('registration validates the database contract without accepting partial con
     consent: 'on',
   };
   assert.deepEqual(validateProfile(form(valid), true), {});
-  for (const year of ['0', '9', '2.5', 'Infinity', '1e0'])
+  for (const year of ['0', '6', '7', '8', '9', '2.5', 'Infinity', '1e0'])
     assert.equal(
       validateProfile(form({ ...valid, academic_year: year }), true).academic_year,
       'invalidYear',
@@ -68,8 +68,26 @@ test('registration validates the database contract without accepting partial con
     validateProfile(form({ ...valid, academic_year: '' }), true).academic_year,
     'missingYear',
   );
+  assert.deepEqual(validateProfile(form({ ...valid, whatsapp: '0790000001' }), true), {});
   assert.equal(
-    validateProfile(form({ ...valid, whatsapp: '0790000001' }), true).whatsapp,
+    validateProfile(form({ ...valid, whatsapp: '0760000001' }), true).whatsapp,
+    'invalidPhone',
+  );
+  const legacy = { whatsapp: '+447700900123', academic_year: 7 };
+  assert.deepEqual(
+    validateProfile(
+      form({ ...valid, whatsapp: legacy.whatsapp, academic_year: '7' }),
+      false,
+      legacy,
+    ),
+    {},
+  );
+  assert.equal(
+    validateProfile(form({ ...valid, academic_year: '7' }), true, legacy).academic_year,
+    'invalidYear',
+  );
+  assert.equal(
+    validateProfile(form({ ...valid, whatsapp: '+447700900124' }), false, legacy).whatsapp,
     'invalidPhone',
   );
   assert.equal(validateProfile(form({ ...valid, consent: '' }), true).consent, 'consentRequired');

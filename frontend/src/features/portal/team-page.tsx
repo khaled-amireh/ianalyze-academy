@@ -1,4 +1,4 @@
-import { useCallback, useState, type FormEvent } from 'react';
+import { useCallback, useRef, useState, type FormEvent } from 'react';
 import { Link, useLocation } from 'react-router';
 import { useAuth } from '@/features/auth/use-auth';
 import { PageContainer } from '@/components/shared/page-container';
@@ -7,6 +7,8 @@ import { Input } from '@/components/ui/input';
 import { stateText, usePortalCopy } from './copy';
 import { MixedText } from '@/components/shared/mixed-text';
 import { FormNotice } from './form-feedback';
+import type { PortalCopy } from './copy';
+import { academicYearLabel } from './academic-years';
 import {
   checked,
   client,
@@ -29,15 +31,17 @@ function ActivityEditor({
   activity?: Row<'activities'>;
 }) {
   const { c, arabic } = usePortalCopy();
+  const inFlight = useRef(false);
   const [busy, setBusy] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState<keyof PortalCopy | ''>('');
   const due = activity?.due_at ? new Date(activity.due_at) : null;
   const dueInput = due
     ? new Date(due.getTime() - due.getTimezoneOffset() * 60000).toISOString().slice(0, 16)
     : '';
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (busy) return;
+    if (inFlight.current) return;
+    inFlight.current = true;
     setBusy(true);
     setMessage('');
     const form = new FormData(event.currentTarget);
@@ -65,16 +69,17 @@ function ActivityEditor({
         ? await client().from('activities').update(values).eq('id', activity.id)
         : await client().from('activities').insert(values);
       if (result.error) throw result.error;
-      setMessage(c.saved);
+      setMessage('saved');
       reload();
     } catch {
-      setMessage(c.error);
+      setMessage('error');
     } finally {
+      inFlight.current = false;
       setBusy(false);
     }
   }
   return (
-    <form onSubmit={save}>
+    <form onSubmit={save} aria-busy={busy}>
       <h3>
         <MixedText>
           {activity ? (arabic ? activity.title_ar : activity.title_en) : c.createActivity}
@@ -159,7 +164,10 @@ function ActivityEditor({
         {c.status}: {stateText(activity?.status ?? 'draft', c)}
       </p>
       <Button disabled={busy}>{c.save}</Button>
-      <p role="status">{message}</p>
+      <FormNotice
+        message={message ? c[message] : ''}
+        kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}
+      />
     </form>
   );
 }
@@ -174,11 +182,13 @@ function RubricEditor({
 }) {
   const { c, arabic } = usePortalCopy();
   const [count, setCount] = useState(1);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState<keyof PortalCopy | ''>('');
+  const inFlight = useRef(false);
   const [busy, setBusy] = useState(false);
   async function create(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (busy) return;
+    if (inFlight.current) return;
+    inFlight.current = true;
     setBusy(true);
     const form = new FormData(event.currentTarget);
     try {
@@ -192,11 +202,12 @@ function RubricEditor({
         p_criteria: rows,
       });
       if (result.error) throw result.error;
-      setMessage(c.saved);
+      setMessage('saved');
       reload();
     } catch {
-      setMessage(c.error);
+      setMessage('error');
     } finally {
+      inFlight.current = false;
       setBusy(false);
     }
   }
@@ -234,6 +245,8 @@ function RubricEditor({
                   variant="outline"
                   disabled={busy}
                   onClick={async () => {
+                    if (inFlight.current) return;
+                    inFlight.current = true;
                     setBusy(true);
                     try {
                       const result = await client()
@@ -243,8 +256,9 @@ function RubricEditor({
                       if (result.error) throw result.error;
                       reload();
                     } catch {
-                      setMessage(c.error);
+                      setMessage('error');
                     } finally {
+                      inFlight.current = false;
                       setBusy(false);
                     }
                   }}
@@ -255,7 +269,7 @@ function RubricEditor({
             )}
           </div>
         ))}
-      <form onSubmit={create}>
+      <form onSubmit={create} aria-busy={busy}>
         {Array.from({ length: count }, (_, i) => (
           <div className="portal-criterion" key={i}>
             <Input
@@ -296,7 +310,10 @@ function RubricEditor({
         </Button>
         <Button disabled={busy}>{c.createRubric}</Button>
       </form>
-      <p role="status">{message}</p>
+      <FormNotice
+        message={message ? c[message] : ''}
+        kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}
+      />
     </section>
   );
 }
@@ -311,13 +328,16 @@ function DraftCriteria({
 }) {
   const { c } = usePortalCopy();
   const [count, setCount] = useState(Math.max(1, criteria.length));
+  const inFlight = useRef(false);
   const [busy, setBusy] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState<keyof PortalCopy | ''>('');
   return (
     <form
+      aria-busy={busy}
       onSubmit={async (event) => {
         event.preventDefault();
-        if (busy) return;
+        if (inFlight.current) return;
+        inFlight.current = true;
         setBusy(true);
         const form = new FormData(event.currentTarget);
         try {
@@ -333,8 +353,9 @@ function DraftCriteria({
           if (result.error) throw result.error;
           reload();
         } catch {
-          setMessage(c.error);
+          setMessage('error');
         } finally {
+          inFlight.current = false;
           setBusy(false);
         }
       }}
@@ -378,7 +399,10 @@ function DraftCriteria({
         {c.addCriterion}
       </Button>
       <Button disabled={busy}>{c.save}</Button>
-      <p role="status">{message}</p>
+      <FormNotice
+        message={message ? c[message] : ''}
+        kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}
+      />
     </form>
   );
 }
@@ -392,7 +416,8 @@ function Review({
   reload: () => void;
 }) {
   const { c, arabic } = usePortalCopy();
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState<keyof PortalCopy | ''>('');
+  const inFlight = useRef(false);
   const [busy, setBusy] = useState(false);
   const grades = data.grades.filter((g) => g.submission_id === submission.id);
   const last = grades[0];
@@ -401,7 +426,8 @@ function Review({
   const activity = data.activities.find((a) => a.id === submission.activity_id);
   async function grade(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (busy) return;
+    if (inFlight.current) return;
+    inFlight.current = true;
     setBusy(true);
     const form = new FormData(event.currentTarget);
     const publish =
@@ -420,11 +446,12 @@ function Review({
         p_expected_revision: expected,
       });
       if (result.error) throw result.error;
-      setMessage(c.saved);
+      setMessage('saved');
       reload();
     } catch {
-      setMessage(c.error);
+      setMessage('error');
     } finally {
+      inFlight.current = false;
       setBusy(false);
     }
   }
@@ -442,14 +469,14 @@ function Review({
         <Button
           variant="outline"
           onClick={() =>
-            void downloadNotebook(submission.object_path!).catch(() => setMessage(c.error))
+            void downloadNotebook(submission.object_path!).catch(() => setMessage('error'))
           }
         >
           {c.download}
         </Button>
       )}
       {submission.status !== 'uploading' && (
-        <form onSubmit={grade}>
+        <form onSubmit={grade} aria-busy={busy}>
           {data.criteria
             .filter((x) => x.rubric_id === submission.rubric_id)
             .map((x) => (
@@ -490,6 +517,8 @@ function Review({
                 variant="outline"
                 disabled={busy}
                 onClick={async () => {
+                  if (inFlight.current) return;
+                  inFlight.current = true;
                   setBusy(true);
                   try {
                     const result = await client().rpc('request_resubmission', {
@@ -498,8 +527,9 @@ function Review({
                     if (result.error) throw result.error;
                     reload();
                   } catch {
-                    setMessage(c.error);
+                    setMessage('error');
                   } finally {
+                    inFlight.current = false;
                     setBusy(false);
                   }
                 }}
@@ -510,7 +540,10 @@ function Review({
           </div>
         </form>
       )}
-      <p role="status">{message}</p>
+      <FormNotice
+        message={message ? c[message] : ''}
+        kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}
+      />
     </section>
   );
 }
@@ -521,7 +554,7 @@ function Materials() {
     [],
   );
   const { data, error } = useRemote(load);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState<keyof PortalCopy | ''>('');
   return (
     <section className="content-card">
       <h2>{c.materials}</h2>
@@ -532,14 +565,19 @@ function Materials() {
             <Button
               variant="outline"
               onClick={() =>
-                void downloadNotebook(f.name, 'team-materials').catch(() => setMessage(c.error))
+                void downloadNotebook(f.name, 'team-materials').catch(() => setMessage('error'))
               }
             >
               {f.name}
             </Button>
           </p>
         ))}
-      <p role="status">{error ? c.error : !data ? c.wait : !data.length ? c.noRecords : message}</p>
+      <FormNotice
+        message={
+          error ? c.error : !data ? c.wait : !data.length ? c.noRecords : message ? c[message] : ''
+        }
+        kind={error || message === 'error' ? 'error' : 'info'}
+      />
     </section>
   );
 }
@@ -547,9 +585,10 @@ export function TeamPageLive() {
   const { c, arabic } = usePortalCopy();
   const auth = useAuth();
   const location = useLocation();
-  const profileSaved = (location.state as { profileSaved?: string } | null)?.profileSaved;
+  const routeState = location.state as { profileSaved?: string; emailVerified?: boolean } | null;
+  const profileSaved = routeState?.profileSaved;
   const { data, error, reload } = useRemote(loadPortal);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState<keyof PortalCopy | ''>('');
   const [reviewPage, setReviewPage] = useState(0);
   const [reviewActivity, setReviewActivity] = useState('');
   if (!data)
@@ -584,7 +623,13 @@ export function TeamPageLive() {
       </nav>
       <FormNotice
         message={
-          profileSaved === 'registered' ? c.registered : profileSaved === 'saved' ? c.saved : ''
+          profileSaved === 'registered'
+            ? c.registered
+            : profileSaved === 'saved'
+              ? c.saved
+              : routeState?.emailVerified
+                ? c.confirmed
+                : ''
         }
         kind="success"
       />
@@ -598,22 +643,55 @@ export function TeamPageLive() {
                 <th>{c.email}</th>
                 <th>{c.whatsapp}</th>
                 <th>{c.major}</th>
+                <th>{c.year}</th>
+                <th>{c.python}</th>
+                <th>{c.universityId}</th>
+                <th>{c.preferredLanguage}</th>
+                <th>{c.registrationDate}</th>
               </tr>
             </thead>
             <tbody>
               {!data.profiles.some((p) => p.registered_at) && (
                 <tr>
-                  <td colSpan={4}>{c.noRecords}</td>
+                  <td colSpan={9}>{c.noRecords}</td>
                 </tr>
               )}
               {data.profiles
                 .filter((p) => p.registered_at)
                 .map((p) => (
                   <tr key={p.id}>
-                    <td>{p.full_name}</td>
-                    <td dir="ltr">{p.email}</td>
-                    <td dir="ltr">{p.whatsapp}</td>
-                    <td>{p.major}</td>
+                    <td>
+                      <bdi dir="auto">{p.full_name || c.notProvided}</bdi>
+                    </td>
+                    <td>
+                      <bdi dir="ltr">{p.email || c.notProvided}</bdi>
+                    </td>
+                    <td>
+                      <bdi dir="ltr">{p.whatsapp || c.notProvided}</bdi>
+                    </td>
+                    <td>
+                      <bdi dir="auto">{p.major || c.notProvided}</bdi>
+                    </td>
+                    <td>{academicYearLabel(p.academic_year, arabic)}</td>
+                    <td>
+                      {p.python_experience === 'none'
+                        ? c.none
+                        : p.python_experience === 'basic'
+                          ? c.basic
+                          : p.python_experience === 'experienced'
+                            ? c.experienced
+                            : c.notProvided}
+                    </td>
+                    <td>
+                      <bdi dir="auto">{p.university_id || c.notProvided}</bdi>
+                    </td>
+                    <td>{p.locale === 'ar' ? c.arabicLanguage : c.englishLanguage}</td>
+                    <td>
+                      {new Intl.DateTimeFormat(arabic ? 'ar-JO' : 'en-GB', {
+                        dateStyle: 'medium',
+                        timeZone: 'Asia/Amman',
+                      }).format(new Date(p.registered_at!))}
+                    </td>
                   </tr>
                 ))}
             </tbody>
@@ -653,7 +731,7 @@ export function TeamPageLive() {
                     if (result.error) throw result.error;
                     reload();
                   } catch {
-                    setMessage(c.error);
+                    setMessage('error');
                   }
                 }}
               >
@@ -672,7 +750,10 @@ export function TeamPageLive() {
             <RubricEditor activity={a} data={data} reload={reload} />
           </details>
         ))}
-        <p role="status">{message}</p>
+        <FormNotice
+          message={message ? c[message] : ''}
+          kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}
+        />
       </section>
       <section id="reviews">
         <h2>{c.review}</h2>

@@ -10,6 +10,10 @@ export const mergeResolution = JSON.parse(
 export const authIntegration = JSON.parse(
   readFileSync(new URL('docs/supabase-auth-integration/approved-changes.json', root), 'utf8'),
 );
+// Current user-authorized refinement, pinned separately from historical approvals.
+export const qualityUpdate = JSON.parse(
+  readFileSync(new URL('docs/final-quality/approved-changes.json', root), 'utf8'),
+);
 const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
 function tree(commit) {
   return new Map(
@@ -31,6 +35,25 @@ export function verifyMergePreservation() {
   const resolvedFiles = { ...mergeResolution.resolvedFiles };
   for (const [path, resolution] of Object.entries(authIntegration.files))
     resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };
+  assert.equal(git('merge-base', qualityUpdate.baseCommit, 'HEAD'), qualityUpdate.baseCommit);
+  const qualityBaseline = tree(qualityUpdate.baseCommit);
+  for (const [path, resolution] of Object.entries(qualityUpdate.files)) {
+    assert.ok(resolution.reason, `Quality update reason missing: ${path}`);
+    if (resolution.added) {
+      assert.ok(!qualityBaseline.has(path), `Quality addition already existed: ${path}`);
+    } else {
+      assert.equal(
+        createHash('sha256')
+          .update(
+            execFileSync('git', ['show', `${qualityUpdate.baseCommit}:${path}`], { cwd: root }),
+          )
+          .digest('hex'),
+        resolution.previousSha256,
+        `Quality update baseline changed: ${path}`,
+      );
+    }
+    resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };
+  }
   assert.equal(git('merge-base', functionalCommit, redesignCommit), baseCommit);
   const base = tree(baseCommit);
   const functional = tree(functionalCommit);

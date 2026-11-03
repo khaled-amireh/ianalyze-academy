@@ -58,6 +58,12 @@ enable_confirmations = true
 double_confirm_changes = true
 secure_password_change = true
 max_frequency = "1s"
+[auth.email.template.confirmation]
+subject = "Verify Email Address | تأكيد البريد الإلكتروني — iAnalyze Academy"
+content_path = "./supabase/templates/confirmation.html"
+[auth.email.template.recovery]
+subject = "Reset your password | استعادة كلمة المرور — iAnalyze Academy"
+content_path = "./supabase/templates/recovery.html"
 [auth.sms]
 enable_signup = false
 [auth.external.google]

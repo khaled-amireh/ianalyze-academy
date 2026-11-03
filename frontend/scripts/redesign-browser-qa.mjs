@@ -554,7 +554,9 @@ const videoAttempt = {
   ),
 };
 const results = {
-  date: '2026-11-02',
+  date: new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Amman', dateStyle: 'short' }).format(
+    new Date(),
+  ),
   origin,
   checks,
   contrastChecks,

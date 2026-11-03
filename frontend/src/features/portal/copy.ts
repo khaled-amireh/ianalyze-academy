@@ -6,15 +6,19 @@ const en = {
   sessionVerificationError:
     'Your session could not be verified. Retry, or log in again if it has expired.',
   confirmationLoginHelp:
-    'The email link has returned to the academy. Log in with your email and password to continue. If your email is not confirmed, request a new confirmation message. Use the browser where you started signup or recovery to finish those links.',
+    'For an older email link, try the browser where you requested it, or log in if your email is already verified. You can also request a new verification or password recovery email.',
+  verifyEmail: 'Verify Email Address',
+  verificationHelp:
+    'Open the latest message in your inbox or spam folder. You can request another verification email below.',
+  resendWait: 'Please wait at least one minute before requesting another email.',
   requiredField: 'This field is required.',
   invalidEmail: 'Please enter a valid email address.',
   shortPassword: 'Password must contain at least 12 characters.',
   passwordMismatch: 'Passwords do not match.',
   invalidPhone:
-    'Please enter a valid phone number, including the country code (for example +962790000001).',
+    'Enter a Jordanian mobile number with 10 digits starting with 077, 078 or 079, for example 0797232936. +962 and 00962 formats are also accepted.',
   missingYear: 'Please select your academic year.',
-  invalidYear: 'Please select an academic year from 1 to 8.',
+  invalidYear: 'Please select an academic year from First Year to Fifth Year.',
   consentRequired: 'Please read and accept the privacy notice.',
   tooLong: 'This value is too long.',
   networkError: 'Unable to connect. Please try again.',
@@ -30,7 +34,8 @@ const en = {
   academyRegistration: 'Academy registration',
   resendSent:
     'If your account needs confirmation, a new confirmation email has been requested. Check your inbox and spam folder.',
-  registrationNext: 'After confirming your email, log in to complete your academy registration.',
+  registrationNext:
+    'Open the verification link to continue to your profile and complete academy registration. If an older link asks you to log in, use your email and password.',
   login: 'Log in',
   signup: 'Create account',
   email: 'Email address',
@@ -41,8 +46,8 @@ const en = {
   send: 'Send recovery email',
   sent: 'If eligible, check your email and spam folder for the next step.',
   verificationSent:
-    'Please check your email and spam folder for a confirmation link. Verify your email before logging in.',
-  confirmed: 'Your email has been verified. Complete your profile to join the academy.',
+    'Check your inbox and spam folder for a verification link. Verify your email to continue registration.',
+  confirmed: 'Your email has been verified.',
   error:
     'The request could not be completed. Check your details and try again. If a record changed, refresh before retrying.',
   unavailable: 'This service is not open yet. Please check back after the academy announcement.',
@@ -53,7 +58,12 @@ const en = {
   dashboard: 'My dashboard',
   profile: 'My profile',
   fullName: 'Full name',
-  whatsapp: 'WhatsApp number (international format)',
+  whatsapp: 'Phone Number',
+  notProvided: 'Not provided',
+  registrationDate: 'Registration date',
+  preferredLanguage: 'Preferred language',
+  arabicLanguage: 'Arabic',
+  englishLanguage: 'English',
   major: 'Major',
   year: 'Academic year',
   python: 'Python experience',
@@ -142,14 +152,19 @@ const ar: PortalCopy = {
   version: 'الإصدار',
   sessionVerificationError: 'تعذر التحقق من جلستك. حاول مجددًا، أو سجّل الدخول إذا انتهت صلاحيتها.',
   confirmationLoginHelp:
-    'تمت العودة من رابط البريد. سجّل الدخول بالبريد وكلمة المرور لإكمال التسجيل. إذا لم يُؤكَّد البريد، اطلب رسالة تأكيد جديدة. استخدم المتصفح الذي بدأت فيه التسجيل لإكمال روابط التأكيد والاستعادة.',
+    'إذا كان رابط البريد قديمًا، فجرّب فتحه في المتصفح الذي طلبته منه، أو سجّل الدخول إذا كان بريدك مؤكّدًا. يمكنك أيضًا طلب رسالة تأكيد أو استعادة جديدة.',
+  verifyEmail: 'تأكيد البريد الإلكتروني',
+  verificationHelp:
+    'افتح أحدث رسالة في بريدك الوارد أو الرسائل غير المرغوب فيها. يمكنك طلب رسالة تأكيد أخرى أدناه.',
+  resendWait: 'يرجى الانتظار دقيقة واحدة على الأقل قبل طلب رسالة أخرى.',
   requiredField: 'هذا الحقل مطلوب.',
   invalidEmail: 'يرجى إدخال عنوان بريد إلكتروني صالح.',
   shortPassword: 'يجب أن تتكون كلمة المرور من 12 حرفًا على الأقل.',
   passwordMismatch: 'كلمتا المرور غير متطابقتين.',
-  invalidPhone: 'يرجى إدخال رقم هاتف صالح مع رمز الدولة (مثل ‎+962790000001).',
+  invalidPhone:
+    'أدخل رقم هاتف أردنيًا من 10 أرقام يبدأ بـ 077 أو 078 أو 079، مثل 0797232936. تُقبل أيضًا صيغتا +962 و00962.',
   missingYear: 'يرجى اختيار السنة الدراسية.',
-  invalidYear: 'يرجى اختيار سنة دراسية من 1 إلى 8.',
+  invalidYear: 'يرجى اختيار سنة دراسية من السنة الأولى إلى السنة الخامسة.',
   consentRequired: 'يرجى قراءة إشعار الخصوصية والموافقة عليه.',
   tooLong: 'القيمة المدخلة طويلة جدًا.',
   networkError: 'تعذر الاتصال. يرجى المحاولة مجددًا.',
@@ -165,7 +180,8 @@ const ar: PortalCopy = {
   academyRegistration: 'التسجيل في الأكاديمية',
   resendSent:
     'إذا كان الحساب بحاجة إلى التأكيد، فقد طُلبت رسالة تأكيد جديدة. تحقق من البريد والرسائل غير المرغوب فيها.',
-  registrationNext: 'بعد تأكيد البريد الإلكتروني، سجّل الدخول لإكمال التسجيل في الأكاديمية.',
+  registrationNext:
+    'افتح رابط التأكيد للانتقال إلى ملفك وإكمال التسجيل في الأكاديمية. إذا طلب منك رابط قديم تسجيل الدخول، فاستخدم بريدك الإلكتروني وكلمة المرور.',
   login: 'تسجيل الدخول',
   signup: 'إنشاء حساب',
   email: 'البريد الإلكتروني',
@@ -176,8 +192,8 @@ const ar: PortalCopy = {
   send: 'إرسال رسالة الاستعادة',
   sent: 'إذا كان الحساب مؤهلاً، تحقق من البريد والرسائل غير المرغوب فيها لإكمال الخطوة التالية.',
   verificationSent:
-    'تحقق من البريد والرسائل غير المرغوب فيها لفتح رابط التأكيد. أكّد بريدك الإلكتروني قبل تسجيل الدخول.',
-  confirmed: 'تم تأكيد البريد. أكمل ملفك للانضمام للأكاديمية.',
+    'تحقق من البريد الوارد والرسائل غير المرغوب فيها لفتح رابط التأكيد. أكّد بريدك الإلكتروني لمتابعة التسجيل.',
+  confirmed: 'تم تأكيد البريد الإلكتروني بنجاح.',
   error:
     'تعذر إكمال الطلب. تحقق من البيانات وحاول مجددًا. إذا تغير السجل، حدّث البيانات قبل المحاولة.',
   unavailable: 'هذه الخدمة غير مفتوحة حاليًا. يرجى متابعة إعلان الأكاديمية.',
@@ -188,7 +204,12 @@ const ar: PortalCopy = {
   dashboard: 'لوحتي',
   profile: 'ملفي الشخصي',
   fullName: 'الاسم الكامل',
-  whatsapp: 'رقم WhatsApp (بصيغة دولية)',
+  whatsapp: 'رقم الهاتف',
+  notProvided: 'غير مذكور',
+  registrationDate: 'تاريخ التسجيل',
+  preferredLanguage: 'اللغة المفضلة',
+  arabicLanguage: 'العربية',
+  englishLanguage: 'الإنجليزية',
   major: 'التخصص',
   year: 'السنة الدراسية',
   python: 'الخبرة في Python',

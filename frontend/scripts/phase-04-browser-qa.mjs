@@ -100,8 +100,15 @@ async function wait(expression, label, sessionId) {
 }
 async function navigate(path) {
   await send('Page.navigate', { url: origin + path });
+  const pathname = path.split(/[?#]/)[0];
+  // Production callbacks can finish before the first browser poll. Assert the
+  // final destination in the caller instead of requiring a transient frame.
+  const reached =
+    pathname === '/auth/callback'
+      ? "['/auth/callback','/student','/workspace','/auth/reset'].includes(location.pathname)"
+      : `location.pathname===${JSON.stringify(pathname)}`;
   await wait(
-    `location.pathname===${JSON.stringify(path.split(/[?#]/)[0])}&&document.readyState==='complete'&&Boolean(document.querySelector('h1'))`,
+    `${reached}&&document.readyState==='complete'&&Boolean(document.querySelector('h1'))`,
     path.split('?')[0],
   );
 }
@@ -277,7 +284,9 @@ try {
   assert.equal(team.error, null);
   users.push(team.data.user.id);
   await sql`update app_private.user_roles set role='team',grant_reason='LOCAL UI TEST ONLY' where user_id=${team.data.user.id}`;
-  const targets = await (await fetch('http://127.0.0.1:9237/json/list')).json();
+  const targets = await (
+    await fetch(`${process.env.ACADEMY_BROWSER_DEBUGGER ?? 'http://127.0.0.1:9237'}/json/list`)
+  ).json();
   const pages = targets.filter((t) => t.type === 'page');
   assert.equal(pages.length, 1);
   socket = new WebSocket(pages[0].webSocketDebuggerUrl);
@@ -332,7 +341,7 @@ try {
   await evaluate(
     "document.querySelector('input[type=checkbox]').click();document.querySelector('form').requestSubmit()",
   );
-  await wait("document.body.innerText.includes('check your email')", 'confirmation message');
+  await wait("document.body.innerText.includes('Check your inbox')", 'confirmation message');
   const successColor = await evaluate(
     "getComputedStyle(document.querySelector('.portal-notice-success p')).color",
   );
@@ -357,10 +366,10 @@ try {
     "document.body.innerText.includes('Please select your academic year')",
     'registration required fields',
   );
-  await fill('input[name=whatsapp]', '0790000001');
+  await fill('input[name=whatsapp]', '0760000001');
   await evaluate("document.querySelector('form').requestSubmit()");
   await wait(
-    "document.body.innerText.includes('Please enter a valid phone number')",
+    "document.body.innerText.includes('Enter a Jordanian mobile number')",
     'registration phone validation',
   );
   await send('Page.captureScreenshot', { format: 'png' }).then((r) =>
@@ -371,7 +380,7 @@ try {
   );
   for (const [name, value] of Object.entries({
     full_name: 'LOCAL UI STUDENT',
-    whatsapp: '+962790000001',
+    whatsapp: '0790000001',
     major: 'AI',
     academic_year: '4',
     python_experience: 'basic',
@@ -673,7 +682,7 @@ try {
   await evaluate(
     "document.querySelector('input[name=consent]').click();document.querySelector('form').requestSubmit()",
   );
-  await wait("document.body.innerText.includes('check your email')", 'resend fixture signup');
+  await wait("document.body.innerText.includes('Check your inbox')", 'resend fixture signup');
   const resendUser = (await admin.auth.admin.listUsers()).data.users.find(
     (u) => u.email === resendAddress,
   );

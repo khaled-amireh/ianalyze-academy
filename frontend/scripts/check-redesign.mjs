@@ -5,6 +5,7 @@ import { execFileSync } from 'node:child_process';
 import {
   authIntegration,
   mergeResolution,
+  qualityUpdate,
   verifyMergePreservation,
 } from './verify-merge-preservation.mjs';
 const root = new URL('../../', import.meta.url);
@@ -18,7 +19,7 @@ for (const [path, expected] of Object.entries(baseline)) {
     continue;
   assert.equal(
     hash(readFileSync(new URL(path, root))),
-    authIntegration.files[path]?.sha256 ?? expected,
+    qualityUpdate.files[path]?.sha256 ?? authIntegration.files[path]?.sha256 ?? expected,
     `Preserved historical file changed: ${path}`,
   );
 }
@@ -91,6 +92,7 @@ const changed = execFileSync('git', ['diff', mergeResolution.functionalCommit, '
 for (const path of changed)
   assert.ok(
     authIntegration.files[path] ||
+      qualityUpdate.files[path] ||
       !/^(supabase\/|frontend\/src\/(features\/auth\/|lib\/(academy-data|supabase)|types\/database)|frontend\/\.env|\.github\/|.*wrangler)/.test(
         path,
       ),

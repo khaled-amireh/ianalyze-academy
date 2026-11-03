@@ -95,7 +95,23 @@
   overflow-x: auto;
 }
 .portal-page #students table {
-  min-width: 40rem;
+  min-width: 80rem;
+}
+.portal-page #students th {
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
+.portal-page #students td {
+  overflow-wrap: normal;
+}
+.portal-page #students td:nth-child(2) {
+  min-width: 16rem;
+  max-width: 22rem;
+  overflow-wrap: anywhere;
+}
+.portal-page #students td:nth-child(3),
+.portal-page #students td:last-child {
+  white-space: nowrap;
 }
 .portal-page pre {
   white-space: pre-wrap;
@@ -147,13 +163,18 @@
   position: relative;
   display: flex;
   align-items: center;
+  direction: ltr;
 }
 .portal-password input {
-  padding-inline-end: 3rem;
+  padding-left: 0.7rem;
+  padding-right: 3.25rem;
+  min-height: 44px;
 }
 .portal-password-toggle {
   position: absolute;
-  inset-inline-end: 0.2rem;
+  right: 0.2rem;
+  top: 50%;
+  transform: translateY(-50%);
   display: grid;
   place-items: center;
   min-width: 44px;

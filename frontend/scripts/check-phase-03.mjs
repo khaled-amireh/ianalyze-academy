@@ -6,6 +6,7 @@ import { root } from './database-fixture.mjs';
 import {
   authIntegration,
   mergeResolution,
+  qualityUpdate,
   verifyMergePreservation,
 } from './verify-merge-preservation.mjs';
 
@@ -32,7 +33,7 @@ for (const [path, hash] of Object.entries(manifest)) {
     createHash('sha256')
       .update(readFileSync(new URL(integration[path] ?? path, root)))
       .digest('hex'),
-    authIntegration.files[path]?.sha256 ?? hash,
+    qualityUpdate.files[path]?.sha256 ?? authIntegration.files[path]?.sha256 ?? hash,
     `Unrelated frontend/Yomna file changed: ${path}`,
   );
 }

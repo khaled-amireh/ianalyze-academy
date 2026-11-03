@@ -1,8 +1,10 @@
 import { useId, useRef, useState, type FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { useAuth } from '@/features/auth/use-auth';
 import { privacyApproved, registrationEnabled, submissionsEnabled } from '@/lib/academy-client';
 import { saveAcademyProfile } from '@/lib/academy-data';
+import { normalizeJordanianMobile } from '@/lib/jordanian-phone';
+import { academicYears, academicYearLabel } from './academic-years';
 import { PageContainer } from '@/components/shared/page-container';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +12,7 @@ import { stateText, usePortalCopy } from './copy';
 import { MixedText } from '@/components/shared/mixed-text';
 import { FormField } from '@/components/shared/form-field';
 import { FormNotice } from './form-feedback';
+import type { PortalCopy } from './copy';
 import {
   errorAttributes,
   focusFirstError,
@@ -38,7 +41,7 @@ function ProfileForm({
   const id = useId(),
     inFlight = useRef(false);
   const [errors, setErrors] = useState<FieldErrors>({});
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState<keyof PortalCopy | ''>('');
   const [busy, setBusy] = useState(false);
   const registering = !profile.registered_at;
   const open = registrationEnabled && privacyApproved;
@@ -47,11 +50,11 @@ function ProfileForm({
     if (inFlight.current || (registering && !open)) return;
     const element = event.currentTarget,
       form = new FormData(element);
-    const invalid = validateProfile(form, registering);
+    const invalid = validateProfile(form, registering, profile);
     setErrors(invalid);
     setMessage('');
     if (Object.keys(invalid).length) {
-      setMessage(c.validationSummary);
+      setMessage('validationSummary');
       focusFirstError(element, invalid);
       return;
     }
@@ -62,7 +65,9 @@ function ProfileForm({
         client(),
         {
           full_name: String(form.get('full_name')).trim(),
-          whatsapp: String(form.get('whatsapp')).trim(),
+          ...(String(form.get('whatsapp')).trim() !== profile.whatsapp
+            ? { whatsapp: normalizeJordanianMobile(String(form.get('whatsapp')))! }
+            : {}),
           major: String(form.get('major')).trim(),
           academic_year: Number(form.get('academic_year')),
           python_experience: String(form.get('python_experience')),
@@ -73,7 +78,7 @@ function ProfileForm({
       );
       onSaved(persisted, registering);
     } catch (error) {
-      setMessage(c[requestError(error)]);
+      setMessage(requestError(error));
     } finally {
       inFlight.current = false;
       setBusy(false);
@@ -103,8 +108,9 @@ function ProfileForm({
               name="whatsapp"
               type="tel"
               autoComplete="tel"
-              pattern="\+[1-9][0-9]{6,14}"
-              placeholder="+962790000001"
+              inputMode="tel"
+              maxLength={64}
+              placeholder="07XXXXXXXX"
               required
               dir="ltr"
               defaultValue={profile.whatsapp ?? ''}
@@ -124,12 +130,19 @@ function ProfileForm({
               {...field('academic_year')}
               name="academic_year"
               required
-              defaultValue={profile.academic_year ?? ''}
+              defaultValue={
+                registering && (profile.academic_year ?? 0) > 5 ? '' : (profile.academic_year ?? '')
+              }
             >
               <option value="">{c.select}</option>
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((year) => (
+              {!registering && profile.academic_year !== null && profile.academic_year > 5 && (
+                <option value={profile.academic_year} hidden>
+                  {academicYearLabel(profile.academic_year, arabic)}
+                </option>
+              )}
+              {academicYears.map((year) => (
                 <option key={year} value={year}>
-                  {new Intl.NumberFormat(arabic ? 'ar' : 'en').format(year)}
+                  {academicYearLabel(year, arabic)}
                 </option>
               ))}
             </select>
@@ -190,7 +203,7 @@ function ProfileForm({
         <Button type="submit" disabled={busy || (registering && !open)}>
           {busy ? c.wait : registering ? c.complete : c.save}
         </Button>
-        <FormNotice message={message} kind="error" />
+        <FormNotice message={message ? c[message] : ''} kind="error" />
       </form>
     </section>
   );
@@ -205,17 +218,19 @@ function NotebookUpload({
   reload: () => void;
 }) {
   const { c } = usePortalCopy();
+  const inFlight = useRef(false);
   const [busy, setBusy] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState<keyof PortalCopy | ''>('');
   async function upload(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (busy || !open) return;
+    if (inFlight.current || !open) return;
     const file = new FormData(event.currentTarget).get('notebook');
     if (!(file instanceof File)) return;
     if (!file.name.endsWith('.ipynb') || file.size > 262144 || file.size === 0) {
-      setMessage(c.uploadHint);
+      setMessage('uploadHint');
       return;
     }
+    inFlight.current = true;
     setBusy(true);
     setMessage('');
     try {
@@ -250,16 +265,17 @@ function NotebookUpload({
         },
       });
       if (result.error) throw result.error;
-      setMessage(c.submitted);
+      setMessage('submitted');
       reload();
     } catch {
-      setMessage(c.error);
+      setMessage('error');
     } finally {
+      inFlight.current = false;
       setBusy(false);
     }
   }
   return (
-    <form onSubmit={upload}>
+    <form onSubmit={upload} aria-busy={busy}>
       <p>{c.uploadHint}</p>
       {!open && <p>{c.uploadClosed}</p>}
       <Input
@@ -271,7 +287,10 @@ function NotebookUpload({
         required
       />
       <Button disabled={!open || busy}>{busy ? c.uploading : c.upload}</Button>
-      <p role="status">{message}</p>
+      <FormNotice
+        message={message ? c[message] : ''}
+        kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}
+      />
     </form>
   );
 }
@@ -279,8 +298,10 @@ export function StudentPage() {
   const { c, arabic } = usePortalCopy();
   const auth = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const emailVerified = (location.state as { emailVerified?: boolean } | null)?.emailVerified;
   const { data, error, reload, update, refresh } = useRemote(loadPortal);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState<keyof PortalCopy | ''>('');
   const [saved, setSaved] = useState<'registered' | 'saved' | null>(null);
   const [editing, setEditing] = useState(false);
   const onSaved = (profile: Row<'profiles'>, registered: boolean) => {
@@ -317,6 +338,7 @@ export function StudentPage() {
         <nav className="portal-actions">
           <Button onClick={() => void auth.signOut()}>{c.logout}</Button>
         </nav>
+        <FormNotice message={emailVerified ? c.confirmed : ''} kind="success" />
         <ProfileForm profile={profile} onSaved={onSaved} />
       </PageContainer>
     );
@@ -333,7 +355,7 @@ export function StudentPage() {
         {auth.role === 'team' && <Link to="/workspace">{c.team}</Link>}
         <Link to="/privacy">{c.privacy}</Link>
       </nav>
-      <FormNotice message={saved ? c[saved] : ''} kind="success" />
+      <FormNotice message={saved ? c[saved] : emailVerified ? c.confirmed : ''} kind="success" />
       {error && <FormNotice message={c.error} kind="error" />}
       {profile && !editing && (
         <Button variant="outline" onClick={() => setEditing(true)}>
@@ -418,7 +440,7 @@ export function StudentPage() {
                         <Button
                           variant="outline"
                           onClick={() =>
-                            void downloadNotebook(s.object_path!).catch(() => setMessage(c.error))
+                            void downloadNotebook(s.object_path!).catch(() => setMessage('error'))
                           }
                         >
                           {c.download}
@@ -447,7 +469,10 @@ export function StudentPage() {
           </section>
         );
       })}
-      <p role="status">{message}</p>
+      <FormNotice
+        message={message ? c[message] : ''}
+        kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}
+      />
     </PageContainer>
   );
 }

@@ -1,0 +1,30 @@
+{
+  "browserRenderOnly": true,
+  "realMailClientVerified": false,
+  "cases": [
+    {
+      "template": "confirmation",
+      "width": 390,
+      "noOverflow": true,
+      "passed": true
+    },
+    {
+      "template": "confirmation",
+      "width": 640,
+      "noOverflow": true,
+      "passed": true
+    },
+    {
+      "template": "recovery",
+      "width": 390,
+      "noOverflow": true,
+      "passed": true
+    },
+    {
+      "template": "recovery",
+      "width": 640,
+      "noOverflow": true,
+      "passed": true
+    }
+  ]
+}

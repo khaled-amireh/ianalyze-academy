@@ -1,0 +1,565 @@
+{
+  "localOnly": true,
+  "realSupabase": true,
+  "mobile": "Chrome viewport emulation, not a physical mail app",
+  "passed": true,
+  "cases": [
+    {
+      "check": "signup-password",
+      "path": "/join",
+      "locale": "ar",
+      "theme": "light",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "check": "signup-password",
+      "path": "/join",
+      "locale": "ar",
+      "theme": "light",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "check": "signup-password",
+      "path": "/join",
+      "locale": "ar",
+      "theme": "light",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "signup-password",
+      "path": "/join",
+      "locale": "ar",
+      "theme": "light",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "signup-password",
+      "path": "/join",
+      "locale": "ar",
+      "theme": "dark",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "check": "signup-password",
+      "path": "/join",
+      "locale": "ar",
+      "theme": "dark",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "check": "signup-password",
+      "path": "/join",
+      "locale": "ar",
+      "theme": "dark",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "signup-password",
+      "path": "/join",
+      "locale": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "signup-password",
+      "path": "/join",
+      "locale": "en",
+      "theme": "light",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "check": "signup-password",
+      "path": "/join",
+      "locale": "en",
+      "theme": "light",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "check": "signup-password",
+      "path": "/join",
+      "locale": "en",
+      "theme": "light",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "signup-password",
+      "path": "/join",
+      "locale": "en",
+      "theme": "light",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "signup-password",
+      "path": "/join",
+      "locale": "en",
+      "theme": "dark",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "check": "signup-password",
+      "path": "/join",
+      "locale": "en",
+      "theme": "dark",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "check": "signup-password",
+      "path": "/join",
+      "locale": "en",
+      "theme": "dark",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "signup-password",
+      "path": "/join",
+      "locale": "en",
+      "theme": "dark",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "login-password",
+      "path": "/login",
+      "locale": "ar",
+      "theme": "light",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "check": "login-password",
+      "path": "/login",
+      "locale": "ar",
+      "theme": "light",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "check": "login-password",
+      "path": "/login",
+      "locale": "ar",
+      "theme": "light",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "login-password",
+      "path": "/login",
+      "locale": "ar",
+      "theme": "light",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "login-password",
+      "path": "/login",
+      "locale": "ar",
+      "theme": "dark",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "check": "login-password",
+      "path": "/login",
+      "locale": "ar",
+      "theme": "dark",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "check": "login-password",
+      "path": "/login",
+      "locale": "ar",
+      "theme": "dark",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "login-password",
+      "path": "/login",
+      "locale": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "login-password",
+      "path": "/login",
+      "locale": "en",
+      "theme": "light",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "check": "login-password",
+      "path": "/login",
+      "locale": "en",
+      "theme": "light",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "check": "login-password",
+      "path": "/login",
+      "locale": "en",
+      "theme": "light",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "login-password",
+      "path": "/login",
+      "locale": "en",
+      "theme": "light",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "login-password",
+      "path": "/login",
+      "locale": "en",
+      "theme": "dark",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "check": "login-password",
+      "path": "/login",
+      "locale": "en",
+      "theme": "dark",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "check": "login-password",
+      "path": "/login",
+      "locale": "en",
+      "theme": "dark",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "login-password",
+      "path": "/login",
+      "locale": "en",
+      "theme": "dark",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "associated errors and focus",
+      "passed": true
+    },
+    {
+      "check": "captured confirmation opened without signup browser verifier",
+      "passed": true
+    },
+    {
+      "check": "profile",
+      "path": "/student",
+      "locale": "ar",
+      "theme": "light",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "check": "profile",
+      "path": "/student",
+      "locale": "ar",
+      "theme": "light",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "check": "profile",
+      "path": "/student",
+      "locale": "ar",
+      "theme": "light",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "profile",
+      "path": "/student",
+      "locale": "ar",
+      "theme": "light",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "profile",
+      "path": "/student",
+      "locale": "ar",
+      "theme": "dark",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "check": "profile",
+      "path": "/student",
+      "locale": "ar",
+      "theme": "dark",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "check": "profile",
+      "path": "/student",
+      "locale": "ar",
+      "theme": "dark",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "profile",
+      "path": "/student",
+      "locale": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "profile",
+      "path": "/student",
+      "locale": "en",
+      "theme": "light",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "check": "profile",
+      "path": "/student",
+      "locale": "en",
+      "theme": "light",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "check": "profile",
+      "path": "/student",
+      "locale": "en",
+      "theme": "light",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "profile",
+      "path": "/student",
+      "locale": "en",
+      "theme": "light",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "profile",
+      "path": "/student",
+      "locale": "en",
+      "theme": "dark",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "check": "profile",
+      "path": "/student",
+      "locale": "en",
+      "theme": "dark",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "check": "profile",
+      "path": "/student",
+      "locale": "en",
+      "theme": "dark",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "profile",
+      "path": "/student",
+      "locale": "en",
+      "theme": "dark",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "double Save persists normalized registration and existing session",
+      "passed": true
+    },
+    {
+      "check": "profile Save stays authenticated",
+      "passed": true
+    },
+    {
+      "check": "used link is scrubbed and offers resend",
+      "passed": true
+    },
+    {
+      "check": "resend success with double-submit guard and cooldown",
+      "passed": true
+    },
+    {
+      "check": "real Supabase 429 has actionable feedback and cooldown",
+      "passed": true
+    },
+    {
+      "check": "expired captured email fails safely with resend",
+      "passed": true
+    },
+    {
+      "check": "mobile-emulated recovery in a different browser from request",
+      "passed": true
+    },
+    {
+      "check": "reset-password",
+      "path": "/auth/reset",
+      "locale": "ar",
+      "theme": "light",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "check": "reset-password",
+      "path": "/auth/reset",
+      "locale": "ar",
+      "theme": "light",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "check": "reset-password",
+      "path": "/auth/reset",
+      "locale": "ar",
+      "theme": "light",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "reset-password",
+      "path": "/auth/reset",
+      "locale": "ar",
+      "theme": "light",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "reset-password",
+      "path": "/auth/reset",
+      "locale": "ar",
+      "theme": "dark",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "check": "reset-password",
+      "path": "/auth/reset",
+      "locale": "ar",
+      "theme": "dark",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "check": "reset-password",
+      "path": "/auth/reset",
+      "locale": "ar",
+      "theme": "dark",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "reset-password",
+      "path": "/auth/reset",
+      "locale": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "reset-password",
+      "path": "/auth/reset",
+      "locale": "en",
+      "theme": "light",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "check": "reset-password",
+      "path": "/auth/reset",
+      "locale": "en",
+      "theme": "light",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "check": "reset-password",
+      "path": "/auth/reset",
+      "locale": "en",
+      "theme": "light",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "reset-password",
+      "path": "/auth/reset",
+      "locale": "en",
+      "theme": "light",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "reset-password",
+      "path": "/auth/reset",
+      "locale": "en",
+      "theme": "dark",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "check": "reset-password",
+      "path": "/auth/reset",
+      "locale": "en",
+      "theme": "dark",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "check": "reset-password",
+      "path": "/auth/reset",
+      "locale": "en",
+      "theme": "dark",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "reset-password",
+      "path": "/auth/reset",
+      "locale": "en",
+      "theme": "dark",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "password reset, re-login and protected Team route",
+      "passed": true
+    },
+    {
+      "check": "verified Team callback and all nine private registration columns",
+      "passed": true
+    }
+  ],
+  "exceptions": []
+}

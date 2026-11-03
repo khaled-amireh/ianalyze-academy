@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 
 const root = new URL('../../', import.meta.url);
@@ -65,8 +65,13 @@ export function verifyMergePreservation() {
   for (const path of Object.keys(resolvedFiles))
     assert.ok(expected.has(path) || resolvedFiles[path].added, `Unrecorded addition: ${path}`);
   for (const path of new Set([...expected.keys(), ...Object.keys(resolvedFiles)])) {
-    const bytes = readFileSync(new URL(path, root));
     const resolved = resolvedFiles[path];
+    if (resolved?.removed) {
+      assert.ok(resolved.reason, `Removal reason missing: ${path}`);
+      assert.equal(existsSync(new URL(path, root)), false, `Retired asset restored: ${path}`);
+      continue;
+    }
+    const bytes = readFileSync(new URL(path, root));
     if (resolved) {
       assert.ok(resolved.reason, `Resolution reason missing: ${path}`);
       assert.equal(

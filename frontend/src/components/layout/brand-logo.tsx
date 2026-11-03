@@ -2,29 +2,36 @@ import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import iAnalyzeLight from '@/assets/brand/ianalyze-on-light.png';
 import iAnalyzeDark from '@/assets/brand/ianalyze-on-dark.png';
-import iTeamLight from '@/assets/brand/iteam-on-light.png';
-import iTeamDark from '@/assets/brand/iteam-on-dark.png';
+import iTeamLight from '@/assets/brand/iteam-logo-light.png';
+import iTeamDark from '@/assets/brand/iteam-logo-transparent-ready.png';
 
 function ThemeLogo({
   light,
   dark,
   alt,
   lazy = false,
+  dimensions,
 }: {
   light: string;
   dark: string;
   alt: string;
   lazy?: boolean;
+  dimensions?: readonly [number, number];
 }) {
   return (
-    <span className="theme-logo" role="img" aria-label={alt}>
+    <span
+      className="theme-logo"
+      role="img"
+      aria-label={alt}
+      style={dimensions ? { aspectRatio: `${dimensions[0]} / ${dimensions[1]}` } : undefined}
+    >
       <img
         className="theme-logo-light"
         src={light}
         alt=""
         aria-hidden="true"
-        width={640}
-        height={213}
+        width={dimensions?.[0] ?? 640}
+        height={dimensions?.[1] ?? 213}
         loading={lazy ? 'lazy' : 'eager'}
       />
       <img
@@ -32,8 +39,8 @@ function ThemeLogo({
         src={dark}
         alt=""
         aria-hidden="true"
-        width={640}
-        height={213}
+        width={dimensions?.[0] ?? 640}
+        height={dimensions?.[1] ?? 213}
         loading={lazy ? 'lazy' : 'eager'}
       />
     </span>
@@ -52,7 +59,13 @@ export function ParentLogo() {
   const { t } = useTranslation();
   return (
     <span className="parent-logo">
-      <ThemeLogo light={iTeamLight} dark={iTeamDark} alt={t('brand.parentAlt')} lazy />
+      <ThemeLogo
+        light={iTeamLight}
+        dark={iTeamDark}
+        alt={t('brand.parentAlt')}
+        dimensions={[1536, 668]}
+        lazy
+      />
     </span>
   );
 }

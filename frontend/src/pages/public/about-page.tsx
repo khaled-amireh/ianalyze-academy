@@ -36,7 +36,7 @@ export function AboutPage() {
             </p>
           </div>
           <aside className="parent-story">
-            <ParentLogo />
+            <ParentLogo transparent />
             <h2>
               <MixedText>{t('academy.about.parentTitle')}</MixedText>
             </h2>

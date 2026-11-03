@@ -8,7 +8,7 @@
     "frontend/src/assets/brand/ianalyze-on-light.png": "1a75432e399067949cefdba1b621b3bf5bf009394cae64546acb3c6cdb61b9e1",
     "frontend/src/assets/ianalyze-logo-small.png": "d2abb283b2c1db23e3f63edbbc231f7962a78c95a1683f47345e510995d44976",
     "frontend/src/assets/ianalyze-logo.png": "f23e1133a31fc97c76d98a2c8bd95e1f25074d7e2cfb8bae2c469e1e8447666a",
-    "frontend/src/components/layout/brand-logo.tsx": "3e0211715957e59e45f656b362cab46ed2e3562c2026095efc028af5538faead",
+    "frontend/src/components/layout/brand-logo.tsx": "9fb10d3e8e4c8d0d90348880e4ce8edae53bd73520dc3de81e12d035f6bbdfe5",
     "frontend/src/styles/redesign.css": "62ee39071e6566e8fd82dcb1863285c1ff2617208171f3ae37341ea97c2c86aa"
   }
 }

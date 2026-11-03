@@ -55,12 +55,12 @@ export function BrandLogo() {
     </Link>
   );
 }
-export function ParentLogo() {
+export function ParentLogo({ transparent = false }: { transparent?: boolean }) {
   const { t } = useTranslation();
   return (
     <span className="parent-logo">
       <ThemeLogo
-        light={iTeamLight}
+        light={transparent ? iTeamDark : iTeamLight}
         dark={iTeamDark}
         alt={t('brand.parentAlt')}
         dimensions={[1536, 668]}

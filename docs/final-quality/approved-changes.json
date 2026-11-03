@@ -165,7 +165,7 @@
     "frontend/src/components/layout/brand-logo.tsx": {
       "reason": "User-approved supplied iTeam 3D logo replacement; preserve iAnalyze branding.",
       "previousSha256": "dde272fa777873302188d626f2cfce220819779010fd5c20c4632d9aab5d6e7e",
-      "sha256": "3e0211715957e59e45f656b362cab46ed2e3562c2026095efc028af5538faead"
+      "sha256": "9fb10d3e8e4c8d0d90348880e4ce8edae53bd73520dc3de81e12d035f6bbdfe5"
     },
     ".github/workflows/production.yml": {
       "reason": "Skip unrelated Supabase Edge configuration/deployment when its inputs have not changed.",
@@ -175,7 +175,7 @@
     "docs/final-quality/branding-preservation.json": {
       "reason": "Pin unchanged iAnalyze assets and the user-approved iTeam presentation.",
       "added": true,
-      "sha256": "b70288ba4b756d12d80d0e568e0b01857b35864ce977459c33dbf6d0db3311b3"
+      "sha256": "affb9ffd6303dc555c4aef35db36a2fd6144bf67147b84727db95a5de56c46cc"
     },
     "frontend/src/assets/brand/iteam-logo-light.png": {
       "reason": "User-approved supplied iTeam 3D logo replacement; preserve iAnalyze branding.",
@@ -210,6 +210,11 @@
       "previousSha256": "705fd2fd59795a0db6110b3754aedab5809a1da0e789feb6ed3606573775d8e7",
       "removed": true,
       "sha256": null
+    },
+    "frontend/src/pages/public/about-page.tsx": {
+      "reason": "Use the existing transparent iTeam artwork only in the Part of iTeam card; preserve its layout and all other logo placements.",
+      "previousSha256": "fe8b129f15620d64402a3eebf8f61d106f024e83bdd66b5263d5b1f6ab79d3b9",
+      "sha256": "30e41c9a61239c04c8630abd86aaacfe593a2e81ac8ee6323eea50586727ce0b"
     }
   }
 }

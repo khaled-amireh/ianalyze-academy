@@ -133,9 +133,9 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     "frontend/src/components/layout/footer.tsx": {
-      "sha256": "c6f40e53e8b15e511148dd5ab5ea703441fd793cabf61dd113894581ea562925",
+      "sha256": "6d0373e719bfb849f66b35a04bc13e134022a1e7220f136409919acc32969bec",
       "previousSha256": "eb22df6ad08ab2191309928a4a3e2a01d4c5952c574de15b4e604f282ff474d9",
-      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
+      "reason": "User-approved public content fixes and global logo background audit: use the existing approved transparent iTeam variant in the shared footer in both themes; preserve artwork and layout."
     },
     "frontend/src/components/layout/mobile-navigation.tsx": {
       "sha256": "c6e0825ed3c0e250e78a1c3ec5ac7c97b8381c197910806c2bb14e1f0fcf62d3",

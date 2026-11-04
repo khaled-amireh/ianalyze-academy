@@ -1,0 +1,474 @@
+{
+  "baselineCommit": "2f4054b027b957ef10f2b0eab5d2bac074cb136d",
+  "allOriginalBytesPreserved": true,
+  "files": [
+    {
+      "path": "design-preview/assets/ianalyze-logo.png",
+      "sha256": "f23e1133a31fc97c76d98a2c8bd95e1f25074d7e2cfb8bae2c469e1e8447666a",
+      "size": [
+        2172,
+        724
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "corners": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "transparentPercent": 71.83
+    },
+    {
+      "path": "design-preview/assets/iteam-logo.png",
+      "sha256": "851feca56162a94b055ea9dff4b443ccf9875b96cf643658aa8dd15f9e3bbc96",
+      "size": [
+        2172,
+        724
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "corners": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "transparentPercent": 67.73
+    },
+    {
+      "path": "frontend/src/assets/ianalyze-logo-small.png",
+      "sha256": "d2abb283b2c1db23e3f63edbbc231f7962a78c95a1683f47345e510995d44976",
+      "size": [
+        480,
+        160
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "corners": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "transparentPercent": 72.55
+    },
+    {
+      "path": "frontend/src/assets/ianalyze-logo.png",
+      "sha256": "f23e1133a31fc97c76d98a2c8bd95e1f25074d7e2cfb8bae2c469e1e8447666a",
+      "size": [
+        2172,
+        724
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "corners": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "transparentPercent": 71.83
+    },
+    {
+      "path": "frontend/src/assets/iteam-logo-small.png",
+      "sha256": "45055eff702cdc4178059eab5623b226a060348a802ec79ce050b3c9b603f3da",
+      "size": [
+        480,
+        160
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "corners": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "transparentPercent": 68.89
+    },
+    {
+      "path": "frontend/src/assets/iteam-logo.png",
+      "sha256": "851feca56162a94b055ea9dff4b443ccf9875b96cf643658aa8dd15f9e3bbc96",
+      "size": [
+        2172,
+        724
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "corners": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "transparentPercent": 67.73
+    },
+    {
+      "path": "frontend/src/assets/brand/ianalyze-on-dark-original.png",
+      "sha256": "613f4723128b94aeb31f0dadc7055aeeda0f08f609e38773dc471287809be4e3",
+      "size": [
+        2048,
+        682
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "corners": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "transparentPercent": 79.98
+    },
+    {
+      "path": "frontend/src/assets/brand/ianalyze-on-dark.png",
+      "sha256": "d2b299cc36cc41643b7815c7d34851b4e956487b1f805135e66656db0af98590",
+      "size": [
+        640,
+        213
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "corners": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "transparentPercent": 78.58
+    },
+    {
+      "path": "frontend/src/assets/brand/ianalyze-on-light-original.png",
+      "sha256": "904e72ba552dba2dc98cbb91dacd7ed00dddc4705d5d1df11813b5019b5cb00e",
+      "size": [
+        2172,
+        724
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "corners": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "transparentPercent": 46.66
+    },
+    {
+      "path": "frontend/src/assets/brand/ianalyze-on-light.png",
+      "sha256": "1a75432e399067949cefdba1b621b3bf5bf009394cae64546acb3c6cdb61b9e1",
+      "size": [
+        640,
+        213
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "corners": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "transparentPercent": 49.27
+    },
+    {
+      "path": "frontend/src/assets/brand/iteam-logo-light.png",
+      "sha256": "65baae5d39a646b09356988da182844d0ac42d5c976d954b786157181f0847fd",
+      "size": [
+        1536,
+        668
+      ],
+      "alphaExtrema": [
+        255,
+        255
+      ],
+      "corners": [
+        [
+          255,
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255,
+          255
+        ]
+      ],
+      "transparentPercent": 0.0
+    },
+    {
+      "path": "frontend/src/assets/brand/iteam-logo-transparent-ready.png",
+      "sha256": "43c42b2995994fd0eae42435f91ee12a2a592178cdc9182f451b52af8d28d4b6",
+      "size": [
+        1902,
+        827
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "corners": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "transparentPercent": 55.04
+    }
+  ]
+}

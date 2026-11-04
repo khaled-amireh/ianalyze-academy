@@ -29,7 +29,7 @@ export function Footer() {
             ))}
           </nav>
           <div>
-            <ParentLogo />
+            <ParentLogo transparent />
             <p>
               <MixedText>{t('brand.initiative')}</MixedText>
             </p>

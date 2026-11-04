@@ -93,7 +93,8 @@ describe(
               .update({
                 full_name: 'LOCAL TEST ONLY',
                 whatsapp: '+962790000000',
-                major: 'AI',
+                major: 'Data Science & Artificial Intelligence',
+                university: 'Local Test University',
                 academic_year: 4,
                 python_experience: 'none',
               })

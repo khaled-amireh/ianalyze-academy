@@ -3,7 +3,9 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import { useAuth } from '@/features/auth/use-auth';
 import { privacyApproved, registrationEnabled, submissionsEnabled } from '@/lib/academy-client';
 import { saveAcademyProfile } from '@/lib/academy-data';
+import { changeLocale } from '@/lib/i18n';
 import { normalizeJordanianMobile } from '@/lib/jordanian-phone';
+import { ZUJ, majors, profileMajor, selectedMajor } from './profile-fields';
 import { academicYears, academicYearLabel } from './academic-years';
 import { PageContainer } from '@/components/shared/page-container';
 import { Button } from '@/components/ui/button';
@@ -30,7 +32,7 @@ import {
   type Row,
 } from './data';
 
-function ProfileForm({
+export function ProfileForm({
   profile,
   onSaved,
 }: {
@@ -44,6 +46,10 @@ function ProfileForm({
   const [message, setMessage] = useState<keyof PortalCopy | ''>('');
   const [busy, setBusy] = useState(false);
   const registering = !profile.registered_at;
+  const [major, setMajor] = useState(selectedMajor(profile.major));
+  const [universityChoice, setUniversityChoice] = useState(
+    profile.university === ZUJ ? ZUJ : profile.university ? 'other' : '',
+  );
   const open = registrationEnabled && privacyApproved;
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -68,14 +74,16 @@ function ProfileForm({
           ...(String(form.get('whatsapp')).trim() !== profile.whatsapp
             ? { whatsapp: normalizeJordanianMobile(String(form.get('whatsapp')))! }
             : {}),
-          major: String(form.get('major')).trim(),
+          major: profileMajor(form),
+          university: String(form.get('university')).trim(),
           academic_year: Number(form.get('academic_year')),
           python_experience: String(form.get('python_experience')),
           university_id: String(form.get('university_id') ?? '').trim() || null,
-          locale: arabic ? 'ar' : 'en',
+          locale: String(form.get('locale')) === 'en' ? 'en' : 'ar',
         },
         registering,
       );
+      changeLocale(persisted.locale === 'en' ? 'en' : 'ar');
       onSaved(persisted, registering);
     } catch (error) {
       setMessage(requestError(error));
@@ -116,14 +124,80 @@ function ProfileForm({
               defaultValue={profile.whatsapp ?? ''}
             />
           </FormField>
+          <FormField
+            id={id + '-university_choice'}
+            label={c.university}
+            error={error('university_choice')}
+          >
+            <select
+              {...field('university_choice')}
+              name="university_choice"
+              value={universityChoice}
+              onChange={(e) => setUniversityChoice(e.target.value)}
+              required
+            >
+              <option value="">{c.select}</option>
+              <option value={ZUJ}>{c.zuj}</option>
+              <option value="other">{c.otherUniversity}</option>
+            </select>
+          </FormField>
+          {universityChoice === 'other' ? (
+            <FormField id={id + '-university'} label={c.universityName} error={error('university')}>
+              <Input
+                {...field('university')}
+                name="university"
+                required
+                maxLength={200}
+                defaultValue={profile.university === ZUJ ? '' : (profile.university ?? '')}
+              />
+            </FormField>
+          ) : (
+            <>
+              <input name="university" type="hidden" value={universityChoice} />
+              {errors.university && (
+                <p className="field-error" role="alert">
+                  {error('university')}
+                </p>
+              )}
+            </>
+          )}
           <FormField id={id + '-major'} label={c.major} error={error('major')}>
-            <Input
+            <select
               {...field('major')}
               name="major"
               required
-              maxLength={150}
-              defaultValue={profile.major ?? ''}
-            />
+              value={major}
+              onChange={(e) => setMajor(e.target.value)}
+            >
+              <option value="">{c.select}</option>
+              {majors.map((m) => (
+                <option key={m.value} value={m.value}>
+                  {arabic ? m.ar : m.value}
+                </option>
+              ))}
+              <option value="other">{c.otherMajor}</option>
+            </select>
+          </FormField>
+          {major === 'other' && (
+            <FormField id={id + '-major_other'} label={c.majorOther} error={error('major_other')}>
+              <Input
+                {...field('major_other')}
+                name="major_other"
+                required
+                maxLength={150}
+                defaultValue={selectedMajor(profile.major) === 'other' ? (profile.major ?? '') : ''}
+              />
+            </FormField>
+          )}
+          <FormField id={id + '-locale'} label={c.preferredLanguage}>
+            <select
+              id={id + '-locale'}
+              name="locale"
+              defaultValue={registering ? (arabic ? 'ar' : 'en') : profile.locale}
+            >
+              <option value="ar">{c.arabicLanguage}</option>
+              <option value="en">{c.englishLanguage}</option>
+            </select>
           </FormField>
           <FormField id={id + '-academic_year'} label={c.year} error={error('academic_year')}>
             <select
@@ -166,12 +240,15 @@ function ProfileForm({
           </FormField>
           <FormField
             id={id + '-university_id'}
-            label={c.universityId}
+            label={universityChoice === ZUJ ? c.universityIdRequired : c.universityId}
             error={error('university_id')}
           >
             <Input
               {...field('university_id')}
               name="university_id"
+              required={universityChoice === ZUJ}
+              inputMode={universityChoice === ZUJ ? 'numeric' : 'text'}
+              dir="ltr"
               maxLength={50}
               defaultValue={profile.university_id ?? ''}
             />
@@ -179,9 +256,6 @@ function ProfileForm({
         </fieldset>
         {registering && (
           <div>
-            <p>
-              <Link to="/privacy">{c.privacy}</Link>
-            </p>
             <label className="portal-check" htmlFor={id + '-consent'}>
               <input
                 {...field('consent')}
@@ -190,7 +264,9 @@ function ProfileForm({
                 required
                 disabled={busy || !open}
               />
-              {c.consent}
+              <span>
+                {c.consent} <Link to="/privacy">{c.privacy}</Link>
+              </span>
             </label>
             {errors.consent && (
               <p className="field-error" id={id + '-consent-error'}>

@@ -33,7 +33,7 @@ test('embedded PostgreSQL security (test-only Auth/Storage fixture)', async (t) 
   for (const uid of [A, B])
     await asUser(db, uid, async () => {
       await db.query(
-        "update public.profiles set full_name='Test Student', whatsapp='+962790000000', major='AI', academic_year=4, python_experience='none' where id=$1",
+        "update public.profiles set full_name='Test Student', whatsapp='+962790000000', major='AI', university='Other University', academic_year=4, python_experience='none' where id=$1",
         [uid],
       );
       await db.query("select public.complete_registration('registration-v1')");
@@ -61,12 +61,12 @@ test('embedded PostgreSQL security (test-only Auth/Storage fixture)', async (t) 
       ('team-materials','fixture.pdf','${T}');
   `);
   await t.test(
-    'all ten tables use RLS; exposed functions are invokers and definer paths are fixed',
+    'all application tables use RLS; exposed functions are invokers and definer paths are fixed',
     async () => {
       const { rows } = await db.query(
         "select c.relname,c.relrowsecurity from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname in ('public','app_private') and c.relkind='r'",
       );
-      assert.equal(rows.length, 10);
+      assert.equal(rows.length, 12);
       assert.ok(rows.every((r) => r.relrowsecurity));
       assert.deepEqual(
         (

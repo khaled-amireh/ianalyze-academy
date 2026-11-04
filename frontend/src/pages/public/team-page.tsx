@@ -1,4 +1,5 @@
 import { Users } from 'lucide-react';
+import { LinkedinIcon } from '@/components/shared/social-icons';
 import { useTranslation } from 'react-i18next';
 import { leaders } from '@/content/public-content';
 import { PageContainer } from '@/components/shared/page-container';
@@ -6,7 +7,6 @@ import { PageHeader } from '@/components/shared/page-header';
 import { Reveal } from '@/components/shared/reveal';
 import { MixedText } from '@/components/shared/mixed-text';
 import { TextLink } from '@/components/shared/academy-content';
-import { Badge } from '@/components/ui/badge';
 
 export function TeamPage() {
   const { t } = useTranslation();
@@ -32,11 +32,6 @@ export function TeamPage() {
                 />
               </div>
               <div className="leader-info">
-                <Badge variant="secondary">
-                  {t(
-                    leader.id === 'yomna' ? 'academy.team.positionFemale' : 'academy.team.position',
-                  )}
-                </Badge>
                 <h2>
                   <MixedText>{t(`academy.team.${leader.id}`)}</MixedText>
                 </h2>
@@ -49,6 +44,16 @@ export function TeamPage() {
                     )}
                   </MixedText>
                 </p>
+                <a
+                  className="team-linkedin"
+                  href={leader.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`LinkedIn · ${t(`academy.team.${leader.id}`)}`}
+                >
+                  <LinkedinIcon />
+                  <span className="sr-only">LinkedIn</span>
+                </a>
               </div>
             </article>
           </Reveal>

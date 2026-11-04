@@ -13,7 +13,7 @@ const U = '00000000-0000-4000-8000-000000000015';
 const H = '00000000-0000-4000-8000-000000000016';
 
 test('registration migration, normalized data and private participant access in embedded PostgreSQL', async (t) => {
-  const all = migrations();
+  const all = migrations().slice(0, 5);
   const db = await createDatabase(all.slice(0, -1));
   t.after(() => db.close());
   const queryAs = (uid, sql, args = []) => asUser(db, uid, () => db.query(sql, args));

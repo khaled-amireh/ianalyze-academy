@@ -1,6 +1,28 @@
 import { useTranslation } from 'react-i18next';
 
 const en = {
+  rememberMe: 'Remember me',
+  university: 'University',
+  zuj: 'Al-Zaytoonah University of Jordan',
+  otherUniversity: 'Other university',
+  universityName: 'University name',
+  otherMajor: 'Other',
+  majorOther: 'Your major',
+  invalidUniversityId: 'Enter your University ID using 1–20 digits.',
+  duplicateUniversityId: 'This University ID is already registered. Check it or contact the team.',
+  universityIdRequired: 'University ID (required for Al-Zaytoonah students)',
+  notifications: 'Notifications',
+  unread: 'Unread',
+  markRead: 'Mark as read',
+  markAllRead: 'Mark all as read',
+  noNotifications: 'You have no notifications yet.',
+  announcements: 'Academy announcements',
+  publishAnnouncement: 'Publish announcement',
+  unpublish: 'Unpublish',
+  emailChange: 'Change email',
+  emailChangeSent:
+    'Check the confirmation messages sent by Supabase to complete your email change.',
+
   editProfile: 'Edit profile',
   version: 'Version',
   sessionVerificationError:
@@ -148,6 +170,27 @@ const en = {
 };
 export type PortalCopy = Record<keyof typeof en, string>;
 const ar: PortalCopy = {
+  rememberMe: 'تذكرني',
+  university: 'الجامعة',
+  zuj: 'جامعة الزيتونة الأردنية',
+  otherUniversity: 'جامعة أخرى',
+  universityName: 'اسم الجامعة',
+  otherMajor: 'أخرى',
+  majorOther: 'تخصصك',
+  invalidUniversityId: 'أدخل الرقم الجامعي باستخدام ١ إلى ٢٠ رقمًا بالإنجليزية.',
+  duplicateUniversityId: 'هذا الرقم الجامعي مسجل مسبقًا. تحقق منه أو تواصل مع الفريق.',
+  universityIdRequired: 'الرقم الجامعي (مطلوب لطلبة جامعة الزيتونة)',
+  notifications: 'الإشعارات',
+  unread: 'غير مقروءة',
+  markRead: 'تحديد كمقروء',
+  markAllRead: 'تحديد الكل كمقروء',
+  noNotifications: 'لا توجد إشعارات حاليًا.',
+  announcements: 'إعلانات الأكاديمية',
+  publishAnnouncement: 'نشر إعلان',
+  unpublish: 'إلغاء النشر',
+  emailChange: 'تغيير البريد الإلكتروني',
+  emailChangeSent: 'راجع رسائل التأكيد التي أرسلتها Supabase لإتمام تغيير البريد الإلكتروني.',
+
   editProfile: 'تعديل الملف الشخصي',
   version: 'الإصدار',
   sessionVerificationError: 'تعذر التحقق من جلستك. حاول مجددًا، أو سجّل الدخول إذا انتهت صلاحيتها.',

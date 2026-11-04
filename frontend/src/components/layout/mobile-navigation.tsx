@@ -15,6 +15,7 @@ import { publicNavigation, secondaryNavigation } from '@/app/navigation';
 import { MixedText } from '@/components/shared/mixed-text';
 import { LanguageSwitcher } from './language-switcher';
 import { ThemeToggle } from './theme-toggle';
+import { JoinNavigation } from '@/features/portal/account-navigation';
 import { AccountLink } from '@/features/portal/auth-pages';
 
 export function MobileNavigation() {
@@ -64,21 +65,25 @@ export function MobileNavigation() {
               setOpen(false);
             }}
           />
-          {[...publicNavigation, ...secondaryNavigation, { id: 'join', to: '/join' } as const].map(
-            (item) => (
-              <NavLink
-                key={item.id}
-                to={item.to}
-                end={item.to === '/'}
-                onClick={() => {
-                  navigated.current = true;
-                  setOpen(false);
-                }}
-              >
-                <MixedText>{t(`nav.${item.id}`)}</MixedText>
-              </NavLink>
-            ),
-          )}
+          {[...publicNavigation, ...secondaryNavigation].map((item) => (
+            <NavLink
+              key={item.id}
+              to={item.to}
+              end={item.to === '/'}
+              onClick={() => {
+                navigated.current = true;
+                setOpen(false);
+              }}
+            >
+              <MixedText>{t(`nav.${item.id}`)}</MixedText>
+            </NavLink>
+          ))}
+          <JoinNavigation
+            onNavigate={() => {
+              navigated.current = true;
+              setOpen(false);
+            }}
+          />
         </nav>
         <div className="mobile-preferences">
           <LanguageSwitcher />

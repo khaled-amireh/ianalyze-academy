@@ -22,13 +22,11 @@ export function Footer() {
             <p className="text-sm">{t('brand.university')}</p>
           </div>
           <nav aria-label={t('common.footerNavigation')}>
-            {(['about', 'eda', 'videos', 'team', 'join', 'leaderboard', 'contact'] as const).map(
-              (key) => (
-                <Link to={`/${key}`} key={key}>
-                  <MixedText>{t(`nav.${key}`)}</MixedText>
-                </Link>
-              ),
-            )}
+            {(['about', 'videos', 'team', 'join', 'leaderboard', 'contact'] as const).map((key) => (
+              <Link to={`/${key}`} key={key}>
+                <MixedText>{t(`nav.${key}`)}</MixedText>
+              </Link>
+            ))}
           </nav>
           <div>
             <ParentLogo />

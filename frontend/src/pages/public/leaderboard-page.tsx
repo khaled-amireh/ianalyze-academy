@@ -4,7 +4,6 @@ import { PageContainer } from '@/components/shared/page-container';
 import { PageHeader } from '@/components/shared/page-header';
 import { EmptyState } from '@/components/shared/empty-state';
 import { SectionHeading } from '@/components/shared/section-heading';
-import { TextLink } from '@/components/shared/academy-content';
 import { Badge } from '@/components/ui/badge';
 
 export function LeaderboardPage() {
@@ -54,7 +53,6 @@ export function LeaderboardPage() {
           icon={Trophy}
           title={t('academy.leaderboard.emptyTitle')}
           description={t('academy.leaderboard.emptyText')}
-          action={<TextLink to="/eda">{t('academy.fullSyllabus')}</TextLink>}
         />
       </section>
       <div className="two-card-grid public-section">

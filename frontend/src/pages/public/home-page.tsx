@@ -1,14 +1,11 @@
-import { ArrowRight, Play, BookOpen, Users } from 'lucide-react';
+import { ArrowRight, Play, Users } from 'lucide-react';
 import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { PageContainer } from '@/components/shared/page-container';
 import { MixedText } from '@/components/shared/mixed-text';
-import { DataStory } from '@/components/shared/data-story';
 import { Reveal } from '@/components/shared/reveal';
-import { JoinCallout, ProgramFacts, TextLink } from '@/components/shared/academy-content';
-import { CurriculumCarousel } from '@/components/shared/curriculum-carousel';
-import { SectionHeading } from '@/components/shared/section-heading';
+import { JoinCallout, TextLink } from '@/components/shared/academy-content';
 import { leaders, syllabus } from '@/content/public-content';
 
 export function HomePage() {
@@ -27,8 +24,8 @@ export function HomePage() {
           </p>
           <div className="hero-actions">
             <Button asChild size="lg">
-              <Link to="/eda">
-                <MixedText>{t('home.secondary')}</MixedText>
+              <Link to="/videos">
+                <MixedText>{t('academy.watch')}</MixedText>
                 <ArrowRight className="directional" aria-hidden="true" />
               </Link>
             </Button>
@@ -39,29 +36,6 @@ export function HomePage() {
               </Link>
             </Button>
           </div>
-        </div>
-        <Reveal>
-          <DataStory />
-        </Reveal>
-      </section>
-      <section className="course-facts" aria-label={t('home.factsLabel')}>
-        <div className="course-facts-intro">
-          <BookOpen aria-hidden="true" />
-          <span>
-            <MixedText>{t('home.factsLabel')}</MixedText>
-          </span>
-        </div>
-        <ProgramFacts />
-      </section>
-      <section className="public-section curriculum-section">
-        <SectionHeading
-          title={t('academy.home.journeyTitle')}
-          description={t('academy.home.journeyText')}
-        />
-        <CurriculumCarousel />
-        <div className="curriculum-footer">
-          <p>{t('home.beginner')}</p>
-          <TextLink to="/eda">{t('academy.fullSyllabus')}</TextLink>
         </div>
       </section>
       <Reveal>
@@ -114,7 +88,9 @@ export function HomePage() {
                 <MixedText>{t(`academy.team.${leader.id}`)}</MixedText>
               </span>
               <small>
-                {t(leader.id === 'yomna' ? 'academy.team.positionFemale' : 'academy.team.position')}
+                {t(
+                  leader.id === 'yomna' ? 'academy.team.educationFemale' : 'academy.team.education',
+                )}
               </small>
             </Link>
           ))}

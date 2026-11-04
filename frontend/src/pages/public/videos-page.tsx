@@ -1,10 +1,9 @@
-import { Library, BookOpen, Play } from 'lucide-react';
+import { Library, Play } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { introductoryVideo } from '@/content/public-content';
 import { PageContainer } from '@/components/shared/page-container';
 import { PageHeader } from '@/components/shared/page-header';
 import { MixedText } from '@/components/shared/mixed-text';
-import { TextLink } from '@/components/shared/academy-content';
 import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
 
@@ -60,16 +59,6 @@ export function VideosPage() {
             <p>
               <MixedText>{t('academy.video.optionalText')}</MixedText>
             </p>
-          </div>
-        </section>
-        <section className="content-card detail-card">
-          <BookOpen className="icon-tile" aria-hidden="true" />
-          <div>
-            <h2>{t('academy.video.exploreTitle')}</h2>
-            <p>
-              <MixedText>{t('academy.video.exploreText')}</MixedText>
-            </p>
-            <TextLink to="/eda">{t('academy.fullSyllabus')}</TextLink>
           </div>
         </section>
       </div>

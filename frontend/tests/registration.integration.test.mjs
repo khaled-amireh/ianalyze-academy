@@ -15,7 +15,8 @@ describe(
     const patch = {
       full_name: 'LOCAL REGISTRATION TEST',
       whatsapp: '+962790000001',
-      major: 'AI',
+      major: 'Data Science & Artificial Intelligence',
+      university: 'Local Test University',
       academic_year: 4,
       python_experience: 'basic',
       locale: 'en',

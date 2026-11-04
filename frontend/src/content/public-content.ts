@@ -1,4 +1,5 @@
 import khaledPhoto from '@/assets/team/khaled-amireh.webp';
+import husseinPhoto from '@/assets/team/hussein-zahran-original.png';
 import yomnaPhoto from '@/assets/team/yomna-al-jabiri.webp';
 
 /** Public, owner-confirmed metadata only. Copy lives in the existing locale dictionaries. */
@@ -20,8 +21,27 @@ export const syllabus = {
 } as const;
 
 export const leaders = [
-  { id: 'khaled', photo: khaledPhoto, width: 1024, height: 1106 },
-  { id: 'yomna', photo: yomnaPhoto, width: 1385, height: 1385 },
+  {
+    id: 'khaled',
+    photo: khaledPhoto,
+    width: 1024,
+    height: 1106,
+    linkedin: 'https://www.linkedin.com/in/khaled-amireh-0633b3355/',
+  },
+  {
+    id: 'yomna',
+    photo: yomnaPhoto,
+    width: 1385,
+    height: 1385,
+    linkedin: 'https://www.linkedin.com/in/yomna-aljabiri/',
+  },
+  {
+    id: 'hussein',
+    photo: husseinPhoto,
+    width: 1030,
+    height: 1500,
+    linkedin: 'https://www.linkedin.com/in/hussein-zahran-911481358/',
+  },
 ] as const;
 
 export const introductoryVideo = {

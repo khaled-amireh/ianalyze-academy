@@ -1,14 +1,17 @@
-import { Link, NavLink } from 'react-router';
+import { NavLink } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { ArrowRight } from 'lucide-react';
 import { publicNavigation } from '@/app/navigation';
-import { Button } from '@/components/ui/button';
 import { MixedText } from '@/components/shared/mixed-text';
 import { PageContainer } from '@/components/shared/page-container';
 import { BrandLogo } from './brand-logo';
 import { LanguageSwitcher } from './language-switcher';
 import { ThemeToggle } from './theme-toggle';
 import { MobileNavigation } from './mobile-navigation';
+import {
+  JoinNavigation,
+  ProfileNavigation,
+  NotificationBell,
+} from '@/features/portal/account-navigation';
 import { AccountLink } from '@/features/portal/auth-pages';
 
 export function Navbar() {
@@ -31,14 +34,9 @@ export function Navbar() {
               <LanguageSwitcher />
               <ThemeToggle />
             </div>
-            <Button asChild className="desktop-join" size="sm">
-              <Link to="/join">
-                <span>
-                  <MixedText>{t('nav.join')}</MixedText>
-                </span>
-                <ArrowRight className="directional" aria-hidden="true" />
-              </Link>
-            </Button>
+            <ProfileNavigation />
+            <NotificationBell />
+            <JoinNavigation className="desktop-join navigation-join" />
             <MobileNavigation />
           </div>
         </PageContainer>

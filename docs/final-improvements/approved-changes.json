@@ -1,0 +1,271 @@
+{
+  "baseCommit": "0b46b44719d7fd0c6dde2604e78d9a021cf19fee",
+  "authorization": "Final Website Improvements user request; local implementation only until backup and release gates pass.",
+  "files": {
+    "docs/final-improvements/release.md": {
+      "sha256": "7b166d7aee84408e1cced42157929e8a8f17c7e85d5d7e69927842eb4f1665d8",
+      "added": true,
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/scripts/check-feature-readiness.mjs": {
+      "sha256": "47687b6654ff7438411914b5f07bd47a7bd617e93600f4163778abe06cb2b18d",
+      "added": true,
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/scripts/final-improvements-browser-qa.mjs": {
+      "sha256": "cda4ed2e285d1f8fdc50fd77750947fc8b48def743638b2f48a341347410c9a3",
+      "added": true,
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/assets/team/hussein-zahran-original.png": {
+      "sha256": "f7ec7fe63f449dcbf1ff6bed9f2881da10b86cb7cae8a185ae82a87c5c60945b",
+      "added": true,
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/features/portal/account-navigation.tsx": {
+      "sha256": "1b3a3ffb066a382adb07078d0e1bf35eb1ca8b6b71fadbcb4a0085b4670d29d0",
+      "added": true,
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/features/portal/announcements.tsx": {
+      "sha256": "bbecfe567172f65cd1adf15da85902ca843dda5d2fcd5d6aebba13fce2a7c940",
+      "added": true,
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/features/portal/notifications.tsx": {
+      "sha256": "f7b6a2362bd1b8ab0cc1578a6be3a6c147f084b75b94b0c5070527796a28c793",
+      "added": true,
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/features/portal/profile-fields.ts": {
+      "sha256": "06b391f9a874343d997d755746a637b09904bc8aefbf0413eebad80a3998c6e7",
+      "added": true,
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/features/portal/profile-page.tsx": {
+      "sha256": "5fc98d6f1819cd8bbaa66e711f5e8bd62c6fa90e4ec0f50d91628fa9e56ab7dc",
+      "added": true,
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/features/portal/use-notifications.ts": {
+      "sha256": "174e1d246870d2a61053756920c400177e407f05a1121b4f7bfb7a2e6650eb2a",
+      "added": true,
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/features/portal/use-own-profile.ts": {
+      "sha256": "35ba2b129d7a4213a680b9bed493da2d4c1eee414f6c083b633b384e81c71382",
+      "added": true,
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/lib/auth-storage.ts": {
+      "sha256": "262754c9f36296bfaf93ed2d4abc3d84819d52bd8389f943e4daa43b978160f1",
+      "added": true,
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/tests/auth-storage.test.ts": {
+      "sha256": "54c23b0fe10004b6a475d39333bca1c470978de700efeb3a7dd59f7ce339bd95",
+      "added": true,
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/tests/final-improvements.security.test.mjs": {
+      "sha256": "abbdbfc48b1be0737daaca132dc24d29a4b8c92fc277962169e95357a48fab1d",
+      "added": true,
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "supabase/migrations/20261104000100_profiles_notifications.sql": {
+      "sha256": "303c42d5f1463e9f7f378c40f3e4aba157bab36d39feb0ffc8f39c5fb573dd9e",
+      "added": true,
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "supabase/operations/final-improvements-readiness.sql": {
+      "sha256": "fdeda218fb3f37494ef99e90fd1d19b656b92755ac911c2940904134b546544b",
+      "added": true,
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    ".github/workflows/production.yml": {
+      "sha256": "564660d831416fe26b2933e17f28a724758b49f18a37f4bc32db231ca6a6c60d",
+      "previousSha256": "a588525894de0e140cb03f2650410e8ae4a655f74c24bd8eb74666cd822470fb",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/package.json": {
+      "sha256": "d4a9348a96e7dcabadb957c65ddcf5e563541508767f203f06dc22d6a0b703ff",
+      "previousSha256": "cc9d6cbb1b93658650ecded97b18a7040e1d6202d0d1f643b554a6075b212eb7",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/scripts/check-phase-03.mjs": {
+      "sha256": "de8190cca72da34d5d3f5941fe29a0377241279b0f40421682aa281865b91572",
+      "previousSha256": "ac180646667d7172d8ac4738fd8ed10e146eb9b1acbb4784e105d5e6a5ec3b82",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/scripts/check-redesign.mjs": {
+      "sha256": "fab155414f7140fac9e3f1c0bff1af41d0cba27a7654c87be6ea769b3cfd61fb",
+      "previousSha256": "2c35b10c9ec9d8ba6859bfcb488de257bbc57711bb603b4eb7f5ea1293256f1f",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/scripts/phase-04-browser-qa.mjs": {
+      "sha256": "6d2ecd660e18dd7d6c8fb2979b78f5133d30db91d8b9569aac120d7afd069f21",
+      "previousSha256": "5bd177043090423cac5549587e43290d20b3d0dbe47cb3f6e033c244769b793f",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/scripts/registration-browser-qa.mjs": {
+      "sha256": "57af6830e7cb1d69db6251adf3c89ca5cf992e0bfb0c65e782b71f4148f340c0",
+      "previousSha256": "e5ed3d77c013e5d414dc491a9ca9d4fd97061cdd88b0b323c6c32c9f133ca37b",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/scripts/verify-merge-preservation.mjs": {
+      "sha256": "e8a8a07e4bd08eb7c406337f9a323fc63f4f1fb335ade2f3c56688decfbeaf9b",
+      "previousSha256": "164c1e44c9572e3e9c1fac1b8501773d75147969e046e6f1a68e001f3e63870a",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/app/app.tsx": {
+      "sha256": "dcda1c4d7fa96f037ed1469c188b8006fa307e21a9ea3064eeead8b91a7b402c",
+      "previousSha256": "373cd62c045ddbb6985b35e6c8eaf47354856991ad9fc49afdcc04410089cb0b",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/app/navigation.ts": {
+      "sha256": "a5d04834b215b5e27eb43a9fe1e34b42813d050efbba917086a9149f136df05e",
+      "previousSha256": "4f176d63ff464ecb92986cd9d94a2943669881e77b0bae33df13b8ccfeb4df9e",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/app/route-effects.tsx": {
+      "sha256": "1cbe8a2bfd2e290d7ec0d99a02a5c02ecd679fed9db7c2c725d95084f1d693b3",
+      "previousSha256": "020b3e181c4f17abda57d900a4d6d16e1d6e09c1a03619ed50cad7852c1d051c",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/components/layout/footer.tsx": {
+      "sha256": "c97caf48ebbf5a1965bbacdb576b35629eb904caa1e68cc23a1932f208111ae6",
+      "previousSha256": "eb22df6ad08ab2191309928a4a3e2a01d4c5952c574de15b4e604f282ff474d9",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/components/layout/mobile-navigation.tsx": {
+      "sha256": "c6e0825ed3c0e250e78a1c3ec5ac7c97b8381c197910806c2bb14e1f0fcf62d3",
+      "previousSha256": "d3468ebd15e26dabb69de35e518e451bf42a1c48cff36a968d6277ec11f701ae",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/components/layout/navbar.tsx": {
+      "sha256": "7ea9ecb33e1ecb610cf39c67a2608cf4de5d278f8ede47439f3d801fb1cea695",
+      "previousSha256": "a478d8600c61cc291cf1907fb663ef16681b6ff1f6101ed3ea3dbf6dfc2f1f71",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/content/public-content.ts": {
+      "sha256": "89577438a60119891eaa6b2f442f69e30629e5f14013ca798c09d724ee622bae",
+      "previousSha256": "f9e9693205f13efe8be5216f7b5c180351015779f2449f2a2c2a928d093a994b",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/features/portal/auth-pages.tsx": {
+      "sha256": "782886a2e2e04800f76df43feeb97a92a9f31820d45a94df99458c9adcd1ac92",
+      "previousSha256": "456bf91d6c5e91b3f4522e171bcc70d1f640196e4a14d731292388e8116ad0e6",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/features/portal/copy.ts": {
+      "sha256": "3ec03f2fc7c3c2e4e972b928c5c6a44135933d78ff427d632c0725ab32274938",
+      "previousSha256": "0ff6c3fc1e335c51bd06bfad0ea6b2d2fd08fc23f80a40901170b095bb0ce67d",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/features/portal/form-validation.ts": {
+      "sha256": "4fc5846b1a99ea62793b32e25c0ad384748992309d21eb4229fb70c9269efd34",
+      "previousSha256": "0949192cd550afaf7c86eb658ac024ea628f1d84cf210d462d51d9dc2db74008",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/features/portal/portal.css": {
+      "sha256": "0e5b833753e7d7f4c1e7b908dfc3f897d65971140b25b118ca274e8da4785664",
+      "previousSha256": "f62621d4b528038db905fa4a7d41d0971aaab06ecb9f284e511445a92a46125c",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/features/portal/privacy-page.tsx": {
+      "sha256": "a01a115e7a789576512ac178a48e1ae78f7f79d6d08ab8ed0408e638dcd6dddf",
+      "previousSha256": "cef55d78273da8ae518e13adfd6ff898b533c140e366668cc3c04d33e090da5f",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/features/portal/student-page.tsx": {
+      "sha256": "445d0bc6c48a66b79169ff10d074e07ca342d41e11e43ca20bbeb78bfe7826ac",
+      "previousSha256": "c4d355cc9d10ebcccd3c053fca069430cfa1dbb798c7bf17112152a1757fce75",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/features/portal/team-page.tsx": {
+      "sha256": "c16d1b45b3dab31ae239b0a11b499bd59aa0c18795972a1cb9b36b62345fed56",
+      "previousSha256": "4789c95a88f27ff52e1af5792ee0ecfa02f811dc05b831dabdfec2f9c0651c40",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/lib/academy-data.ts": {
+      "sha256": "6932e8a13ea5ab0e9df385b91673f5fd98dc2dfe1e08bbbad44322f8d7e4248c",
+      "previousSha256": "74f56314b5f57aa55a21d26f97f9182d623508d3750bbbffa5f997fc6934d8c9",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/lib/supabase.ts": {
+      "sha256": "64a880437f03bc8feb92176c2a5acf22244e90a84c82f786dd59b24ce2820032",
+      "previousSha256": "5d5a67135ab5fbbf122115b0975983013db3364c8237f3bb97a3203540cc11b0",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/locales/ar.json": {
+      "sha256": "435d30a163737a132f5a6aa1035678a36857baa8a79fa95828ff537d2fa892ed",
+      "previousSha256": "c250a8a3d408a7b26e8000d73b2259685c07cd8227bd937201120c660a70dbd7",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/locales/en.json": {
+      "sha256": "e30e9204a46e606250b098b039086f1ce1eb38e4abc6bd3d7fc66f0338fe0420",
+      "previousSha256": "8926ac2635c3d6dbeed685adc3988381e3c4ae1733ad30f4c9de033e626e7101",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/pages/public/home-page.tsx": {
+      "sha256": "9079593d1cfc126784aeff99f8e242db2d4eee9882475099e519f8c14bacf609",
+      "previousSha256": "0959c9dcc9c7f7707fdc649db895b569a2094eb78545a20f41f7115377e81d33",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/pages/public/join-page.tsx": {
+      "sha256": "7ff07f7e02cc808878060b1fa3e9d7cc8f12e09137fca2981bc8878321c9008e",
+      "previousSha256": "1fec0ae15b09b2a478d20feb50efbd763e0ada3460cff68962ce4028feb70629",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/pages/public/leaderboard-page.tsx": {
+      "sha256": "98e57568cb8570f835865fc43344df8fd61e084119d5112306ae971ee9234b7a",
+      "previousSha256": "d0cda516475817eccd0e2c3d5fd813211fb707113f446e1911582e59ea472a9d",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/pages/public/team-page.tsx": {
+      "sha256": "b3c0f6bf4e9cfab3386880b6eae8a4f67a842b8ea05a0bf79c0a37816026cb18",
+      "previousSha256": "fdec8eaafb4c1e51f75bd8d8b3d113701ef2bd321cb2c091bc41bae73481f128",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/pages/public/videos-page.tsx": {
+      "sha256": "0aca1a6deaf6bc6404fc3de1be6dfc97b38cfa7cf7d34c3f75aee0a97e72999d",
+      "previousSha256": "9193adf2477344d3e5310215619175a11f0376d4f48c065f19ccaddc8e4f0dad",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/types/database.ts": {
+      "sha256": "8e8cf872c9ac1abf990035411c7c95b5f294ff455cdf0219b6cc2128fe73204c",
+      "previousSha256": "b583a1c88fd373f028a8f94f24002c162af3dcaab7d47bc715a53b7483e913b1",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/tests/database.security.test.mjs": {
+      "sha256": "ad6f5853bac0aa19dd12cdf186275c7bd1397b19e1f8690f074a3e75955da37c",
+      "previousSha256": "c5c6c544e815cfd0d1a36a13ba883f1476cbfb6d35bdf6c7db7f70d7b185f342",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/tests/delivery.integration.test.mjs": {
+      "sha256": "20c3c325fe752708683ef95f4a6ff1855e51d0e5c0ad5067db7f34fe959d7df4",
+      "previousSha256": "c80d1b2f320dbbcc5335002514668f022015ce099b76e315a8636b940a3b8e09",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/tests/form-validation.test.ts": {
+      "sha256": "37664ff366d5348c9a583f450ed8f441d2ce45130f720d56909ef6cc34d813d6",
+      "previousSha256": "14347557441f7d12ee7a36c1dae9e84b8d4cc9ef36ab6b7e6e9ae9d0c634162f",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/tests/registration.integration.test.mjs": {
+      "sha256": "8b87812e915aed1b28d05211006f6e52c808dab8fd9c777471123e9b73eb4729",
+      "previousSha256": "b8aad78bb9e0418390f5a2380dcb757980e0785a3b17e8577b122253ecd485d0",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/tests/registration.security.test.mjs": {
+      "sha256": "80d5f00876228f16b583bc5e5385515ea4062640793db7628e7d9bb0970fa151",
+      "previousSha256": "0fd4be13fccad783dac933ebd20f4d3dffbad7c7caf06da0e806f7300a126c80",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/tests/supabase.integration.test.mjs": {
+      "sha256": "89274d82eede888782b4fb2c7855f2f3a3e557bd02421f9da67bfc78c8029a32",
+      "previousSha256": "ad9c87d936dc1d9eda170829125d3588f4f01406534a705d2676ecdfe9bbf113",
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    }
+  }
+}

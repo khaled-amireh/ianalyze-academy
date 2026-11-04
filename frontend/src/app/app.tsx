@@ -32,8 +32,11 @@ const DevelopmentPreview = import.meta.env.DEV ? lazy(() => import('@/dev/dev-ro
 const AboutPage = lazy(() =>
   import('@/pages/public/about-page').then((m) => ({ default: m.AboutPage })),
 );
-const SyllabusPage = lazy(() =>
-  import('@/pages/public/syllabus-page').then((m) => ({ default: m.SyllabusPage })),
+const ProfilePage = lazy(() =>
+  import('@/features/portal/profile-page').then((m) => ({ default: m.ProfilePage })),
+);
+const NotificationsPage = lazy(() =>
+  import('@/features/portal/notifications').then((m) => ({ default: m.NotificationsPage })),
 );
 const VideosPage = lazy(() =>
   import('@/pages/public/videos-page').then((m) => ({ default: m.VideosPage })),
@@ -59,7 +62,7 @@ export function App() {
         <Route element={<PublicLayout />}>
           <Route index element={<HomePage />} />
           <Route path="about" element={<AboutPage />} />
-          <Route path="eda" element={<SyllabusPage />} />
+          <Route path="eda/*" element={<NotFoundPage />} />
           <Route path="videos" element={<VideosPage />} />
           <Route path="team" element={<TeamPage />} />
           <Route
@@ -100,6 +103,30 @@ export function App() {
             }
           />
           <Route element={<ProtectedPortal />}>
+            <Route
+              path="profile"
+              element={
+                <Suspense fallback={<LoadingIndicator />}>
+                  <ProfilePage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="profile/edit"
+              element={
+                <Suspense fallback={<LoadingIndicator />}>
+                  <ProfilePage edit />
+                </Suspense>
+              }
+            />
+            <Route
+              path="notifications"
+              element={
+                <Suspense fallback={<LoadingIndicator />}>
+                  <NotificationsPage />
+                </Suspense>
+              }
+            />
             <Route
               path="student"
               element={

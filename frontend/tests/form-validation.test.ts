@@ -53,7 +53,8 @@ test('registration validates the database contract without accepting partial con
   const valid = {
     full_name: 'Learner',
     whatsapp: '+962790000001',
-    major: 'AI',
+    major: 'Data Science & Artificial Intelligence',
+    university: 'Other University',
     academic_year: '4',
     python_experience: 'basic',
     consent: 'on',
@@ -105,4 +106,41 @@ test('SDK returned errors map to safe actionable copy; arbitrary server text is 
   assert.equal(requestError({ status: 429 }), 'rateLimited');
   assert.equal(requestError({ code: 'PGRST301' }), 'sessionExpired');
   assert.equal(requestError({ message: 'private database details' }), 'error');
+});
+
+test('major Other, historical values, conditional university IDs and conflict messages', () => {
+  const valid = {
+    full_name: 'Student',
+    whatsapp: '0790000001',
+    major: 'other',
+    major_other: 'Historical custom major',
+    university: 'Another University',
+    academic_year: '4',
+    python_experience: 'none',
+    consent: 'on',
+  };
+  assert.deepEqual(validateProfile(form(valid), true), {});
+  assert.equal(
+    validateProfile(form({ ...valid, major_other: '' }), true).major_other,
+    'requiredField',
+  );
+  assert.equal(
+    validateProfile(form({ ...valid, major: 'Unlisted text' }), true).major,
+    'requiredField',
+  );
+  const zuj = { ...valid, university: 'Al-Zaytoonah University of Jordan' };
+  for (const university_id of ['', 'abc', '١٢٣', '123456789012345678901'])
+    assert.equal(
+      validateProfile(form({ ...zuj, university_id }), true).university_id,
+      'invalidUniversityId',
+    );
+  assert.deepEqual(validateProfile(form({ ...zuj, university_id: ' 202311432 ' }), true), {});
+  assert.deepEqual(validateProfile(form({ ...valid, university_id: '' }), true), {});
+  assert.equal(
+    requestError({
+      code: '23505',
+      message: 'duplicate key violates unique constraint "profiles_zuj_university_id_unique"',
+    }),
+    'duplicateUniversityId',
+  );
 });

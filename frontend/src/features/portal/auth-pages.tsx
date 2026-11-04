@@ -19,6 +19,7 @@ import {
 } from './form-validation';
 import type { PortalCopy } from './copy';
 import './portal.css';
+import { authPersistence } from '@/lib/auth-storage';
 
 export function AccountLink({
   className,
@@ -121,6 +122,7 @@ function AuthForm({ mode }: { mode: AuthMode }) {
     const redirectTo = `${window.location.origin}/auth/callback${mode === 'recover' ? '?flow=recovery' : ''}`;
     try {
       if (mode === 'login') {
+        authPersistence.setRememberMe(form.get('remember') === 'on');
         const { error } = await academyClient.auth.signInWithPassword({ email, password });
         if (error) throw error;
         await auth.refresh();
@@ -212,6 +214,12 @@ function AuthForm({ mode }: { mode: AuthMode }) {
                   error={errors.confirmation}
                   c={c}
                 />
+              )}
+              {mode === 'login' && (
+                <label className="portal-check">
+                  <input type="checkbox" name="remember" />
+                  {c.rememberMe}
+                </label>
               )}
               {mode === 'signup' && (
                 <div>

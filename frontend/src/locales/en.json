@@ -4,7 +4,7 @@
     "home": "iAnalyze - Home",
     "logoAlt": "iAnalyze AI & DS Club by iTeam",
     "parentAlt": "iTeam",
-    "initiative": "An iTeam Initiative",
+    "initiative": "A club under iTeam",
     "university": "Al-Zaytoonah University of Jordan",
     "description": "A student community exploring AI and data science, together."
   },
@@ -73,7 +73,7 @@
       "description": "A foundational learning resource for iAnalyze students. Explore an introductory session in Data Science."
     },
     "team": {
-      "title": "Leaders",
+      "title": "Our Team",
       "description": "Meet the members behind iAnalyze’s learning community."
     },
     "join": {
@@ -140,7 +140,7 @@
     },
     "about": {
       "whoTitle": "Who we are",
-      "whoText": "iAnalyze is a student club for artificial intelligence and data science at Al-Zaytoonah University of Jordan. We create opportunities to explore the field through approachable, practical learning.",
+      "whoText": "iAnalyze is a club under iTeam at Al-Zaytoonah University of Jordan.",
       "parentTitle": "Part of iTeam",
       "parentText": "iAnalyze operates under iTeam at Al-Zaytoonah University of Jordan. Our focus is AI and data science within this wider student community.",
       "missionTitle": "Our mission",
@@ -230,13 +230,14 @@
     "team": {
       "khaled": "Khaled Amireh",
       "yomna": "Yomna Al-jabiri",
-      "education": "AI Student - 4th Year",
-      "educationFemale": "AI Student - 4th Year",
+      "education": "AI Student — 4th Year",
+      "educationFemale": "AI Student — 4th Year",
       "position": "Member",
       "positionFemale": "Member",
       "portrait": "Portrait of {{name}}",
       "communityTitle": "Learning starts with people.",
-      "communityText": "Get to know iAnalyze’s practical learning approach and the student community around it."
+      "communityText": "Get to know iAnalyze’s practical learning approach and the student community around it.",
+      "hussein": "Hussein Zahran"
     },
     "join": {
       "status": "Registration coming soon",
@@ -266,7 +267,7 @@
         "participate": "Receive Student / Participant access"
       },
       "prepareTitle": "Start exploring while you wait",
-      "prepareText": "Get to know the syllabus or watch the optional Introduction to Data Science video."
+      "prepareText": "Watch the Introduction to Data Science video."
     },
     "leaderboard": {
       "status": "Rankings are not published yet",

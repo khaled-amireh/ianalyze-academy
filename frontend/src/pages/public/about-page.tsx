@@ -55,7 +55,7 @@ export function AboutPage() {
               <p>
                 <MixedText>{t(`academy.about.${id}Text`)}</MixedText>
               </p>
-              {id === 'past' && <TextLink to="/videos">{t('academy.watch')}</TextLink>}
+              {id === 'past' && <TextLink to="/contact">{t('nav.contact')}</TextLink>}
             </article>
           </Reveal>
         ))}

@@ -27,6 +27,6 @@ test('Arabic public content is translated, with the owner-supplied profile names
     readFileSync(new URL('../src/locales/ar.json', import.meta.url), 'utf8'),
   ) as { academy: unknown };
   for (const [key, text] of strings(ar.academy))
-    if (!['.team.khaled', '.team.yomna'].includes(key))
+    if (!['.team.khaled', '.team.yomna', '.team.hussein'].includes(key))
       assert.ok(/[\u0600-\u06FF]/.test(text), `Missing Arabic content: ${key}`);
 });

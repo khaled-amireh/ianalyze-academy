@@ -118,14 +118,14 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     "frontend/src/app/app.tsx": {
-      "sha256": "dcda1c4d7fa96f037ed1469c188b8006fa307e21a9ea3064eeead8b91a7b402c",
+      "sha256": "a40b8d2003ca62145a3b0c896f1a9ea84f667cd512b3539229529838d91c545e",
       "previousSha256": "373cd62c045ddbb6985b35e6c8eaf47354856991ad9fc49afdcc04410089cb0b",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
     },
     "frontend/src/app/navigation.ts": {
-      "sha256": "a5d04834b215b5e27eb43a9fe1e34b42813d050efbba917086a9149f136df05e",
+      "sha256": "f40f65bf27bcfe8735a3904289dc51e6ec6ce014689f2c57bcce444205dddf32",
       "previousSha256": "4f176d63ff464ecb92986cd9d94a2943669881e77b0bae33df13b8ccfeb4df9e",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
     },
     "frontend/src/app/route-effects.tsx": {
       "sha256": "1cbe8a2bfd2e290d7ec0d99a02a5c02ecd679fed9db7c2c725d95084f1d693b3",
@@ -133,9 +133,9 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     "frontend/src/components/layout/footer.tsx": {
-      "sha256": "c97caf48ebbf5a1965bbacdb576b35629eb904caa1e68cc23a1932f208111ae6",
+      "sha256": "c6f40e53e8b15e511148dd5ab5ea703441fd793cabf61dd113894581ea562925",
       "previousSha256": "eb22df6ad08ab2191309928a4a3e2a01d4c5952c574de15b4e604f282ff474d9",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
     },
     "frontend/src/components/layout/mobile-navigation.tsx": {
       "sha256": "c6e0825ed3c0e250e78a1c3ec5ac7c97b8381c197910806c2bb14e1f0fcf62d3",
@@ -198,24 +198,24 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     "frontend/src/locales/ar.json": {
-      "sha256": "435d30a163737a132f5a6aa1035678a36857baa8a79fa95828ff537d2fa892ed",
+      "sha256": "9071b4fbd0c9b400beecaddd27983261e2508ebdab93c48db0cb01279fcb60e6",
       "previousSha256": "c250a8a3d408a7b26e8000d73b2259685c07cd8227bd937201120c660a70dbd7",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
     },
     "frontend/src/locales/en.json": {
-      "sha256": "e30e9204a46e606250b098b039086f1ce1eb38e4abc6bd3d7fc66f0338fe0420",
+      "sha256": "0b2703b6befea99ff71f5d96cfebcb308b0b60eb3e2d661724649906868522a9",
       "previousSha256": "8926ac2635c3d6dbeed685adc3988381e3c4ae1733ad30f4c9de033e626e7101",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
     },
     "frontend/src/pages/public/home-page.tsx": {
-      "sha256": "9079593d1cfc126784aeff99f8e242db2d4eee9882475099e519f8c14bacf609",
+      "sha256": "221475bb1dfd3169d8fdb2ab6fa6b7c5fd2f83b9e8c7544ad78677ff749dfcb6",
       "previousSha256": "0959c9dcc9c7f7707fdc649db895b569a2094eb78545a20f41f7115377e81d33",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
     },
     "frontend/src/pages/public/join-page.tsx": {
-      "sha256": "7ff07f7e02cc808878060b1fa3e9d7cc8f12e09137fca2981bc8878321c9008e",
+      "sha256": "985a2611f608c187207d9e958f5e764d632a881b2d9c6b17ce57dc0bce15b5cd",
       "previousSha256": "1fec0ae15b09b2a478d20feb50efbd763e0ada3460cff68962ce4028feb70629",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
     },
     "frontend/src/pages/public/leaderboard-page.tsx": {
       "sha256": "98e57568cb8570f835865fc43344df8fd61e084119d5112306ae971ee9234b7a",
@@ -266,6 +266,21 @@
       "sha256": "89274d82eede888782b4fb2c7855f2f3a3e557bd02421f9da67bfc78c8029a32",
       "previousSha256": "ad9c87d936dc1d9eda170829125d3588f4f01406534a705d2676ecdfe9bbf113",
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+    },
+    "frontend/src/pages/public/about-page.tsx": {
+      "previousSha256": "30e41c9a61239c04c8630abd86aaacfe593a2e81ac8ee6323eea50586727ce0b",
+      "sha256": "825e0cad49065d1a08bda00014408c364e78f84a4cfc3d10746dc63b8876af79",
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
+    },
+    "frontend/tests/content-audit.test.ts": {
+      "previousSha256": "bbe2bb9424a8e0f89088dc47c3ceb6481537f7a99ae6738d29743ac688e4d1dc",
+      "sha256": "334bc5eef32507dd93504fa347fc52c10cee33724ab77a62fc45da50606e3b7e",
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
+    },
+    "frontend/tests/content-encoding.test.ts": {
+      "previousSha256": "d678799c60dedafe1caf1281eed582a154bd3e4dabdb9a335a8a2b2f98195e1c",
+      "sha256": "9989b2c59adb474be211b354289698bb39f1b3511ccc70c50ab68e2afb5d8283",
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
     }
   }
 }

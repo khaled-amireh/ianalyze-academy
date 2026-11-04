@@ -38,6 +38,29 @@ const catalogues = [
   ['dev', load('../src/dev/locales/en.json'), load('../src/dev/locales/ar.json')],
   ['portal', portalTranslations.en, portalTranslations.ar],
 ] as const;
+
+test('team names remain English in both languages and visible public copy contains no curriculum details', () => {
+  for (const locale of ['en', 'ar']) {
+    const copy = load(`../src/locales/${locale}.json`);
+    assert.deepEqual(
+      ['khaled', 'yomna', 'hussein'].map((id) => copy.academy.team[id]),
+      ['Khaled Amireh', 'Yomna Al-jabiri', 'Hussein Zahran'],
+    );
+    const visible = [
+      copy.home.description,
+      copy.academy.home.resourceTitle,
+      copy.academy.home.resourceText,
+      copy.academy.home.communityText,
+      ...flatten(copy.academy.about).map(([, value]) => value),
+      ...flatten(copy.academy.faq).map(([, value]) => value),
+      copy.academy.join.prepareText,
+    ].join('\n');
+    assert.doesNotMatch(
+      visible,
+      /Python|Pandas|Matplotlib|Google Colab|Power BI|\bEDA\b|Introduction to Data Science|six teaching weeks|18 planned|final project|مقدمة في علم البيانات|أسابيع تدريبية|ساعات تدريبية|مشروع نهائي/i,
+    );
+  }
+});
 test('all three bilingual catalogues have unique keys, equivalent placeholders, Unicode and intentional English exceptions only', () => {
   for (const dir of ['src/locales', 'src/dev/locales'])
     for (const locale of ['ar', 'en'])
@@ -65,6 +88,7 @@ test('all three bilingual catalogues have unique keys, equivalent placeholders, 
           'home.toolkit',
           'academy.team.khaled',
           'academy.team.yomna',
+          'academy.team.hussein',
         ].includes(key)
       )
         assert.ok(/[\u0600-\u06FF]/.test(text), `${name}.${key}: untranslated Arabic`);

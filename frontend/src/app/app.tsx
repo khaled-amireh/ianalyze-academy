@@ -38,9 +38,6 @@ const ProfilePage = lazy(() =>
 const NotificationsPage = lazy(() =>
   import('@/features/portal/notifications').then((m) => ({ default: m.NotificationsPage })),
 );
-const VideosPage = lazy(() =>
-  import('@/pages/public/videos-page').then((m) => ({ default: m.VideosPage })),
-);
 const TeamPage = lazy(() =>
   import('@/pages/public/team-page').then((m) => ({ default: m.TeamPage })),
 );
@@ -63,7 +60,7 @@ export function App() {
           <Route index element={<HomePage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="eda/*" element={<NotFoundPage />} />
-          <Route path="videos" element={<VideosPage />} />
+          <Route path="videos/*" element={<NotFoundPage />} />
           <Route path="team" element={<TeamPage />} />
           <Route
             path="join"

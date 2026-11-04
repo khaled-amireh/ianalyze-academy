@@ -1,4 +1,4 @@
-import { ArrowRight, Play, Users } from 'lucide-react';
+import { ArrowRight, Users } from 'lucide-react';
 import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
@@ -6,7 +6,7 @@ import { PageContainer } from '@/components/shared/page-container';
 import { MixedText } from '@/components/shared/mixed-text';
 import { Reveal } from '@/components/shared/reveal';
 import { JoinCallout, TextLink } from '@/components/shared/academy-content';
-import { leaders, syllabus } from '@/content/public-content';
+import { leaders } from '@/content/public-content';
 
 export function HomePage() {
   const { t } = useTranslation();
@@ -24,8 +24,8 @@ export function HomePage() {
           </p>
           <div className="hero-actions">
             <Button asChild size="lg">
-              <Link to="/videos">
-                <MixedText>{t('academy.watch')}</MixedText>
+              <Link to="/team">
+                <MixedText>{t('redesign.meetTeam')}</MixedText>
                 <ArrowRight className="directional" aria-hidden="true" />
               </Link>
             </Button>
@@ -40,28 +40,23 @@ export function HomePage() {
       </section>
       <Reveal>
         <section className="resource-feature">
-          <Link to="/videos" className="resource-art" aria-label={t('academy.watch')}>
+          <Link to="/about" className="resource-art" aria-label={t('nav.about')}>
             <span className="resource-symbol" aria-hidden="true">
-              <Play />
+              <Users />
             </span>
             <span className="resource-art-title">
-              <MixedText>{t('redesign.videoTitle')}</MixedText>
+              <MixedText>{t('academy.home.aboutEyebrow')}</MixedText>
             </span>
-            <span className="resource-art-caption">{t('redesign.videoType')}</span>
+            <span className="resource-art-caption">
+              <MixedText>{t('brand.initiative')}</MixedText>
+            </span>
           </Link>
           <div>
             <h2>{t('academy.home.resourceTitle')}</h2>
             <p>
               <MixedText>{t('academy.home.resourceText')}</MixedText>
             </p>
-            <TextLink to="/videos">{t('academy.watch')}</TextLink>
-            <div className="resource-tools" aria-label={t('academy.syllabus.toolsTitle')}>
-              {syllabus.tools.map((tool) => (
-                <bdi key={tool} dir="ltr">
-                  {tool}
-                </bdi>
-              ))}
-            </div>
+            <TextLink to="/about">{t('nav.about')}</TextLink>
           </div>
         </section>
       </Reveal>

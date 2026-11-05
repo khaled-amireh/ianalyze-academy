@@ -118,14 +118,14 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     "frontend/src/app/app.tsx": {
-      "sha256": "a40b8d2003ca62145a3b0c896f1a9ea84f667cd512b3539229529838d91c545e",
+      "sha256": "28cf51701225bdea5c1471b8abd4af9f8574600ca8777171996e29923f7208d5",
       "previousSha256": "373cd62c045ddbb6985b35e6c8eaf47354856991ad9fc49afdcc04410089cb0b",
-      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification. Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
     },
     "frontend/src/app/navigation.ts": {
-      "sha256": "f40f65bf27bcfe8735a3904289dc51e6ec6ce014689f2c57bcce444205dddf32",
+      "sha256": "774520c99322dd3a6a8e19259b8cebd905139fa429ba77c53d4614a446f388f5",
       "previousSha256": "4f176d63ff464ecb92986cd9d94a2943669881e77b0bae33df13b8ccfeb4df9e",
-      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification. Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
     },
     "frontend/src/app/route-effects.tsx": {
       "sha256": "1cbe8a2bfd2e290d7ec0d99a02a5c02ecd679fed9db7c2c725d95084f1d693b3",
@@ -133,9 +133,9 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     "frontend/src/components/layout/footer.tsx": {
-      "sha256": "6d0373e719bfb849f66b35a04bc13e134022a1e7220f136409919acc32969bec",
+      "sha256": "1f9a4157e3e705e6c1e28eff9b063b4d41620a7eec79313d29b6294106e3a6dc",
       "previousSha256": "eb22df6ad08ab2191309928a4a3e2a01d4c5952c574de15b4e604f282ff474d9",
-      "reason": "User-approved public content fixes and global logo background audit: use the existing approved transparent iTeam variant in the shared footer in both themes; preserve artwork and layout."
+      "reason": "User-approved public content fixes and global logo background audit: use the existing approved transparent iTeam variant in the shared footer in both themes; preserve artwork and layout. Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
     },
     "frontend/src/components/layout/mobile-navigation.tsx": {
       "sha256": "c6e0825ed3c0e250e78a1c3ec5ac7c97b8381c197910806c2bb14e1f0fcf62d3",
@@ -198,24 +198,24 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     "frontend/src/locales/ar.json": {
-      "sha256": "9071b4fbd0c9b400beecaddd27983261e2508ebdab93c48db0cb01279fcb60e6",
+      "sha256": "aa2506c1e08ff32181d2142c1ed97bf577e8e88e3ac1f639ed2ee26aa29464cf",
       "previousSha256": "c250a8a3d408a7b26e8000d73b2259685c07cd8227bd937201120c660a70dbd7",
-      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification. Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
     },
     "frontend/src/locales/en.json": {
-      "sha256": "0b2703b6befea99ff71f5d96cfebcb308b0b60eb3e2d661724649906868522a9",
+      "sha256": "059562e9065f05fe385e101a089b2dc3c60c3919bbe3f3e4e64e3c36abc8838a",
       "previousSha256": "8926ac2635c3d6dbeed685adc3988381e3c4ae1733ad30f4c9de033e626e7101",
-      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification. Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
     },
     "frontend/src/pages/public/home-page.tsx": {
-      "sha256": "221475bb1dfd3169d8fdb2ab6fa6b7c5fd2f83b9e8c7544ad78677ff749dfcb6",
+      "sha256": "62dc2383c1a8824024c968c2af5ea9a6a6c157c0867a62bc46500da567fce58b",
       "previousSha256": "0959c9dcc9c7f7707fdc649db895b569a2094eb78545a20f41f7115377e81d33",
-      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification. Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
     },
     "frontend/src/pages/public/join-page.tsx": {
-      "sha256": "985a2611f608c187207d9e958f5e764d632a881b2d9c6b17ce57dc0bce15b5cd",
+      "sha256": "4796aed7f03bc3063172201e64787856d1e8f92a57ca435c64d6a4209b29dcdf",
       "previousSha256": "1fec0ae15b09b2a478d20feb50efbd763e0ada3460cff68962ce4028feb70629",
-      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification. Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
     },
     "frontend/src/pages/public/leaderboard-page.tsx": {
       "sha256": "98e57568cb8570f835865fc43344df8fd61e084119d5112306ae971ee9234b7a",
@@ -269,8 +269,8 @@
     },
     "frontend/src/pages/public/about-page.tsx": {
       "previousSha256": "30e41c9a61239c04c8630abd86aaacfe593a2e81ac8ee6323eea50586727ce0b",
-      "sha256": "825e0cad49065d1a08bda00014408c364e78f84a4cfc3d10746dc63b8876af79",
-      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
+      "sha256": "e696fa7cba0d7106d767bcc140f51732d9e901d67db8f3ff8341715097203842",
+      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification. Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
     },
     "frontend/tests/content-audit.test.ts": {
       "previousSha256": "bbe2bb9424a8e0f89088dc47c3ceb6481537f7a99ae6738d29743ac688e4d1dc",
@@ -296,6 +296,46 @@
       "added": true,
       "sha256": "53c3ce7ebb6b305a910e82427db8fc1ec258944e336d7a15a566f1e71e2f6570",
       "reason": "User-authorized announcement composer, scoped responsive styles and bilingual validation tests."
+    },
+    "frontend/src/components/shared/hero-chart.tsx": {
+      "sha256": "b7fbae23b337b927bca14d1f87cef83cce9c44cc2d39bd3bdfd5bafd034e2769",
+      "added": true,
+      "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+    },
+    "frontend/src/components/shared/simple-blocks.tsx": {
+      "sha256": "ab3ceaa4837f1b23d6d1ce5e8770fe4fec673c16480925558823cb68f955f6d5",
+      "added": true,
+      "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+    },
+    "frontend/src/index.css": {
+      "sha256": "56acc74bd9381877c276604b0e7e349cd7d4f6efd84842726f55d3e16b5b41d9",
+      "previousSha256": "529b1d7a05bcaf56c6f2ffeceb9207f671bac644079fe9dc3592fe03b7a2b758",
+      "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+    },
+    "frontend/src/lib/i18n.ts": {
+      "sha256": "b6c3e399afd1eedca3339cc6a83bf63eedff1b5cdba948a4582746f1f7865af2",
+      "previousSha256": "fe91b766acadaf07e1c1450faa412918ee3abd748bca48085f0e2c181cbaf926",
+      "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+    },
+    "frontend/src/lib/mixed-text.ts": {
+      "sha256": "8aabe5dd6f5b8b57d3a08a54603c10a99a7150ee52f2ddf1f0e6621767f26788",
+      "previousSha256": "8223af8a3485b63666f6c8eb9a43f99cec1b22013240b337c551dea2105104fb",
+      "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+    },
+    "frontend/src/pages/public/syllabus-page.tsx": {
+      "sha256": "e61b036e82d0d93de34f3df8d01a327a2d0a18a9303228d030313629346b67b2",
+      "previousSha256": "72cf2706db2bba416a98b67612e495aa183e56d9ff829374bfb002fc805a738e",
+      "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+    },
+    "frontend/src/styles/simplify.css": {
+      "sha256": "dcc1d7b177c206a17dcf75313c10190b618b3c0ca0b33ac9a5a30a56cfcdab89",
+      "added": true,
+      "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+    },
+    "frontend/src/styles/tokens.css": {
+      "sha256": "c2f56120439a0bfeb15e23ac79173136b30cc77902bb33234e6ac5eafd270030",
+      "previousSha256": "71c61876db7e95f429e02e17154f53e7958119ae6e09437cf853ee96c8b035ad",
+      "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
     }
   }
 }

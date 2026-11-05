@@ -1,0 +1,679 @@
+/* Simplified public pages (home, course, about) + fixed layout across languages. */
+
+/* ---------- Language: same layout, only the text direction changes ---------- */
+html[lang='en'] :is(h1, h2, h3, h4, p, li, dt, dd, label, summary, figcaption, blockquote, small),
+html[lang='en'] :is(input, textarea) {
+  unicode-bidi: plaintext;
+}
+
+/* ---------- Shared bits ---------- */
+.s-eyebrow {
+  color: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+}
+.s-lede {
+  color: var(--muted-foreground);
+  font-size: 1.125rem;
+  line-height: 1.8;
+  max-width: 40rem;
+  margin: 0;
+}
+.s-muted {
+  color: var(--muted-foreground);
+  margin: 0.25rem 0 0;
+}
+.s-note {
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+  margin: 1rem 0 0;
+}
+.s-section {
+  margin-block: 4.5rem;
+}
+.s-section h2,
+.s-register h2,
+.s-card h2 {
+  color: var(--foreground);
+  font-weight: 800;
+  margin: 0;
+}
+.s-section h2 {
+  font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+}
+.s-section-head {
+  align-items: end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+/* ---------- Hero ---------- */
+.s-hero {
+  align-items: center;
+  isolation: isolate;
+  display: grid;
+  gap: 3rem;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  padding-block: 4rem 2rem;
+  position: relative;
+}
+.s-hero-copy {
+  position: relative;
+}
+.s-hero-copy::before {
+  animation: s-drift 18s ease-in-out infinite alternate;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--brand-teal) 30%, transparent),
+    transparent
+  );
+  content: '';
+  height: 22rem;
+  inset-block-start: -3rem;
+  inset-inline: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+}
+.s-hero h1,
+.s-page-head h1 {
+  color: var(--foreground);
+  font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin: 0 0 1rem;
+}
+.s-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.s-facts {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 1.75rem 0 0;
+  max-width: 36rem;
+}
+.s-fact {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.85rem 1rem;
+  transition:
+    transform 0.25s var(--ease),
+    border-color 0.25s var(--ease);
+}
+.s-fact:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+.s-fact svg {
+  color: var(--primary);
+  height: 1.15rem;
+  margin-bottom: 0.25rem;
+  width: 1.15rem;
+}
+.s-fact dt {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+.s-fact dd {
+  color: var(--foreground);
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Study plan: full-width, centered fact boxes */
+.s-facts-wide {
+  gap: 1rem;
+  margin: 2rem 0 0;
+  max-width: none;
+}
+.s-facts-wide .s-fact {
+  border-radius: 18px;
+  justify-items: center;
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+.s-facts-wide .s-fact svg {
+  height: 1.6rem;
+  margin-bottom: 0.4rem;
+  width: 1.6rem;
+}
+.s-facts-wide .s-fact dt {
+  font-size: 0.9rem;
+}
+.s-facts-wide .s-fact dd {
+  font-size: 1.25rem;
+}
+
+/* Animated chart card */
+.s-hero-chart {
+  animation: s-float 6s ease-in-out infinite;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  box-shadow: var(--shadow-raised);
+  padding: 1rem 1.25rem 1.5rem;
+}
+.s-hero-chart-top {
+  align-items: center;
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+.s-hero-chart-top code {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  margin-inline-start: auto;
+}
+.s-dot {
+  background: var(--border);
+  border-radius: 50%;
+  height: 0.6rem;
+  width: 0.6rem;
+}
+.s-dot:first-child {
+  background: var(--brand-orange);
+}
+.s-dot:nth-child(2) {
+  background: var(--brand-teal);
+}
+.s-hero-bars {
+  align-items: end;
+  direction: ltr;
+  display: flex;
+  gap: 0.75rem;
+  height: 14rem;
+  position: relative;
+}
+.s-bar {
+  animation:
+    s-grow 0.9s var(--ease) backwards,
+    s-breathe 4s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 90ms), calc(1s + var(--i) * 250ms);
+  background: linear-gradient(to top, var(--primary), var(--chart-bar));
+  border-radius: 8px 8px 3px 3px;
+  flex: 1;
+  height: var(--h);
+  transform-origin: bottom;
+}
+.s-hero-line {
+  height: 100%;
+  inset: 0;
+  overflow: visible;
+  position: absolute;
+  width: 100%;
+}
+.s-hero-line polyline {
+  animation: s-draw 1.6s 0.5s var(--ease) both;
+  fill: none;
+  stroke: var(--brand-orange);
+  stroke-dasharray: 420;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+}
+
+/* ---------- Week list ---------- */
+.s-weeks {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.s-weeks li {
+  animation: s-rise 0.6s var(--ease) backwards;
+  animation-delay: calc(var(--i) * 70ms);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  display: flex;
+  gap: 0.9rem;
+  padding: 1.1rem 1.15rem;
+  transition:
+    transform 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
+}
+.s-weeks li:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-raised);
+  transform: translateY(-3px);
+}
+.s-week-number {
+  align-items: center;
+  background: var(--secondary);
+  border-radius: 10px;
+  color: var(--secondary-foreground);
+  display: flex;
+  flex: none;
+  font-weight: 800;
+  height: 2.5rem;
+  justify-content: center;
+  width: 2.5rem;
+}
+.s-weeks h3 {
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 0.3rem;
+}
+.s-weeks p {
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ---------- Cards ---------- */
+.s-cards {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-block: 2.5rem;
+}
+.s-cards-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.s-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.5rem;
+  transition:
+    transform 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
+}
+.s-card:hover {
+  box-shadow: var(--shadow-raised);
+  transform: translateY(-2px);
+}
+.s-card h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.4rem;
+}
+.s-card p {
+  color: var(--muted-foreground);
+  line-height: 1.8;
+  margin: 0;
+}
+.s-card-icon {
+  background: var(--secondary);
+  border-radius: 12px;
+  color: var(--primary);
+  height: 2.6rem;
+  margin-bottom: 1rem;
+  padding: 0.6rem;
+  width: 2.6rem;
+}
+.s-parent img {
+  height: 2.75rem;
+  margin-bottom: 1rem;
+  width: auto;
+}
+.s-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.s-tools bdi {
+  background: var(--secondary);
+  border-radius: 999px;
+  color: var(--secondary-foreground);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.3rem 0.8rem;
+}
+
+/* ---------- About strip + team ---------- */
+.s-about {
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  padding: 2rem;
+}
+.s-about p {
+  color: var(--muted-foreground);
+  line-height: 1.85;
+  margin: 0.75rem 0 1rem;
+}
+.s-team {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.s-person {
+  margin: 0;
+}
+.s-person img {
+  aspect-ratio: 4 / 5;
+  border-radius: 16px;
+  object-fit: cover;
+  transition: transform 0.4s var(--ease);
+  width: 100%;
+}
+.s-person:hover img {
+  transform: scale(1.02);
+}
+.s-person figcaption {
+  display: grid;
+  margin-top: 0.6rem;
+}
+.s-person strong {
+  color: var(--foreground);
+}
+.s-person span {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.s-person figcaption {
+  position: relative;
+}
+.s-person-link {
+  color: var(--muted-foreground);
+  inset-block-start: 0.15rem;
+  inset-inline-end: 0;
+  position: absolute;
+  transition: color 0.2s var(--ease);
+}
+.s-person-link:hover,
+.s-person-link:focus-visible {
+  color: var(--primary);
+}
+.s-person-link svg {
+  height: 1.1rem;
+  width: 1.1rem;
+}
+
+/* ---------- Study plan teaser ---------- */
+.s-plan-teaser {
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: inherit;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.25rem;
+  margin-block: 2rem;
+  padding: 1.5rem;
+  text-decoration: none;
+  transition:
+    transform 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
+}
+.s-plan-teaser:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-raised);
+  transform: translateY(-2px);
+}
+.s-plan-teaser .s-card-icon {
+  margin: 0;
+}
+.s-plan-teaser > div {
+  flex: 1 1 18rem;
+}
+.s-plan-teaser h2 {
+  color: var(--foreground);
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 0 0 0.25rem;
+}
+.s-plan-teaser p {
+  color: var(--muted-foreground);
+  margin: 0;
+}
+.s-plan-teaser-link {
+  align-items: center;
+  color: var(--primary);
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.4rem;
+}
+.s-plan-teaser-link svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+/* ---------- FAQ ---------- */
+.s-faq {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding-inline: 1.25rem;
+}
+
+/* ---------- Page header (course/about) ---------- */
+.s-page-head {
+  padding-block: 3.5rem 0.5rem;
+}
+
+/* ---------- Video ---------- */
+.s-video {
+  align-items: center;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+}
+.s-video-copy p {
+  color: var(--muted-foreground);
+  line-height: 1.8;
+  margin: 0.6rem 0 1.25rem;
+}
+.s-video-frame {
+  aspect-ratio: 16 / 9;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+}
+.s-video-frame iframe {
+  border: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/* ---------- Register band ---------- */
+.s-register {
+  align-items: center;
+  background: var(--primary);
+  border-radius: 24px;
+  color: var(--primary-foreground);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem 2rem;
+  justify-content: space-between;
+  margin-block: 4rem 5rem;
+  overflow: hidden;
+  padding: 2rem 2.25rem;
+  position: relative;
+}
+.s-register::after {
+  animation: s-drift 14s ease-in-out infinite alternate;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--brand-teal) 45%, transparent),
+    transparent 65%
+  );
+  content: '';
+  height: 18rem;
+  inset-block-start: -8rem;
+  inset-inline-end: -4rem;
+  pointer-events: none;
+  position: absolute;
+  width: 18rem;
+}
+.s-register > * {
+  position: relative;
+  z-index: 1;
+}
+.s-register h2 {
+  color: inherit;
+  font-size: 1.5rem;
+}
+.s-register p {
+  margin: 0.35rem 0 0;
+  opacity: 0.9;
+}
+.s-register .academy-button,
+.s-register a {
+  background: var(--primary-foreground);
+  color: var(--primary);
+}
+
+.dark .s-register {
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+}
+.dark .s-register .academy-button,
+.dark .s-register a {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* ---------- Motion ---------- */
+@keyframes s-grow {
+  from {
+    transform: scaleY(0);
+  }
+}
+@keyframes s-breathe {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.88);
+  }
+}
+@keyframes s-draw {
+  from {
+    stroke-dashoffset: 420;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes s-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+@keyframes s-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(2rem, 1rem, 0) scale(1.08);
+  }
+}
+@keyframes s-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .s-hero-copy::before,
+  .s-hero-chart,
+  .s-bar,
+  .s-hero-line polyline,
+  .s-weeks li,
+  .s-register::after {
+    animation: none;
+  }
+  .s-fact,
+  .s-weeks li,
+  .s-card,
+  .s-plan-teaser,
+  .s-person img {
+    transition: none;
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .s-hero,
+  .s-about,
+  .s-video {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .s-hero {
+    gap: 2rem;
+    padding-top: 2.5rem;
+  }
+  .s-weeks,
+  .s-cards-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .s-facts,
+  .s-weeks,
+  .s-cards,
+  .s-cards-3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .s-facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+  .s-fact {
+    padding: 0.7rem;
+  }
+  .s-fact dd {
+    font-size: 0.875rem;
+  }
+  .s-facts-wide .s-fact {
+    padding: 1rem 0.5rem;
+  }
+  .s-facts-wide .s-fact dd {
+    font-size: 0.95rem;
+  }
+  .s-hero-bars {
+    height: 9rem;
+  }
+  .s-team {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+  .s-person figcaption {
+    font-size: 0.8rem;
+  }
+  .s-section {
+    margin-block: 3rem;
+  }
+  .s-about,
+  .s-register {
+    padding: 1.5rem;
+  }
+}
+html[lang='en'] .s-lede {
+  max-width: none;
+}

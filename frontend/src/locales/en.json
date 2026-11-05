@@ -11,10 +11,10 @@
   "nav": {
     "home": "Home",
     "about": "About",
-    "eda": "EDA Syllabus",
+    "eda": "Study plan",
     "videos": "Video Library",
     "team": "Our Team",
-    "join": "Join iAnalyze",
+    "join": "Register",
     "leaderboard": "Leaderboard",
     "contact": "Contact & FAQ"
   },
@@ -135,8 +135,8 @@
     },
     "cta": {
       "eyebrow": "Your next step",
-      "title": "A little curiosity goes a long way.",
-      "text": "Find out how to create your account and complete academy registration."
+      "title": "Register with iAnalyze",
+      "text": "Create an account, confirm your email, then complete your details."
     },
     "about": {
       "whoTitle": "Who we are",
@@ -353,5 +353,44 @@
     "carouselRole": "carousel",
     "slideRole": "slide",
     "slideLabel": "Module {{current}} of {{total}}"
+  },
+  "simple": {
+    "heroEyebrow": "AI and Data Science Club at Al-Zaytoonah University, part of iTeam",
+    "heroTitle": "Learn AI and data science with your classmates",
+    "heroText": "A student club running hands-on courses and activities, taught by students, for students. It doesn't matter where you start, only that you're interested.",
+    "seePlan": "Study plan",
+    "aboutTitle": "Who we are",
+    "aboutText": "iAnalyze is a student club at Al-Zaytoonah University of Jordan, part of iTeam, focused on AI and data science.",
+    "teamLink": "Meet the team",
+    "planTeaserTitle": "Study plan",
+    "planTeaserText": "What we'll learn week by week, when, and what you need to get started.",
+    "planTeaserLink": "View the study plan",
+    "faqTitle": "Common questions",
+    "faqMore": "All questions",
+    "durationLabel": "Length",
+    "durationValue": "6 weeks",
+    "whenLabel": "When",
+    "whenValue": "Thursdays, 10 AM – 1 PM",
+    "levelLabel": "Level",
+    "levelValue": "No experience needed",
+    "courseEyebrow": "Study plan",
+    "courseTitle": "Exploratory Data Analysis (EDA)",
+    "courseText": "A beginner course: six weeks, from Python basics to your first data analysis project. Taught in Arabic, with technical terms in English.",
+    "whoTitle": "Who it's for",
+    "whoText": "Any student interested in data, even if you've never written code.",
+    "needTitle": "What you need",
+    "needText": "A laptop and a Google account. We use Google Colab, so there's nothing to install.",
+    "planTitle": "Week by week",
+    "planText": "Each week: a short explanation, practice with the instructor, then a small activity.",
+    "toolsTitle": "Tools",
+    "videoTitle": "Before you start (optional)",
+    "videoText": "An Introduction to Data Science video that gives you a feel for the field. Not required to register.",
+    "aboutPageTitle": "About the club",
+    "parentTitle": "Part of iTeam",
+    "parentText": "iAnalyze is one of the iTeam clubs at Al-Zaytoonah University of Jordan, focused on AI and data science.",
+    "howTitle": "How we learn",
+    "howText": "We explain an idea briefly, try it together, then everyone tries it on their own. Questions are welcome any time.",
+    "newsTitle": "News and announcements",
+    "newsText": "We post activity dates and announcements on the official iTeam accounts."
   }
 }

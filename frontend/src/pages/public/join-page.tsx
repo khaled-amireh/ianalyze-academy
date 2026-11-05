@@ -114,7 +114,7 @@ export function JoinPage() {
             <BookOpen className="icon-tile" aria-hidden="true" />
             <h2>{t('academy.join.prepareTitle')}</h2>
             <p>{t('academy.join.prepareText')}</p>
-            <TextLink to="/team">{t('redesign.meetTeam')}</TextLink>
+            <TextLink to="/about#team">{t('redesign.meetTeam')}</TextLink>
           </section>
         </aside>
       </div>

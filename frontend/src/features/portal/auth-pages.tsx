@@ -231,7 +231,11 @@ function AuthForm({ mode }: { mode: AuthMode }) {
                       required
                     />
                     <span>
-                      {c.consent} <Link to="/privacy">{c.privacy}</Link>
+                      {c.privacyConsentBefore}
+                      <Link className="privacy-link" to="/privacy">
+                        {c.privacy}
+                      </Link>
+                      {c.privacyConsentAfter}
                     </span>
                   </label>
                   {errors.consent && (
@@ -248,6 +252,15 @@ function AuthForm({ mode }: { mode: AuthMode }) {
           </form>
         )}
         <FormNotice message={shown ? c[shown.key] : ''} kind={shown?.kind} />
+        {mode === 'login' && (
+          <p className="auth-privacy-note">
+            {c.loginPrivacyBefore}
+            <Link className="privacy-link" to="/privacy">
+              {c.privacy}
+            </Link>
+            {c.loginPrivacyAfter}
+          </p>
+        )}
         <nav className="portal-actions">
           <Link to="/login">{c.login}</Link>
           <Link to="/join">{c.signup}</Link>

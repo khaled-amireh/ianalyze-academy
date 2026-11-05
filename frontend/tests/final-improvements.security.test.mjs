@@ -133,14 +133,14 @@ test('notifications release published content only; receipts are private and can
   t.after(() => db.close());
   const q = (id, sql, args = []) => asUser(db, id, () => db.query(sql, args));
   await db.query(
-    "insert into auth.users(id,email,email_confirmed_at) values($1,'a@example.test',now()),($2,'b@example.test',now()),($3,'team@example.test',now()),($4,'u@example.test',null)",
-    [A, B, T, U],
+    "insert into auth.users(id,email,email_confirmed_at) values($1,'a@example.test',now()),($2,'b@example.test',now()),($3,'team@example.test',now()),($4,'u@example.test',null),($5,'organizer@example.test',now())",
+    [A, B, T, U, H],
   );
   await db.query(
-    "update app_private.user_roles set role='team',grant_reason='Test staff' where user_id=$1",
-    [T],
+    "update app_private.user_roles set role='team',grant_reason='Test Leader and Organizer' where user_id in ($1,$2)",
+    [T, H],
   );
-  for (const id of [A, B, T]) {
+  for (const id of [A, B, T, H]) {
     await q(
       id,
       "update public.profiles set full_name='Test',whatsapp='+962790000001',major='Other historical',university='Another University',academic_year=4,python_experience='basic' where id=$1",
@@ -164,7 +164,7 @@ test('notifications release published content only; receipts are private and can
     [ANN],
   );
   await q(
-    T,
+    H,
     "insert into public.announcements(title_ar,title_en,body_ar,body_en) values('خاص','Private draft','خاص','SECRET STAFF DRAFT')",
   );
   const feed = async (id) =>
@@ -197,8 +197,75 @@ test('notifications release published content only; receipts are private and can
   assert.ok((await feed(A)).every((x) => x.read_at));
   await q(A, 'select public.read_notification()');
   assert.equal((await q(A, 'select * from public.notification_receipts')).rows.length, 3);
+  // Editing keeps the event identity, publication time and each user's read state.
+  const beforeEdit = (await feed(A)).find((x) => x.event_key === `announcement:${ANN}`);
+  const receiptsBefore = (
+    await db.query('select * from public.notification_receipts order by user_id,event_key')
+  ).rows;
+  await q(
+    H,
+    "update public.announcements set title_ar='إعلان محدث',title_en='Updated announcement',body_ar='نص محدث',body_en='Updated body' where id=$1",
+    [ANN],
+  );
+  const afterEdit = (await feed(A)).filter((x) => x.event_key === `announcement:${ANN}`);
+  assert.equal(afterEdit.length, 1);
+  assert.equal(afterEdit[0].title_en, 'Updated announcement');
+  assert.equal(afterEdit[0].created_at, beforeEdit.created_at);
+  assert.equal(afterEdit[0].read_at, beforeEdit.read_at);
+  assert.equal((await feed(B)).find((x) => x.event_key === `announcement:${ANN}`).read_at, null);
+  for (const student of [A, B, U]) {
+    assert.equal(
+      (
+        await q(
+          student,
+          "update public.announcements set body_en='Unauthorized' where id=$1 returning id",
+          [ANN],
+        )
+      ).rows.length,
+      0,
+    );
+    assert.equal(
+      (
+        await q(
+          student,
+          "update public.announcements set status='draft' where id=$1 returning id",
+          [ANN],
+        )
+      ).rows.length,
+      0,
+    );
+  }
+  await assert.rejects(
+    asUser(db, null, () => db.query('select * from public.announcements'), 'anon'),
+    (e) => e.code === '42501',
+  );
+  for (const field of ['title_ar', 'title_en', 'body_ar', 'body_en']) {
+    await assert.rejects(
+      q(T, `update public.announcements set ${field}='   ' where id=$1`, [ANN]),
+      (e) => e.code === '23514',
+    );
+  }
   await q(T, "update public.announcements set status='draft' where id=$1", [ANN]);
   assert.equal((await feed(A)).length, 2);
+  assert.equal(
+    (await q(A, 'select * from public.announcements where id=$1', [ANN])).rows.length,
+    0,
+  );
+  assert.equal(
+    (await q(T, 'select * from public.announcements where id=$1', [ANN])).rows.length,
+    1,
+  );
+  assert.deepEqual(
+    (await db.query('select * from public.notification_receipts order by user_id,event_key')).rows,
+    receiptsBefore,
+  );
+  await q(T, "update public.announcements set status='published' where id=$1", [ANN]);
+  assert.equal((await feed(A)).filter((x) => x.event_key === `announcement:${ANN}`).length, 1);
+  assert.equal(
+    (await feed(A)).find((x) => x.event_key === `announcement:${ANN}`).read_at,
+    beforeEdit.read_at,
+  );
+  await q(T, "update public.announcements set status='draft' where id=$1", [ANN]);
   await q(T, "update public.academy_weeks set status='draft' where id=$1", [W]);
   assert.deepEqual(await feed(A), []);
   await q(T, "update public.academy_weeks set status='published' where id=$1", [W]);

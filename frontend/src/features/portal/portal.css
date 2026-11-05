@@ -178,6 +178,26 @@
 .portal-check input {
   margin-block-start: 0.3rem;
 }
+.portal-auth .privacy-link {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  border-radius: 0.15rem;
+}
+.portal-auth .privacy-link:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+}
+.portal-auth .auth-privacy-note {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.8;
+  margin-block: 1rem;
+}
+.portal-auth .portal-check input {
+  flex-shrink: 0;
+}
 .portal-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));

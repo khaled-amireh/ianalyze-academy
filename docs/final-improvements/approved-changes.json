@@ -28,9 +28,9 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     "frontend/src/features/portal/announcements.tsx": {
-      "sha256": "bbecfe567172f65cd1adf15da85902ca843dda5d2fcd5d6aebba13fce2a7c940",
+      "sha256": "4b4c5f2bb2ff4b8bb88b1fd8c716c1fb7eb526f4152f8c7a5af76b0da1056606",
       "added": true,
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "Authorized Announcement Center redesign, bilingual preview, guarded publishing, editing and confirmed unpublishing with existing RLS and notification identities."
     },
     "frontend/src/features/portal/notifications.tsx": {
       "sha256": "f7b6a2362bd1b8ab0cc1578a6be3a6c147f084b75b94b0c5070527796a28c793",
@@ -68,9 +68,9 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     "frontend/tests/final-improvements.security.test.mjs": {
-      "sha256": "abbdbfc48b1be0737daaca132dc24d29a4b8c92fc277962169e95357a48fab1d",
+      "sha256": "e9c0a301a09f7d16130344d2745ba9147b555f025b919a30c6c23374ee952f43",
       "added": true,
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "Announcement RLS, equal Team permissions, update/unpublish safety and notification receipt preservation regressions."
     },
     "supabase/migrations/20261104000100_profiles_notifications.sql": {
       "sha256": "303c42d5f1463e9f7f378c40f3e4aba157bab36d39feb0ffc8f39c5fb573dd9e",
@@ -153,14 +153,14 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     "frontend/src/features/portal/auth-pages.tsx": {
-      "sha256": "782886a2e2e04800f76df43feeb97a92a9f31820d45a94df99458c9adcd1ac92",
+      "sha256": "d77c8c3b3867c6fc190fd9c6f780e6577a7cd82394e992a80c893080bc501162",
       "previousSha256": "456bf91d6c5e91b3f4522e171bcc70d1f640196e4a14d731292388e8116ad0e6",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "Authorized privacy link presentation on login and sign-up only; authentication and required consent handling preserved."
     },
     "frontend/src/features/portal/copy.ts": {
-      "sha256": "3ec03f2fc7c3c2e4e972b928c5c6a44135933d78ff427d632c0725ab32274938",
+      "sha256": "e8f8b52beac8b6f7f25333574c21438a4e6504fcff8d42e133b10463b146e7ab",
       "previousSha256": "0ff6c3fc1e335c51bd06bfad0ea6b2d2fd08fc23f80a40901170b095bb0ce67d",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "Bilingual text for authorized announcement management and authentication privacy links."
     },
     "frontend/src/features/portal/form-validation.ts": {
       "sha256": "4fc5846b1a99ea62793b32e25c0ad384748992309d21eb4229fb70c9269efd34",
@@ -168,9 +168,9 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     "frontend/src/features/portal/portal.css": {
-      "sha256": "0e5b833753e7d7f4c1e7b908dfc3f897d65971140b25b118ca274e8da4785664",
+      "sha256": "f34aef5b3911e3d50a37663d90bee307868f42f82fcd1886fc3a137f08f9f9db",
       "previousSha256": "f62621d4b528038db905fa4a7d41d0971aaab06ecb9f284e511445a92a46125c",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "Scoped authentication privacy link contrast, underline, focus and checkbox alignment."
     },
     "frontend/src/features/portal/privacy-page.tsx": {
       "sha256": "a01a115e7a789576512ac178a48e1ae78f7f79d6d08ab8ed0408e638dcd6dddf",
@@ -281,6 +281,21 @@
       "previousSha256": "d678799c60dedafe1caf1281eed582a154bd3e4dabdb9a335a8a2b2f98195e1c",
       "sha256": "9989b2c59adb474be211b354289698bb39f1b3511ccc70c50ab68e2afb5d8283",
       "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification."
+    },
+    "frontend/src/features/portal/announcement-validation.ts": {
+      "added": true,
+      "sha256": "fbd5b9fd82e457aa9fe83ffa91c367760ab8cb4e4e7993bfad7c6bcebb34bc01",
+      "reason": "User-authorized announcement composer, scoped responsive styles and bilingual validation tests."
+    },
+    "frontend/src/features/portal/announcements.css": {
+      "added": true,
+      "sha256": "1894a150db9e8a35f8d4ce7593e881ccdb073b6ee481467082e363730b2c8fb8",
+      "reason": "User-authorized announcement composer, scoped responsive styles and bilingual validation tests."
+    },
+    "frontend/tests/announcements.test.ts": {
+      "added": true,
+      "sha256": "53c3ce7ebb6b305a910e82427db8fc1ec258944e336d7a15a566f1e71e2f6570",
+      "reason": "User-authorized announcement composer, scoped responsive styles and bilingual validation tests."
     }
   }
 }

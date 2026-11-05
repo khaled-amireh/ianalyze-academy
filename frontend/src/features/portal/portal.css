@@ -3,6 +3,110 @@
   font-size: 12px;
   white-space: nowrap;
 }
+.account-icon {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--foreground);
+  cursor: pointer;
+}
+.account-icon svg {
+  width: 20px;
+  height: 20px;
+}
+.account-icon:focus-visible,
+.team-linkedin:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+.notification-count {
+  position: absolute;
+  inset-inline-end: -5px;
+  top: -5px;
+  border-radius: 20px;
+  padding: 0 5px;
+  font-size: 11px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.account-menu {
+  z-index: 100;
+  min-width: 180px;
+  max-width: calc(100vw - 24px);
+  padding: 8px;
+  background: var(--card);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px #0003;
+}
+.account-menu [role='menuitem'] {
+  display: block;
+  padding: 10px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  outline: none;
+}
+.account-menu [data-highlighted] {
+  background: var(--muted);
+}
+.navigation-join {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  white-space: nowrap;
+  font-size: 13px;
+}
+.notification-body {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.notification-unread {
+  color: var(--primary);
+  font-weight: 700;
+}
+.profile-details {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  margin-block-end: 1.5rem;
+}
+.profile-details dt {
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+}
+.profile-details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.team-linkedin {
+  display: inline-flex;
+  color: var(--primary);
+  padding: 8px;
+  margin-block-start: 12px;
+}
+.team-linkedin svg {
+  width: 24px;
+  height: 24px;
+}
+@media (max-width: 560px) {
+  .header-actions {
+    gap: 6px;
+  }
+  .account-icon {
+    width: 34px;
+    height: 38px;
+    flex-basis: 34px;
+  }
+}
 @media (max-width: 1119px) {
   .header-account {
     display: none;
@@ -73,6 +177,26 @@
 }
 .portal-check input {
   margin-block-start: 0.3rem;
+}
+.portal-auth .privacy-link {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  border-radius: 0.15rem;
+}
+.portal-auth .privacy-link:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+}
+.portal-auth .auth-privacy-note {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.8;
+  margin-block: 1rem;
+}
+.portal-auth .portal-check input {
+  flex-shrink: 0;
 }
 .portal-grid {
   display: grid;
@@ -236,4 +360,29 @@
 .portal-page .portal-actions > span {
   min-width: 0;
   overflow-wrap: anywhere;
+}
+
+@media (min-width: 900px) {
+  .leaders-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 1200px;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 560px) {
+  .header-actions .header-preferences {
+    display: none;
+  }
+  .header-actions {
+    gap: 4px;
+  }
+  .account-icon {
+    width: 30px;
+    flex-basis: 30px;
+  }
+  .header-actions .mobile-menu-trigger {
+    width: 36px;
+    height: 40px;
+  }
 }

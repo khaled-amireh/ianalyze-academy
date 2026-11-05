@@ -1,4 +1,5 @@
 import { normalizeJordanianMobile } from '../../lib/jordanian-phone.ts';
+import { ZUJ, majors, profileMajor } from './profile-fields.ts';
 
 export type ValidationCode =
   | 'requiredField'
@@ -9,7 +10,9 @@ export type ValidationCode =
   | 'missingYear'
   | 'invalidYear'
   | 'consentRequired'
-  | 'tooLong';
+  | 'tooLong'
+  | 'invalidUniversityId';
+// University ID is private, numeric, and required only for Al-Zaytoonah students.
 export type FieldErrors = Record<string, ValidationCode>;
 export type AuthMode = 'login' | 'signup' | 'recover' | 'reset';
 const value = (form: FormData, name: string) => String(form.get(name) ?? '');
@@ -40,11 +43,23 @@ export function validateProfile(
   existing: { whatsapp?: string | null; academic_year?: number | null } = {},
 ): FieldErrors {
   const errors: FieldErrors = {};
-  for (const field of ['full_name', 'major']) {
+  for (const field of ['full_name']) {
     const text = value(form, field).trim();
     if (!text) errors[field] = 'requiredField';
     else if (text.length > 150) errors[field] = 'tooLong';
   }
+  const major = profileMajor(form);
+  if (!major) errors[form.get('major') === 'other' ? 'major_other' : 'major'] = 'requiredField';
+  else if (major.length > 150) errors.major_other = 'tooLong';
+  if (form.get('major') !== 'other' && !majors.some((m) => m.value === form.get('major')))
+    errors.major = 'requiredField';
+  const university = value(form, 'university').trim();
+  if (!university)
+    errors[form.get('university_choice') === 'other' ? 'university' : 'university_choice'] =
+      'requiredField';
+  else if (university.length > 200) errors.university = 'tooLong';
+  if (university === ZUJ && !/^[0-9]{1,20}$/.test(value(form, 'university_id').trim()))
+    errors.university_id = 'invalidUniversityId';
   const phone = value(form, 'whatsapp');
   if (!phone.trim()) errors.whatsapp = 'requiredField';
   else if (phone.trim() !== existing.whatsapp && !normalizeJordanianMobile(phone))
@@ -61,6 +76,9 @@ export function validateProfile(
 }
 export function requestError(error: unknown) {
   const e = error as { code?: string; status?: number; name?: string; message?: string } | null;
+  if (e?.code === '23505' && e.message?.includes('profiles_zuj_university_id_unique'))
+    return 'duplicateUniversityId';
+  if (e?.code === '23514' && e.message?.includes('University ID')) return 'invalidUniversityId';
   if (e?.code === 'email_not_confirmed') return 'confirmEmail';
   if (e?.code === 'invalid_credentials') return 'invalidCredentials';
   if (

@@ -253,22 +253,28 @@ try {
     passed: true,
   });
   await matrix('/student', 'profile');
+  await fill('university_choice', 'other');
   for (const [name, value] of Object.entries({
     full_name: 'LOCAL COMPLETE PARTICIPANT',
     whatsapp: '(079) 723-2936',
-    major: 'Data Science',
+    major: 'Data Science & Artificial Intelligence',
+    university: 'Local Test University',
     academic_year: '5',
     python_experience: 'experienced',
     university_id: 'LOCAL-OPTIONAL-ID',
   }))
     await fill(name, value);
-  const token = await evaluate("JSON.parse(localStorage.getItem('ianalyze.auth')).access_token");
+  const token = await evaluate(
+    "JSON.parse((sessionStorage.getItem('ianalyze.auth') ?? localStorage.getItem('ianalyze.auth'))).access_token",
+  );
   await evaluate(
     "document.querySelector('[name=consent]').click();document.querySelector('form').requestSubmit();document.querySelector('form').requestSubmit()",
   );
   await wait("!!document.querySelector('[data-student-dashboard]')", 'registration save');
   assert.ok(
-    (await evaluate("JSON.parse(localStorage.getItem('ianalyze.auth')).access_token")) === token,
+    (await evaluate(
+      "JSON.parse((sessionStorage.getItem('ianalyze.auth') ?? localStorage.getItem('ianalyze.auth'))).access_token",
+    )) === token,
     'Save preserves session',
   );
   const profile = (
@@ -414,7 +420,7 @@ try {
     assert.ok(cells?.includes(value), 'Complete participant data: ' + value);
   assert.equal(await evaluate("document.querySelectorAll('#students th').length"), 9);
   cases.push({
-    check: 'verified Team callback and all nine private registration columns',
+    check: 'verified Team callback and private registration fields',
     passed: true,
   });
   await screenshot('complete-participants-en');

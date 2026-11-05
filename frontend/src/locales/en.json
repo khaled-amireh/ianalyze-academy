@@ -4,17 +4,17 @@
     "home": "iAnalyze - Home",
     "logoAlt": "iAnalyze AI & DS Club by iTeam",
     "parentAlt": "iTeam",
-    "initiative": "An iTeam Initiative",
+    "initiative": "A club under iTeam",
     "university": "Al-Zaytoonah University of Jordan",
     "description": "A student community exploring AI and data science, together."
   },
   "nav": {
     "home": "Home",
     "about": "About",
-    "eda": "EDA Syllabus",
+    "eda": "Study plan",
     "videos": "Video Library",
     "team": "Our Team",
-    "join": "Join iAnalyze",
+    "join": "Register",
     "leaderboard": "Leaderboard",
     "contact": "Contact & FAQ"
   },
@@ -44,7 +44,7 @@
     "eyebrow": "Learn with iAnalyze",
     "titleFirst": "Start with data.",
     "titleSecond": "Build understanding.",
-    "description": "Learn Python and data analysis through guided practice, real questions, and a student community that learns together.",
+    "description": "A student community united by curiosity, collaboration, and a shared interest in AI and data science.",
     "primary": "Join iAnalyze",
     "secondary": "Explore the syllabus",
     "beginner": "No Python experience needed",
@@ -73,7 +73,7 @@
       "description": "A foundational learning resource for iAnalyze students. Explore an introductory session in Data Science."
     },
     "team": {
-      "title": "Leaders",
+      "title": "Our Team",
       "description": "Meet the members behind iAnalyze’s learning community."
     },
     "join": {
@@ -127,34 +127,34 @@
       "journeyTitle": "Six weeks. A new way to see data.",
       "journeyText": "A practical path from the essentials to your first EDA project.",
       "resourceEyebrow": "Start exploring",
-      "resourceTitle": "Get to know data science.",
-      "resourceText": "Watch Introduction to Data Science, a foundational learning resource for iAnalyze students. An optional starting point for exploring the field.",
+      "resourceTitle": "Get to know our community.",
+      "resourceText": "iAnalyze brings students together to share ideas, ask questions, and connect with others who share their curiosity.",
       "communityEyebrow": "Better, together",
       "communityTitle": "Bring your questions. Build with others.",
-      "communityText": "Try an idea, compare approaches, and share what you discover. Our learning journey pairs guided practice with short activities and a collaborative final project."
+      "communityText": "Bring your questions, share your perspective, and connect with students who are curious about AI and data science."
     },
     "cta": {
       "eyebrow": "Your next step",
-      "title": "A little curiosity goes a long way.",
-      "text": "Find out how to create your account and complete academy registration."
+      "title": "Register with iAnalyze",
+      "text": "Create an account, confirm your email, then complete your details."
     },
     "about": {
       "whoTitle": "Who we are",
-      "whoText": "iAnalyze is a student club for artificial intelligence and data science at Al-Zaytoonah University of Jordan. We create opportunities to explore the field through approachable, practical learning.",
+      "whoText": "iAnalyze is a club under iTeam at Al-Zaytoonah University of Jordan.",
       "parentTitle": "Part of iTeam",
       "parentText": "iAnalyze operates under iTeam at Al-Zaytoonah University of Jordan. Our focus is AI and data science within this wider student community.",
       "missionTitle": "Our mission",
       "missionText": "Make the first steps in AI and data science approachable through clear explanations, hands-on practice, and learning with peers.",
       "visionTitle": "Our vision",
       "visionText": "A student community that asks thoughtful questions, learns with confidence, and uses data to communicate ideas clearly.",
-      "objectivesTitle": "What we learn together",
-      "objectivesText": "Build a foundation in Python, understand and explore datasets, communicate insights with visualizations, and practice collaborative problem-solving.",
-      "doingTitle": "Learning by doing",
-      "doingText": "Simple explanations lead into guided practice, a short activity, and review. Students apply the concepts as they learn them.",
+      "objectivesTitle": "What brings us together",
+      "objectivesText": "Curiosity, open conversation, and a shared interest in AI and data science bring our community together.",
+      "doingTitle": "Ideas grow through conversation",
+      "doingText": "We encourage questions, different perspectives, and mutual support in a welcoming student community.",
       "communityTitle": "A student community",
       "communityText": "There is room for beginner questions, different approaches, and shared discoveries. Working together is part of the learning experience.",
-      "pastTitle": "Resources for curious students",
-      "pastText": "Explore Introduction to Data Science as a foundational resource in our Video Library. The club has also offered Power BI training."
+      "pastTitle": "Stay connected with iAnalyze",
+      "pastText": "Follow the official iTeam channels for club news and opportunities to connect with the community."
     },
     "syllabus": {
       "title": "Exploratory Data Analysis - From Zero to Insights",
@@ -230,13 +230,14 @@
     "team": {
       "khaled": "Khaled Amireh",
       "yomna": "Yomna Al-jabiri",
-      "education": "AI Student - 4th Year",
-      "educationFemale": "AI Student - 4th Year",
+      "education": "AI Student — 4th Year",
+      "educationFemale": "AI Student — 4th Year",
       "position": "Member",
       "positionFemale": "Member",
       "portrait": "Portrait of {{name}}",
       "communityTitle": "Learning starts with people.",
-      "communityText": "Get to know iAnalyze’s practical learning approach and the student community around it."
+      "communityText": "Get to know iAnalyze’s practical learning approach and the student community around it.",
+      "hussein": "Hussein Zahran"
     },
     "join": {
       "status": "Registration coming soon",
@@ -265,8 +266,8 @@
         "register": "Complete direct registration",
         "participate": "Receive Student / Participant access"
       },
-      "prepareTitle": "Start exploring while you wait",
-      "prepareText": "Get to know the syllabus or watch the optional Introduction to Data Science video."
+      "prepareTitle": "Meet the community",
+      "prepareText": "Get to know the people behind iAnalyze and the student community we share."
     },
     "leaderboard": {
       "status": "Rankings are not published yet",
@@ -301,36 +302,36 @@
         "answer": "iAnalyze is the AI & Data Science Club under iTeam at Al-Zaytoonah University of Jordan. We focus on practical, collaborative student learning."
       },
       "beginner": {
-        "question": "Is the EDA program beginner-friendly?",
-        "answer": "Yes. Exploratory Data Analysis - From Zero to Insights starts with Python fundamentals and builds toward a small practical project."
+        "question": "Who is the community for?",
+        "answer": "Our community welcomes students who are curious about AI and data science, whatever their background."
       },
       "python": {
-        "question": "Do I need Python experience?",
-        "answer": "No previous Python experience is required. The first two teaching weeks introduce the fundamentals needed for the program."
+        "question": "Do I need previous experience?",
+        "answer": "All experience levels are welcome. Curiosity and respect for others are a good starting point."
       },
       "duration": {
-        "question": "How long is the program?",
-        "answer": "Six teaching weeks with 18 planned teaching hours, plus two optional buffer weeks for catch-up or support."
+        "question": "Where can I find club news?",
+        "answer": "Follow the official iTeam channels for confirmed club news and community updates."
       },
       "schedule": {
-        "question": "When are sessions held?",
-        "answer": "Sessions are planned for Thursdays, 10:00 AM-1:00 PM. The start date and location will be announced later."
+        "question": "How are club events announced?",
+        "answer": "Confirmed event details are shared through the official iTeam channels."
       },
       "laptop": {
-        "question": "Do I need a laptop?",
-        "answer": "A laptop and a Google account are recommended for hands-on participation in Google Colab. No complicated software installation is needed."
+        "question": "How can I contact the team?",
+        "answer": "Use the official iTeam social accounts listed on this page to get in touch."
       },
       "registration": {
         "question": "How do I register with the academy?",
         "answer": "Visit the joining page for registration availability. Create your account, verify your email, and complete the registration details. Students receive access immediately without Leader or Organizer approval. Authorized Team members manually invite registered students to the WhatsApp group."
       },
       "activities": {
-        "question": "How will weekly activities work?",
-        "answer": "A short activity is planned for each teaching week. Published instructions appear in the Student Dashboard; submissions and feedback availability are announced separately."
+        "question": "How can I stay involved?",
+        "answer": "Stay connected through the official channels and look out for club announcements."
       },
       "video": {
-        "question": "Can I watch Introduction to Data Science?",
-        "answer": "Yes. Watch Introduction to Data Science in the Video Library, with a fallback link to Google Drive. It is an optional foundational learning resource for iAnalyze students."
+        "question": "Where can I meet the team?",
+        "answer": "Visit the Our Team page to meet the people behind iAnalyze."
       }
     }
   },
@@ -352,5 +353,44 @@
     "carouselRole": "carousel",
     "slideRole": "slide",
     "slideLabel": "Module {{current}} of {{total}}"
+  },
+  "simple": {
+    "heroEyebrow": "AI and Data Science Club at Al-Zaytoonah University, part of iTeam",
+    "heroTitle": "Learn AI and data science with your classmates",
+    "heroText": "A student club running hands-on courses and activities, taught by students, for students. It doesn't matter where you start, only that you're interested.",
+    "seePlan": "Study plan",
+    "aboutTitle": "Who we are",
+    "aboutText": "iAnalyze is a student club at Al-Zaytoonah University of Jordan, part of iTeam, focused on AI and data science.",
+    "teamLink": "Meet the team",
+    "planTeaserTitle": "Study plan",
+    "planTeaserText": "What we'll learn, when, and what you need to get started.",
+    "planTeaserLink": "View the study plan",
+    "faqTitle": "Common questions",
+    "faqMore": "All questions",
+    "durationLabel": "Length",
+    "durationValue": "6 weeks",
+    "whenLabel": "When",
+    "whenValue": "Thursdays, 10 AM – 1 PM",
+    "levelLabel": "Level",
+    "levelValue": "No experience needed",
+    "courseEyebrow": "Study plan",
+    "courseTitle": "Exploratory Data Analysis (EDA)",
+    "courseText": "A beginner course: six weeks, from Python basics to your first data analysis project. Taught in Arabic, with technical terms in English.",
+    "whoTitle": "Who it's for",
+    "whoText": "Any student interested in data, even if you've never written code.",
+    "needTitle": "What you need",
+    "needText": "A laptop and a Google account. We use Google Colab, so there's nothing to install.",
+    "planTitle": "Week by week",
+    "planText": "Each week: a short explanation, practice with the instructor, then a small activity.",
+    "toolsTitle": "Tools",
+    "videoTitle": "Before you start",
+    "videoText": "An Introduction to Data Science video that gives you a feel for the field. Not required to register.",
+    "aboutPageTitle": "About the club",
+    "parentTitle": "Part of iTeam",
+    "parentText": "iAnalyze is one of the iTeam clubs at Al-Zaytoonah University of Jordan, focused on AI and data science.",
+    "howTitle": "How we learn",
+    "howText": "We explain an idea briefly, try it together, then everyone tries it on their own. Questions are welcome any time.",
+    "newsTitle": "News and announcements",
+    "newsText": "We post activity dates and announcements on the official iTeam accounts."
   }
 }

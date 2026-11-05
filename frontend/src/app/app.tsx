@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 import { Direction } from 'radix-ui';
-import { useTranslation } from 'react-i18next';
+import { LAYOUT_DIR } from '@/lib/i18n';
 import { DEV_PREVIEWS } from './config';
 import { PublicLayout } from '@/components/layout/public-layout';
 import { HomePage } from '@/pages/public/home-page';
@@ -32,14 +32,14 @@ const DevelopmentPreview = import.meta.env.DEV ? lazy(() => import('@/dev/dev-ro
 const AboutPage = lazy(() =>
   import('@/pages/public/about-page').then((m) => ({ default: m.AboutPage })),
 );
+const ProfilePage = lazy(() =>
+  import('@/features/portal/profile-page').then((m) => ({ default: m.ProfilePage })),
+);
+const NotificationsPage = lazy(() =>
+  import('@/features/portal/notifications').then((m) => ({ default: m.NotificationsPage })),
+);
 const SyllabusPage = lazy(() =>
   import('@/pages/public/syllabus-page').then((m) => ({ default: m.SyllabusPage })),
-);
-const VideosPage = lazy(() =>
-  import('@/pages/public/videos-page').then((m) => ({ default: m.VideosPage })),
-);
-const TeamPage = lazy(() =>
-  import('@/pages/public/team-page').then((m) => ({ default: m.TeamPage })),
 );
 const JoinPage = lazy(() =>
   import('@/pages/public/join-page').then((m) => ({ default: m.JoinPage })),
@@ -52,16 +52,15 @@ const ContactPage = lazy(() =>
 );
 
 export function App() {
-  const { i18n } = useTranslation();
   return (
-    <Direction.Provider dir={i18n.resolvedLanguage === 'ar' ? 'rtl' : 'ltr'}>
+    <Direction.Provider dir={LAYOUT_DIR}>
       <Routes>
         <Route element={<PublicLayout />}>
           <Route index element={<HomePage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="eda" element={<SyllabusPage />} />
-          <Route path="videos" element={<VideosPage />} />
-          <Route path="team" element={<TeamPage />} />
+          <Route path="videos/*" element={<NotFoundPage />} />
+          <Route path="team" element={<Navigate to="/about#team" replace />} />
           <Route
             path="join"
             element={
@@ -100,6 +99,30 @@ export function App() {
             }
           />
           <Route element={<ProtectedPortal />}>
+            <Route
+              path="profile"
+              element={
+                <Suspense fallback={<LoadingIndicator />}>
+                  <ProfilePage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="profile/edit"
+              element={
+                <Suspense fallback={<LoadingIndicator />}>
+                  <ProfilePage edit />
+                </Suspense>
+              }
+            />
+            <Route
+              path="notifications"
+              element={
+                <Suspense fallback={<LoadingIndicator />}>
+                  <NotificationsPage />
+                </Suspense>
+              }
+            />
             <Route
               path="student"
               element={

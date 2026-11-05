@@ -47,6 +47,10 @@ jobs:
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           ACADEMY_LEADER_USER_ID: ${{ secrets.ACADEMY_LEADER_USER_ID }}
+      - name: Verify additive profile and notification schema before deployment
+        run: node frontend/scripts/check-feature-readiness.mjs
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
       - name: Validate source, security boundaries and both production artifacts
         run: npm --prefix frontend run release:check
       - name: Verify Cloudflare credentials and the existing deployment target

@@ -14,6 +14,9 @@ export const authIntegration = JSON.parse(
 export const qualityUpdate = JSON.parse(
   readFileSync(new URL('docs/final-quality/approved-changes.json', root), 'utf8'),
 );
+export const finalUpdate = JSON.parse(
+  readFileSync(new URL('docs/final-improvements/approved-changes.json', root), 'utf8'),
+);
 const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
 function tree(commit) {
   return new Map(
@@ -55,6 +58,21 @@ export function verifyMergePreservation() {
     resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };
   }
   assert.equal(git('merge-base', functionalCommit, redesignCommit), baseCommit);
+  assert.equal(git('merge-base', finalUpdate.baseCommit, 'HEAD'), finalUpdate.baseCommit);
+  const finalBaseline = tree(finalUpdate.baseCommit);
+  for (const [path, resolution] of Object.entries(finalUpdate.files)) {
+    assert.ok(resolution.reason, `Final improvement reason missing: ${path}`);
+    if (resolution.added) assert.ok(!finalBaseline.has(path), `Addition already existed: ${path}`);
+    else
+      assert.equal(
+        createHash('sha256')
+          .update(execFileSync('git', ['show', `${finalUpdate.baseCommit}:${path}`], { cwd: root }))
+          .digest('hex'),
+        resolution.previousSha256,
+        `Final improvement baseline changed: ${path}`,
+      );
+    resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };
+  }
   const base = tree(baseCommit);
   const functional = tree(functionalCommit);
   const redesign = tree(redesignCommit);

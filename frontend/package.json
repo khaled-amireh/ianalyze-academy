@@ -20,7 +20,7 @@
     "check:pages": "node scripts/check-pages-artifact.mjs",
     "db:types": "node scripts/generate-database-types.mjs",
     "check:database-types": "node scripts/generate-database-types.mjs --check",
-    "test:database:embedded": "node --test tests/database.security.test.mjs tests/delivery.security.test.mjs tests/registration.security.test.mjs",
+    "test:database:embedded": "node --test tests/database.security.test.mjs tests/delivery.security.test.mjs tests/registration.security.test.mjs tests/final-improvements.security.test.mjs",
     "test:integration": "node --test tests/supabase.integration.test.mjs",
     "check:phase-03": "node scripts/check-phase-03.mjs",
     "test:database:supabase": "supabase test db --local --workdir ..",

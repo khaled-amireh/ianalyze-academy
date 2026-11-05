@@ -378,16 +378,18 @@ try {
       Buffer.from(r.data, 'base64'),
     ),
   );
+  await fill('[name=university_choice]', 'other');
   for (const [name, value] of Object.entries({
     full_name: 'LOCAL UI STUDENT',
     whatsapp: '0790000001',
-    major: 'AI',
+    major: 'Computer Science',
+    university: 'Local Test University',
     academic_year: '4',
     python_experience: 'basic',
   }))
     await fill(`[name=${name}]`, value);
   const studentSessionBeforeSave = await evaluate(
-    "JSON.parse(localStorage.getItem('ianalyze.auth')).user.id",
+    "JSON.parse((sessionStorage.getItem('ianalyze.auth') ?? localStorage.getItem('ianalyze.auth'))).user.id",
   );
   await evaluate("document.querySelector('input[name=consent]').click()");
   await send('Network.setBlockedURLs', { urls: [api + '/rest/v1/rpc/complete_registration*'] });
@@ -423,7 +425,9 @@ try {
     'Registered users do not see the registration form again',
   );
   assert.equal(
-    await evaluate("JSON.parse(localStorage.getItem('ianalyze.auth')).user.id"),
+    await evaluate(
+      "JSON.parse((sessionStorage.getItem('ianalyze.auth') ?? localStorage.getItem('ianalyze.auth'))).user.id",
+    ),
     studentSessionBeforeSave,
   );
   assert.ok(await evaluate("Boolean(document.querySelector('.portal-notice-success'))"));
@@ -443,7 +447,7 @@ try {
   );
   // Expired cache metadata forces the SDK through the real local refresh-token endpoint.
   await evaluate(
-    "const saved=JSON.parse(localStorage.getItem('ianalyze.auth'));saved.expires_at=1;localStorage.setItem('ianalyze.auth',JSON.stringify(saved))",
+    "const saved=JSON.parse((sessionStorage.getItem('ianalyze.auth') ?? localStorage.getItem('ianalyze.auth')));saved.expires_at=1;(sessionStorage.getItem('ianalyze.auth') ? sessionStorage : localStorage).setItem('ianalyze.auth',JSON.stringify(saved))",
   );
   await send('Page.reload');
   await wait(
@@ -501,16 +505,18 @@ try {
     "Boolean(document.querySelector('input[name=full_name]'))",
     'Team profile registration',
   );
+  await fill('[name=university_choice]', 'other');
   for (const [name, value] of Object.entries({
     full_name: 'LOCAL UI TEAM',
     whatsapp: '+962790000002',
-    major: 'AI',
+    major: 'Computer Science',
+    university: 'Local Test University',
     academic_year: '4',
     python_experience: 'experienced',
   }))
     await fill('[name=' + name + ']', value);
   const teamBeforeSave = await evaluate(
-    "JSON.parse(localStorage.getItem('ianalyze.auth')).user.id",
+    "JSON.parse((sessionStorage.getItem('ianalyze.auth') ?? localStorage.getItem('ianalyze.auth'))).user.id",
   );
   await evaluate(
     "document.querySelector('input[name=consent]').click();document.querySelector('form').requestSubmit()",
@@ -520,7 +526,9 @@ try {
     'Team Save returns to management without login',
   );
   assert.equal(
-    await evaluate("JSON.parse(localStorage.getItem('ianalyze.auth')).user.id"),
+    await evaluate(
+      "JSON.parse((sessionStorage.getItem('ianalyze.auth') ?? localStorage.getItem('ianalyze.auth'))).user.id",
+    ),
     teamBeforeSave,
   );
   assert.equal(
@@ -729,7 +737,7 @@ try {
     'resent confirmation permits verified login',
   );
   await evaluate(
-    "const saved=JSON.parse(localStorage.getItem('ianalyze.auth'));saved.expires_at=1;saved.refresh_token='LOCAL_EXPIRED_REFRESH_TEST';localStorage.setItem('ianalyze.auth',JSON.stringify(saved))",
+    "const saved=JSON.parse((sessionStorage.getItem('ianalyze.auth') ?? localStorage.getItem('ianalyze.auth')));saved.expires_at=1;saved.refresh_token='LOCAL_EXPIRED_REFRESH_TEST';(sessionStorage.getItem('ianalyze.auth') ? sessionStorage : localStorage).setItem('ianalyze.auth',JSON.stringify(saved))",
   );
   await send('Page.reload');
   await wait(

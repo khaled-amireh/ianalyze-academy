@@ -32,6 +32,9 @@ export function RouteEffects() {
       '/student': c.dashboard,
       '/workspace': c.team,
       '/privacy': c.privacy,
+      '/profile': c.profile,
+      '/profile/edit': c.editProfile,
+      '/notifications': c.notifications,
     };
     document.title = `${portalTitles[pathname] ?? (page ? t(`nav.${page}`) : pathname === '/' ? t('nav.home') : t('error.notFoundTitle'))} · iAnalyze Academy`;
   }, [pathname, t, c]);

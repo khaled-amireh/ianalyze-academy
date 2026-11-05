@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from '@/types/database';
 import { readSupabaseConfiguration } from './supabase-config';
+import { authPersistence } from './auth-storage';
 
 export function createAcademyClient(environment: Record<string, string | boolean | undefined>) {
   const configuration = readSupabaseConfiguration(environment);
@@ -12,6 +13,7 @@ export function createAcademyClient(environment: Record<string, string | boolean
       autoRefreshToken: true,
       detectSessionInUrl: false,
       storageKey: 'ianalyze.auth',
+      storage: authPersistence.storage,
     },
   });
 }

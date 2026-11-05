@@ -11,6 +11,7 @@ export type ProfilePatch = Partial<
     | 'academic_year'
     | 'python_experience'
     | 'university_id'
+    | 'university'
     | 'locale'
   >
 >;
@@ -52,5 +53,6 @@ export async function saveAcademyProfile(
     (registering && !persisted.data.registered_at)
   )
     throw new Error('Registration persistence could not be verified');
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('academy-profile-updated'));
   return persisted.data;
 }

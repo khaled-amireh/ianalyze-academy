@@ -38,37 +38,38 @@
   --font-ui: 'Manrope Variable', Arial, sans-serif;
 }
 .dark {
-  --brand-navy: #200e3a;
-  --brand-teal: #3887be;
-  --background: #200e3a;
-  --foreground: #edf7ff;
-  --card: #291746;
-  --card-foreground: #edf7ff;
-  --popover: #291746;
-  --popover-foreground: #edf7ff;
+  /* Deep navy instead of purple, so dark mode keeps the iAnalyze blue/teal identity. */
+  --brand-navy: #0b1424;
+  --brand-teal: #52d3d8;
+  --background: #0b1424;
+  --foreground: #e9f1fb;
+  --card: #111e33;
+  --card-foreground: #e9f1fb;
+  --popover: #111e33;
+  --popover-foreground: #e9f1fb;
   --primary: #52d3d8;
-  --primary-foreground: #200e3a;
-  --primary-hover: #85e3e7;
-  --secondary: #302451;
-  --secondary-foreground: #c9f4f5;
-  --muted: #302044;
-  --muted-foreground: #bdc8e5;
-  --accent: #38419d;
-  --accent-foreground: #edf7ff;
+  --primary-foreground: #06242a;
+  --primary-hover: #7fe2e6;
+  --secondary: #16304a;
+  --secondary-foreground: #bff1f3;
+  --muted: #142339;
+  --muted-foreground: #a7b9d1;
+  --accent: #1d4f7a;
+  --accent-foreground: #e9f1fb;
   --destructive: #ffb6ab;
   --destructive-foreground: #482a27;
-  --border: #51446d;
-  --input: #9c8db7;
+  --border: #233756;
+  --input: #5d7699;
   --ring: #52d3d8;
   --success: #a8e0bd;
-  --success-surface: #193d30;
+  --success-surface: #15372b;
   --warning: #f6c89f;
-  --warning-surface: #3c3023;
-  --error-surface: #482a27;
-  --chart-bar: #3887be;
+  --warning-surface: #3a2e20;
+  --error-surface: #43231f;
+  --chart-bar: #2f8fcf;
   --chart-line: #52d3d8;
-  --shadow: 0 10px 30px #00000015;
-  --shadow-raised: 0 18px 46px #00000026;
+  --shadow: 0 10px 30px #00000033;
+  --shadow-raised: 0 18px 46px #00000059;
 }
 :lang(ar) {
   --font-ui: 'IBM Plex Sans Arabic', 'Manrope Variable', Arial, sans-serif;

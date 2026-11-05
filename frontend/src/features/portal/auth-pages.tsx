@@ -19,6 +19,7 @@ import {
 } from './form-validation';
 import type { PortalCopy } from './copy';
 import './portal.css';
+import { authPersistence } from '@/lib/auth-storage';
 
 export function AccountLink({
   className,
@@ -121,6 +122,7 @@ function AuthForm({ mode }: { mode: AuthMode }) {
     const redirectTo = `${window.location.origin}/auth/callback${mode === 'recover' ? '?flow=recovery' : ''}`;
     try {
       if (mode === 'login') {
+        authPersistence.setRememberMe(form.get('remember') === 'on');
         const { error } = await academyClient.auth.signInWithPassword({ email, password });
         if (error) throw error;
         await auth.refresh();
@@ -213,6 +215,12 @@ function AuthForm({ mode }: { mode: AuthMode }) {
                   c={c}
                 />
               )}
+              {mode === 'login' && (
+                <label className="portal-check">
+                  <input type="checkbox" name="remember" />
+                  {c.rememberMe}
+                </label>
+              )}
               {mode === 'signup' && (
                 <div>
                   <label className="portal-check" htmlFor={id + '-consent'}>
@@ -223,7 +231,11 @@ function AuthForm({ mode }: { mode: AuthMode }) {
                       required
                     />
                     <span>
-                      {c.consent} <Link to="/privacy">{c.privacy}</Link>
+                      {c.privacyConsentBefore}
+                      <Link className="privacy-link" to="/privacy">
+                        {c.privacy}
+                      </Link>
+                      {c.privacyConsentAfter}
                     </span>
                   </label>
                   {errors.consent && (
@@ -240,6 +252,15 @@ function AuthForm({ mode }: { mode: AuthMode }) {
           </form>
         )}
         <FormNotice message={shown ? c[shown.key] : ''} kind={shown?.kind} />
+        {mode === 'login' && (
+          <p className="auth-privacy-note">
+            {c.loginPrivacyBefore}
+            <Link className="privacy-link" to="/privacy">
+              {c.privacy}
+            </Link>
+            {c.loginPrivacyAfter}
+          </p>
+        )}
         <nav className="portal-actions">
           <Link to="/login">{c.login}</Link>
           <Link to="/join">{c.signup}</Link>

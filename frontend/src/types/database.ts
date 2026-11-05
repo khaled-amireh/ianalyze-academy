@@ -48,6 +48,7 @@ export type Database = {
           max_score: number;
           due_at: string | null;
           status: string;
+          published_at: string | null;
         };
         Insert: {
           id?: string;
@@ -59,6 +60,7 @@ export type Database = {
           max_score: number;
           due_at?: string | null;
           status?: string;
+          published_at?: string | null;
         };
         Update: {
           id?: string;
@@ -70,6 +72,7 @@ export type Database = {
           max_score?: number;
           due_at?: string | null;
           status?: string;
+          published_at?: string | null;
         };
         Relationships: [
           {
@@ -80,6 +83,36 @@ export type Database = {
             referencedColumns: ['id'];
           },
         ];
+      };
+      announcements: {
+        Row: {
+          id: string;
+          title_ar: string;
+          title_en: string;
+          body_ar: string;
+          body_en: string;
+          status: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          title_ar: string;
+          title_en: string;
+          body_ar: string;
+          body_en: string;
+          status?: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          title_ar?: string;
+          title_en?: string;
+          body_ar?: string;
+          body_en?: string;
+          status?: string;
+          created_at?: string;
+        };
+        Relationships: [];
       };
       grade_criterion_scores: {
         Row: {
@@ -182,6 +215,32 @@ export type Database = {
           },
         ];
       };
+      notification_receipts: {
+        Row: {
+          user_id: string;
+          event_key: string;
+          read_at: string;
+        };
+        Insert: {
+          user_id: string;
+          event_key: string;
+          read_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          event_key?: string;
+          read_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'notification_receipts_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       profiles: {
         Row: {
           id: string;
@@ -198,6 +257,7 @@ export type Database = {
           registered_at: string | null;
           created_at: string;
           updated_at: string;
+          university: string | null;
         };
         Insert: {
           id: string;
@@ -214,6 +274,7 @@ export type Database = {
           registered_at?: string | null;
           created_at?: string;
           updated_at?: string;
+          university?: string | null;
         };
         Update: {
           id?: string;
@@ -230,6 +291,7 @@ export type Database = {
           registered_at?: string | null;
           created_at?: string;
           updated_at?: string;
+          university?: string | null;
         };
         Relationships: [];
       };
@@ -366,6 +428,7 @@ export type Database = {
     Functions: {
       academy_capabilities: { Args: Record<string, never>; Returns: Json };
       academy_leaderboard: { Args: Record<string, never>; Returns: Json };
+      academy_notifications: { Args: Record<string, never>; Returns: Json };
       claim_submission_request: { Args: { p_student_id: string }; Returns: undefined };
       complete_registration: { Args: { p_consent_version: string }; Returns: undefined };
       create_draft_rubric: { Args: { p_activity_id: string; p_criteria: Json }; Returns: string };
@@ -374,6 +437,7 @@ export type Database = {
         Args: { p_submission_id: string; p_sha256: string };
         Returns: undefined;
       };
+      read_notification: { Args: { p_event_key?: string }; Returns: undefined };
       request_resubmission: { Args: { p_submission_id: string }; Returns: undefined };
       reserve_notebook: {
         Args: {

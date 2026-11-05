@@ -7,6 +7,7 @@ import {
   authIntegration,
   mergeResolution,
   qualityUpdate,
+  finalUpdate,
   verifyMergePreservation,
 } from './verify-merge-preservation.mjs';
 
@@ -31,9 +32,14 @@ for (const [path, hash] of Object.entries(manifest)) {
     continue;
   assert.equal(
     createHash('sha256')
-      .update(readFileSync(new URL(integration[path] ?? path, root)))
+      .update(
+        readFileSync(new URL(finalUpdate.files[path] ? path : (integration[path] ?? path), root)),
+      )
       .digest('hex'),
-    qualityUpdate.files[path]?.sha256 ?? authIntegration.files[path]?.sha256 ?? hash,
+    finalUpdate.files[path]?.sha256 ??
+      qualityUpdate.files[path]?.sha256 ??
+      authIntegration.files[path]?.sha256 ??
+      hash,
     `Unrelated frontend/Yomna file changed: ${path}`,
   );
 }

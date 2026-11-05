@@ -8,6 +8,8 @@ import { stateText, usePortalCopy } from './copy';
 import { MixedText } from '@/components/shared/mixed-text';
 import { FormNotice } from './form-feedback';
 import type { PortalCopy } from './copy';
+import { AnnouncementManager } from './announcements';
+import { majorLabel, ZUJ } from './profile-fields';
 import { academicYearLabel } from './academic-years';
 import {
   checked,
@@ -642,6 +644,7 @@ export function TeamPageLive() {
                 <th>{c.fullName}</th>
                 <th>{c.email}</th>
                 <th>{c.whatsapp}</th>
+                <th>{c.university}</th>
                 <th>{c.major}</th>
                 <th>{c.year}</th>
                 <th>{c.python}</th>
@@ -653,7 +656,7 @@ export function TeamPageLive() {
             <tbody>
               {!data.profiles.some((p) => p.registered_at) && (
                 <tr>
-                  <td colSpan={9}>{c.noRecords}</td>
+                  <td colSpan={10}>{c.noRecords}</td>
                 </tr>
               )}
               {data.profiles
@@ -670,7 +673,12 @@ export function TeamPageLive() {
                       <bdi dir="ltr">{p.whatsapp || c.notProvided}</bdi>
                     </td>
                     <td>
-                      <bdi dir="auto">{p.major || c.notProvided}</bdi>
+                      <bdi dir="auto">
+                        {p.university === ZUJ ? c.zuj : p.university || c.notProvided}
+                      </bdi>
+                    </td>
+                    <td>
+                      <bdi dir="auto">{majorLabel(p.major, arabic) || c.notProvided}</bdi>
                     </td>
                     <td>{academicYearLabel(p.academic_year, arabic)}</td>
                     <td>
@@ -803,6 +811,7 @@ export function TeamPageLive() {
           />
         ))}
       </section>
+      <AnnouncementManager />
       <Materials />
     </PageContainer>
   );

@@ -1,167 +1,95 @@
-import { BookOpen, CalendarDays, Check, Laptop, Users, Layers, Flag } from 'lucide-react';
+import { ExternalLink, Laptop, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { syllabus } from '@/content/public-content';
-import { Badge } from '@/components/ui/badge';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import { introductoryVideo, syllabus } from '@/content/public-content';
+import { Button } from '@/components/ui/button';
 import { PageContainer } from '@/components/shared/page-container';
-import { PageHeader } from '@/components/shared/page-header';
-import { SectionHeading } from '@/components/shared/section-heading';
 import { MixedText } from '@/components/shared/mixed-text';
 import { Reveal } from '@/components/shared/reveal';
-import { JoinCallout, ProgramFacts } from '@/components/shared/academy-content';
+import { CourseFacts, RegisterBand, WeekList } from '@/components/shared/simple-blocks';
+
+// Hidden for now; set to true to show the week-by-week plan again.
+const SHOW_WEEKLY_PLAN = false;
 
 export function SyllabusPage() {
   const { t } = useTranslation();
   return (
     <PageContainer>
-      <PageHeader
-        eyebrow={t('nav.eda')}
-        title={t('academy.syllabus.title')}
-        description={t('academy.syllabus.overviewText')}
-        icon={BookOpen}
-      />
-      <div className="syllabus-summary">
-        <Badge variant="outline">{t('academy.syllabus.draft')}</Badge>
-        <p>
-          <MixedText>{t('home.beginner')}</MixedText>
+      <header className="s-page-head">
+        <p className="s-eyebrow">{t('simple.courseEyebrow')}</p>
+        <h1 id="page-title" tabIndex={-1}>
+          <MixedText>{t('simple.courseTitle')}</MixedText>
+        </h1>
+        <p className="s-lede">
+          <MixedText>{t('simple.courseText')}</MixedText>
         </p>
-      </div>
-      <ProgramFacts />
-      <Reveal>
-        <section className="public-section syllabus-overview">
-          <div>
-            <SectionHeading title={t('academy.syllabus.overviewTitle')} />
-            <p>
-              <MixedText>{t('academy.syllabus.overviewText')}</MixedText>
-            </p>
-            <div className="tool-chips" aria-label={t('academy.syllabus.toolsTitle')}>
-              {syllabus.tools.map((tool) => (
-                <bdi dir="ltr" key={tool}>
-                  {tool}
-                </bdi>
-              ))}
-            </div>
-            <p className="small-note">{t('academy.syllabus.language')}</p>
-          </div>
-          <div className="content-card">
-            <h2>{t('academy.syllabus.objectivesTitle')}</h2>
-            <ul className="check-list">
-              {(['colab', 'pandas', 'clean', 'patterns', 'present'] as const).map((id) => (
-                <li key={id}>
-                  <Check aria-hidden="true" />
-                  <span>
-                    <MixedText>{t(`academy.syllabus.objectives.${id}`)}</MixedText>
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      </Reveal>
-      <div className="two-card-grid">
+      </header>
+      <CourseFacts wide />
+
+      <div className="s-cards">
         {(
           [
             { id: 'who', icon: Users },
-            { id: 'prerequisites', icon: Laptop },
+            { id: 'need', icon: Laptop },
           ] as const
         ).map(({ id, icon: Icon }) => (
-          <Reveal key={id}>
-            <section className="content-card detail-card">
-              <Icon className="icon-tile" aria-hidden="true" />
-              <div>
-                <h2>{t(`academy.syllabus.${id}Title`)}</h2>
-                <p>
-                  <MixedText>{t(`academy.syllabus.${id}Text`)}</MixedText>
-                </p>
-              </div>
-            </section>
-          </Reveal>
+          <section key={id} className="s-card">
+            <Icon className="s-card-icon" aria-hidden="true" />
+            <h2>{t(`simple.${id}Title`)}</h2>
+            <p>
+              <MixedText>{t(`simple.${id}Text`)}</MixedText>
+            </p>
+          </section>
         ))}
       </div>
-      <section className="public-section" id="weekly-modules">
-        <SectionHeading
-          eyebrow={t('academy.home.journeyEyebrow')}
-          title={t('academy.syllabus.weeklyTitle')}
-          description={t('academy.syllabus.weeklyText')}
-        />
-        <Accordion type="multiple" defaultValue={['python1']} className="syllabus-timeline">
-          {syllabus.modules.map((module) => (
-            <AccordionItem value={module.id} key={module.id}>
-              <AccordionTrigger>
-                <span className="week-marker">
-                  <span>{t('academy.week')}</span>
-                  <bdi dir="ltr">{module.week}</bdi>
-                </span>
-                <span className="week-title">
-                  <MixedText>{t(`academy.modules.${module.id}.title`)}</MixedText>
-                </span>
-              </AccordionTrigger>
-              <AccordionContent>
-                <MixedText>{t(`academy.modules.${module.id}.description`)}</MixedText>
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-        <div className="buffer-note">
-          <Layers aria-hidden="true" />
-          <div>
-            <h3>{t('academy.syllabus.bufferTitle')}</h3>
-            <p>{t('academy.syllabus.bufferText')}</p>
+
+      {SHOW_WEEKLY_PLAN && (
+        <section className="s-section" id="weekly-modules">
+          <div className="s-section-head">
+            <div>
+              <h2>{t('simple.planTitle')}</h2>
+              <p className="s-muted">{t('simple.planText')}</p>
+            </div>
           </div>
-        </div>
-      </section>
+          <WeekList />
+          <div className="s-tools" aria-label={t('simple.toolsTitle')}>
+            {syllabus.tools.map((tool) => (
+              <bdi dir="ltr" key={tool}>
+                {tool}
+              </bdi>
+            ))}
+          </div>
+        </section>
+      )}
+
       <Reveal>
-        <section className="public-section split-section outcomes-section">
-          <div>
-            <p className="eyebrow">{t('academy.syllabus.outcomesTitle')}</p>
-            <h2>{t('academy.home.programCaption')}</h2>
+        <section className="s-section s-video" id="video">
+          <div className="s-video-copy">
+            <h2>{t('simple.videoTitle')}</h2>
             <p>
-              <MixedText>{t('academy.syllabus.outcomesText')}</MixedText>
+              <MixedText>{t('simple.videoText')}</MixedText>
             </p>
+            <Button asChild variant="outline">
+              <a href={introductoryVideo.fallbackUrl} target="_blank" rel="noopener noreferrer">
+                <MixedText>{t('academy.video.fallback')}</MixedText>
+                <ExternalLink aria-hidden="true" />
+                <span className="sr-only">{t('academy.external')}</span>
+              </a>
+            </Button>
           </div>
-          <div className="content-card method-card">
-            <h2>{t('academy.syllabus.methodTitle')}</h2>
-            <p className="method-steps">{t('academy.syllabus.methodSteps')}</p>
-            <p>
-              <MixedText>{t('academy.syllabus.methodText')}</MixedText>
-            </p>
+          <div className="s-video-frame">
+            <iframe
+              src={introductoryVideo.embedUrl}
+              title={t('academy.video.title')}
+              loading="lazy"
+              allow="fullscreen; encrypted-media"
+              allowFullScreen
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
           </div>
         </section>
       </Reveal>
-      <Reveal>
-        <section className="project-feature">
-          <Flag className="icon-tile" aria-hidden="true" />
-          <div>
-            <p className="eyebrow">
-              {t('academy.week')} <bdi dir="ltr">06</bdi>
-            </p>
-            <h2>
-              <MixedText>{t('academy.syllabus.projectTitle')}</MixedText>
-            </h2>
-            <p>
-              <MixedText>{t('academy.syllabus.projectText')}</MixedText>
-            </p>
-          </div>
-        </section>
-      </Reveal>
-      <Reveal>
-        <section className="schedule-panel public-section">
-          <CalendarDays className="icon-tile" aria-hidden="true" />
-          <div>
-            <p className="eyebrow">{t('academy.syllabus.scheduleTitle')}</p>
-            <h2>
-              <MixedText>{t('academy.syllabus.schedule')}</MixedText>
-            </h2>
-            <p>{t('academy.syllabus.scheduleText')}</p>
-          </div>
-        </section>
-      </Reveal>
-      <JoinCallout />
+
+      <RegisterBand />
     </PageContainer>
   );
 }

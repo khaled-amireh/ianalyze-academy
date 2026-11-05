@@ -77,7 +77,8 @@ describe('real local Supabase Auth/REST/Storage integration', { skip: !enabled }
               .update({
                 full_name: 'Disposable Test',
                 whatsapp: '+962790000000',
-                major: 'AI',
+                major: 'Data Science & Artificial Intelligence',
+                university: 'Local Test University',
                 academic_year: 4,
                 python_experience: 'none',
               })

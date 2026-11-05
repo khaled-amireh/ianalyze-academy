@@ -198,12 +198,12 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     "frontend/src/locales/ar.json": {
-      "sha256": "aa2506c1e08ff32181d2142c1ed97bf577e8e88e3ac1f639ed2ee26aa29464cf",
+      "sha256": "31132c4133c7574c093137d448e7227c9626689abd95cafb5b4edc6b5d48c198",
       "previousSha256": "c250a8a3d408a7b26e8000d73b2259685c07cd8227bd937201120c660a70dbd7",
       "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification. Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
     },
     "frontend/src/locales/en.json": {
-      "sha256": "059562e9065f05fe385e101a089b2dc3c60c3919bbe3f3e4e64e3c36abc8838a",
+      "sha256": "0be8e446fce0ebc21bfbd5d60c7364064f79e66ca73b4bb1d00bd9c53111de1d",
       "previousSha256": "8926ac2635c3d6dbeed685adc3988381e3c4ae1733ad30f4c9de033e626e7101",
       "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification. Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
     },
@@ -323,12 +323,12 @@
       "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
     },
     "frontend/src/pages/public/syllabus-page.tsx": {
-      "sha256": "e61b036e82d0d93de34f3df8d01a327a2d0a18a9303228d030313629346b67b2",
+      "sha256": "a445132d7e7cb58729e1f1a7d83d7e1ec64bb942e89a0a2d2699297dcebddbdf",
       "previousSha256": "72cf2706db2bba416a98b67612e495aa183e56d9ff829374bfb002fc805a738e",
       "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
     },
     "frontend/src/styles/simplify.css": {
-      "sha256": "dcc1d7b177c206a17dcf75313c10190b618b3c0ca0b33ac9a5a30a56cfcdab89",
+      "sha256": "a5603a50b206d08da4c31f651997a9a254511fb38c4cebfba01a1895c6211770",
       "added": true,
       "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
     },

@@ -7,6 +7,9 @@ import { MixedText } from '@/components/shared/mixed-text';
 import { Reveal } from '@/components/shared/reveal';
 import { CourseFacts, RegisterBand, WeekList } from '@/components/shared/simple-blocks';
 
+// Hidden for now; set to true to show the week-by-week plan again.
+const SHOW_WEEKLY_PLAN = false;
+
 export function SyllabusPage() {
   const { t } = useTranslation();
   return (
@@ -39,22 +42,24 @@ export function SyllabusPage() {
         ))}
       </div>
 
-      <section className="s-section" id="weekly-modules">
-        <div className="s-section-head">
-          <div>
-            <h2>{t('simple.planTitle')}</h2>
-            <p className="s-muted">{t('simple.planText')}</p>
+      {SHOW_WEEKLY_PLAN && (
+        <section className="s-section" id="weekly-modules">
+          <div className="s-section-head">
+            <div>
+              <h2>{t('simple.planTitle')}</h2>
+              <p className="s-muted">{t('simple.planText')}</p>
+            </div>
           </div>
-        </div>
-        <WeekList />
-        <div className="s-tools" aria-label={t('simple.toolsTitle')}>
-          {syllabus.tools.map((tool) => (
-            <bdi dir="ltr" key={tool}>
-              {tool}
-            </bdi>
-          ))}
-        </div>
-      </section>
+          <WeekList />
+          <div className="s-tools" aria-label={t('simple.toolsTitle')}>
+            {syllabus.tools.map((tool) => (
+              <bdi dir="ltr" key={tool}>
+                {tool}
+              </bdi>
+            ))}
+          </div>
+        </section>
+      )}
 
       <Reveal>
         <section className="s-section s-video" id="video">

@@ -6,6 +6,11 @@ html[lang='en'] :is(input, textarea) {
   unicode-bidi: plaintext;
 }
 
+html[lang='en'] [data-slot='accordion'],
+html[lang='en'] .s-section-head {
+  direction: ltr;
+}
+
 /* ---------- Shared bits ---------- */
 .s-eyebrow {
   color: var(--primary);
@@ -63,21 +68,6 @@ html[lang='en'] :is(input, textarea) {
 }
 .s-hero-copy {
   position: relative;
-}
-.s-hero-copy::before {
-  animation: s-drift 18s ease-in-out infinite alternate;
-  background: radial-gradient(
-    closest-side,
-    color-mix(in srgb, var(--brand-teal) 30%, transparent),
-    transparent
-  );
-  content: '';
-  height: 22rem;
-  inset-block-start: -3rem;
-  inset-inline: 0;
-  pointer-events: none;
-  position: absolute;
-  z-index: -1;
 }
 .s-hero h1,
 .s-page-head h1 {
@@ -600,7 +590,6 @@ html[lang='en'] :is(input, textarea) {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .s-hero-copy::before,
   .s-hero-chart,
   .s-bar,
   .s-hero-line polyline,

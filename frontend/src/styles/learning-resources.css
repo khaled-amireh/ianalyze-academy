@@ -1,0 +1,137 @@
+/* Public learning resources use the existing card, type, color, and button system. */
+.resource-copy {
+  direction: rtl;
+  text-align: right;
+}
+html[lang='en'] .resource-copy,
+html[lang='en'] .eda-tools-card :is(h2, p) {
+  direction: ltr;
+  text-align: left;
+}
+.learning-course-note {
+  padding: 1rem 1.25rem;
+  margin-block-start: 1.5rem;
+  border-inline-start: 3px solid var(--primary);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+}
+.learning-tool,
+.learning-video {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  min-width: 0;
+}
+.learning-tool h2,
+.learning-video h2 {
+  margin: 0;
+}
+.learning-tool .learning-tag {
+  color: var(--primary);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+.learning-tool dl {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+}
+.learning-tool dt {
+  margin-block-end: 0.3rem;
+  color: var(--foreground);
+  font-weight: 600;
+}
+.learning-tool dd {
+  margin: 0;
+}
+.learning-tool .learning-meta {
+  font-size: 0.8125rem;
+}
+.resource-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+.learning-tool .resource-actions {
+  margin-block-start: auto;
+}
+.learning-page a:focus-visible,
+.learning-video-preview a:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.learning-guide {
+  max-width: 56rem;
+}
+.guide-overview,
+.guide-verification {
+  margin-block-start: 2rem;
+}
+.guide-overview :is(h2, p) + :is(h2, p, a) {
+  margin-block-start: 0.85rem;
+}
+.guide-steps {
+  list-style: decimal;
+  padding-inline-start: 1.5rem;
+  margin-block-start: 1.5rem;
+  display: grid;
+  gap: 1rem;
+  color: var(--muted-foreground);
+}
+.guide-verification pre {
+  margin-block: 1rem;
+  font-size: 0.9375rem;
+}
+.guide-links {
+  display: grid;
+  gap: 1.5rem;
+  justify-items: start;
+  margin-block: 2rem 3rem;
+}
+.guide-links nav a,
+.resource-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.resource-source svg,
+.guide-links nav svg {
+  width: 16px;
+  height: 16px;
+}
+.learning-videos-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+.learning-video .s-video-frame {
+  box-sizing: content-box;
+  margin-block: 0.25rem;
+}
+.learning-video .video-fallback {
+  display: grid;
+  justify-items: start;
+  gap: 0.75rem;
+  margin-block-start: auto;
+}
+.learning-video-preview .s-cards {
+  margin-block: 1.5rem 0;
+}
+.learning-video-preview h3 {
+  font-size: 1.125rem;
+  margin-block-end: 0.5rem;
+}
+.learning-video-preview .s-card > a,
+.eda-tools-card > a {
+  margin-block-start: 1rem;
+}
+@media (min-width: 900px) {
+  .learning-videos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -1,6 +1,6 @@
 {
   "baseCommit": "0b46b44719d7fd0c6dde2604e78d9a021cf19fee",
-  "authorization": "Final Website Improvements user request; local implementation only until backup and release gates pass.",
+  "authorization": "Final Website Improvements and user-authorized PR #8 public Tools Hub/Video Library and presentation refinements, 2026-11-06. Review branch only; no merge or deployment.",
   "files": {
     "docs/final-improvements/release.md": {
       "sha256": "7b166d7aee84408e1cced42157929e8a8f17c7e85d5d7e69927842eb4f1665d8",
@@ -118,39 +118,39 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     "frontend/src/app/app.tsx": {
-      "sha256": "28cf51701225bdea5c1471b8abd4af9f8574600ca8777171996e29923f7208d5",
+      "sha256": "5cf6d91d87a780f309fa21a573c54ffc83bf83713cb8c190ccfa5fd250ab8e91",
       "previousSha256": "373cd62c045ddbb6985b35e6c8eaf47354856991ad9fc49afdcc04410089cb0b",
-      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification. Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     },
     "frontend/src/app/navigation.ts": {
-      "sha256": "774520c99322dd3a6a8e19259b8cebd905139fa429ba77c53d4614a446f388f5",
+      "sha256": "d569b87b5c1285a12a3081a5133ae5b7b8f69d862d0ba6da74a399fabca7a6ff",
       "previousSha256": "4f176d63ff464ecb92986cd9d94a2943669881e77b0bae33df13b8ccfeb4df9e",
-      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification. Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     },
     "frontend/src/app/route-effects.tsx": {
-      "sha256": "1cbe8a2bfd2e290d7ec0d99a02a5c02ecd679fed9db7c2c725d95084f1d693b3",
+      "sha256": "deb1818451a653bc08f530fba29e5aeafdf2a61d38c09d008438c418a4a4ce06",
       "previousSha256": "020b3e181c4f17abda57d900a4d6d16e1d6e09c1a03619ed50cad7852c1d051c",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     },
     "frontend/src/components/layout/footer.tsx": {
-      "sha256": "1f9a4157e3e705e6c1e28eff9b063b4d41620a7eec79313d29b6294106e3a6dc",
+      "sha256": "dd39bea465a0b32133aaab9f2c6241cfa163b2b5581b243b6871ccaf77aba3f6",
       "previousSha256": "eb22df6ad08ab2191309928a4a3e2a01d4c5952c574de15b4e604f282ff474d9",
-      "reason": "User-approved public content fixes and global logo background audit: use the existing approved transparent iTeam variant in the shared footer in both themes; preserve artwork and layout. Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     },
     "frontend/src/components/layout/mobile-navigation.tsx": {
-      "sha256": "c6e0825ed3c0e250e78a1c3ec5ac7c97b8381c197910806c2bb14e1f0fcf62d3",
+      "sha256": "32651a51acba15ac3666a50f4d429d0ab3250e2d0fddd54bda179de21fde1304",
       "previousSha256": "d3468ebd15e26dabb69de35e518e451bf42a1c48cff36a968d6277ec11f701ae",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     },
     "frontend/src/components/layout/navbar.tsx": {
-      "sha256": "7ea9ecb33e1ecb610cf39c67a2608cf4de5d278f8ede47439f3d801fb1cea695",
+      "sha256": "12111d661ec391e59cf2c275ffb06a8032fa262345168e162333f33b82cd8d0b",
       "previousSha256": "a478d8600c61cc291cf1907fb663ef16681b6ff1f6101ed3ea3dbf6dfc2f1f71",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     },
     "frontend/src/content/public-content.ts": {
-      "sha256": "89577438a60119891eaa6b2f442f69e30629e5f14013ca798c09d724ee622bae",
+      "sha256": "7448fdf281aaff41e76cb7d2939754fe09b190870611779f1dd55da4ba3db37f",
       "previousSha256": "f9e9693205f13efe8be5216f7b5c180351015779f2449f2a2c2a928d093a994b",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     },
     "frontend/src/features/portal/auth-pages.tsx": {
       "sha256": "d77c8c3b3867c6fc190fd9c6f780e6577a7cd82394e992a80c893080bc501162",
@@ -198,14 +198,14 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     "frontend/src/locales/ar.json": {
-      "sha256": "31132c4133c7574c093137d448e7227c9626689abd95cafb5b4edc6b5d48c198",
+      "sha256": "6661a5a6fc2c58c95651087bf3476fe59257d9aaed14de69cb6809d1e6c5a904",
       "previousSha256": "c250a8a3d408a7b26e8000d73b2259685c07cd8227bd937201120c660a70dbd7",
-      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification. Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     },
     "frontend/src/locales/en.json": {
-      "sha256": "0be8e446fce0ebc21bfbd5d60c7364064f79e66ca73b4bb1d00bd9c53111de1d",
+      "sha256": "879f3080f9e0b6a8ded6c6685694390ef7027f68083e60f4d9f3bf6566ff3272",
       "previousSha256": "8926ac2635c3d6dbeed685adc3988381e3c4ae1733ad30f4c9de033e626e7101",
-      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification. Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     },
     "frontend/src/pages/public/home-page.tsx": {
       "sha256": "62dc2383c1a8824024c968c2af5ea9a6a6c157c0867a62bc46500da567fce58b",
@@ -228,9 +228,9 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     "frontend/src/pages/public/videos-page.tsx": {
-      "sha256": "0aca1a6deaf6bc6404fc3de1be6dfc97b38cfa7cf7d34c3f75aee0a97e72999d",
+      "sha256": "723ca7604ffd8034a5e35185b8d4fb255ff68283c208de21e0b6498b0d857f46",
       "previousSha256": "9193adf2477344d3e5310215619175a11f0376d4f48c065f19ccaddc8e4f0dad",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     },
     "frontend/src/types/database.ts": {
       "sha256": "8e8cf872c9ac1abf990035411c7c95b5f294ff455cdf0219b6cc2128fe73204c",
@@ -269,8 +269,8 @@
     },
     "frontend/src/pages/public/about-page.tsx": {
       "previousSha256": "30e41c9a61239c04c8630abd86aaacfe593a2e81ac8ee6323eea50586727ce0b",
-      "sha256": "e696fa7cba0d7106d767bcc140f51732d9e901d67db8f3ff8341715097203842",
-      "reason": "User-approved final public content fixes: English team names in both languages; generic community copy; hidden public educational routes and links; focused content verification. Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+      "sha256": "bac984e92d0bf9b2510ce0a6fc40ae9256699363cf9202ee519444ff5c28c157",
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     },
     "frontend/tests/content-audit.test.ts": {
       "previousSha256": "bbe2bb9424a8e0f89088dc47c3ceb6481537f7a99ae6738d29743ac688e4d1dc",
@@ -308,9 +308,9 @@
       "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
     },
     "frontend/src/index.css": {
-      "sha256": "56acc74bd9381877c276604b0e7e349cd7d4f6efd84842726f55d3e16b5b41d9",
+      "sha256": "42014550168e1e5bc9943dd2c1b4e46e6b38466e3ccbe2ddb9c4b111d8ac99b6",
       "previousSha256": "529b1d7a05bcaf56c6f2ffeceb9207f671bac644079fe9dc3592fe03b7a2b758",
-      "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     },
     "frontend/src/lib/i18n.ts": {
       "sha256": "b6c3e399afd1eedca3339cc6a83bf63eedff1b5cdba948a4582746f1f7865af2",
@@ -323,19 +323,59 @@
       "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
     },
     "frontend/src/pages/public/syllabus-page.tsx": {
-      "sha256": "a445132d7e7cb58729e1f1a7d83d7e1ec64bb942e89a0a2d2699297dcebddbdf",
+      "sha256": "5c6e13a0830f25a29158c0a25255446b18a16734cf66423413653a7bcf089055",
       "previousSha256": "72cf2706db2bba416a98b67612e495aa183e56d9ff829374bfb002fc805a738e",
-      "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     },
     "frontend/src/styles/simplify.css": {
-      "sha256": "a5603a50b206d08da4c31f651997a9a254511fb38c4cebfba01a1895c6211770",
+      "sha256": "2127aeed809e1b9cafa643b5462e47bf59d2e25cbc35d2399c72c138c281fa3b",
       "added": true,
-      "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     },
     "frontend/src/styles/tokens.css": {
       "sha256": "c2f56120439a0bfeb15e23ac79173136b30cc77902bb33234e6ac5eafd270030",
       "previousSha256": "71c61876db7e95f429e02e17154f53e7958119ae6e09437cf853ee96c8b035ad",
       "reason": "Yomna UI simplification: study plan page, plainer bilingual copy, fixed layout across languages, new dark palette and light motion."
+    },
+    "frontend/src/components/shared/learning-video.tsx": {
+      "added": true,
+      "sha256": "c47ef9c95f17eb645e2b960e6d7fd283e78df2344691d06c0ed88f439d7cbf8d",
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
+    },
+    "frontend/src/content/learning-tools.ts": {
+      "added": true,
+      "sha256": "6e3739f7716720e39b2bbc3aeb782783a5250207a0b8627ca2feebdbad67a9ee",
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
+    },
+    "frontend/src/content/video-resources.ts": {
+      "added": true,
+      "sha256": "0151e483c732e86409abbc8af8f9c405de8434a2ad53c51c8722fa1da31d5a4f",
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
+    },
+    "frontend/src/pages/public/ai-tools-page.tsx": {
+      "added": true,
+      "sha256": "4d20529c3e9694c500cd9b55d5a2b72a57c4281dd0d8d771a845885068f58039",
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
+    },
+    "frontend/src/pages/public/tool-guide-page.tsx": {
+      "added": true,
+      "sha256": "837123278d3da5ed0eff0f33ef2e426ea2332aac903042f70f9bab84e6281a68",
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
+    },
+    "frontend/src/styles/learning-resources.css": {
+      "added": true,
+      "sha256": "e30d8ee1bf8f011769045b3ab40896a25c1755f21710f33c0327f52ca218e149",
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
+    },
+    "frontend/tests/learning-resources.test.ts": {
+      "added": true,
+      "sha256": "f3af71ea7b1d362d4e32ac85ec6bc3fcda5d27a98710eb6d0355cac0c5c0cec2",
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
+    },
+    "frontend/src/styles/navigation-footer.css": {
+      "added": true,
+      "sha256": "616d5bd1422c6797c3d78b6ccc5c7d475be94c99953669f19b6d915a0db85c47",
+      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     }
   }
 }

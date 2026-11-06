@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { publicNavigation, secondaryNavigation } from '@/app/navigation';
+import { DESKTOP_NAV_QUERY, publicNavigation, secondaryNavigation } from '@/app/navigation';
 import { MixedText } from '@/components/shared/mixed-text';
 import { LanguageSwitcher } from './language-switcher';
 import { ThemeToggle } from './theme-toggle';
@@ -23,7 +23,7 @@ export function MobileNavigation() {
   const [open, setOpen] = useState(false);
   const navigated = useRef(false);
   useEffect(() => {
-    const desktop = matchMedia('(min-width:1120px)');
+    const desktop = matchMedia(DESKTOP_NAV_QUERY);
     const closeOnDesktop = () => {
       if (desktop.matches) setOpen(false);
     };

@@ -1,6 +1,7 @@
 /* Shared navigation and footer refinements; logo sizing stays in redesign.css. */
 .site-header .desktop-nav {
   gap: 8px;
+  min-width: 0;
 }
 .site-header .desktop-nav a {
   display: inline-flex;
@@ -10,6 +11,8 @@
   padding: 8px 12px;
   font-size: 15px;
   line-height: 1.5;
+  white-space: normal;
+  text-align: center;
 }
 .site-header .header-actions {
   gap: 10px;
@@ -134,9 +137,17 @@
     column-gap: 48px;
   }
 }
-@media (max-width: 1119px) {
+@media (max-width: 1279px) {
+  .site-header .desktop-nav,
+  .site-header .desktop-join,
   .site-header .navigation-login {
     display: none;
+  }
+  .site-header .mobile-menu-trigger {
+    display: inline-flex;
+  }
+  .site-header .header-actions {
+    margin-inline-start: auto;
   }
 }
 @media (max-width: 560px) {

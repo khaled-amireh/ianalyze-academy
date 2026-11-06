@@ -42,3 +42,16 @@ Availability follows the approved release configuration, not the presence of a r
 ### Motion and accessibility
 
 Lightweight public-page transitions use the original official iTEAM logo with the approved 800ms timing. Reduced-motion preferences are respected, and authentication/protected navigation remains immediate. The interface also provides keyboard focus handling and accessible navigation controls.
+
+## Technology stack
+
+| Area                 | Technologies                                                                       |
+| -------------------- | ---------------------------------------------------------------------------------- |
+| Application          | React 19, TypeScript 6, Vite 8, React Router 8                                     |
+| Styling and UI       | Tailwind CSS 4, Radix UI primitives, Lucide icons, Motion, Embla Carousel          |
+| Localization         | i18next and react-i18next                                                          |
+| Backend              | Supabase Auth, PostgreSQL with row-level security, Storage, and Edge Functions     |
+| Hosting and delivery | Cloudflare Pages and GitHub Actions                                                |
+| Quality checks       | ESLint, Prettier, Node.js tests, and PGlite for embedded PostgreSQL security tests |
+
+Dependency versions and commands are defined in [frontend/package.json](frontend/package.json); installation uses the committed lockfile.

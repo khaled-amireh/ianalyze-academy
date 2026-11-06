@@ -31,3 +31,4 @@ The following capabilities are implemented and depend on a configured Supabase b
 
 - **Registration and authentication:** email verification, sign-in, recovery/reset flows, and optional persistent sessions. Signup requires both registration and privacy approval; production builds require a fresh owner-readiness check before enabling registration.
 - **Student and Team dashboards:** students access released learning content and their own learning records; authorized Team members manage activities, rubrics, grading, and announcements. Leaders and Organizers share the Team authorization role.
+- **Profiles and notifications:** private profile viewing/editing, bilingual announcements, learning notifications, and persistent read receipts. Notifications refresh in the app; they are not browser push notifications.

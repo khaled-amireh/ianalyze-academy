@@ -38,3 +38,7 @@ The following capabilities are implemented and depend on a configured Supabase b
 Public About and Contact pages connect learners with the academic team and official iTEAM community channels. They do not provide an in-app chat or discussion forum.
 
 Availability follows the approved release configuration, not the presence of a route or component. The production build keeps submission and leaderboard flags off; account access additionally depends on backend policies and registration approval.
+
+### Motion and accessibility
+
+Lightweight public-page transitions use the original official iTEAM logo with the approved 800ms timing. Reduced-motion preferences are respected, and authentication/protected navigation remains immediate. The interface also provides keyboard focus handling and accessible navigation controls.

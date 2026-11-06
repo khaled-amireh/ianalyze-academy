@@ -19,7 +19,7 @@ import { JoinNavigation } from '@/features/portal/account-navigation';
 import { AccountLink } from '@/features/portal/auth-pages';
 
 export function MobileNavigation() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [open, setOpen] = useState(false);
   const navigated = useRef(false);
   useEffect(() => {
@@ -45,6 +45,7 @@ export function MobileNavigation() {
       </DialogTrigger>
       <DialogContent
         className="mobile-dialog"
+        dir={i18n.resolvedLanguage === 'ar' ? 'rtl' : 'ltr'}
         aria-modal="true"
         closeLabel={t('common.close')}
         onCloseAutoFocus={(event) => {
@@ -60,6 +61,7 @@ export function MobileNavigation() {
         </DialogHeader>
         <nav className="mobile-nav-links" aria-label={t('common.navigation')}>
           <AccountLink
+            className="navigation-login"
             onNavigate={() => {
               navigated.current = true;
               setOpen(false);
@@ -79,6 +81,7 @@ export function MobileNavigation() {
             </NavLink>
           ))}
           <JoinNavigation
+            className="navigation-join"
             onNavigate={() => {
               navigated.current = true;
               setOpen(false);

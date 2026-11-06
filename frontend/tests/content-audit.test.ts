@@ -3,6 +3,12 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
 import { portalTranslations } from '../src/features/portal/copy.ts';
+import { publicNavigation, publicPages } from '../src/app/navigation.ts';
+
+test('unreleased EDA stays out of public navigation and page metadata', () => {
+  assert.ok(publicNavigation.every(({ to }) => !to.startsWith('/eda')));
+  assert.ok(publicPages.every((page) => !page.startsWith('eda')));
+});
 const flatten = (value: unknown, path = ''): [string, string][] =>
   typeof value === 'string'
     ? [[path, value]]

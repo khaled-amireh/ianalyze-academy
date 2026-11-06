@@ -10,3 +10,7 @@
 A bilingual learning platform for aspiring data analysts, built as an iAnalyze initiative under iTEAM at Al-Zaytoonah University of Jordan.
 
 **[🌐 Visit Live Website](https://ianalyze-academy.pages.dev/)** · [GitHub Repository](https://github.com/khaled-amireh/ianalyze-academy)
+
+## About the project
+
+iAnalyze Academy helps students explore data analysis through accessible learning resources, structured guidance, and a collaborative academic community. It brings together the educational work of iAnalyze, an initiative under iTEAM at Al-Zaytoonah University of Jordan, in one bilingual platform.

@@ -1,6 +1,6 @@
 {
   "baseCommit": "0b46b44719d7fd0c6dde2604e78d9a021cf19fee",
-  "authorization": "Final Website Improvements and user-authorized PR #8 public Tools Hub/Video Library and presentation refinements, 2026-11-06. Review branch only; no merge or deployment.",
+  "authorization": "Final Website Improvements and user-authorized PR #8 public Tools Hub/Video Library and presentation refinements, 2026-11-06. Review branch only; no merge or deployment. User-approved merged PR #9 iTEAM page transition and explicit production preservation repair request; approval records only, no merge or deployment.",
   "files": {
     "docs/final-improvements/release.md": {
       "sha256": "7b166d7aee84408e1cced42157929e8a8f17c7e85d5d7e69927842eb4f1665d8",
@@ -391,6 +391,31 @@
       "previousSha256": "3fa1f3c79b12e8599561f007267ea92b1f31db4a0973cef22e33778b9d905cc1",
       "sha256": "73331406bbba08da0d7e56dc2e5e5307eb4977d224e1bf4057f98b8a6047d8ec",
       "reason": "User-authorized PR #8 final account-navigation/physical-layout cleanup, exact course notice, and corrected Kaggle YouTube source. Authentication logic, dashboard content, EDA/tools/guides, assets, and backend boundaries are preserved."
+    },
+    "frontend/src/components/layout/public-layout.tsx": {
+      "sha256": "33de74358caf589225995cc61f5b59a4b8cb334568bb27d6a1f920b92b9f50ff",
+      "previousSha256": "87eef9f4ac1468f8ca1f2da20e8d8e31fb8b3f5cac3969669823466f9e36ed04",
+      "reason": "User-approved PR #9 public layout wiring for the official iTEAM page transition; preserves the existing navbar, footer, suspense and route effects."
+    },
+    "frontend/src/app/page-transition.ts": {
+      "sha256": "416bf34febd43e82682fbb80c0c5467b5f39adb9248146abb9d5c7c55be61d42",
+      "added": true,
+      "reason": "User-approved PR #9 public page transition eligibility; authentication, protected routes, same-page updates and redirect replacements remain immediate."
+    },
+    "frontend/src/components/layout/page-transition.css": {
+      "sha256": "87408df6e182e92f0fc55c74bb58076a7c1291a8d0b6a07d015f2d45b04bb6a5",
+      "added": true,
+      "reason": "User-approved PR #9 scoped transition styles with the approved logo dimensions, theme variants and reduced-motion behavior."
+    },
+    "frontend/src/components/layout/page-transition.tsx": {
+      "sha256": "52ced17c1d83ee03e9d70252a8a7e96ef696c44a078ea0bf66c5dfcf681a7e04",
+      "added": true,
+      "reason": "User-approved PR #9 official iTEAM page transition with unchanged 800ms timing, 400ms hold, original logo artwork and animation cleanup."
+    },
+    "frontend/tests/page-transition.test.ts": {
+      "sha256": "7edf3308fbde89ee334292d64615ac66d8a1fe4967f64eb364686161abcaf0f9",
+      "added": true,
+      "reason": "User-approved PR #9 regression coverage for public navigation, browser history, same-page updates, redirects and immediate authentication/protected routes."
     }
   }
 }

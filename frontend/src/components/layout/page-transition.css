@@ -1,0 +1,48 @@
+.app-shell > main {
+  position: relative;
+  isolation: isolate;
+}
+
+.page-transition-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--card);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page-transition-logo-position {
+  position: absolute;
+  top: min(50%, calc(50svh - 38px));
+  left: 50%;
+  width: clamp(163.2px, 21.6vw, 240px);
+  max-width: calc(100% - 32px);
+  transform: translate(-50%, -50%);
+}
+
+.page-transition-logo {
+  display: grid;
+}
+
+.page-transition-logo img {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.page-transition-logo-dark,
+.dark .page-transition-logo-light {
+  visibility: hidden;
+}
+
+.dark .page-transition-logo-dark {
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition-overlay {
+    display: none;
+  }
+}

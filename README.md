@@ -93,3 +93,24 @@ For a public-only build that excludes local backend configuration and developmen
 npm run build:public
 npm run check:pages
 ```
+
+## Project structure
+
+```text
+frontend/        React application, assets, translations, tests, and build scripts
+supabase/        Database migrations, Edge Functions, and backend tests
+docs/            Architecture, security, approval records, and historical delivery notes
+design-preview/  Preserved original design reference
+tools/           Design and preservation verification utilities
+.github/         GitHub Actions workflows
+```
+
+Detailed historical documentation remains in [docs/](docs/) and [design-preview/](design-preview/). These archives describe their original milestones; the overview above reflects the current repository.
+
+## Community and credits
+
+<img src="frontend/src/assets/brand/iteam-logo-light.png" alt="Official iTEAM logo" width="180">
+
+Created as an **iAnalyze initiative under iTEAM at Al-Zaytoonah University of Jordan**. The platform retains the official iAnalyze and iTEAM branding.
+
+Connect through iTEAM's official [Instagram](https://www.instagram.com/iteamzuj/) and [LinkedIn](https://www.linkedin.com/company/iteamzuj/posts/) channels, or visit the platform's [Contact page](https://ianalyze-academy.pages.dev/contact).

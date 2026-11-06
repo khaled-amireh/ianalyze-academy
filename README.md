@@ -22,3 +22,5 @@ iAnalyze Academy helps students explore data analysis through accessible learnin
 - **Arabic and English:** translated content with RTL/LTR text handling. The approved layout keeps its RTL structure across languages while English text reads left to right.
 - **Responsive design and themes:** mobile-friendly layouts, light/dark themes, and saved language and theme preferences.
 - **EDA learning resources:** course information, preparation guidance, and study-plan content for Exploratory Data Analysis. The detailed week-by-week plan is implemented but currently hidden on the public course page.
+- **AI Tools Hub:** beginner-friendly guides for Google Colab, Python, Visual Studio Code, Kaggle, and Power BI, with official setup and documentation links.
+- **Educational Video Library:** an introductory data science video and a Kaggle tutorial, with embedded playback and direct viewing links.

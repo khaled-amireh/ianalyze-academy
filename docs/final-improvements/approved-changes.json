@@ -418,7 +418,7 @@
       "reason": "User-approved PR #9 regression coverage for public navigation, browser history, same-page updates, redirects and immediate authentication/protected routes."
     },
     "README.md": {
-      "sha256": "1bee96c6c9500edb37a9212230dbedb43961338adde0ecd699452762939dae81",
+      "sha256": "8cd6283e91c2e090751c0bb90416484e528bcc07ef1dfa99ee4915b3c05e4279",
       "previousSha256": "7d78dfefcf5373a1a8762833ffda268f91388df2a6a05e9ca69fb91914be7cee",
       "reason": "User-authorized professional English README: official branding, current capabilities and production gates, verified stack, local setup, repository structure and community credits."
     },

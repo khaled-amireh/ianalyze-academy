@@ -14,3 +14,10 @@ A bilingual learning platform for aspiring data analysts, built as an iAnalyze i
 ## About the project
 
 iAnalyze Academy helps students explore data analysis through accessible learning resources, structured guidance, and a collaborative academic community. It brings together the educational work of iAnalyze, an initiative under iTEAM at Al-Zaytoonah University of Jordan, in one bilingual platform.
+
+## Key features
+
+### Public learning experience
+
+- **Arabic and English:** translated content with RTL/LTR text handling. The approved layout keeps its RTL structure across languages while English text reads left to right.
+- **Responsive design and themes:** mobile-friendly layouts, light/dark themes, and saved language and theme preferences.

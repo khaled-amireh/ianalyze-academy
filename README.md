@@ -68,3 +68,28 @@ npm run dev
 ```
 
 Open [http://127.0.0.1:5173/](http://127.0.0.1:5173/). Public learning pages can run without backend credentials. In Windows PowerShell environments that block npm scripts, use `npm.cmd` in place of `npm`.
+
+### Backend-dependent features
+
+Use [frontend/.env.example](frontend/.env.example) as the reference for an ignored local environment file. Accounts, dashboards, profiles, notifications, and learning records require an appropriately configured Supabase project and schema. Browser configuration accepts a Supabase URL and a **browser-safe publishable key**; privileged keys never belong in frontend variables or committed files.
+
+Keep the example's release flags closed unless intentionally testing the corresponding capability. Frontend flags alone do not grant roles or open database/Storage permissions. Docker and the local Supabase services are needed for full local backend testing; the [local backend runbook](docs/supabase-auth-integration/README.md) describes stack preparation, captured email, and integration commands. Its older release notes are historical snapshots.
+
+### Validate and build
+
+Run these commands from `frontend/`:
+
+```sh
+npm run validate
+npm run build
+npm run preview
+```
+
+Validation covers types, lint, tests, formatting, the public artifact, preservation rules, embedded database security, and database types. Preview serves the build at [http://127.0.0.1:4174/](http://127.0.0.1:4174/); it does not deploy anything.
+
+For a public-only build that excludes local backend configuration and development previews, use:
+
+```sh
+npm run build:public
+npm run check:pages
+```

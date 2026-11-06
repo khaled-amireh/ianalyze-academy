@@ -5,6 +5,7 @@ import { LoadingIndicator } from '@/components/shared/loading-indicator';
 import { useTranslation } from 'react-i18next';
 import { Navbar } from './navbar';
 import { Footer } from './footer';
+import { PageTransition } from './page-transition';
 
 export function PublicLayout() {
   const { t } = useTranslation();
@@ -17,7 +18,9 @@ export function PublicLayout() {
       <main id="main" tabIndex={-1}>
         <Suspense fallback={<LoadingIndicator />}>
           <RouteEffects />
-          <Outlet />
+          <PageTransition>
+            <Outlet />
+          </PageTransition>
         </Suspense>
       </main>
       <Footer />

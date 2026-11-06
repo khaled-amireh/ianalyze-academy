@@ -33,3 +33,8 @@ The following capabilities are implemented and depend on a configured Supabase b
 - **Student and Team dashboards:** students access released learning content and their own learning records; authorized Team members manage activities, rubrics, grading, and announcements. Leaders and Organizers share the Team authorization role.
 - **Profiles and notifications:** private profile viewing/editing, bilingual announcements, learning notifications, and persistent read receipts. Notifications refresh in the app; they are not browser push notifications.
 - **Weekly activities and submissions:** activity publication, deadlines, rubric-based assessment, and a validated notebook submission workflow. **Production submissions and uploads remain disabled** by frontend and server-side gates; their implementation does not make uploads publicly available.
+- **Leaderboard:** ranking functionality and a public placeholder are implemented. **Live rankings remain disabled in production**; an empty podium does not represent active student scores.
+
+Public About and Contact pages connect learners with the academic team and official iTEAM community channels. They do not provide an in-app chat or discussion forum.
+
+Availability follows the approved release configuration, not the presence of a route or component. The production build keeps submission and leaderboard flags off; account access additionally depends on backend policies and registration approval.

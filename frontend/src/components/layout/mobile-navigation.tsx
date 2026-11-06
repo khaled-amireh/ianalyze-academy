@@ -20,6 +20,7 @@ import { AccountLink } from '@/features/portal/auth-pages';
 
 export function MobileNavigation() {
   const { t, i18n } = useTranslation();
+  const direction = i18n.resolvedLanguage === 'ar' ? 'rtl' : 'ltr';
   const [open, setOpen] = useState(false);
   const navigated = useRef(false);
   useEffect(() => {
@@ -45,7 +46,7 @@ export function MobileNavigation() {
       </DialogTrigger>
       <DialogContent
         className="mobile-dialog"
-        dir={i18n.resolvedLanguage === 'ar' ? 'rtl' : 'ltr'}
+        dir="rtl"
         aria-modal="true"
         closeLabel={t('common.close')}
         onCloseAutoFocus={(event) => {
@@ -55,7 +56,7 @@ export function MobileNavigation() {
           }
         }}
       >
-        <DialogHeader>
+        <DialogHeader dir={direction}>
           <DialogTitle>{t('common.mobileTitle')}</DialogTitle>
           <DialogDescription>{t('common.mobileDescription')}</DialogDescription>
         </DialogHeader>
@@ -71,6 +72,7 @@ export function MobileNavigation() {
             <NavLink
               key={item.id}
               to={item.to}
+              dir={direction}
               end={item.to === '/'}
               onClick={() => {
                 navigated.current = true;
@@ -88,7 +90,7 @@ export function MobileNavigation() {
             }}
           />
         </nav>
-        <div className="mobile-preferences">
+        <div className="mobile-preferences" dir="ltr">
           <LanguageSwitcher />
           <ThemeToggle />
         </div>

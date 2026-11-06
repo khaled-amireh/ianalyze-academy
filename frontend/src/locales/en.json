@@ -397,7 +397,7 @@
   },
   "learning": {
     "toolsIntro": "Five tools to help you learn, practise, and explore data. Understand each tool's purpose before getting started.",
-    "courseNote": "For the EDA course, use Google Colab to run Python in your browser. Installing Python, VS Code, or Power BI locally is optional.",
+    "courseNote": "The required tools will be announced once the course plan is finalized.",
     "why": "Why do I need it?",
     "requirements": "What you need",
     "viewGuide": "View Guide",
@@ -416,6 +416,8 @@
     "watchVideo": "Watch video",
     "videoHelp": "Video not playing? Open it directly in Google Drive.",
     "openDrive": "Open in Google Drive",
+    "youtubeHelp": "Video not playing? Open it directly on YouTube.",
+    "openYouTube": "Open on YouTube",
     "youtubeSource": "Original source on YouTube",
     "categories": {
       "course": "Course tool",

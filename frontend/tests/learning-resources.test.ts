@@ -48,16 +48,24 @@ test('each tool guide has complete English and Arabic content for every configur
   }
 });
 
-test('the two featured videos keep the original Drive media and correct per-video fallbacks', () => {
+test('the introduction stays on Drive and Kaggle uses the corrected YouTube source and fallback', () => {
   assert.deepEqual(
     featuredVideos.map((video) => video.id),
-    ['147puYxGioHyoYjSwxktgGP4RRWeM_qn4', '1Qh5BPaoR125I00znXsaCF6e1s5HpuPBS'],
+    ['147puYxGioHyoYjSwxktgGP4RRWeM_qn4', 'bR2y1MMW5IE'],
   );
   assert.equal(featuredVideos[0].embedUrl, introductoryVideo.embedUrl);
-  for (const video of featuredVideos) {
-    assert.equal(video.embedUrl, `https://drive.google.com/file/d/${video.id}/preview`);
-    assert.equal(video.fallbackUrl, `https://drive.google.com/file/d/${video.id}/view?usp=sharing`);
-    assert.ok(!video.embedUrl.includes('autoplay'));
-  }
+  assert.equal(featuredVideos[0].provider, 'drive');
+  assert.equal(
+    introductoryVideo.embedUrl,
+    'https://drive.google.com/file/d/147puYxGioHyoYjSwxktgGP4RRWeM_qn4/preview',
+  );
+  assert.equal(
+    introductoryVideo.fallbackUrl,
+    'https://drive.google.com/file/d/147puYxGioHyoYjSwxktgGP4RRWeM_qn4/view?usp=sharing',
+  );
+  assert.equal(featuredVideos[1].provider, 'youtube');
+  assert.equal(featuredVideos[1].embedUrl, 'https://www.youtube-nocookie.com/embed/bR2y1MMW5IE');
+  assert.equal(featuredVideos[1].fallbackUrl, 'https://www.youtube.com/watch?v=bR2y1MMW5IE');
+  assert.ok(featuredVideos.every((video) => !video.embedUrl.includes('autoplay')));
   assert.equal(featuredVideos[1].sourceUrl, 'https://youtu.be/bR2y1MMW5IE');
 });

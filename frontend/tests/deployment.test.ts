@@ -18,3 +18,11 @@ test('Cloudflare default SPA fallback stays enabled without a catch-all asset re
   if (existsSync(redirects))
     assert.doesNotMatch(readFileSync(redirects, 'utf8'), /^\/\*\s+\/index\.html\s+200\s*$/m);
 });
+
+test('video frames allow only the approved Drive and privacy-enhanced YouTube origins', () => {
+  const headers = readFileSync(new URL('../public/_headers', import.meta.url), 'utf8');
+  assert.equal(
+    headers.match(/frame-src ([^;]+);/)?.[1],
+    'https://drive.google.com https://www.youtube-nocookie.com',
+  );
+});

@@ -2,6 +2,8 @@
 .site-header .desktop-nav {
   gap: 8px;
   min-width: 0;
+  flex: 0 1 560px;
+  grid-template-columns: 68px 104px 72px minmax(0, 1fr) 128px;
 }
 .site-header .desktop-nav a {
   display: inline-flex;
@@ -13,12 +15,50 @@
   line-height: 1.5;
   white-space: normal;
   text-align: center;
+  height: 62px;
 }
 .site-header .header-actions {
   gap: 10px;
 }
 .site-header .header-preferences {
   gap: 6px;
+}
+.site-header .notification-count {
+  min-width: 20px;
+  line-height: 20px;
+  text-align: center;
+}
+.mobile-dialog .mobile-nav-links a {
+  line-height: 24px;
+}
+.mobile-dialog .dialog-header p {
+  min-height: 48px;
+  line-height: 24px;
+}
+.site-header .navigation-login {
+  width: 118px;
+}
+.site-header .navigation-join {
+  width: 96px;
+}
+.site-header .navigation-join[href='/student'] {
+  width: 198px;
+}
+:is(.site-header, .mobile-dialog) :is(.navigation-login, .navigation-join),
+.mobile-dialog .mobile-nav-links a,
+.account-menu [role='menuitem'] {
+  direction: rtl;
+}
+html[lang='en'] :is(.site-header, .mobile-dialog) :is(.navigation-login, .navigation-join),
+html[lang='en'] .mobile-dialog .mobile-nav-links a,
+html[lang='en'] .account-menu [role='menuitem'] {
+  direction: ltr;
+}
+.site-header .desktop-nav a,
+.mobile-dialog .mobile-nav-links a:not(.navigation-login, .navigation-join),
+.mobile-dialog .dialog-header,
+.account-menu [role='menuitem'] {
+  text-align: start;
 }
 :is(.site-header, .mobile-dialog) {
   --navigation-blue: #0d47a1;
@@ -137,6 +177,11 @@
     column-gap: 48px;
   }
 }
+@media (min-width: 1280px) {
+  .site-header .desktop-nav {
+    display: grid;
+  }
+}
 @media (max-width: 1279px) {
   .site-header .desktop-nav,
   .site-header .desktop-join,
@@ -147,7 +192,8 @@
     display: inline-flex;
   }
   .site-header .header-actions {
-    margin-inline-start: auto;
+    margin-left: 0;
+    margin-right: auto;
   }
 }
 @media (max-width: 560px) {

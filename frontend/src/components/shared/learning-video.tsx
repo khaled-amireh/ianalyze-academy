@@ -32,11 +32,15 @@ export function LearningVideo({ video }: { video: FeaturedVideo }) {
       </div>
       <div className="video-fallback">
         <p className="resource-copy">
-          <MixedText>{t('learning.videoHelp')}</MixedText>
+          <MixedText>
+            {t(video.provider === 'youtube' ? 'learning.youtubeHelp' : 'learning.videoHelp')}
+          </MixedText>
         </p>
         <Button asChild variant="outline" size="sm">
           <a href={video.fallbackUrl} target="_blank" rel="noopener noreferrer">
-            <MixedText>{t('learning.openDrive')}</MixedText>
+            <MixedText>
+              {t(video.provider === 'youtube' ? 'learning.openYouTube' : 'learning.openDrive')}
+            </MixedText>
             <ExternalLink aria-hidden="true" />
           </a>
         </Button>

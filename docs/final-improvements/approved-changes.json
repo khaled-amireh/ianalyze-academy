@@ -138,14 +138,14 @@
       "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     },
     "frontend/src/components/layout/mobile-navigation.tsx": {
-      "sha256": "32651a51acba15ac3666a50f4d429d0ab3250e2d0fddd54bda179de21fde1304",
+      "sha256": "271728113da061b36318f64e8b293b0623b174b0b0b82e569cc49532cc9bf3fd",
       "previousSha256": "d3468ebd15e26dabb69de35e518e451bf42a1c48cff36a968d6277ec11f701ae",
-      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
+      "reason": "User-authorized PR #8 final account-navigation/physical-layout cleanup, exact course notice, and corrected Kaggle YouTube source. Authentication logic, dashboard content, EDA/tools/guides, assets, and backend boundaries are preserved."
     },
     "frontend/src/components/layout/navbar.tsx": {
-      "sha256": "12111d661ec391e59cf2c275ffb06a8032fa262345168e162333f33b82cd8d0b",
+      "sha256": "85a9f6bb3a25b7f4e69fd000b98ffad754baa56e48ad49bbaadab1bd71f5d2da",
       "previousSha256": "a478d8600c61cc291cf1907fb663ef16681b6ff1f6101ed3ea3dbf6dfc2f1f71",
-      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
+      "reason": "User-authorized PR #8 final account-navigation/physical-layout cleanup, exact course notice, and corrected Kaggle YouTube source. Authentication logic, dashboard content, EDA/tools/guides, assets, and backend boundaries are preserved."
     },
     "frontend/src/content/public-content.ts": {
       "sha256": "7448fdf281aaff41e76cb7d2939754fe09b190870611779f1dd55da4ba3db37f",
@@ -153,9 +153,9 @@
       "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
     },
     "frontend/src/features/portal/auth-pages.tsx": {
-      "sha256": "d77c8c3b3867c6fc190fd9c6f780e6577a7cd82394e992a80c893080bc501162",
+      "sha256": "3ff55b4914ffb17cedc3c267f135a497f7cb59d620c59f5cbcd1ed23baa23992",
       "previousSha256": "456bf91d6c5e91b3f4522e171bcc70d1f640196e4a14d731292388e8116ad0e6",
-      "reason": "Authorized privacy link presentation on login and sign-up only; authentication and required consent handling preserved."
+      "reason": "User-authorized PR #8 final account-navigation/physical-layout cleanup, exact course notice, and corrected Kaggle YouTube source. Authentication logic, dashboard content, EDA/tools/guides, assets, and backend boundaries are preserved."
     },
     "frontend/src/features/portal/copy.ts": {
       "sha256": "e8f8b52beac8b6f7f25333574c21438a4e6504fcff8d42e133b10463b146e7ab",
@@ -198,14 +198,14 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     "frontend/src/locales/ar.json": {
-      "sha256": "6661a5a6fc2c58c95651087bf3476fe59257d9aaed14de69cb6809d1e6c5a904",
+      "sha256": "c148295af9f8239c7c139997cb2a56afdc66c43b98992e404a67b766d7a3ed8d",
       "previousSha256": "c250a8a3d408a7b26e8000d73b2259685c07cd8227bd937201120c660a70dbd7",
-      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
+      "reason": "User-authorized PR #8 final account-navigation/physical-layout cleanup, exact course notice, and corrected Kaggle YouTube source. Authentication logic, dashboard content, EDA/tools/guides, assets, and backend boundaries are preserved."
     },
     "frontend/src/locales/en.json": {
-      "sha256": "879f3080f9e0b6a8ded6c6685694390ef7027f68083e60f4d9f3bf6566ff3272",
+      "sha256": "7e7346c77a7207a1a6d164a60d3c95044c27d4adc0b9fd03b8747766acd40434",
       "previousSha256": "8926ac2635c3d6dbeed685adc3988381e3c4ae1733ad30f4c9de033e626e7101",
-      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
+      "reason": "User-authorized PR #8 final account-navigation/physical-layout cleanup, exact course notice, and corrected Kaggle YouTube source. Authentication logic, dashboard content, EDA/tools/guides, assets, and backend boundaries are preserved."
     },
     "frontend/src/pages/public/home-page.tsx": {
       "sha256": "62dc2383c1a8824024c968c2af5ea9a6a6c157c0867a62bc46500da567fce58b",
@@ -339,8 +339,8 @@
     },
     "frontend/src/components/shared/learning-video.tsx": {
       "added": true,
-      "sha256": "c47ef9c95f17eb645e2b960e6d7fd283e78df2344691d06c0ed88f439d7cbf8d",
-      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
+      "sha256": "135137aeb8a24764910e7963653022b137ca4628f312394fb2b49664a35e420e",
+      "reason": "User-authorized PR #8 final account-navigation/physical-layout cleanup, exact course notice, and corrected Kaggle YouTube source. Authentication logic, dashboard content, EDA/tools/guides, assets, and backend boundaries are preserved."
     },
     "frontend/src/content/learning-tools.ts": {
       "added": true,
@@ -349,8 +349,8 @@
     },
     "frontend/src/content/video-resources.ts": {
       "added": true,
-      "sha256": "0151e483c732e86409abbc8af8f9c405de8434a2ad53c51c8722fa1da31d5a4f",
-      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
+      "sha256": "667c11ddb017b613c8ebdf767227fd7c845d6f70dea6b7ad2484e818a68c0e16",
+      "reason": "User-authorized PR #8 final account-navigation/physical-layout cleanup, exact course notice, and corrected Kaggle YouTube source. Authentication logic, dashboard content, EDA/tools/guides, assets, and backend boundaries are preserved."
     },
     "frontend/src/pages/public/ai-tools-page.tsx": {
       "added": true,
@@ -369,13 +369,28 @@
     },
     "frontend/tests/learning-resources.test.ts": {
       "added": true,
-      "sha256": "f3af71ea7b1d362d4e32ac85ec6bc3fcda5d27a98710eb6d0355cac0c5c0cec2",
-      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
+      "sha256": "61fa8109e0797d6608b93a4ce2f376ec1124d6323173523591ba190419e3b282",
+      "reason": "User-authorized PR #8 final account-navigation/physical-layout cleanup, exact course notice, and corrected Kaggle YouTube source. Authentication logic, dashboard content, EDA/tools/guides, assets, and backend boundaries are preserved."
     },
     "frontend/src/styles/navigation-footer.css": {
       "added": true,
-      "sha256": "616d5bd1422c6797c3d78b6ccc5c7d475be94c99953669f19b6d915a0db85c47",
-      "reason": "User-authorized PR #8 Navbar/Footer/About refinements and public AI Tools Hub/Video Library; preserves approved design, assets, course visibility, and backend/auth boundaries."
+      "sha256": "c75e215e5e828ebd0425b007745e294f5ba6ed826c2083e39a7dac57d39e6456",
+      "reason": "User-authorized PR #8 final account-navigation/physical-layout cleanup, exact course notice, and corrected Kaggle YouTube source. Authentication logic, dashboard content, EDA/tools/guides, assets, and backend boundaries are preserved."
+    },
+    "frontend/public/_headers": {
+      "previousSha256": "532d9625d9f6fe45c24991c7ab0508faed6cd46c77228c1611cf4fead2e3b7fa",
+      "sha256": "f241638dd80aab6987a36bfd18fc413b14b0192ed785bc31dd8187c114662853",
+      "reason": "User-authorized PR #8 final account-navigation/physical-layout cleanup, exact course notice, and corrected Kaggle YouTube source. Authentication logic, dashboard content, EDA/tools/guides, assets, and backend boundaries are preserved."
+    },
+    "frontend/src/components/layout/language-switcher.tsx": {
+      "previousSha256": "7a027f13ebc235947fc3f877e3c1e7d0727ef95a35425080191ab49d81d4b2bb",
+      "sha256": "3d307ee76421c72fc8c65d64a58b2f7c83cedb75da0abcb58df7b5de121b2a62",
+      "reason": "User-authorized PR #8 final account-navigation/physical-layout cleanup, exact course notice, and corrected Kaggle YouTube source. Authentication logic, dashboard content, EDA/tools/guides, assets, and backend boundaries are preserved."
+    },
+    "frontend/tests/deployment.test.ts": {
+      "previousSha256": "3fa1f3c79b12e8599561f007267ea92b1f31db4a0973cef22e33778b9d905cc1",
+      "sha256": "73331406bbba08da0d7e56dc2e5e5307eb4977d224e1bf4057f98b8a6047d8ec",
+      "reason": "User-authorized PR #8 final account-navigation/physical-layout cleanup, exact course notice, and corrected Kaggle YouTube source. Authentication logic, dashboard content, EDA/tools/guides, assets, and backend boundaries are preserved."
     }
   }
 }

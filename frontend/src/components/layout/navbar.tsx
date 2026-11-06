@@ -22,14 +22,14 @@ export function Navbar() {
       <header className="site-header">
         <PageContainer className="navbar-inner">
           <BrandLogo />
-          <nav className="desktop-nav" dir={direction} aria-label={t('common.navigation')}>
+          <nav className="desktop-nav" dir="ltr" aria-label={t('common.navigation')}>
             {publicNavigation.map((item) => (
-              <NavLink key={item.id} to={item.to} end={item.to === '/'}>
+              <NavLink key={item.id} to={item.to} end={item.to === '/'} dir={direction}>
                 <MixedText>{t(`nav.${item.id}`)}</MixedText>
               </NavLink>
             ))}
           </nav>
-          <div className="header-actions" dir={direction}>
+          <div className="header-actions" dir="ltr">
             <AccountLink className="header-account navigation-login" />
             <div className="header-preferences">
               <LanguageSwitcher />

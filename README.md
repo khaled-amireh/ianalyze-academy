@@ -55,3 +55,16 @@ Lightweight public-page transitions use the original official iTEAM logo with th
 | Quality checks       | ESLint, Prettier, Node.js tests, and PGlite for embedded PostgreSQL security tests |
 
 Dependency versions and commands are defined in [frontend/package.json](frontend/package.json); installation uses the committed lockfile.
+
+## Getting started
+
+Use **Node.js >=24.0.0** and **npm >=11.0.0**, as required by the frontend package.
+
+```sh
+git clone https://github.com/khaled-amireh/ianalyze-academy.git
+cd ianalyze-academy/frontend
+npm ci
+npm run dev
+```
+
+Open [http://127.0.0.1:5173/](http://127.0.0.1:5173/). Public learning pages can run without backend credentials. In Windows PowerShell environments that block npm scripts, use `npm.cmd` in place of `npm`.

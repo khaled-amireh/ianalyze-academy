@@ -1,6 +1,6 @@
 {
   "baseCommit": "0b46b44719d7fd0c6dde2604e78d9a021cf19fee",
-  "authorization": "Final Website Improvements and user-authorized PR #8 public Tools Hub/Video Library and presentation refinements, 2026-11-06. Review branch only; no merge or deployment. User-approved merged PR #9 iTEAM page transition and explicit production preservation repair request; approval records only, no merge or deployment.",
+  "authorization": "Final Website Improvements and user-authorized PR #8 public Tools Hub/Video Library and presentation refinements, 2026-11-06. Review branch only; no merge or deployment. User-approved merged PR #9 iTEAM page transition and explicit production preservation repair request; approval records only, no merge or deployment. User-authorized English root README redesign and explicitly approved README-only Phase 02 approval check; local documentation branch only, no push, PR, merge or deployment.",
   "files": {
     "docs/final-improvements/release.md": {
       "sha256": "7b166d7aee84408e1cced42157929e8a8f17c7e85d5d7e69927842eb4f1665d8",
@@ -416,6 +416,16 @@
       "sha256": "7edf3308fbde89ee334292d64615ac66d8a1fe4967f64eb364686161abcaf0f9",
       "added": true,
       "reason": "User-approved PR #9 regression coverage for public navigation, browser history, same-page updates, redirects and immediate authentication/protected routes."
+    },
+    "README.md": {
+      "sha256": "1bf2a1d7e7e9bd1499e6384069fa8459d24b9bd8de04556c98015a1520e975aa",
+      "previousSha256": "7d78dfefcf5373a1a8762833ffda268f91388df2a6a05e9ca69fb91914be7cee",
+      "reason": "User-authorized professional English README: official branding, current capabilities and production gates, verified stack, local setup, repository structure and community credits."
+    },
+    "frontend/scripts/check-phase-02.mjs": {
+      "sha256": "4fc7b06fbef263eb22fc98c0898fbc33af91aaa4fd7c2daaf9d169042493c6db",
+      "previousSha256": "2fb6d24cbc926e0438b800155406cc8380f590aa2ee612c8fdce9e142fc5e56f",
+      "reason": "Explicit user approval to accept only the root README hash-pinned documentation update while checking its previous hash against the unchanged historical Phase 02 baseline; all other preservation and dependency assertions remain unchanged."
     }
   }
 }

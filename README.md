@@ -24,3 +24,9 @@ iAnalyze Academy helps students explore data analysis through accessible learnin
 - **EDA learning resources:** course information, preparation guidance, and study-plan content for Exploratory Data Analysis. The detailed week-by-week plan is implemented but currently hidden on the public course page.
 - **AI Tools Hub:** beginner-friendly guides for Google Colab, Python, Visual Studio Code, Kaggle, and Power BI, with official setup and documentation links.
 - **Educational Video Library:** an introductory data science video and a Kaggle tutorial, with embedded playback and direct viewing links.
+
+### Accounts and learning workspace
+
+The following capabilities are implemented and depend on a configured Supabase backend, verified identity, role permissions, and applicable release gates:
+
+- **Registration and authentication:** email verification, sign-in, recovery/reset flows, and optional persistent sessions. Signup requires both registration and privacy approval; production builds require a fresh owner-readiness check before enabling registration.

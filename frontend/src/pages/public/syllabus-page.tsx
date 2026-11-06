@@ -11,7 +11,7 @@ import { CourseFacts, RegisterBand, WeekList } from '@/components/shared/simple-
 const SHOW_WEEKLY_PLAN = false;
 
 export function SyllabusPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <PageContainer>
       <header className="s-page-head">
@@ -60,6 +60,14 @@ export function SyllabusPage() {
           </div>
         </section>
       )}
+
+      <section
+        className="s-section"
+        aria-labelledby="ai-tools-hub-title"
+        dir={i18n.resolvedLanguage === 'ar' ? 'rtl' : 'ltr'}
+      >
+        <h2 id="ai-tools-hub-title">{t('simple.aiToolsHubTitle')}</h2>
+      </section>
 
       <Reveal>
         <section className="s-section s-video" id="video">

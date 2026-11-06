@@ -38,6 +38,9 @@ const ProfilePage = lazy(() =>
 const NotificationsPage = lazy(() =>
   import('@/features/portal/notifications').then((m) => ({ default: m.NotificationsPage })),
 );
+const SyllabusPage = lazy(() =>
+  import('@/pages/public/syllabus-page').then((m) => ({ default: m.SyllabusPage })),
+);
 const JoinPage = lazy(() =>
   import('@/pages/public/join-page').then((m) => ({ default: m.JoinPage })),
 );
@@ -55,8 +58,7 @@ export function App() {
         <Route element={<PublicLayout />}>
           <Route index element={<HomePage />} />
           <Route path="about" element={<AboutPage />} />
-          {/* Keep the unreleased syllabus source off public routes. */}
-          <Route path="eda/*" element={<NotFoundPage />} />
+          <Route path="eda" element={<SyllabusPage />} />
           <Route path="videos/*" element={<NotFoundPage />} />
           <Route path="team" element={<Navigate to="/about#team" replace />} />
           <Route

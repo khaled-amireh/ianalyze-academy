@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, BookOpen } from 'lucide-react';
 import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
@@ -39,6 +39,9 @@ export function HomePage() {
                 <ArrowRight className="directional" aria-hidden="true" />
               </Link>
             </Button>
+            <Button asChild size="lg" variant="outline">
+              <Link to="/eda">{t('simple.seePlan')}</Link>
+            </Button>
           </div>
         </div>
         <HeroChart />
@@ -56,6 +59,18 @@ export function HomePage() {
           <TeamRow />
         </section>
       </Reveal>
+
+      <Link to="/eda" className="s-plan-teaser">
+        <BookOpen className="s-card-icon" aria-hidden="true" />
+        <div>
+          <h2>{t('simple.planTeaserTitle')}</h2>
+          <p>{t('simple.planTeaserText')}</p>
+        </div>
+        <span className="s-plan-teaser-link">
+          {t('simple.planTeaserLink')}
+          <ArrowRight className="directional" aria-hidden="true" />
+        </span>
+      </Link>
 
       <section className="s-section">
         <div className="s-section-head">

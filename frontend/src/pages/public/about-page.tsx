@@ -19,7 +19,7 @@ export function AboutPage() {
         </p>
       </header>
 
-      <div className="s-cards s-cards-3">
+      <div className="s-cards s-cards-3 about-info-cards">
         <section className="s-card s-parent">
           <ParentLogo transparent />
           <h2>{t('simple.parentTitle')}</h2>

@@ -22,11 +22,9 @@ for (const forbidden of [
   assert.ok(!text.includes(forbidden), `Development/private material in production: ${forbidden}`);
 assert.ok(
   !built.some((url) =>
-    /dev-routes|workspace-foundation|component-gallery|team-syllabus|syllabus-page/.test(
-      url.pathname,
-    ),
+    /dev-routes|workspace-foundation|component-gallery|team-syllabus/.test(url.pathname),
   ),
-  'Unexpected preview/private/unreleased asset',
+  'Unexpected preview/private asset',
 );
 const baseline = JSON.parse(
   readFileSync(new URL('../docs/phase-01/preserved-phase00.json', root), 'utf8'),

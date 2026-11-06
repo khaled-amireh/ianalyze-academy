@@ -44,6 +44,15 @@ const SyllabusPage = lazy(() =>
 const JoinPage = lazy(() =>
   import('@/pages/public/join-page').then((m) => ({ default: m.JoinPage })),
 );
+const AiToolsPage = lazy(() =>
+  import('@/pages/public/ai-tools-page').then((m) => ({ default: m.AiToolsPage })),
+);
+const ToolGuidePage = lazy(() =>
+  import('@/pages/public/tool-guide-page').then((m) => ({ default: m.ToolGuidePage })),
+);
+const VideosPage = lazy(() =>
+  import('@/pages/public/videos-page').then((m) => ({ default: m.VideosPage })),
+);
 const LeaderboardPage = lazy(() =>
   import('@/pages/public/leaderboard-page').then((m) => ({ default: m.LeaderboardPage })),
 );
@@ -59,7 +68,9 @@ export function App() {
           <Route index element={<HomePage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="eda" element={<SyllabusPage />} />
-          <Route path="videos/*" element={<NotFoundPage />} />
+          <Route path="ai-tools" element={<AiToolsPage />} />
+          <Route path="ai-tools/:toolId" element={<ToolGuidePage />} />
+          <Route path="videos" element={<VideosPage />} />
           <Route path="team" element={<Navigate to="/about#team" replace />} />
           <Route
             path="join"

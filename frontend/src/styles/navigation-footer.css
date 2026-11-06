@@ -1,0 +1,209 @@
+/* Shared navigation and footer refinements; logo sizing stays in redesign.css. */
+.site-header .desktop-nav {
+  gap: 8px;
+  min-width: 0;
+  flex: 0 1 560px;
+  grid-template-columns: 68px 104px 72px minmax(0, 1fr) 128px;
+}
+.site-header .desktop-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 12px;
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: normal;
+  text-align: center;
+  height: 62px;
+}
+.site-header .header-actions {
+  gap: 10px;
+}
+.site-header .header-preferences {
+  gap: 6px;
+}
+.site-header .notification-count {
+  min-width: 20px;
+  line-height: 20px;
+  text-align: center;
+}
+.mobile-dialog .mobile-nav-links a {
+  line-height: 24px;
+}
+.mobile-dialog .dialog-header p {
+  min-height: 48px;
+  line-height: 24px;
+}
+.site-header .navigation-login {
+  width: 118px;
+}
+.site-header .navigation-join {
+  width: 96px;
+}
+.site-header .navigation-join[href='/student'] {
+  width: 198px;
+}
+:is(.site-header, .mobile-dialog) :is(.navigation-login, .navigation-join),
+.mobile-dialog .mobile-nav-links a,
+.account-menu [role='menuitem'] {
+  direction: rtl;
+}
+html[lang='en'] :is(.site-header, .mobile-dialog) :is(.navigation-login, .navigation-join),
+html[lang='en'] .mobile-dialog .mobile-nav-links a,
+html[lang='en'] .account-menu [role='menuitem'] {
+  direction: ltr;
+}
+.site-header .desktop-nav a,
+.mobile-dialog .mobile-nav-links a:not(.navigation-login, .navigation-join),
+.mobile-dialog .dialog-header,
+.account-menu [role='menuitem'] {
+  text-align: start;
+}
+:is(.site-header, .mobile-dialog) {
+  --navigation-blue: #0d47a1;
+  --navigation-blue-hover: #093779;
+  --navigation-outline: #0d47a1;
+}
+.dark :is(.site-header, .mobile-dialog) {
+  --navigation-blue: #2165ba;
+  --navigation-blue-hover: #18549f;
+  --navigation-outline: #8fc4ff;
+}
+.site-header :is(.navigation-login, .navigation-join),
+.mobile-dialog .mobile-nav-links :is(.navigation-login, .navigation-join) {
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--navigation-outline);
+  border-radius: 10px;
+  color: var(--navigation-outline);
+  background: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+  text-align: center;
+  white-space: nowrap;
+  text-decoration: none;
+  transition:
+    background-color 160ms var(--ease),
+    border-color 160ms var(--ease),
+    color 160ms var(--ease);
+}
+/* Keep the existing desktop/menu breakpoint and guest visibility rules. */
+.site-header .navigation-login {
+  display: inline-flex;
+}
+.mobile-dialog .mobile-nav-links :is(.navigation-login, .navigation-join) {
+  display: flex;
+}
+.site-header .navigation-join,
+.mobile-dialog .mobile-nav-links .navigation-join {
+  border-color: var(--navigation-blue);
+  background: var(--navigation-blue);
+  color: #fff;
+}
+.site-header .navigation-login:hover,
+.mobile-dialog .mobile-nav-links .navigation-login:hover {
+  background: var(--secondary);
+}
+.site-header .navigation-join:hover,
+.mobile-dialog .mobile-nav-links .navigation-join:hover {
+  border-color: var(--navigation-blue-hover);
+  background: var(--navigation-blue-hover);
+}
+.site-header a:focus-visible,
+.mobile-dialog .mobile-nav-links a:focus-visible,
+.site-footer a:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.site-footer .footer-grid {
+  align-items: start;
+  gap: 32px;
+  text-align: start;
+}
+.site-footer .footer-grid > * {
+  min-width: 0;
+}
+.site-footer .footer-grid > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+.site-footer .footer-grid p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.site-footer .footer-grid nav {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  gap: 4px 20px;
+}
+.site-footer .footer-grid nav a {
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.site-footer .social-links {
+  display: grid;
+  justify-items: start;
+  gap: 4px;
+  max-width: 100%;
+}
+.site-footer .social-links a {
+  display: grid;
+  grid-template-columns: 17px minmax(0, 1fr) 12px;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.site-footer .social-links svg {
+  flex-shrink: 0;
+}
+.site-footer .footer-bottom {
+  align-items: center;
+  font-size: 12px;
+  text-align: start;
+}
+@media (min-width: 900px) {
+  .site-footer .footer-grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.85fr) minmax(0, 1fr);
+    column-gap: 48px;
+  }
+}
+@media (min-width: 1280px) {
+  .site-header .desktop-nav {
+    display: grid;
+  }
+}
+@media (max-width: 1279px) {
+  .site-header .desktop-nav,
+  .site-header .desktop-join,
+  .site-header .navigation-login {
+    display: none;
+  }
+  .site-header .mobile-menu-trigger {
+    display: inline-flex;
+  }
+  .site-header .header-actions {
+    margin-left: 0;
+    margin-right: auto;
+  }
+}
+@media (max-width: 560px) {
+  .site-header .header-actions {
+    gap: 4px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header :is(.navigation-login, .navigation-join),
+  .mobile-dialog .mobile-nav-links :is(.navigation-login, .navigation-join) {
+    transition: none;
+  }
+}

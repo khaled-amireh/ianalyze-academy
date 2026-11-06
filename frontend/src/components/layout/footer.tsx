@@ -5,11 +5,13 @@ import { PageContainer } from '@/components/shared/page-container';
 import { MixedText } from '@/components/shared/mixed-text';
 import { ParentLogo } from './brand-logo';
 import { SocialLinks } from '@/components/shared/academy-content';
+import { JoinNavigation } from '@/features/portal/account-navigation';
+import { publicNavigation, secondaryNavigation } from '@/app/navigation';
 
 export function Footer() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" dir={i18n.resolvedLanguage === 'ar' ? 'rtl' : 'ltr'}>
       <PageContainer>
         <div className="footer-grid">
           <div>
@@ -22,11 +24,19 @@ export function Footer() {
             <p className="text-sm">{t('brand.university')}</p>
           </div>
           <nav aria-label={t('common.footerNavigation')}>
-            {(['eda', 'about', 'join', 'leaderboard', 'contact'] as const).map((key) => (
-              <Link to={`/${key}`} key={key}>
-                <MixedText>{t(`nav.${key}`)}</MixedText>
-              </Link>
-            ))}
+            {[
+              ...publicNavigation.filter((item) => item.id !== 'home'),
+              { id: 'join', to: '/join' } as const,
+              ...secondaryNavigation,
+            ].map((item) =>
+              item.id === 'join' ? (
+                <JoinNavigation key={item.id} />
+              ) : (
+                <Link to={item.to} key={item.id}>
+                  <MixedText>{t(`nav.${item.id}`)}</MixedText>
+                </Link>
+              ),
+            )}
           </nav>
           <div>
             <ParentLogo transparent />

@@ -30,16 +30,10 @@ export function AccountLink({
 }) {
   const auth = useAuth();
   const { c } = usePortalCopy();
-  if (!academyClient) return null;
+  if (!academyClient || auth.status === 'signed-in') return null;
   return (
-    <Link
-      className={className}
-      onClick={onNavigate}
-      to={
-        auth.status === 'signed-in' ? (auth.role === 'team' ? '/workspace' : '/student') : '/login'
-      }
-    >
-      {auth.status === 'signed-in' ? c.dashboard : c.login}
+    <Link className={className} onClick={onNavigate} to="/login">
+      {c.login}
     </Link>
   );
 }

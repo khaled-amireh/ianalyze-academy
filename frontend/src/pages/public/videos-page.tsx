@@ -1,66 +1,25 @@
-import { Library, Play } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { introductoryVideo } from '@/content/public-content';
+import { featuredVideos } from '@/content/video-resources';
 import { PageContainer } from '@/components/shared/page-container';
-import { PageHeader } from '@/components/shared/page-header';
 import { MixedText } from '@/components/shared/mixed-text';
-import { Button } from '@/components/ui/button';
-import { ExternalLink } from 'lucide-react';
+import { LearningVideo } from '@/components/shared/learning-video';
 
 export function VideosPage() {
   const { t } = useTranslation();
   return (
-    <PageContainer>
-      <PageHeader
-        eyebrow={t('nav.videos')}
-        title={t('pages.videos.title')}
-        description={t('pages.videos.description')}
-        icon={Library}
-      />
-      <article className="video-feature">
-        <div className="video-frame">
-          <iframe
-            src={introductoryVideo.embedUrl}
-            title={t('academy.video.title')}
-            loading="lazy"
-            allow="fullscreen; encrypted-media"
-            allowFullScreen
-            referrerPolicy="strict-origin-when-cross-origin"
-          />
-        </div>
-        <div className="video-details">
-          <div>
-            <p className="eyebrow">
-              <Play aria-hidden="true" />
-              {t('academy.video.category')}
-            </p>
-            <h2>{t('academy.video.title')}</h2>
-            <p>
-              <MixedText>{t('academy.video.description')}</MixedText>
-            </p>
-          </div>
-          <div className="video-fallback">
-            <p>{t('academy.video.help')}</p>
-            <Button asChild variant="outline">
-              <a href={introductoryVideo.fallbackUrl} target="_blank" rel="noopener noreferrer">
-                <MixedText>{t('academy.video.fallback')}</MixedText>
-                <ExternalLink aria-hidden="true" />
-                <span className="sr-only">{t('academy.external')}</span>
-              </a>
-            </Button>
-          </div>
-        </div>
-      </article>
-      <div className="two-card-grid public-section">
-        <section className="content-card detail-card">
-          <Play className="icon-tile" aria-hidden="true" />
-          <div>
-            <h2>{t('academy.video.optionalTitle')}</h2>
-            <p>
-              <MixedText>{t('academy.video.optionalText')}</MixedText>
-            </p>
-          </div>
-        </section>
+    <PageContainer className="learning-page">
+      <header className="s-page-head">
+        <h1 className="resource-copy" id="page-title" tabIndex={-1}>
+          {t('nav.videos')}
+        </h1>
+        <p className="s-lede resource-copy">
+          <MixedText>{t('learning.videoIntro')}</MixedText>
+        </p>
+      </header>
+      <div className="s-cards learning-videos-grid">
+        {featuredVideos.map((video) => (
+          <LearningVideo video={video} key={video.id} />
+        ))}
       </div>
     </PageContainer>
   );

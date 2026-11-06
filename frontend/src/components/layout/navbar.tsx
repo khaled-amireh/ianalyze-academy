@@ -15,21 +15,22 @@ import {
 import { AccountLink } from '@/features/portal/auth-pages';
 
 export function Navbar() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const direction = i18n.resolvedLanguage === 'ar' ? 'rtl' : 'ltr';
   return (
     <>
       <header className="site-header">
         <PageContainer className="navbar-inner">
           <BrandLogo />
-          <nav className="desktop-nav" aria-label={t('common.navigation')}>
+          <nav className="desktop-nav" dir="ltr" aria-label={t('common.navigation')}>
             {publicNavigation.map((item) => (
-              <NavLink key={item.id} to={item.to} end={item.to === '/'}>
+              <NavLink key={item.id} to={item.to} end={item.to === '/'} dir={direction}>
                 <MixedText>{t(`nav.${item.id}`)}</MixedText>
               </NavLink>
             ))}
           </nav>
-          <div className="header-actions">
-            <AccountLink className="header-account" />
+          <div className="header-actions" dir="ltr">
+            <AccountLink className="header-account navigation-login" />
             <div className="header-preferences">
               <LanguageSwitcher />
               <ThemeToggle />

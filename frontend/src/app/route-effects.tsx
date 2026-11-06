@@ -3,6 +3,7 @@ import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { publicPages } from './navigation';
 import { usePortalCopy } from '@/features/portal/copy';
+import { findLearningTool } from '@/content/learning-tools';
 
 export function RouteEffects() {
   const { pathname, hash } = useLocation();
@@ -24,6 +25,7 @@ export function RouteEffects() {
   }, [pathname, hash]);
   useEffect(() => {
     const page = publicPages.find((page) => pathname === `/${page}`);
+    const tool = findLearningTool(pathname.match(/^\/ai-tools\/([^/]+)\/?$/)?.[1]);
     const portalTitles: Record<string, string> = {
       '/login': c.login,
       '/auth/callback': c.login,
@@ -36,7 +38,7 @@ export function RouteEffects() {
       '/profile/edit': c.editProfile,
       '/notifications': c.notifications,
     };
-    document.title = `${portalTitles[pathname] ?? (page ? t(`nav.${page}`) : pathname === '/' ? t('nav.home') : t('error.notFoundTitle'))} · iAnalyze Academy`;
+    document.title = `${portalTitles[pathname] ?? (tool ? `${tool.name} · ${t('nav.aiTools')}` : page ? t(`nav.${page === 'ai-tools' ? 'aiTools' : page}`) : pathname === '/' ? t('nav.home') : t('error.notFoundTitle'))} · iAnalyze Academy`;
   }, [pathname, t, c]);
   return null;
 }

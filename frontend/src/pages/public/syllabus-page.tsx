@@ -1,10 +1,11 @@
-import { ExternalLink, Laptop, Users } from 'lucide-react';
+import { Laptop, Users } from 'lucide-react';
+import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { introductoryVideo, syllabus } from '@/content/public-content';
+import { syllabus } from '@/content/public-content';
 import { Button } from '@/components/ui/button';
 import { PageContainer } from '@/components/shared/page-container';
 import { MixedText } from '@/components/shared/mixed-text';
-import { Reveal } from '@/components/shared/reveal';
+import { VideoLibraryPreview } from '@/components/shared/learning-video';
 import { CourseFacts, RegisterBand, WeekList } from '@/components/shared/simple-blocks';
 
 // Hidden for now; set to true to show the week-by-week plan again.
@@ -32,12 +33,17 @@ export function SyllabusPage() {
             { id: 'need', icon: Laptop },
           ] as const
         ).map(({ id, icon: Icon }) => (
-          <section key={id} className="s-card">
+          <section key={id} className={id === 'need' ? 's-card eda-tools-card' : 's-card'}>
             <Icon className="s-card-icon" aria-hidden="true" />
             <h2>{t(`simple.${id}Title`)}</h2>
             <p>
               <MixedText>{t(`simple.${id}Text`)}</MixedText>
             </p>
+            {id === 'need' && (
+              <Button asChild variant="outline" size="sm">
+                <Link to="/ai-tools">{t('learning.viewTools')}</Link>
+              </Button>
+            )}
           </section>
         ))}
       </div>
@@ -61,33 +67,7 @@ export function SyllabusPage() {
         </section>
       )}
 
-      <Reveal>
-        <section className="s-section s-video" id="video">
-          <div className="s-video-copy">
-            <h2>{t('simple.videoTitle')}</h2>
-            <p>
-              <MixedText>{t('simple.videoText')}</MixedText>
-            </p>
-            <Button asChild variant="outline">
-              <a href={introductoryVideo.fallbackUrl} target="_blank" rel="noopener noreferrer">
-                <MixedText>{t('academy.video.fallback')}</MixedText>
-                <ExternalLink aria-hidden="true" />
-                <span className="sr-only">{t('academy.external')}</span>
-              </a>
-            </Button>
-          </div>
-          <div className="s-video-frame">
-            <iframe
-              src={introductoryVideo.embedUrl}
-              title={t('academy.video.title')}
-              loading="lazy"
-              allow="fullscreen; encrypted-media"
-              allowFullScreen
-              referrerPolicy="strict-origin-when-cross-origin"
-            />
-          </div>
-        </section>
-      </Reveal>
+      <VideoLibraryPreview />
 
       <RegisterBand />
     </PageContainer>

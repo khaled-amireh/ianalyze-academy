@@ -4,7 +4,7 @@ import { changeLocale } from '@/lib/i18n';
 export function LanguageSwitcher() {
   const { t, i18n } = useTranslation();
   return (
-    <div className="language-switcher" role="group" aria-label={t('common.language')}>
+    <div className="language-switcher" role="group" dir="ltr" aria-label={t('common.language')}>
       {(['ar', 'en'] as const).map((locale) => (
         <button
           key={locale}

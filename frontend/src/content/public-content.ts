@@ -44,11 +44,7 @@ export const leaders = [
   },
 ] as const;
 
-export const introductoryVideo = {
-  id: '147puYxGioHyoYjSwxktgGP4RRWeM_qn4',
-  embedUrl: 'https://drive.google.com/file/d/147puYxGioHyoYjSwxktgGP4RRWeM_qn4/preview',
-  fallbackUrl: 'https://drive.google.com/file/d/147puYxGioHyoYjSwxktgGP4RRWeM_qn4/view?usp=sharing',
-} as const;
+export { introductoryVideo } from './video-resources';
 
 export const socialLinks = [
   { id: 'instagram', name: 'Instagram', href: 'https://www.instagram.com/iteamzuj/' },

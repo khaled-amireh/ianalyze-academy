@@ -315,6 +315,16 @@ html[lang='en'] .s-section-head {
   margin-bottom: 1rem;
   width: auto;
 }
+html[lang='en'] .about-info-cards > .s-card {
+  text-align: left;
+}
+html[lang='en'] .about-info-cards > .s-card > :is(.s-card-icon, .parent-logo) {
+  margin-left: 0;
+  margin-right: auto;
+}
+html[lang='en'] .about-info-cards .parent-logo .theme-logo img {
+  justify-self: left;
+}
 .s-tools {
   display: flex;
   flex-wrap: wrap;

@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { publicNavigation, secondaryNavigation } from '@/app/navigation';
+import { DESKTOP_NAV_QUERY, publicNavigation, secondaryNavigation } from '@/app/navigation';
 import { MixedText } from '@/components/shared/mixed-text';
 import { LanguageSwitcher } from './language-switcher';
 import { ThemeToggle } from './theme-toggle';
@@ -19,11 +19,12 @@ import { JoinNavigation } from '@/features/portal/account-navigation';
 import { AccountLink } from '@/features/portal/auth-pages';
 
 export function MobileNavigation() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const direction = i18n.resolvedLanguage === 'ar' ? 'rtl' : 'ltr';
   const [open, setOpen] = useState(false);
   const navigated = useRef(false);
   useEffect(() => {
-    const desktop = matchMedia('(min-width:1120px)');
+    const desktop = matchMedia(DESKTOP_NAV_QUERY);
     const closeOnDesktop = () => {
       if (desktop.matches) setOpen(false);
     };
@@ -45,6 +46,7 @@ export function MobileNavigation() {
       </DialogTrigger>
       <DialogContent
         className="mobile-dialog"
+        dir="rtl"
         aria-modal="true"
         closeLabel={t('common.close')}
         onCloseAutoFocus={(event) => {
@@ -54,12 +56,13 @@ export function MobileNavigation() {
           }
         }}
       >
-        <DialogHeader>
+        <DialogHeader dir={direction}>
           <DialogTitle>{t('common.mobileTitle')}</DialogTitle>
           <DialogDescription>{t('common.mobileDescription')}</DialogDescription>
         </DialogHeader>
         <nav className="mobile-nav-links" aria-label={t('common.navigation')}>
           <AccountLink
+            className="navigation-login"
             onNavigate={() => {
               navigated.current = true;
               setOpen(false);
@@ -69,6 +72,7 @@ export function MobileNavigation() {
             <NavLink
               key={item.id}
               to={item.to}
+              dir={direction}
               end={item.to === '/'}
               onClick={() => {
                 navigated.current = true;
@@ -79,13 +83,14 @@ export function MobileNavigation() {
             </NavLink>
           ))}
           <JoinNavigation
+            className="navigation-join"
             onNavigate={() => {
               navigated.current = true;
               setOpen(false);
             }}
           />
         </nav>
-        <div className="mobile-preferences">
+        <div className="mobile-preferences" dir="ltr">
           <LanguageSwitcher />
           <ThemeToggle />
         </div>

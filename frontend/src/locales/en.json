@@ -16,7 +16,8 @@
     "team": "Our Team",
     "join": "Register",
     "leaderboard": "Leaderboard",
-    "contact": "Contact & FAQ"
+    "contact": "Contact & FAQ",
+    "aiTools": "AI Tools Hub"
   },
   "common": {
     "skip": "Skip to content",
@@ -373,16 +374,17 @@
     "whenValue": "Thursdays, 10 AM – 1 PM",
     "levelLabel": "Level",
     "levelValue": "No experience needed",
-    "courseEyebrow": "Study plan",
+    "courseEyebrow": "EDA Course",
     "courseTitle": "Exploratory Data Analysis (EDA)",
     "courseText": "A beginner course: six weeks, from Python basics to your first data analysis project. Taught in Arabic, with technical terms in English.",
     "whoTitle": "Who it's for",
     "whoText": "Any student interested in data, even if you've never written code.",
     "needTitle": "What you need",
-    "needText": "A laptop and a Google account. We use Google Colab, so there's nothing to install.",
+    "needText": "A laptop and a Google account. We use Google Colab, so no local installation is required for the course. You can also explore Power BI, an optional tool for analysing data and creating interactive reports and dashboards.",
     "planTitle": "Week by week",
     "planText": "Each week: a short explanation, practice with the instructor, then a small activity.",
     "toolsTitle": "Tools",
+    "aiToolsHubTitle": "AI Tools Hub",
     "videoTitle": "Before you start",
     "videoText": "An Introduction to Data Science video that gives you a feel for the field. Not required to register.",
     "aboutPageTitle": "About the club",
@@ -392,5 +394,124 @@
     "howText": "We explain an idea briefly, try it together, then everyone tries it on their own. Questions are welcome any time.",
     "newsTitle": "News and announcements",
     "newsText": "We post activity dates and announcements on the official iTeam accounts."
+  },
+  "learning": {
+    "toolsIntro": "Five tools to help you learn, practise, and explore data. Understand each tool's purpose before getting started.",
+    "courseNote": "The required tools will be announced once the course plan is finalized.",
+    "why": "Why do I need it?",
+    "requirements": "What you need",
+    "viewGuide": "View Guide",
+    "viewTools": "View Tools",
+    "getStarted": "How to Get Started",
+    "installGuide": "Installation Guide",
+    "setupSteps": "Setup steps",
+    "verify": "Check that it works",
+    "backToTools": "Back to AI Tools Hub",
+    "officialDocs": "Official instructions",
+    "windows": "Windows instructions",
+    "macos": "macOS instructions",
+    "linux": "Linux instructions",
+    "videoIntro": "Two optional videos to help you explore data science and practise with Kaggle.",
+    "viewLibrary": "View Video Library",
+    "watchVideo": "Watch video",
+    "videoHelp": "Video not playing? Open it directly in Google Drive.",
+    "openDrive": "Open in Google Drive",
+    "youtubeHelp": "Video not playing? Open it directly on YouTube.",
+    "openYouTube": "Open on YouTube",
+    "youtubeSource": "Original source on YouTube",
+    "categories": {
+      "course": "Course tool",
+      "local": "Optional local setup",
+      "practice": "Datasets and practice",
+      "visualization": "Optional visualization tool"
+    },
+    "modes": {
+      "online": "Online · no installation",
+      "install": "Desktop installation"
+    },
+    "platforms": {
+      "browser": "Windows, macOS, Linux · browser",
+      "desktop": "Windows, macOS, Linux",
+      "windows": "Windows only"
+    },
+    "tools": {
+      "google-colab": {
+        "description": "A browser-based notebook for writing and running Python, with no local installation.",
+        "why": "This is the EDA course workspace. Write code, explore datasets, and follow practical activities in one notebook.",
+        "requirements": "A laptop, internet connection, modern browser, and Google account. Colab includes Python; no local setup is required.",
+        "open": "Open Google Colab",
+        "steps": {
+          "open": "Open Google Colab using the official link above.",
+          "account": "Sign in with your Google account.",
+          "notebook": "Choose New notebook and give it a name.",
+          "run": "Enter the example below in a code cell. Use its run button or press Shift+Enter to connect a runtime and execute it."
+        },
+        "verification": "The cell should display Hello, iAnalyze! below it. Save your notebook so you can return to it."
+      },
+      "python": {
+        "description": "The programming language used in the EDA course, also available for your own computer.",
+        "why": "A local installation lets you run Python outside Colab. It is optional because Colab already provides Python.",
+        "requirements": "A supported Windows, macOS, or Linux computer and permission to install software. VS Code is a separate, optional editor.",
+        "open": "Download Python",
+        "steps": {
+          "download": "Open the official Python downloads page and choose a current supported Python 3 release for your operating system.",
+          "windows": "Windows: follow the official install-manager or installer instructions shown for your download. Complete setup, then reopen your terminal.",
+          "macos": "macOS: download the official .pkg installer and follow its prompts. Open a new Terminal window after installation.",
+          "linux": "Linux: check whether python3 is already available. Otherwise use your distribution's package manager and the official Linux instructions below; keep the system Python installation intact."
+        },
+        "verification": "In a terminal, run the command for your operating system below. A Python 3 version confirms installation. If the command is unavailable, consult the official platform instructions."
+      },
+      "vscode": {
+        "description": "A code editor for organizing files and writing programs on your computer.",
+        "why": "Use VS Code when you want a local Python workspace. It is optional for the Colab-based EDA course.",
+        "requirements": "Install Python separately for local execution. Use Microsoft's Python extension. The Jupyter extension is optional for notebook work.",
+        "open": "Download VS Code",
+        "steps": {
+          "windows": "Windows: download the matching user installer from the official page, run it, and follow the setup prompts.",
+          "macos": "macOS: download the matching build, open it, and move Visual Studio Code to Applications.",
+          "linux": "Linux: choose the package for your distribution, such as .deb or .rpm, and install it with your package manager.",
+          "extension": "Open VS Code, open Extensions, and install the Python extension published by Microsoft.",
+          "interpreter": "Open the Command Palette, choose Python: Select Interpreter, and select your installed Python interpreter.",
+          "run": "Create hello.py, enter the example below, save the file, and choose Run Python File in Terminal."
+        },
+        "verification": "The terminal should display Hello, iAnalyze! If no interpreter is available, install Python first and select it again."
+      },
+      "kaggle": {
+        "description": "An online platform for discovering datasets and working with notebooks.",
+        "why": "Find datasets for practice and explore how others analyse data. It complements the course and needs no desktop installation.",
+        "requirements": "An internet connection and browser. A Kaggle account is needed to save or run your notebooks; some datasets have additional access terms.",
+        "open": "Open Kaggle",
+        "steps": {
+          "open": "Visit Kaggle using the official link above.",
+          "account": "Create an account or sign in to your existing account.",
+          "dataset": "Open Datasets, search for a topic, and read the dataset description, file preview, and usage terms.",
+          "notebook": "From a dataset, choose New Notebook where available, or create a notebook and attach the dataset through its data panel."
+        },
+        "verification": "Confirm that the dataset appears in the notebook's data panel. Run a simple Python cell, such as print(1 + 1), and check that it outputs 2."
+      },
+      "power-bi": {
+        "description": "A Windows desktop application for analysing data and building interactive reports and dashboards.",
+        "why": "Explore visual reporting alongside your programming work. Power BI Desktop is optional and is not a requirement of the EDA course.",
+        "requirements": "A Windows computer meeting Microsoft's current system requirements. There is no native Power BI Desktop application for macOS or Linux.",
+        "open": "Get Power BI Desktop",
+        "steps": {
+          "download": "Open the official Microsoft page and check the current Windows requirements in the instructions linked below.",
+          "install": "Choose the Microsoft Store option or Microsoft's direct installer, then follow the installation prompts.",
+          "open": "Launch Power BI Desktop after installation.",
+          "import": "Choose Get data, then Text/CSV or Excel. Select a small sample file you are allowed to use, review the preview, and choose Load."
+        },
+        "verification": "Confirm the data fields appear, then add a simple chart on the report canvas. Save the report locally; publishing online is a separate step."
+      }
+    },
+    "videos": {
+      "dataScience": {
+        "title": "Introduction to Data Science",
+        "description": "An introduction to the fundamentals of data science and its real-world applications."
+      },
+      "kaggle": {
+        "title": "Getting Started with Kaggle",
+        "description": "Learn how to explore datasets and get started with Kaggle."
+      }
+    }
   }
 }

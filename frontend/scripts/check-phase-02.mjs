@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
-import { authIntegration } from './verify-merge-preservation.mjs';
+import { authIntegration, finalUpdate } from './verify-merge-preservation.mjs';
 const root = new URL('../../', import.meta.url);
 const hash = (path) =>
   createHash('sha256')
@@ -10,8 +10,16 @@ const hash = (path) =>
 const baseline = JSON.parse(
   readFileSync(new URL('docs/phase-02/preserved-files.json', root), 'utf8'),
 );
-for (const [path, expected] of Object.entries(baseline))
-  assert.equal(hash(path), expected, `Preserved file changed: ${path}`);
+for (const [path, expected] of Object.entries(baseline)) {
+  const readmeApproval = path === 'README.md' ? finalUpdate.files[path] : undefined;
+  if (readmeApproval)
+    assert.equal(
+      readmeApproval.previousSha256,
+      expected,
+      'README approval must preserve the historical Phase 02 baseline',
+    );
+  assert.equal(hash(path), readmeApproval?.sha256 ?? expected, `Preserved file changed: ${path}`);
+}
 const portraits = JSON.parse(
   readFileSync(new URL('docs/phase-02/asset-provenance.json', root), 'utf8'),
 );

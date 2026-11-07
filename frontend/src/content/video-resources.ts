@@ -9,15 +9,21 @@ function driveVideo(id: string) {
 
 export const introductoryVideo = driveVideo('147puYxGioHyoYjSwxktgGP4RRWeM_qn4');
 export const featuredVideos = [
-  { ...introductoryVideo, slug: 'data-science', copyKey: 'dataScience' },
+  {
+    ...introductoryVideo,
+    slug: 'data-science',
+    copyKey: 'dataScience',
+    cover: 'brand' as const,
+  },
   {
     provider: 'youtube',
-    id: 'bR2y1MMW5IE',
-    embedUrl: 'https://www.youtube-nocookie.com/embed/bR2y1MMW5IE',
-    fallbackUrl: 'https://www.youtube.com/watch?v=bR2y1MMW5IE',
+    id: '_3m-0Fskfe8',
+    embedUrl: 'https://www.youtube-nocookie.com/embed/_3m-0Fskfe8',
+    fallbackUrl: 'https://www.youtube.com/watch?v=_3m-0Fskfe8',
     slug: 'kaggle',
     copyKey: 'kaggle',
-    sourceUrl: 'https://youtu.be/bR2y1MMW5IE',
+    sourceUrl: 'https://youtu.be/_3m-0Fskfe8',
+    cover: '/video-thumbnails/kaggle-introduction.jpg',
   },
 ] as const;
 export type FeaturedVideo = (typeof featuredVideos)[number];

@@ -48,10 +48,10 @@ test('each tool guide has complete English and Arabic content for every configur
   }
 });
 
-test('the introduction stays on Drive and Kaggle uses the corrected YouTube source and fallback', () => {
+test('the introduction stays on Drive and Kaggle uses the approved Arabic tutorial', () => {
   assert.deepEqual(
     featuredVideos.map((video) => video.id),
-    ['147puYxGioHyoYjSwxktgGP4RRWeM_qn4', 'bR2y1MMW5IE'],
+    ['147puYxGioHyoYjSwxktgGP4RRWeM_qn4', '_3m-0Fskfe8'],
   );
   assert.equal(featuredVideos[0].embedUrl, introductoryVideo.embedUrl);
   assert.equal(featuredVideos[0].provider, 'drive');
@@ -64,8 +64,36 @@ test('the introduction stays on Drive and Kaggle uses the corrected YouTube sour
     'https://drive.google.com/file/d/147puYxGioHyoYjSwxktgGP4RRWeM_qn4/view?usp=sharing',
   );
   assert.equal(featuredVideos[1].provider, 'youtube');
-  assert.equal(featuredVideos[1].embedUrl, 'https://www.youtube-nocookie.com/embed/bR2y1MMW5IE');
-  assert.equal(featuredVideos[1].fallbackUrl, 'https://www.youtube.com/watch?v=bR2y1MMW5IE');
+  assert.equal(featuredVideos[1].embedUrl, 'https://www.youtube-nocookie.com/embed/_3m-0Fskfe8');
+  assert.equal(featuredVideos[1].fallbackUrl, 'https://www.youtube.com/watch?v=_3m-0Fskfe8');
   assert.ok(featuredVideos.every((video) => !video.embedUrl.includes('autoplay')));
-  assert.equal(featuredVideos[1].sourceUrl, 'https://youtu.be/bR2y1MMW5IE');
+  assert.equal(featuredVideos[1].sourceUrl, 'https://youtu.be/_3m-0Fskfe8');
+  assert.equal(featuredVideos[1].cover, '/video-thumbnails/kaggle-introduction.jpg');
+});
+
+test('both cards defer their iframe until activation and share one persistent player', () => {
+  const component = readFileSync(
+    new URL('../src/components/shared/drive-video.tsx', import.meta.url),
+    'utf8',
+  );
+  const card = readFileSync(
+    new URL('../src/components/shared/learning-video.tsx', import.meta.url),
+    'utf8',
+  );
+  const styles = readFileSync(
+    new URL('../src/styles/learning-resources.css', import.meta.url),
+    'utf8',
+  );
+  assert.match(component, /!activated \? \(/);
+  assert.match(component, /setActivated\(true\)/);
+  assert.match(component, /<iframe/);
+  assert.match(component, /allowFullScreen/);
+  assert.match(component, /requestFullscreen/);
+  assert.match(component, /referrerPolicy="strict-origin-when-cross-origin"/);
+  assert.equal((card.match(/<VideoPlayer/g) ?? []).length, 1);
+  assert.equal((component.match(/<iframe/g) ?? []).length, 1);
+  assert.match(styles, /\.video-player-frame[\s\S]*inline-size: 100%/);
+  assert.match(styles, /\.video-player-frame[\s\S]*max-inline-size: 100%/);
+  assert.match(styles, /\.video-player-frame[\s\S]*aspect-ratio: 16 \/ 9/);
+  assert.match(styles, /\.video-player-frame iframe[\s\S]*position: absolute/);
 });

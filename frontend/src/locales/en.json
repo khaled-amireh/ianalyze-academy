@@ -414,6 +414,8 @@
     "videoIntro": "Two optional videos to help you explore data science and practise with Kaggle.",
     "viewLibrary": "View Video Library",
     "watchVideo": "Watch video",
+    "playVideo": "Play video",
+    "loadingVideo": "Loading video player…",
     "videoHelp": "Video not playing? Open it directly in Google Drive.",
     "openDrive": "Open in Google Drive",
     "expandVideo": "Fullscreen / Expand Video",
@@ -511,8 +513,8 @@
         "description": "An introduction to the fundamentals of data science and its real-world applications."
       },
       "kaggle": {
-        "title": "Getting Started with Kaggle",
-        "description": "Learn how to explore datasets and get started with Kaggle."
+        "title": "Introduction to Kaggle",
+        "description": "A beginner-friendly Arabic tour of Kaggle, its main sections, datasets, notebooks, and competitions."
       }
     }
   }

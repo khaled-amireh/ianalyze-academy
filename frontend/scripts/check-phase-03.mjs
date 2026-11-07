@@ -8,6 +8,7 @@ import {
   mergeResolution,
   qualityUpdate,
   finalUpdate,
+  prePresentationUpdate,
   verifyMergePreservation,
 } from './verify-merge-preservation.mjs';
 
@@ -33,10 +34,18 @@ for (const [path, hash] of Object.entries(manifest)) {
   assert.equal(
     createHash('sha256')
       .update(
-        readFileSync(new URL(finalUpdate.files[path] ? path : (integration[path] ?? path), root)),
+        readFileSync(
+          new URL(
+            prePresentationUpdate.files[path] || finalUpdate.files[path]
+              ? path
+              : (integration[path] ?? path),
+            root,
+          ),
+        ),
       )
       .digest('hex'),
-    finalUpdate.files[path]?.sha256 ??
+    prePresentationUpdate.files[path]?.sha256 ??
+      finalUpdate.files[path]?.sha256 ??
       qualityUpdate.files[path]?.sha256 ??
       authIntegration.files[path]?.sha256 ??
       hash,

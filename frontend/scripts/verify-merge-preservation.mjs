@@ -17,6 +17,9 @@ export const qualityUpdate = JSON.parse(
 export const finalUpdate = JSON.parse(
   readFileSync(new URL('docs/final-improvements/approved-changes.json', root), 'utf8'),
 );
+export const prePresentationUpdate = JSON.parse(
+  readFileSync(new URL('docs/pre-presentation-fixes/approved-changes.json', root), 'utf8'),
+);
 const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
 function tree(commit) {
   return new Map(
@@ -71,6 +74,30 @@ export function verifyMergePreservation() {
         resolution.previousSha256,
         `Final improvement baseline changed: ${path}`,
       );
+    resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };
+  }
+  assert.equal(
+    git('merge-base', prePresentationUpdate.baseCommit, 'HEAD'),
+    prePresentationUpdate.baseCommit,
+  );
+  const presentationBaseline = tree(prePresentationUpdate.baseCommit);
+  for (const [path, resolution] of Object.entries(prePresentationUpdate.files)) {
+    assert.ok(resolution.reason, `Presentation fix reason missing: ${path}`);
+    if (resolution.added) {
+      assert.ok(!presentationBaseline.has(path), `Presentation addition already existed: ${path}`);
+    } else {
+      assert.equal(
+        createHash('sha256')
+          .update(
+            execFileSync('git', ['show', `${prePresentationUpdate.baseCommit}:${path}`], {
+              cwd: root,
+            }),
+          )
+          .digest('hex'),
+        resolution.previousSha256,
+        `Presentation fix baseline changed: ${path}`,
+      );
+    }
     resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };
   }
   const base = tree(baseCommit);

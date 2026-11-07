@@ -4,6 +4,7 @@ import { ExternalLink } from 'lucide-react';
 import { featuredVideos, type FeaturedVideo } from '@/content/video-resources';
 import { Button } from '@/components/ui/button';
 import { MixedText } from './mixed-text';
+import { DriveVideo } from './drive-video';
 
 export function LearningVideo({ video }: { video: FeaturedVideo }) {
   const { t } = useTranslation();
@@ -20,16 +21,20 @@ export function LearningVideo({ video }: { video: FeaturedVideo }) {
       <p className="resource-copy">
         <MixedText>{t(`learning.videos.${video.copyKey}.description`)}</MixedText>
       </p>
-      <div className="s-video-frame">
-        <iframe
-          src={video.embedUrl}
-          title={title}
-          loading="lazy"
-          allow="fullscreen; encrypted-media"
-          allowFullScreen
-          referrerPolicy="strict-origin-when-cross-origin"
-        />
-      </div>
+      {video.provider === 'drive' ? (
+        <DriveVideo src={video.embedUrl} title={title} />
+      ) : (
+        <div className="s-video-frame">
+          <iframe
+            src={video.embedUrl}
+            title={title}
+            loading="lazy"
+            allow="fullscreen; encrypted-media"
+            allowFullScreen
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
+        </div>
+      )}
       <div className="video-fallback">
         <p className="resource-copy">
           <MixedText>

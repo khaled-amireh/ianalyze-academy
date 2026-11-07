@@ -52,6 +52,13 @@ const texts = entries
   .filter((x) => /\.(?:js|html|css|json)$/.test(x.path))
   .map((x) => readFileSync(x.url, 'utf8'))
   .join('\n');
+for (const { path, url } of entries.filter((entry) => entry.path.endsWith('.css'))) {
+  assert.doesNotMatch(
+    readFileSync(url, 'utf8'),
+    /url\(["']?data:(?:font\/|application\/(?:x-)?font)/i,
+    `Inline font conflicts with font-src 'self': ${path}`,
+  );
+}
 for (const pattern of [
   /sb_secret_[A-Za-z0-9_-]{20,}/,
   /eyJ[A-Za-z0-9_-]{15,}\.[A-Za-z0-9_-]{15,}\.[A-Za-z0-9_-]{15,}/,

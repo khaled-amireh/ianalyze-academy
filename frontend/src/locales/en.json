@@ -416,6 +416,8 @@
     "watchVideo": "Watch video",
     "videoHelp": "Video not playing? Open it directly in Google Drive.",
     "openDrive": "Open in Google Drive",
+    "expandVideo": "Fullscreen / Expand Video",
+    "closeVideo": "Close / Exit Fullscreen",
     "youtubeHelp": "Video not playing? Open it directly on YouTube.",
     "openYouTube": "Open on YouTube",
     "youtubeSource": "Original source on YouTube",

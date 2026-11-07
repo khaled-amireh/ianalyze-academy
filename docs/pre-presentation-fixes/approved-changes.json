@@ -1,0 +1,86 @@
+{
+  "baseCommit": "db4bb8eff14d2120107f756272c07eae4bda1341",
+  "authorization": "User-authorized Complete Pre-Presentation Fixes and Browser Verification, 2026-11-07: route loading stability, mobile LinkedIn overlap, CSP-compatible font emission, and independent Google Drive fullscreen/enlargement. Local review branch only. Kaggle, assets, auth/backend, content, feature gates, deployment and all unrelated functionality remain unchanged.",
+  "files": {
+    "frontend/scripts/check-pages-artifact.mjs": {
+      "previousSha256": "baea732c873fbabdf794624672b68bbd67d38241b43366eed21f6d51acf2b202",
+      "sha256": "8c5b791995dad493997d4ab411b81fdde2548c2454fdc6515d974a88561694f7",
+      "reason": "Add an artifact invariant rejecting CSP-incompatible inlined fonts; retain all existing security/artifact assertions."
+    },
+    "frontend/scripts/check-phase-03.mjs": {
+      "previousSha256": "de8190cca72da34d5d3f5941fe29a0377241279b0f40421682aa281865b91572",
+      "sha256": "2b47bd75605b35b640fc05aff13afe78be1a561a19586ae5e0ebe93c141290e4",
+      "reason": "Honor the separately verified current presentation manifest in the existing historical hash checks."
+    },
+    "frontend/scripts/check-redesign.mjs": {
+      "previousSha256": "fab155414f7140fac9e3f1c0bff1af41d0cba27a7654c87be6ea769b3cfd61fb",
+      "sha256": "c886c6d8115b74541cdce3f4170cdb00d49b7d48fabd292c09178fa548531a97",
+      "reason": "Honor the separately verified current presentation manifest in the existing historical hash checks."
+    },
+    "frontend/scripts/verify-merge-preservation.mjs": {
+      "previousSha256": "e8a8a07e4bd08eb7c406337f9a323fc63f4f1fb335ade2f3c56688decfbeaf9b",
+      "sha256": "5412d96f589d8bdd27d888f098aec385d3c610fb3644ada07b803c5d13a5d616",
+      "reason": "Extend historical preservation with a separate explicit latest-main approval, verifying real baseline and current hashes without editing historical records."
+    },
+    "frontend/src/components/shared/learning-video.tsx": {
+      "previousSha256": "135137aeb8a24764910e7963653022b137ca4628f312394fb2b49664a35e420e",
+      "sha256": "3c633f3e58b35abaa8ebdefac13177e9e729f41b8f8633e934715b301174e13a",
+      "reason": "Use the new viewer only for Google Drive; the complete YouTube branch and all video metadata/fallbacks remain unchanged."
+    },
+    "frontend/src/locales/ar.json": {
+      "previousSha256": "c148295af9f8239c7c139997cb2a56afdc66c43b98992e404a67b766d7a3ed8d",
+      "sha256": "521e71dacfc3f642387f5226d53b5889d2d816695fad4f36ad9e3ac4e0412b71",
+      "reason": "Add only Arabic Drive expand/close labels; preserve every existing translation."
+    },
+    "frontend/src/locales/en.json": {
+      "previousSha256": "7e7346c77a7207a1a6d164a60d3c95044c27d4adc0b9fd03b8747766acd40434",
+      "sha256": "7cbf98dad43523e1136e889f3f68d133efbfd7ee9c9bbae1a98e62a8fa51b46e",
+      "reason": "Add only English Drive expand/close labels; preserve every existing translation."
+    },
+    "frontend/src/styles/academy.css": {
+      "previousSha256": "147d9b61b82f077e6fc79893e84bb4384da500d139c61a1ae32f8af9a613dc79",
+      "sha256": "5ce9033014dd7ff9e38e24a91569918839a6dcb34c7f8a5e5e4dc1dc1935aacc",
+      "reason": "Reserve one viewport of route space, accounting for the unchanged responsive header, so lazy content cannot push a visible footer out of the viewport."
+    },
+    "frontend/src/styles/learning-resources.css": {
+      "previousSha256": "e30d8ee1bf8f011769045b3ab40896a25c1755f21710f33c0327f52ca218e149",
+      "sha256": "616688e0dcbd72df9ed53ea08f9075651b2278347db2f64891c0bddce6e9c176",
+      "reason": "Scope enlarged-view layout to Drive while preserving inline video and Kaggle styles."
+    },
+    "frontend/src/styles/simplify.css": {
+      "previousSha256": "2127aeed809e1b9cafa643b5462e47bf59d2e25cbc35d2399c72c138c281fa3b",
+      "sha256": "0494467e924783065b0ae2bbb5f06d2e7acd4ccdb5b6f49633cef16cdf5062c5",
+      "reason": "Place mobile LinkedIn anchors in their own caption row with 44px targets; allow long names to wrap. Portraits, names and links remain unchanged."
+    },
+    "frontend/vite.config.ts": {
+      "previousSha256": "c86719ddf8df685ac18240c562ec58f90dd291ebcf09db4ebd01dca0d7335878",
+      "sha256": "ac2bb1e46582e23d600f7c5aa8c7e9e2190d6784e9aa47d1e02d44e5c816b84c",
+      "reason": "Emit font assets as same-origin files without changing CSP or the inlining behavior of unrelated assets."
+    },
+    "frontend/src/components/shared/drive-video.tsx": {
+      "added": true,
+      "sha256": "57718bba1d257dc138872a9dcbfada6b7a784a50f1390e59d5e9a6b2a2448a2f",
+      "reason": "Add a persistent single-iframe Drive viewer with true-fullscreen attempt and native modal fallback, Close/Escape, focus restoration and aspect-ratio fitting."
+    },
+    "frontend/tests/pre-presentation.test.ts": {
+      "added": true,
+      "sha256": "448eb659e056e8a746bd413d23f4accdeb982e8dc4255bdadc7f6b1d9478107b",
+      "reason": "Add regression coverage for font policy, unchanged CSP, exact existing learning copy/video metadata, protected assets/auth/navigation/gates."
+    },
+    "frontend/scripts/pre-presentation-browser-client.mjs": {
+      "added": true,
+      "sha256": "9aa23722c9fee85e861bc01ea9e6c4fedb65d99a769f826dbf1ba69e9a503c12",
+      "reason": "Dedicated local browser automation helper for reproducible Chromium/Edge evidence; no application/runtime dependency."
+    },
+    "frontend/scripts/pre-presentation-browser-qa.mjs": {
+      "added": true,
+      "sha256": "24ad21c2ac0d4603f5aa835c9a99db6a91088f653d8a2118fc6a3d07a0545537",
+      "reason": "Add actual-browser regressions for routes, mobile card geometry, loading stability, fonts/CSP, fullscreen fallback, focus, languages/themes and unchanged Kaggle DOM. Staging review: require an explicit --axe input instead of an unstaged local audit-file dependency; no application behavior changed."
+    },
+    "frontend/scripts/pre-presentation-fixture.mjs": {
+      "added": true,
+      "sha256": "fe78ad31af46e822c0b111d10126fe32a5fef671ae8c753a115b5e10b3895d0b",
+      "reason": "Reproducible local production-mode fixture builder/server with synthetic configuration and unchanged CSP; no deployment or real credentials."
+    }
+  }
+}

@@ -107,8 +107,15 @@ pre {
 }
 .app-shell > main {
   flex: 1;
+  /* Keep the footer below the first viewport while a lazy route is loading. */
+  min-height: calc(100svh - 76px);
   min-width: 0;
   padding-block-end: 80px;
+}
+@media (max-width: 767px) {
+  .app-shell > main {
+    min-height: calc(100svh - 70px);
+  }
 }
 .muted {
   color: var(--muted-foreground);

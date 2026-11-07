@@ -122,6 +122,80 @@ html[lang='en'] .eda-tools-card :is(h2, p) {
 .learning-video-preview .s-cards {
   margin-block: 1.5rem 0;
 }
+/* The modeless dialog is the inline player; showModal promotes that same node. */
+.drive-video {
+  position: static;
+  inset: auto;
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  overflow: visible;
+}
+.drive-video-expand {
+  align-self: flex-start;
+}
+.drive-video-toolbar[hidden] {
+  display: none;
+}
+.drive-video:modal {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: var(--background);
+}
+.drive-video::backdrop {
+  background: var(--background);
+}
+.drive-video:modal .drive-video-viewport,
+.drive-video-viewport:fullscreen {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  height: 100%;
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+    max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  color: var(--foreground);
+  background: var(--background);
+}
+.drive-video-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  flex-shrink: 0;
+}
+.drive-video-toolbar h3 {
+  flex: 1 1 12rem;
+  font-size: 1rem;
+}
+.drive-video:modal .drive-video-stage {
+  display: grid;
+  place-items: center;
+  flex: 1;
+  min-height: 0;
+  container-type: size;
+}
+.drive-video:modal .s-video-frame {
+  box-sizing: border-box;
+  border: 0;
+  width: min(100cqw, calc(100cqh * 16 / 9));
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin: 0;
+}
+.drive-video :is(button, iframe):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
 .learning-video-preview h3 {
   font-size: 1.125rem;
   margin-block-end: 0.5rem;

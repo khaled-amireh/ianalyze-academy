@@ -380,6 +380,7 @@ html[lang='en'] .about-info-cards .parent-logo .theme-logo img {
 }
 .s-person strong {
   color: var(--foreground);
+  overflow-wrap: anywhere;
 }
 .s-person span {
   color: var(--muted-foreground);
@@ -664,6 +665,16 @@ html[lang='en'] .about-info-cards .parent-logo .theme-logo img {
   }
   .s-person figcaption {
     font-size: 0.8rem;
+  }
+  .s-person-link {
+    position: static;
+    justify-self: end;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    margin-block-start: 4px;
   }
   .s-section {
     margin-block: 3rem;

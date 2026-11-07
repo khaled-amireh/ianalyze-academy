@@ -110,8 +110,148 @@ html[lang='en'] .eda-tools-card :is(h2, p) {
   grid-template-columns: minmax(0, 1fr);
 }
 .learning-video .s-video-frame {
-  box-sizing: content-box;
+  box-sizing: border-box;
   margin-block: 0.25rem;
+}
+.video-player-frame {
+  position: relative;
+  isolation: isolate;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  aspect-ratio: 16 / 9;
+  flex: none;
+  background: #071a31;
+  border-color: color-mix(in srgb, var(--primary) 32%, var(--border));
+  box-shadow: 0 14px 34px #071a3124;
+}
+.video-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: clamp(1rem, 4vw, 2rem);
+  overflow: hidden;
+  border: 0;
+  color: #fff;
+  background: #071a31;
+  cursor: pointer;
+  font: inherit;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.video-cover img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    transform 240ms var(--ease),
+    filter 240ms var(--ease);
+}
+.video-cover-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #06182c20 20%, #06182cb8 100%);
+}
+.video-cover-brand {
+  background:
+    radial-gradient(circle at 75% 20%, #52d3d84d 0, transparent 32%),
+    linear-gradient(135deg, #0d47a1, #071a31 70%);
+}
+.video-cover-brand::before {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(#ffffff0a 1px, transparent 1px),
+    linear-gradient(90deg, #ffffff0a 1px, transparent 1px);
+  background-size: 32px 32px;
+  content: '';
+  mask-image: linear-gradient(to bottom, #000, transparent 85%);
+}
+.video-cover-brand-name {
+  position: absolute;
+  inset-block-start: clamp(0.85rem, 3vw, 1.5rem);
+  inset-inline-start: clamp(0.9rem, 3vw, 1.5rem);
+  z-index: 1;
+  font-size: clamp(0.8rem, 2.5vw, 1.05rem);
+  letter-spacing: 0.01em;
+}
+.video-cover-brand-name b {
+  color: var(--brand-teal);
+}
+.video-cover-play {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: clamp(3.5rem, 12vw, 5rem);
+  height: clamp(3.5rem, 12vw, 5rem);
+  border: 2px solid #ffffffd9;
+  border-radius: 999px;
+  color: var(--brand-navy);
+  background: #ffffffed;
+  box-shadow: 0 12px 30px #0006;
+  transition:
+    transform 180ms var(--ease),
+    background 180ms var(--ease);
+}
+.video-cover-play svg {
+  width: 42%;
+  height: 42%;
+  transform: translateX(8%);
+}
+[dir='rtl'] .video-cover-play svg {
+  transform: translateX(-8%);
+}
+.video-cover-title {
+  position: absolute;
+  inset-inline: clamp(1rem, 4vw, 2rem);
+  inset-block-end: clamp(0.8rem, 3vw, 1.35rem);
+  z-index: 1;
+  overflow-wrap: anywhere;
+  font-size: clamp(0.9rem, 3vw, 1.2rem);
+  font-weight: 700;
+  line-height: 1.35;
+  text-shadow: 0 2px 12px #000;
+}
+.video-cover:hover img {
+  filter: saturate(1.05) brightness(0.92);
+  transform: scale(1.025);
+}
+.video-cover:hover .video-cover-play {
+  background: #fff;
+  transform: scale(1.06);
+}
+.video-cover:active .video-cover-play {
+  transform: scale(0.96);
+}
+.video-cover:focus-visible {
+  outline: 3px solid var(--brand-teal);
+  outline-offset: -5px;
+}
+.video-player-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  color: #fff;
+  background: #071a31;
+  text-align: center;
+}
+.video-player-frame iframe {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  min-width: 0;
 }
 .learning-video .video-fallback {
   display: grid;
@@ -195,6 +335,12 @@ html[lang='en'] .eda-tools-card :is(h2, p) {
 .drive-video :is(button, iframe):focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .video-cover img,
+  .video-cover-play {
+    transition: none;
+  }
 }
 .learning-video-preview h3 {
   font-size: 1.125rem;

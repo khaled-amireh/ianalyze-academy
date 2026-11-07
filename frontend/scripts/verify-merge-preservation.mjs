@@ -20,6 +20,9 @@ export const finalUpdate = JSON.parse(
 export const prePresentationUpdate = JSON.parse(
   readFileSync(new URL('docs/pre-presentation-fixes/approved-changes.json', root), 'utf8'),
 );
+export const videoRedesignUpdate = JSON.parse(
+  readFileSync(new URL('docs/video-redesign/approved-changes.json', root), 'utf8'),
+);
 const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
 function tree(commit) {
   return new Map(
@@ -96,6 +99,30 @@ export function verifyMergePreservation() {
           .digest('hex'),
         resolution.previousSha256,
         `Presentation fix baseline changed: ${path}`,
+      );
+    }
+    resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };
+  }
+  assert.equal(
+    git('merge-base', videoRedesignUpdate.baseCommit, 'HEAD'),
+    videoRedesignUpdate.baseCommit,
+  );
+  const videoBaseline = tree(videoRedesignUpdate.baseCommit);
+  for (const [path, resolution] of Object.entries(videoRedesignUpdate.files)) {
+    assert.ok(resolution.reason, `Video redesign reason missing: ${path}`);
+    if (resolution.added) {
+      assert.ok(!videoBaseline.has(path), `Video redesign addition already existed: ${path}`);
+    } else {
+      assert.equal(
+        createHash('sha256')
+          .update(
+            execFileSync('git', ['show', `${videoRedesignUpdate.baseCommit}:${path}`], {
+              cwd: root,
+            }),
+          )
+          .digest('hex'),
+        resolution.previousSha256,
+        `Video redesign baseline changed: ${path}`,
       );
     }
     resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };

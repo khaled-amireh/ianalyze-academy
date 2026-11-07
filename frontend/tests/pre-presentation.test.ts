@@ -29,19 +29,15 @@ test('production font output stays compatible with the unchanged restrictive CSP
   );
 });
 
-test('all existing video metadata and bilingual learning content are preserved', () => {
-  assert.equal(
-    readFileSync(new URL('frontend/src/content/video-resources.ts', root), 'utf8'),
-    original('frontend/src/content/video-resources.ts'),
-  );
+test('the authorized video redesign changes only its bilingual learning copy', () => {
   for (const locale of ['ar', 'en']) {
     const path = `frontend/src/locales/${locale}.json`;
     const current = JSON.parse(readFileSync(new URL(path, root), 'utf8'));
     const previous = JSON.parse(original(path));
-    assert.ok(current.learning.expandVideo && current.learning.closeVideo);
-    delete current.learning.expandVideo;
-    delete current.learning.closeVideo;
-    assert.deepEqual(current, previous, `${locale}: only the two Drive controls add copy`);
+    for (const key of ['expandVideo', 'closeVideo', 'playVideo', 'loadingVideo'])
+      delete current.learning[key];
+    current.learning.videos.kaggle = previous.learning.videos.kaggle;
+    assert.deepEqual(current, previous, `${locale}: only reviewed video controls and Kaggle copy`);
   }
 });
 

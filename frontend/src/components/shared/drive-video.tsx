@@ -1,17 +1,30 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Expand, X } from 'lucide-react';
+import { Expand, Play, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 
-/** One persistent iframe: changing viewing mode never moves or recreates the player. */
-export function DriveVideo({ src, title }: { src: string; title: string }) {
+type VideoPlayerProps = {
+  src: string;
+  title: string;
+  provider: 'drive' | 'youtube';
+  cover: 'brand' | string;
+};
+
+/** The iframe is created only after Play, then remains mounted through every viewing mode. */
+export function VideoPlayer({ src, title, provider, cover }: VideoPlayerProps) {
   const { t } = useTranslation();
+  const permissions =
+    provider === 'youtube'
+      ? 'accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen'
+      : 'encrypted-media; fullscreen';
   const dialog = useRef<HTMLDialogElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
   const iframe = useRef<HTMLIFrameElement>(null);
   const nativeSession = useRef(false);
+  const [activated, setActivated] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
   const restoreInline = useCallback(() => {
@@ -114,16 +127,44 @@ export function DriveVideo({ src, title }: { src: string; title: string }) {
             </Button>
           </div>
           <div className="drive-video-stage">
-            <div className="s-video-frame">
-              <iframe
-                ref={iframe}
-                src={src}
-                title={title}
-                loading="lazy"
-                allow="fullscreen; encrypted-media"
-                allowFullScreen
-                referrerPolicy="strict-origin-when-cross-origin"
-              />
+            <div className={`s-video-frame video-player-frame video-player-${provider}`}>
+              {!activated ? (
+                <button
+                  type="button"
+                  className={`video-cover${cover === 'brand' ? ' video-cover-brand' : ''}`}
+                  aria-label={`${t('learning.playVideo')}: ${title}`}
+                  onClick={() => setActivated(true)}
+                >
+                  {cover !== 'brand' && <img src={cover} alt="" />}
+                  <span className="video-cover-shade" aria-hidden="true" />
+                  {cover === 'brand' && (
+                    <span className="video-cover-brand-name" aria-hidden="true">
+                      iAnalyze <b>Academy</b>
+                    </span>
+                  )}
+                  <span className="video-cover-play" aria-hidden="true">
+                    <Play fill="currentColor" />
+                  </span>
+                  <span className="video-cover-title">{title}</span>
+                </button>
+              ) : (
+                <>
+                  {!loaded && (
+                    <span className="video-player-loading" role="status">
+                      {t('learning.loadingVideo')}
+                    </span>
+                  )}
+                  <iframe
+                    ref={iframe}
+                    src={src}
+                    title={title}
+                    allow={permissions}
+                    allowFullScreen
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    onLoad={() => setLoaded(true)}
+                  />
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -135,6 +176,7 @@ export function DriveVideo({ src, title }: { src: string; title: string }) {
         className="drive-video-expand"
         aria-haspopup="dialog"
         aria-expanded={expanded}
+        disabled={!activated}
         onClick={expand}
       >
         <Expand aria-hidden="true" />

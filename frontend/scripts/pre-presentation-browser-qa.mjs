@@ -256,6 +256,10 @@ try {
         await preferences(lang, theme);
         await b.size(1440, 1000);
         await b.load(origin + '/videos');
+        assert.equal(await b.ev("document.querySelectorAll('.learning-video iframe').length"), 0);
+        assert.equal(await b.ev("document.querySelectorAll('.video-cover').length"), 2);
+        await b.click('#data-science .video-cover');
+        await b.wait("!!document.querySelector('#data-science iframe')");
         await b.ev(
           `void(window.auditFrame=document.querySelector('.drive-video iframe'));void(window.auditWindow=window.auditFrame.contentWindow);void(window.auditFullscreen=Element.prototype.requestFullscreen)`,
         );
@@ -339,6 +343,8 @@ try {
       await b.size(390, 844);
       await b.load(origin + '/videos');
       await b.ev('void(Element.prototype.requestFullscreen=undefined)');
+      await b.click('#data-science .video-cover');
+      await b.wait("!!document.querySelector('#data-science iframe')");
       await b.click('.drive-video-expand');
       await b.wait("document.querySelector('.drive-video').matches(':modal')");
       await b.shot(`video-${engine}-android-emulation.png`);
@@ -549,28 +555,30 @@ try {
         return { timings };
       },
     );
-    await check('Kaggle card markup is identical to latest-main baseline', async () => {
-      const baseline = argument('baseline', 'http://127.0.0.1:4192');
-      assert.ok(['127.0.0.1', 'localhost'].includes(new URL(baseline).hostname));
-      const rows = [];
-      for (const lang of ['ar', 'en'])
-        for (const theme of ['light', 'dark']) {
-          await b.load(baseline + '/');
-          await preferences(lang, theme);
-          await b.load(baseline + '/videos');
-          const before = await b.ev("document.querySelector('#kaggle').outerHTML");
-          await b.load(origin + '/');
-          await preferences(lang, theme);
-          await b.load(origin + '/videos');
-          assert.equal(await b.ev("document.querySelector('#kaggle').outerHTML"), before);
-          assert.equal(
-            await b.ev("document.querySelectorAll('#kaggle .drive-video-expand').length"),
-            0,
-          );
-          rows.push({ lang, theme, identical: true });
-        }
-      return rows;
-    });
+    await check(
+      'both video cards defer and independently activate their approved player',
+      async () => {
+        const rows = [];
+        for (const lang of ['ar', 'en'])
+          for (const theme of ['light', 'dark']) {
+            await preferences(lang, theme);
+            await b.load(origin + '/videos');
+            assert.equal(
+              await b.ev("document.querySelectorAll('.learning-video iframe').length"),
+              0,
+            );
+            assert.equal(await b.ev("document.querySelectorAll('.video-cover').length"), 2);
+            await b.click('#kaggle .video-cover');
+            await b.wait("!!document.querySelector('#kaggle iframe')");
+            assert.equal(await b.ev("document.querySelectorAll('#kaggle iframe').length"), 1);
+            assert.equal(await b.ev("document.querySelectorAll('#data-science iframe').length"), 0);
+            const src = await b.ev("document.querySelector('#kaggle iframe').src");
+            assert.ok(src.endsWith('/embed/_3m-0Fskfe8') && !src.includes('autoplay'));
+            rows.push({ lang, theme, deferred: true, src });
+          }
+        return rows;
+      },
+    );
   }
   if (part === 'accessibility') {
     const axe = readFileSync(axePath, 'utf8');
@@ -607,6 +615,8 @@ try {
             await b.size(width, 844);
             await b.load(origin + '/videos');
             await b.ev('void(Element.prototype.requestFullscreen=undefined)');
+            await b.click('#data-science .video-cover');
+            await b.wait("!!document.querySelector('#data-science iframe')");
             await b.click('.drive-video-expand');
             await b.ev(axe);
             const r = await b.ev(

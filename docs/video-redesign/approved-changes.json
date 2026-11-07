@@ -1,0 +1,86 @@
+{
+  "baseCommit": "233cdd8588a3c6b0bcc3ec3d533020562dc14903",
+  "authorization": "User-authorized Final Video Experience Redesign and approved Arabic Kaggle replacement, 2026-11-07. Scope is limited to both Videos-page cards, their content metadata, verified thumbnail, tests, documentation, and preservation integration.",
+  "files": {
+    "frontend/scripts/verify-merge-preservation.mjs": {
+      "previousSha256": "5412d96f589d8bdd27d888f098aec385d3c610fb3644ada07b803c5d13a5d616",
+      "sha256": "3c9500f573d102836e0609cb472331c6c66fdc8efdfbcabc86ccd97440603a5a",
+      "reason": "Add a separate hash-pinned video-redesign approval layer while retaining every historical preservation manifest and check."
+    },
+    "frontend/scripts/pre-presentation-browser-qa.mjs": {
+      "previousSha256": "24ad21c2ac0d4603f5aa835c9a99db6a91088f653d8a2118fc6a3d07a0545537",
+      "sha256": "2f48114d0180495f312288c0ba680f8793df33f86b38b2aa96f059421deb99c9",
+      "reason": "Exercise deferred activation for both providers and retain Drive expansion, focus, geometry, RTL/theme and accessibility coverage."
+    },
+    "frontend/scripts/pre-presentation-fixture.mjs": {
+      "previousSha256": "fe78ad31af46e822c0b111d10126fe32a5fef671ae8c753a115b5e10b3895d0b",
+      "sha256": "817223e5fba74b386983111c6a223bc591117150f68ef5e32a35884f7ac2e631",
+      "reason": "Serve the verified local JPEG thumbnail with its correct media type in the local-only production browser fixture."
+    },
+    "frontend/src/content/video-resources.ts": {
+      "previousSha256": "667c11ddb017b613c8ebdf767227fd7c845d6f70dea6b7ad2484e818a68c0e16",
+      "sha256": "892248c7aa5af12e9a0c3034584c823dd19114a3210cd878042d8b077a5f6524",
+      "reason": "Keep the Drive URLs and replace only the approved unavailable Kaggle source with the verified Arabic tutorial and local thumbnail."
+    },
+    "frontend/src/components/shared/learning-video.tsx": {
+      "previousSha256": "3c633f3e58b35abaa8ebdefac13177e9e729f41b8f8633e934715b301174e13a",
+      "sha256": "164a0847be153a1ae36be6afd8818ffc730a9fca9ba60c159dd3ce83bf5d915e",
+      "reason": "Use one thumbnail-first player interface for both approved video cards while retaining existing fallback and source links."
+    },
+    "frontend/src/components/shared/drive-video.tsx": {
+      "previousSha256": "57718bba1d257dc138872a9dcbfada6b7a784a50f1390e59d5e9a6b2a2448a2f",
+      "sha256": "6c1cf3b9b84e19a741af2465a66f7b2044fef7a9452a65148eec87a67338463d",
+      "reason": "Generalize the persistent viewer with accessible covers, user-triggered iframe creation, loading feedback, fullscreen fallback, and focus restoration."
+    },
+    "frontend/src/locales/ar.json": {
+      "previousSha256": "521e71dacfc3f642387f5226d53b5889d2d816695fad4f36ad9e3ac4e0412b71",
+      "sha256": "c00b62bb5dbaf62982f34782985e16b0fd1f8b3e4e123c78f5e09249ee62559a",
+      "reason": "Add Arabic play/loading labels and accurately describe the approved Arabic Kaggle overview."
+    },
+    "frontend/src/locales/en.json": {
+      "previousSha256": "7cbf98dad43523e1136e889f3f68d133efbfd7ee9c9bbae1a98e62a8fa51b46e",
+      "sha256": "a59d69e324afd7465fa673b7934478da41ef8c51762efa9a0bd051f3bc268959",
+      "reason": "Add English play/loading labels, use the approved Introduction to Kaggle title, and accurately describe the Arabic overview."
+    },
+    "frontend/src/styles/learning-resources.css": {
+      "previousSha256": "616688e0dcbd72df9ed53ea08f9075651b2278347db2f64891c0bddce6e9c176",
+      "sha256": "602efb494d0023683bdd1dbebd3eb8ec4edab2f10fcacc64a716f1d50c885eb3",
+      "reason": "Add responsive branded and real-thumbnail covers with clear interaction states, 16:9 containment, RTL support, and reduced-motion behavior."
+    },
+    "frontend/tests/learning-resources.test.ts": {
+      "previousSha256": "61fa8109e0797d6608b93a4ce2f376ec1124d6323173523591ba190419e3b282",
+      "sha256": "ba7b6a24720ab739a62a7ce1eff65a1a841f84197455311c228db3da003f8a5e",
+      "reason": "Pin the approved Kaggle URLs and cover and verify deferred, shared, persistent player architecture."
+    },
+    "frontend/tests/pre-presentation.test.ts": {
+      "previousSha256": "448eb659e056e8a746bd413d23f4accdeb982e8dc4255bdadc7f6b1d9478107b",
+      "sha256": "1f38adb517eabd4a7ab5ff7a04c27ee128f24b06be5e5857401fd03c385bdba6",
+      "reason": "Permit only the explicitly authorized bilingual video labels and Kaggle copy while retaining unrelated preservation assertions."
+    },
+    "frontend/public/video-thumbnails/kaggle-introduction.jpg": {
+      "added": true,
+      "sha256": "94152ba1432fe27e3497ac8d8b56b372d628680228d7ef9224589c5a349ca290",
+      "reason": "Store YouTube's verified thumbnail locally so the premium cover works without weakening the existing self-only image CSP."
+    },
+    "docs/video-redesign/kaggle-verification.md": {
+      "added": true,
+      "sha256": "676b515472edcc07b05595b6e33d05c7b29f4ae25b5b7451e52a72a906e976b9",
+      "reason": "Record the selected title, channel, URL, duration, relevance, public endpoint results, old-video failure, and provider limitation."
+    },
+    "docs/video-redesign/README.md": {
+      "added": true,
+      "sha256": "b9c29e5b271bdf1b805dd315512d63de697b232b79886042852166debff12589",
+      "reason": "Document the scoped result, reproducible checks, screenshots, provider boundaries, device limits, and browser-automation blocker."
+    },
+    "docs/video-redesign/videos-mobile-390.png": {
+      "added": true,
+      "sha256": "7c383d2df6beb2d0a4be602572eaa1304ec08b724c8bde22d69bf0eebc00ab0e",
+      "reason": "Provide a visually reviewed narrow mobile-layout screenshot showing both complete thumbnail-first cards."
+    },
+    "docs/video-redesign/videos-desktop-1440.png": {
+      "added": true,
+      "sha256": "4d24a36128ca9c7de87c4c32148a6ff89e6447086062c2f397bbb7d70ee471be",
+      "reason": "Provide a visually reviewed 1440px desktop screenshot showing both complete thumbnail-first cards."
+    }
+  }
+}

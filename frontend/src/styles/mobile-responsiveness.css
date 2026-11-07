@@ -1,0 +1,16 @@
+/* Phone browser geometry and safe-area refinements, isolated from preserved branding rules. */
+html {
+  scroll-padding-block-start: calc(96px + env(safe-area-inset-top));
+}
+
+.site-header {
+  padding-block-start: env(safe-area-inset-top);
+}
+
+@media (max-width: 767px) {
+  #main,
+  #page-title,
+  [id] {
+    scroll-margin-block-start: calc(82px + env(safe-area-inset-top));
+  }
+}

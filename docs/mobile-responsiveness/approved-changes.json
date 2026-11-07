@@ -1,0 +1,41 @@
+{
+  "baseCommit": "87be3ae850d27aff380e572682549062528f772a",
+  "authorization": "User-authorized phone-first responsiveness and video containment fixes, 2026-11-07. Scope is limited to viewport and safe-area handling, flexible video/card containment, mobile spacing, regression tests, and preservation integration.",
+  "files": {
+    "frontend/index.html": {
+      "previousSha256": "f91f69db54380635014e38cee28ba6bdd040576ee40e2e50886b0d20775ff585",
+      "sha256": "b60c65473ccd207bb0f8acb9550bdabde46d518ef4097e8ed95c4b70125e2185",
+      "reason": "Enable iPhone safe-area viewport fitting without changing routes, content, or branding."
+    },
+    "frontend/scripts/verify-merge-preservation.mjs": {
+      "previousSha256": "3c9500f573d102836e0609cb472331c6c66fdc8efdfbcabc86ccd97440603a5a",
+      "sha256": "27ed999efe1a203fdfe4ed2e59aba53398f428794fd2142170581fdf143e7c98",
+      "reason": "Add a separate hash-pinned mobile-responsiveness approval layer while retaining every historical preservation check."
+    },
+    "frontend/src/index.css": {
+      "previousSha256": "42014550168e1e5bc9943dd2c1b4e46e6b38466e3ccbe2ddb9c4b111d8ac99b6",
+      "sha256": "1edbced9ea107d568d065b3de9d528b1c749cbd1f4c410a640a09fafe13b32ed",
+      "reason": "Load the isolated phone-browser and safe-area refinement layer after the existing preserved styles."
+    },
+    "frontend/src/styles/academy.css": {
+      "previousSha256": "5ce9033014dd7ff9e38e24a91569918839a6dcb34c7f8a5e5e4dc1dc1935aacc",
+      "sha256": "71fbf2d013495fae41247ae8d04e8fc7f763aea04d411f07580d0b143cddcc05",
+      "reason": "Constrain the document and application shell to the viewport and prevent accidental horizontal page overflow."
+    },
+    "frontend/src/styles/learning-resources.css": {
+      "previousSha256": "602efb494d0023683bdd1dbebd3eb8ec4edab2f10fcacc64a716f1d50c885eb3",
+      "sha256": "4f8f874ddb4d1f70eaac5bf8b124be226546010c9ddb1a5f538e2aee22597776",
+      "reason": "Keep both video cards, stages, and iframes in one flexible 16:9 window with mobile-first spacing, wrapping, and tap targets."
+    },
+    "frontend/src/styles/mobile-responsiveness.css": {
+      "added": true,
+      "sha256": "26dacb6703e326c55c501a2a912e29087b98c7e67270cd886251e8b952f4d199",
+      "reason": "Account for iPhone safe areas and keep anchored or focused content below the sticky header without modifying preserved branding rules."
+    },
+    "frontend/tests/mobile-responsiveness.test.ts": {
+      "added": true,
+      "sha256": "8a008726654cb1d10c1bbeeca15a7fccf2f144c718aac9ef66042f0f2aea17ab",
+      "reason": "Regress viewport, sticky-header, flexible 16:9 iframe, Drive preview, no-autoplay, wrapping, and minimum tap-target requirements."
+    }
+  }
+}

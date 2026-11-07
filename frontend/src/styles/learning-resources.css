@@ -23,6 +23,8 @@ html[lang='en'] .eda-tools-card :is(h2, p) {
   align-items: stretch;
   gap: 1rem;
   min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
 .learning-tool h2,
 .learning-video h2 {
@@ -121,6 +123,7 @@ html[lang='en'] .eda-tools-card :is(h2, p) {
   min-inline-size: 0;
   aspect-ratio: 16 / 9;
   flex: none;
+  overflow: hidden;
   background: #071a31;
   border-color: color-mix(in srgb, var(--primary) 32%, var(--border));
   box-shadow: 0 14px 34px #071a3124;
@@ -267,7 +270,8 @@ html[lang='en'] .eda-tools-card :is(h2, p) {
   position: static;
   inset: auto;
   width: 100%;
-  max-width: none;
+  max-width: 100%;
+  min-width: 0;
   max-height: none;
   margin: 0;
   padding: 0;
@@ -275,6 +279,12 @@ html[lang='en'] .eda-tools-card :is(h2, p) {
   color: inherit;
   background: transparent;
   overflow: visible;
+}
+.drive-video-viewport,
+.drive-video-stage {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 .drive-video-expand {
   align-self: flex-start;
@@ -353,5 +363,36 @@ html[lang='en'] .eda-tools-card :is(h2, p) {
 @media (min-width: 900px) {
   .learning-videos-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .learning-page .s-page-head {
+    padding-block: clamp(1.75rem, 8vw, 2.5rem) 0.5rem;
+  }
+  .learning-page .s-page-head h1 {
+    font-size: clamp(1.9rem, 10vw, 2.5rem);
+  }
+  .learning-page .s-lede {
+    font-size: clamp(0.95rem, 4.3vw, 1.05rem);
+  }
+  .learning-video {
+    gap: 0.875rem;
+    padding: clamp(1rem, 5vw, 1.25rem);
+  }
+  .learning-video h2 {
+    font-size: clamp(1.05rem, 5.4vw, 1.2rem);
+  }
+  .learning-video .resource-copy,
+  .learning-video .video-fallback {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .learning-video .academy-button,
+  .learning-video .resource-source,
+  .drive-video-expand {
+    max-width: 100%;
+    min-height: 44px;
+    white-space: normal;
   }
 }

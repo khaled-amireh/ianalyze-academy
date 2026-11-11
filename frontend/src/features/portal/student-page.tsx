@@ -2,10 +2,13 @@ import { useId, useRef, useState, type FormEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { useAuth } from '@/features/auth/use-auth';
 import { privacyApproved, registrationEnabled, submissionsEnabled } from '@/lib/academy-client';
-import { saveAcademyProfile } from '@/lib/academy-data';
+import { loadOwnProfile, saveAcademyProfile } from '@/lib/academy-data';
 import { changeLocale } from '@/lib/i18n';
-import { normalizeJordanianMobile } from '@/lib/jordanian-phone';
-import { ZUJ, majors, profileMajor, selectedMajor } from './profile-fields';
+import { majors, profilePatch, selectedMajor } from './profile-fields';
+import { ProfileDetails } from './profile-details';
+import { UniversityIdField } from './university-id-field';
+import { useRegistrationDraft } from './use-registration-draft';
+import { RegistrationDraftNotice } from './registration-draft-notice';
 import { academicYears, academicYearLabel } from './academic-years';
 import { PageContainer } from '@/components/shared/page-container';
 import { Button } from '@/components/ui/button';
@@ -35,28 +38,44 @@ import {
 export function ProfileForm({
   profile,
   onSaved,
+  onCancel,
 }: {
   profile: Row<'profiles'>;
+  onCancel?: () => void;
   onSaved: (profile: Row<'profiles'>, registered: boolean) => void;
 }) {
   const { c, arabic } = usePortalCopy();
+  const auth = useAuth();
   const id = useId(),
     inFlight = useRef(false);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [message, setMessage] = useState<keyof PortalCopy | ''>('');
   const [busy, setBusy] = useState(false);
-  const registering = !profile.registered_at;
-  const [major, setMajor] = useState(selectedMajor(profile.major));
-  const [universityChoice, setUniversityChoice] = useState(
-    profile.university === ZUJ ? ZUJ : profile.university ? 'other' : '',
-  );
+  const registering = !profile.registered_at && auth.role !== 'team';
+  const required = (
+    name:
+      'full_name' | 'whatsapp' | 'major' | 'academic_year' | 'python_experience' | 'university_id',
+  ) => registering || auth.role !== 'team' || Boolean(profile[name]);
+  const formRef = useRef<HTMLFormElement>(null);
+  const draft = useRegistrationDraft(registering ? { kind: 'profile', userId: profile.id } : null, {
+    full_name: profile.full_name ?? '',
+    whatsapp: profile.whatsapp ?? '',
+    major: selectedMajor(profile.major),
+    major_other: selectedMajor(profile.major) === 'other' ? (profile.major ?? '') : '',
+    academic_year:
+      registering && (profile.academic_year ?? 0) > 5 ? '' : String(profile.academic_year ?? ''),
+    python_experience: profile.python_experience ?? '',
+    university_id: profile.university_id ?? '',
+    locale: registering ? (arabic ? 'ar' : 'en') : profile.locale,
+  });
+  const major = draft.values.major;
   const open = registrationEnabled && privacyApproved;
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (inFlight.current || (registering && !open)) return;
     const element = event.currentTarget,
       form = new FormData(element);
-    const invalid = validateProfile(form, registering, profile);
+    const invalid = validateProfile(form, registering, profile, auth.role === 'team');
     setErrors(invalid);
     setMessage('');
     if (Object.keys(invalid).length) {
@@ -69,20 +88,10 @@ export function ProfileForm({
     try {
       const persisted = await saveAcademyProfile(
         client(),
-        {
-          full_name: String(form.get('full_name')).trim(),
-          ...(String(form.get('whatsapp')).trim() !== profile.whatsapp
-            ? { whatsapp: normalizeJordanianMobile(String(form.get('whatsapp')))! }
-            : {}),
-          major: profileMajor(form),
-          university: String(form.get('university')).trim(),
-          academic_year: Number(form.get('academic_year')),
-          python_experience: String(form.get('python_experience')),
-          university_id: String(form.get('university_id') ?? '').trim() || null,
-          locale: String(form.get('locale')) === 'en' ? 'en' : 'ar',
-        },
+        profilePatch(form, profile, registering),
         registering,
       );
+      if (registering) draft.complete();
       changeLocale(persisted.locale === 'en' ? 'en' : 'ar');
       onSaved(persisted, registering);
     } catch (error) {
@@ -95,10 +104,16 @@ export function ProfileForm({
   const field = (name: string) => errorAttributes(id + '-' + name, errors[name]);
   const error = (name: string) => (errors[name] ? c[errors[name]] : undefined);
   return (
-    <section className="content-card">
+    <section className="content-card" dir={arabic ? 'rtl' : 'ltr'}>
       <h2>{registering ? c.academyRegistration : c.profile}</h2>
       <p dir="ltr">{profile.email}</p>
-      <form onSubmit={submit} noValidate aria-busy={busy}>
+      <form
+        ref={formRef}
+        onSubmit={submit}
+        noValidate
+        aria-busy={busy}
+        data-registration-draft={registering ? 'profile' : undefined}
+      >
         <fieldset className="portal-grid" disabled={busy}>
           <FormField id={id + '-full_name'} label={c.fullName} error={error('full_name')}>
             <Input
@@ -106,8 +121,8 @@ export function ProfileForm({
               name="full_name"
               autoComplete="name"
               maxLength={150}
-              required
-              defaultValue={profile.full_name ?? ''}
+              required={required('full_name')}
+              {...draft.field('full_name')}
             />
           </FormField>
           <FormField id={id + '-whatsapp'} label={c.whatsapp} error={error('whatsapp')}>
@@ -119,55 +134,17 @@ export function ProfileForm({
               inputMode="tel"
               maxLength={64}
               placeholder="07XXXXXXXX"
-              required
+              required={required('whatsapp')}
               dir="ltr"
-              defaultValue={profile.whatsapp ?? ''}
+              {...draft.field('whatsapp')}
             />
           </FormField>
-          <FormField
-            id={id + '-university_choice'}
-            label={c.university}
-            error={error('university_choice')}
-          >
-            <select
-              {...field('university_choice')}
-              name="university_choice"
-              value={universityChoice}
-              onChange={(e) => setUniversityChoice(e.target.value)}
-              required
-            >
-              <option value="">{c.select}</option>
-              <option value={ZUJ}>{c.zuj}</option>
-              <option value="other">{c.otherUniversity}</option>
-            </select>
-          </FormField>
-          {universityChoice === 'other' ? (
-            <FormField id={id + '-university'} label={c.universityName} error={error('university')}>
-              <Input
-                {...field('university')}
-                name="university"
-                required
-                maxLength={200}
-                defaultValue={profile.university === ZUJ ? '' : (profile.university ?? '')}
-              />
-            </FormField>
-          ) : (
-            <>
-              <input name="university" type="hidden" value={universityChoice} />
-              {errors.university && (
-                <p className="field-error" role="alert">
-                  {error('university')}
-                </p>
-              )}
-            </>
-          )}
           <FormField id={id + '-major'} label={c.major} error={error('major')}>
             <select
               {...field('major')}
               name="major"
-              required
-              value={major}
-              onChange={(e) => setMajor(e.target.value)}
+              required={required('major')}
+              {...draft.field('major')}
             >
               <option value="">{c.select}</option>
               {majors.map((m) => (
@@ -185,16 +162,12 @@ export function ProfileForm({
                 name="major_other"
                 required
                 maxLength={150}
-                defaultValue={selectedMajor(profile.major) === 'other' ? (profile.major ?? '') : ''}
+                {...draft.field('major_other')}
               />
             </FormField>
           )}
           <FormField id={id + '-locale'} label={c.preferredLanguage}>
-            <select
-              id={id + '-locale'}
-              name="locale"
-              defaultValue={registering ? (arabic ? 'ar' : 'en') : profile.locale}
-            >
+            <select id={id + '-locale'} name="locale" {...draft.field('locale')}>
               <option value="ar">{c.arabicLanguage}</option>
               <option value="en">{c.englishLanguage}</option>
             </select>
@@ -203,10 +176,8 @@ export function ProfileForm({
             <select
               {...field('academic_year')}
               name="academic_year"
-              required
-              defaultValue={
-                registering && (profile.academic_year ?? 0) > 5 ? '' : (profile.academic_year ?? '')
-              }
+              required={required('academic_year')}
+              {...draft.field('academic_year')}
             >
               <option value="">{c.select}</option>
               {!registering && profile.academic_year !== null && profile.academic_year > 5 && (
@@ -229,8 +200,8 @@ export function ProfileForm({
             <select
               {...field('python_experience')}
               name="python_experience"
-              required
-              defaultValue={profile.python_experience ?? ''}
+              required={required('python_experience')}
+              {...draft.field('python_experience')}
             >
               <option value="">{c.select}</option>
               <option value="none">{c.none}</option>
@@ -238,21 +209,12 @@ export function ProfileForm({
               <option value="experienced">{c.experienced}</option>
             </select>
           </FormField>
-          <FormField
+          <UniversityIdField
             id={id + '-university_id'}
-            label={universityChoice === ZUJ ? c.universityIdRequired : c.universityId}
-            error={error('university_id')}
-          >
-            <Input
-              {...field('university_id')}
-              name="university_id"
-              required={universityChoice === ZUJ}
-              inputMode={universityChoice === ZUJ ? 'numeric' : 'text'}
-              dir="ltr"
-              maxLength={50}
-              defaultValue={profile.university_id ?? ''}
-            />
-          </FormField>
+            {...draft.field('university_id')}
+            required={required('university_id')}
+            error={errors.university_id}
+          />
         </fieldset>
         {registering && (
           <div>
@@ -277,9 +239,29 @@ export function ProfileForm({
           </div>
         )}
         <Button type="submit" disabled={busy || (registering && !open)}>
-          {busy ? c.wait : registering ? c.complete : c.save}
+          {busy ? c.wait : registering ? c.complete : c.saveChanges}
         </Button>
-        <FormNotice message={message ? c[message] : ''} kind="error" />
+        {registering && (
+          <RegistrationDraftNotice
+            disabled={busy}
+            unavailable={draft.unavailable}
+            onClear={() => {
+              draft.clear();
+              formRef.current?.reset();
+              setErrors({});
+              setMessage('draftCleared');
+            }}
+          />
+        )}
+        {onCancel && (
+          <Button type="button" variant="outline" disabled={busy} onClick={onCancel}>
+            {c.cancel}
+          </Button>
+        )}
+        <FormNotice
+          message={message ? c[message] : ''}
+          kind={message === 'draftCleared' ? 'success' : 'error'}
+        />
       </form>
     </section>
   );
@@ -370,14 +352,19 @@ function NotebookUpload({
     </form>
   );
 }
+async function loadStudentProfile() {
+  const result = await loadOwnProfile(client());
+  if (result.error) throw result.error;
+  return { profiles: [result.data] };
+}
+
 export function StudentPage() {
   const { c, arabic } = usePortalCopy();
   const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const emailVerified = (location.state as { emailVerified?: boolean } | null)?.emailVerified;
-  const { data, error, reload, update, refresh } = useRemote(loadPortal);
-  const [message, setMessage] = useState<keyof PortalCopy | ''>('');
+  const { data, error, reload, update, refresh } = useRemote(loadStudentProfile);
   const [saved, setSaved] = useState<'registered' | 'saved' | null>(null);
   const [editing, setEditing] = useState(false);
   const onSaved = (profile: Row<'profiles'>, registered: boolean) => {
@@ -387,7 +374,7 @@ export function StudentPage() {
     }));
     setSaved(registered ? 'registered' : 'saved');
     setEditing(false);
-    // Registration changes which learning records RLS releases to this session.
+    // Revalidate without interrupting the immediately updated profile view.
     refresh();
     navigate(auth.role === 'team' ? '/workspace' : '/student', {
       replace: true,
@@ -396,18 +383,18 @@ export function StudentPage() {
   };
   if (!data)
     return (
-      <PageContainer className="portal-page">
+      <PageContainer className="portal-page" dir={arabic ? 'rtl' : 'ltr'}>
         <h1 id="page-title" tabIndex={-1}>
           {c.dashboard}
         </h1>
         <p role="status">{error ? c.error : c.wait}</p>
-        <Button onClick={reload}>{c.retry}</Button>
+        {error && <Button onClick={reload}>{c.tryAgain}</Button>}
       </PageContainer>
     );
   const profile = data.profiles.find((p) => p.id === auth.user?.id);
-  if (profile && !profile.registered_at)
+  if (profile && !profile.registered_at && auth.role !== 'team')
     return (
-      <PageContainer className="portal-page">
+      <PageContainer className="portal-page" dir={arabic ? 'rtl' : 'ltr'}>
         <h1 id="page-title" tabIndex={-1}>
           {c.academyRegistration}
         </h1>
@@ -419,26 +406,57 @@ export function StudentPage() {
       </PageContainer>
     );
   return (
-    <PageContainer className="portal-page" data-student-dashboard>
+    <PageContainer className="portal-page" dir={arabic ? 'rtl' : 'ltr'} data-student-dashboard>
       <h1 id="page-title" tabIndex={-1}>
         {c.dashboard}
       </h1>
       <nav className="portal-actions">
         <Button onClick={() => void auth.signOut()}>{c.logout}</Button>
-        <Button variant="outline" onClick={reload}>
-          {c.retry}
-        </Button>
         {auth.role === 'team' && <Link to="/workspace">{c.team}</Link>}
         <Link to="/privacy">{c.privacy}</Link>
       </nav>
       <FormNotice message={saved ? c[saved] : emailVerified ? c.confirmed : ''} kind="success" />
       {error && <FormNotice message={c.error} kind="error" />}
       {profile && !editing && (
-        <Button variant="outline" onClick={() => setEditing(true)}>
-          {c.editProfile}
-        </Button>
+        <section className="content-card">
+          <h2>{c.profile}</h2>
+          <ProfileDetails profile={profile} />
+          <Button
+            onClick={() => {
+              setSaved(null);
+              setEditing(true);
+            }}
+          >
+            {c.editProfile}
+          </Button>
+        </section>
       )}
-      {profile && editing && <ProfileForm key={profile.id} profile={profile} onSaved={onSaved} />}
+      {profile && editing && (
+        <ProfileForm
+          key={profile.id}
+          profile={profile}
+          onSaved={onSaved}
+          onCancel={() => setEditing(false)}
+        />
+      )}
+    </PageContainer>
+  );
+}
+
+// Retained for a future learning-plan launch; intentionally not mounted for students.
+export function StudentLearningPlan({
+  data,
+  reload,
+}: {
+  data: Awaited<ReturnType<typeof loadPortal>>;
+  reload: () => void;
+}) {
+  const { c, arabic } = usePortalCopy();
+  const auth = useAuth();
+  const profile = data.profiles.find((p) => p.id === auth.user?.id);
+  const [message, setMessage] = useState<keyof PortalCopy | ''>('');
+  return (
+    <>
       <h2>{c.activities}</h2>
       {topics.map((topic, index) => {
         const week = data.weeks.find((w) => w.week_number === index + 1);
@@ -549,6 +567,6 @@ export function StudentPage() {
         message={message ? c[message] : ''}
         kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}
       />
-    </PageContainer>
+    </>
   );
 }

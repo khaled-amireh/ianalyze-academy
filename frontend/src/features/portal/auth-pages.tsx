@@ -20,6 +20,8 @@ import {
 import type { PortalCopy } from './copy';
 import './portal.css';
 import { authPersistence } from '@/lib/auth-storage';
+import { useRegistrationDraft } from './use-registration-draft';
+import { RegistrationDraftNotice } from './registration-draft-notice';
 
 export function AccountLink({
   className,
@@ -30,7 +32,7 @@ export function AccountLink({
 }) {
   const auth = useAuth();
   const { c } = usePortalCopy();
-  if (!academyClient || auth.status === 'signed-in') return null;
+  if (auth.status === 'signed-in' || auth.status === 'loading') return null;
   return (
     <Link className={className} onClick={onNavigate} to="/login">
       {c.login}
@@ -71,6 +73,8 @@ function AuthForm({ mode }: { mode: AuthMode }) {
   const location = useLocation();
   const id = useId();
   const inFlight = useRef(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const draft = useRegistrationDraft(mode === 'signup' ? { kind: 'account' } : null, { email: '' });
   const [busy, setBusy] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [verificationEmail, setVerificationEmail] = useState<string | null>(null);
@@ -127,6 +131,7 @@ function AuthForm({ mode }: { mode: AuthMode }) {
           options: { emailRedirectTo: redirectTo },
         });
         if (error) throw error;
+        draft.complete();
         for (const name of ['password', 'confirmation'])
           (element.elements.namedItem(name) as HTMLInputElement).value = '';
         if (data.session) await auth.refresh();
@@ -170,7 +175,13 @@ function AuthForm({ mode }: { mode: AuthMode }) {
         ) : verificationEmail ? (
           <p>{c.registrationNext}</p>
         ) : (
-          <form onSubmit={submit} noValidate aria-busy={busy}>
+          <form
+            ref={formRef}
+            onSubmit={submit}
+            noValidate
+            aria-busy={busy}
+            data-registration-draft={mode === 'signup' ? 'account' : undefined}
+          >
             <fieldset disabled={busy} className="portal-fields">
               {mode !== 'reset' && (
                 <FormField
@@ -180,6 +191,7 @@ function AuthForm({ mode }: { mode: AuthMode }) {
                 >
                   <Input
                     {...errorAttributes(id + '-email', errors.email)}
+                    {...draft.field('email')}
                     name="email"
                     type="email"
                     autoComplete="email"
@@ -243,6 +255,18 @@ function AuthForm({ mode }: { mode: AuthMode }) {
             <Button disabled={busy} type="submit">
               {busy ? c.wait : mode === 'recover' ? c.send : title}
             </Button>
+            {mode === 'signup' && (
+              <RegistrationDraftNotice
+                disabled={busy}
+                unavailable={draft.unavailable}
+                onClear={() => {
+                  draft.clear();
+                  formRef.current?.reset();
+                  setErrors({});
+                  setNotice({ key: 'draftCleared', kind: 'success' });
+                }}
+              />
+            )}
           </form>
         )}
         <FormNotice message={shown ? c[shown.key] : ''} kind={shown?.kind} />

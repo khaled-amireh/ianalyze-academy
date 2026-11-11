@@ -1,5 +1,5 @@
 import { normalizeJordanianMobile } from '../../lib/jordanian-phone.ts';
-import { ZUJ, majors, profileMajor } from './profile-fields.ts';
+import { majors, profileMajor } from './profile-fields.ts';
 
 export type ValidationCode =
   | 'requiredField'
@@ -12,7 +12,7 @@ export type ValidationCode =
   | 'consentRequired'
   | 'tooLong'
   | 'invalidUniversityId';
-// University ID is private, numeric, and required only for Al-Zaytoonah students.
+// Reuse the database's supported 1–20 ASCII digit rule; no fixed length is assumed.
 export type FieldErrors = Record<string, ValidationCode>;
 export type AuthMode = 'login' | 'signup' | 'recover' | 'reset';
 const value = (form: FormData, name: string) => String(form.get(name) ?? '');
@@ -40,7 +40,15 @@ export function validateAuth(form: FormData, mode: AuthMode): FieldErrors {
 export function validateProfile(
   form: FormData,
   registering: boolean,
-  existing: { whatsapp?: string | null; academic_year?: number | null } = {},
+  existing: {
+    full_name?: string | null;
+    major?: string | null;
+    whatsapp?: string | null;
+    academic_year?: number | null;
+    python_experience?: string | null;
+    university_id?: string | null;
+  } = {},
+  allowIncompleteTeamProfile = false,
 ): FieldErrors {
   const errors: FieldErrors = {};
   for (const field of ['full_name']) {
@@ -53,13 +61,9 @@ export function validateProfile(
   else if (major.length > 150) errors.major_other = 'tooLong';
   if (form.get('major') !== 'other' && !majors.some((m) => m.value === form.get('major')))
     errors.major = 'requiredField';
-  const university = value(form, 'university').trim();
-  if (!university)
-    errors[form.get('university_choice') === 'other' ? 'university' : 'university_choice'] =
-      'requiredField';
-  else if (university.length > 200) errors.university = 'tooLong';
-  if (university === ZUJ && !/^[0-9]{1,20}$/.test(value(form, 'university_id').trim()))
-    errors.university_id = 'invalidUniversityId';
+  const universityId = value(form, 'university_id').trim();
+  if (!universityId) errors.university_id = 'requiredField';
+  else if (!/^[0-9]{1,20}$/.test(universityId)) errors.university_id = 'invalidUniversityId';
   const phone = value(form, 'whatsapp');
   if (!phone.trim()) errors.whatsapp = 'requiredField';
   else if (phone.trim() !== existing.whatsapp && !normalizeJordanianMobile(phone))
@@ -70,7 +74,25 @@ export function validateProfile(
     errors.academic_year = 'invalidYear';
   if (!['none', 'basic', 'experienced'].includes(value(form, 'python_experience')))
     errors.python_experience = 'requiredField';
-  if (value(form, 'university_id').trim().length > 50) errors.university_id = 'tooLong';
+  // Only existing team profiles may retain unchanged historical/incomplete values.
+  // This option comes from the verified role, never a student-controlled form field.
+  if (!registering && allowIncompleteTeamProfile) {
+    for (const field of [
+      'full_name',
+      'major',
+      'whatsapp',
+      'academic_year',
+      'python_experience',
+      'university_id',
+    ] as const) {
+      const text = field === 'major' ? major : value(form, field).trim();
+      if (!text && !existing[field]) {
+        delete errors[field];
+        if (field === 'major') delete errors.major_other;
+      }
+    }
+    if (universityId && universityId === existing.university_id) delete errors.university_id;
+  }
   if (registering && form.get('consent') !== 'on') errors.consent = 'consentRequired';
   return errors;
 }

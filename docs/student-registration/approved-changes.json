@@ -1,0 +1,116 @@
+{
+  "baseCommit": "502e431300b7058867f29b82846e6bc1e01f8025",
+  "authorization": "User requested local-only student registration, profile dashboard, bilingual ID help and auth navigation refinements on 2026-11-11; no migrations, production data, commits, pushes, or deployments. Follow-up explicitly authorizes the confirmed unchanged-profile save fix and directly related regression tests/documentation. User also authorizes secure local registration drafts, expiry/manual cleanup, and related bilingual and regression-test changes. On 2026-11-11 the owner explicitly authorized the full release: scoped commit, feature-branch push, PR, merge into main, existing production deployment, and non-mutating production smoke tests; no database or account changes.",
+  "files": {
+    "frontend/src/features/portal/auth-pages.tsx": {
+      "sha256": "0b6a7822fca5924eea903c0df1413d8fa84cfeb814af51b987af2aff92373517",
+      "reason": "Preserve auth navigation while saving/restoring only signup email; clear its draft after accepted account creation and provide manual clearing.",
+      "previousSha256": "3ff55b4914ffb17cedc3c267f135a497f7cb59d620c59f5cbcd1ed23baa23992"
+    },
+    "frontend/src/features/portal/copy.ts": {
+      "sha256": "df0db412e88e41504a7376d42316889c2bec4fcc93216fb3a2db50f2d9762c35",
+      "reason": "Bilingual required ID labels, exact informational messages, and profile actions.",
+      "previousSha256": "e8f8b52beac8b6f7f25333574c21438a4e6504fcff8d42e133b10463b146e7ab"
+    },
+    "frontend/src/features/portal/form-validation.ts": {
+      "sha256": "f1e1c55e07113d8af5c0e6198a4f2b2b19d3498a71c8da32a83c0e4ca25795cc",
+      "reason": "Require supported numeric IDs for students and preserve unchanged incomplete team fields.",
+      "previousSha256": "4fc5846b1a99ea62793b32e25c0ad384748992309d21eb4229fb70c9269efd34"
+    },
+    "frontend/src/features/portal/portal.css": {
+      "sha256": "5e76de84e3493daeb931a7c1dca01558e3f97fd677e824750a3f04914660bcfe",
+      "reason": "Responsive theme-aware informational popover styling using existing tokens.",
+      "previousSha256": "f34aef5b3911e3d50a37663d90bee307868f42f82fcd1886fc3a137f08f9f9db"
+    },
+    "frontend/src/features/portal/profile-fields.ts": {
+      "sha256": "90508bb725bb2c5820deb4f0421c911a724b30548a1162da01dabbe322d1eeae",
+      "reason": "Whitelist changed personal fields, trim IDs, and assign the existing university constant for registration.",
+      "previousSha256": "06b391f9a874343d997d755746a637b09904bc8aefbf0413eebad80a3998c6e7"
+    },
+    "frontend/src/features/portal/profile-page.tsx": {
+      "sha256": "e382cdeae802fb297921f42001e2b42210afa641ba7a53f3cd08879b7ce70fba",
+      "reason": "Reuse saved profile details and return to read-only mode after Save or Cancel.",
+      "previousSha256": "5fc98d6f1819cd8bbaa66e711f5e8bd62c6fa90e4ec0f50d91628fa9e56ab7dc"
+    },
+    "frontend/src/features/portal/student-page.tsx": {
+      "sha256": "0feb7015da9107230ff509325903a5ff3be5685683f0c747dfc6774348f21aa2",
+      "reason": "Preserve the profile-only dashboard and add scoped drafts only during student profile completion; cleanup on success and manual clear.",
+      "previousSha256": "445d0bc6c48a66b79169ff10d074e07ca342d41e11e43ca20bbeb78bfe7826ac"
+    },
+    "frontend/src/features/portal/use-own-profile.ts": {
+      "sha256": "8e352c2fd6efae974dade9d75330f6f41aa574df953265b7da4e96a9625771da",
+      "reason": "Immediately display the own-profile response after saving.",
+      "previousSha256": "35ba2b129d7a4213a680b9bed493da2d4c1eee414f6c083b633b384e81c71382"
+    },
+    "frontend/src/features/portal/profile-details.tsx": {
+      "sha256": "637eef138c9755499c4260aa9d336587efff137a7ee1483452b45ec2f59b7560",
+      "reason": "Shared read-only personal information using existing profile styling.",
+      "added": true
+    },
+    "frontend/src/features/portal/university-id-field.tsx": {
+      "sha256": "36f551c539a9ada7d1e64bb62357a357f9a64acfc3233b9d1a6023224a40a236",
+      "reason": "Keep existing accessible bilingual ID help while accepting a controlled non-secret value for safe draft restoration.",
+      "added": true
+    },
+    "frontend/tests/form-validation.test.ts": {
+      "sha256": "b8d1d1f267d74494c222153bd588c84c053a6c6d6a37eb66515c94366916027f",
+      "reason": "Update registration expectations and verify team historical-profile exceptions.",
+      "previousSha256": "37664ff366d5348c9a583f450ed8f441d2ce45130f720d56909ef6cc34d813d6"
+    },
+    "frontend/tests/profile-patch.test.ts": {
+      "sha256": "e1be06d6547a3107a2d339cb4152c9864eed9e59f661230e4aeb9c94ac479c67",
+      "reason": "Verify university assignment, trimming, preservation, and security-field exclusion.",
+      "added": true
+    },
+    "frontend/tests/pre-presentation.test.ts": {
+      "sha256": "7306203268c3a2c35338073817b46c077aa99caf61a2b13114463dd25ef93da0",
+      "reason": "Honor this explicitly requested scope while retaining unrelated presentation boundaries.",
+      "previousSha256": "1f38adb517eabd4a7ab5ff7a04c27ee128f24b06be5e5857401fd03c385bdba6"
+    },
+    "frontend/scripts/student-registration-browser-qa.mjs": {
+      "sha256": "cf36f6090e36d1743c40188ba3ee51f1dd46d228bda93941b9f36d2f2ba30b75",
+      "reason": "Isolated API fixtures verify registration/dashboard behavior, strict empty-PATCH handling, registration drafts, password exclusion, tab close/reopen, cleanup, and responsive bilingual restoration.",
+      "added": true
+    },
+    "frontend/scripts/verify-merge-preservation.mjs": {
+      "sha256": "5239b86319cdd3f4805929ed42b45cb25655000c5920a78852f89c27eabfd0dd",
+      "reason": "Record this refinement as a separate hash-pinned layer without weakening prior checks.",
+      "previousSha256": "27ed999efe1a203fdfe4ed2e59aba53398f428794fd2142170581fdf143e7c98"
+    },
+    "frontend/scripts/check-phase-03.mjs": {
+      "sha256": "d626b21be7b21062f682a36447a0cfaa86719e93d3d3fa5053ce60adc04831f2",
+      "reason": "Include the current authorized changes in inherited-file preservation checks.",
+      "previousSha256": "2b47bd75605b35b640fc05aff13afe78be1a561a19586ae5e0ebe93c141290e4"
+    },
+    "frontend/src/lib/academy-data.ts": {
+      "reason": "Skip empty PATCH requests by reading the authenticated persisted profile; preserve real read/update errors and registration completion.",
+      "previousSha256": "6932e8a13ea5ab0e9df385b91673f5fd98dc2dfe1e08bbbad44322f8d7e4248c",
+      "sha256": "797c58bffd2f3f94ed97005392200921bf0f6505387bed2f6e97d494da04150d"
+    },
+    "frontend/tests/profile-save.test.ts": {
+      "reason": "Exercise unchanged and normalized no-op saves, real changes, real errors, and registration continuation using the installed query builder with intercepted transport.",
+      "added": true,
+      "sha256": "b5e1c46f42b952f46b7b2db0aa60ec261999e53976c57bcdce8661d9cb1cac8d"
+    },
+    "frontend/src/features/portal/registration-draft.ts": {
+      "reason": "Versioned 24-hour local draft allowlist, strict record validation, per-user scope isolation, and per-field merging without secrets or backend calls.",
+      "added": true,
+      "sha256": "f17b61652e1e0b78664c7a170fdc18b614ffee032d17238bae96e3b1afd43b97"
+    },
+    "frontend/src/features/portal/use-registration-draft.ts": {
+      "reason": "Initialize controlled non-secret fields once, save changes synchronously, and clear drafts after successful registration without overwriting active input.",
+      "added": true,
+      "sha256": "1d0ff525c7361ddbaa5d2cc08801b3cf439c120c003885891af3c0ef0f8e8827"
+    },
+    "frontend/src/features/portal/registration-draft-notice.tsx": {
+      "reason": "Accessible bilingual shared-device notice and manual clear action.",
+      "added": true,
+      "sha256": "348f2e5e2b3dca4c7a8897bd652e46d25bef2a7c65fe1afce2b97283aa341750"
+    },
+    "frontend/tests/registration-draft.test.ts": {
+      "reason": "Cover allowlisting, password/token exclusion, expiry/corruption, user isolation, stale-tab merging, blocked storage, and restored ID validation.",
+      "added": true,
+      "sha256": "9eab3c540e6cbe787e0dc65cc96fc79c3ca4bdd7cbc4761fd5b26b78bec9202c"
+    }
+  }
+}

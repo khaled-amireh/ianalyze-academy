@@ -24,6 +24,9 @@ export async function loadOwnProfile(client: AcademyClient) {
   return client.from('profiles').select('*').eq('id', identity.user.id).single();
 }
 export async function updateOwnProfile(client: AcademyClient, patch: ProfilePatch) {
+  // An empty PATCH affects zero rows and cannot satisfy .single(). Read the
+  // authenticated profile instead; preserve real read errors and registration flow.
+  if (!Object.keys(patch).length) return loadOwnProfile(client);
   const { data: identity, error } = await client.auth.getUser();
   if (error) throw error;
   if (!identity.user) throw new Error('Authentication required');

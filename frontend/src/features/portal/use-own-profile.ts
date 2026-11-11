@@ -33,5 +33,14 @@ export function useOwnProfile() {
       window.removeEventListener('academy-profile-updated', load);
     };
   }, [uid]);
-  return { profile: result && result.uid === uid ? result.profile : null, error };
+  return {
+    profile: result && result.uid === uid ? result.profile : null,
+    error,
+    updateProfile: (profile: Row<'profiles'>) => {
+      if (uid && profile.id === uid) {
+        setResult({ uid, profile });
+        setError(false);
+      }
+    },
+  };
 }

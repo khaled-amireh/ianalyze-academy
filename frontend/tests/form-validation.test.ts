@@ -54,7 +54,7 @@ test('registration validates the database contract without accepting partial con
     full_name: 'Learner',
     whatsapp: '+962790000001',
     major: 'Data Science & Artificial Intelligence',
-    university: 'Other University',
+    university_id: '202311432',
     academic_year: '4',
     python_experience: 'basic',
     consent: 'on',
@@ -108,13 +108,13 @@ test('SDK returned errors map to safe actionable copy; arbitrary server text is 
   assert.equal(requestError({ message: 'private database details' }), 'error');
 });
 
-test('major Other, historical values, conditional university IDs and conflict messages', () => {
+test('major Other, historical values, required university IDs and conflict messages', () => {
   const valid = {
     full_name: 'Student',
     whatsapp: '0790000001',
     major: 'other',
     major_other: 'Historical custom major',
-    university: 'Another University',
+    university_id: '202311432',
     academic_year: '4',
     python_experience: 'none',
     consent: 'on',
@@ -129,18 +129,62 @@ test('major Other, historical values, conditional university IDs and conflict me
     'requiredField',
   );
   const zuj = { ...valid, university: 'Al-Zaytoonah University of Jordan' };
-  for (const university_id of ['', 'abc', '١٢٣', '123456789012345678901'])
+  for (const university_id of ['abc', 'student@example.org', '١٢٣', '123456789012345678901'])
     assert.equal(
       validateProfile(form({ ...zuj, university_id }), true).university_id,
       'invalidUniversityId',
     );
   assert.deepEqual(validateProfile(form({ ...zuj, university_id: ' 202311432 ' }), true), {});
-  assert.deepEqual(validateProfile(form({ ...valid, university_id: '' }), true), {});
+  assert.equal(
+    validateProfile(form({ ...valid, university_id: '   ' }), true).university_id,
+    'requiredField',
+  );
   assert.equal(
     requestError({
       code: '23505',
       message: 'duplicate key violates unique constraint "profiles_zuj_university_id_unique"',
     }),
     'duplicateUniversityId',
+  );
+});
+
+test('only editing a verified team profile may preserve unchanged incomplete fields', () => {
+  const incomplete = {
+    full_name: 'Historical Team',
+    major: null,
+    whatsapp: null,
+    academic_year: null,
+    python_experience: null,
+    university_id: null,
+  };
+  const values = { full_name: 'Updated Team', locale: 'en' };
+  assert.deepEqual(validateProfile(form(values), false, incomplete, true), {});
+  assert.equal(validateProfile(form(values), false, incomplete).university_id, 'requiredField');
+  assert.equal(
+    validateProfile(form(values), true, incomplete, true).university_id,
+    'requiredField',
+  );
+  for (const university_id of ['email@example.org', '12 34', '123456789012345678901'])
+    assert.equal(
+      validateProfile(form({ ...values, university_id }), false, incomplete, true).university_id,
+      'invalidUniversityId',
+    );
+  assert.equal(
+    validateProfile(
+      form({ ...values, university_id: '' }),
+      false,
+      { ...incomplete, university_id: '1234' },
+      true,
+    ).university_id,
+    'requiredField',
+  );
+  assert.deepEqual(
+    validateProfile(
+      form({ ...values, university_id: 'legacy' }),
+      false,
+      { ...incomplete, university_id: 'legacy' },
+      true,
+    ),
+    {},
   );
 });

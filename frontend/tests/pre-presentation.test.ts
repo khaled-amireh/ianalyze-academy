@@ -10,6 +10,11 @@ const base = 'db4bb8eff14d2120107f756272c07eae4bda1341';
 const root = new URL('../../', import.meta.url);
 const original = (path: string) =>
   execFileSync('git', ['show', `${base}:${path}`], { cwd: root, encoding: 'utf8' });
+// Current registration/profile work is separately pinned; every other historical
+// presentation boundary remains checked against its original baseline.
+const registrationUpdate = JSON.parse(
+  readFileSync(new URL('docs/student-registration/approved-changes.json', root), 'utf8'),
+);
 
 test('production font output stays compatible with the unchanged restrictive CSP', () => {
   const policy = configuration.build?.assetsInlineLimit;
@@ -80,6 +85,14 @@ test('the scoped presentation fixes preserve assets, security, navigation and cl
   );
   for (const path of protectedFiles) {
     const bytes = readFileSync(new URL(path, root));
+    if (registrationUpdate.files[path]) {
+      assert.equal(
+        createHash('sha256').update(bytes).digest('hex'),
+        registrationUpdate.files[path].sha256,
+        path,
+      );
+      continue;
+    }
     assert.equal(
       createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex'),
       tree.get(path),

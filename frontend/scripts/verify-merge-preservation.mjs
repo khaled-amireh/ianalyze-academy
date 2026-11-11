@@ -26,6 +26,9 @@ export const videoRedesignUpdate = JSON.parse(
 export const mobileResponsivenessUpdate = JSON.parse(
   readFileSync(new URL('docs/mobile-responsiveness/approved-changes.json', root), 'utf8'),
 );
+export const studentRegistrationUpdate = JSON.parse(
+  readFileSync(new URL('docs/student-registration/approved-changes.json', root), 'utf8'),
+);
 const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
 function tree(commit) {
   return new Map(
@@ -155,6 +158,29 @@ export function verifyMergePreservation() {
         `Mobile responsiveness baseline changed: ${path}`,
       );
     }
+    resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };
+  }
+  assert.equal(
+    git('merge-base', studentRegistrationUpdate.baseCommit, 'HEAD'),
+    studentRegistrationUpdate.baseCommit,
+  );
+  const registrationBaseline = tree(studentRegistrationUpdate.baseCommit);
+  for (const [path, resolution] of Object.entries(studentRegistrationUpdate.files)) {
+    assert.ok(resolution.reason, `Registration refinement reason missing: ${path}`);
+    if (resolution.added)
+      assert.ok(!registrationBaseline.has(path), `Registration addition already existed: ${path}`);
+    else
+      assert.equal(
+        createHash('sha256')
+          .update(
+            execFileSync('git', ['show', `${studentRegistrationUpdate.baseCommit}:${path}`], {
+              cwd: root,
+            }),
+          )
+          .digest('hex'),
+        resolution.previousSha256,
+        `Registration refinement baseline changed: ${path}`,
+      );
     resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };
   }
   const base = tree(baseCommit);

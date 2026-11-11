@@ -87,6 +87,25 @@
   margin: 0;
   overflow-wrap: anywhere;
 }
+.university-id-control {
+  position: relative;
+}
+.university-id-hint {
+  position: absolute;
+  z-index: 10;
+  inset-inline: 0;
+  bottom: calc(100% + 1.75rem);
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: 0 8px 24px #0003;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  text-align: start;
+  pointer-events: none;
+}
 .team-linkedin {
   display: inline-flex;
   color: var(--primary);

@@ -85,6 +85,8 @@ npm run build
 npm run preview
 ```
 
+For focused checks during development, run `npm run check:types` for TypeScript errors or `npm run lint` for ESLint feedback. Run `npm run validate` for the full validation suite.
+
 Validation covers types, lint, tests, formatting, the public artifact, preservation rules, embedded database security, and database types. Preview serves the build at [http://127.0.0.1:4174/](http://127.0.0.1:4174/); it does not deploy anything.
 
 For a public-only build that excludes local backend configuration and development previews, use:

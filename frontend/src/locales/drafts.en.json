@@ -1,0 +1,11 @@
+{
+  "loading": "Restoring unfinished work…",
+  "saving": "Saving draft…",
+  "saved": "Draft saved privately.",
+  "offline": "Encrypted recovery copy saved on this device. Waiting for a connection to sync.",
+  "error": "Draft not confirmed saved. Keep this page open and reconnect; your current inputs are still here.",
+  "conflict": "Newer saved data or a newer draft exists. This recovered draft is read-only. Discard it to use the current saved record.",
+  "discard": "Discard draft",
+  "confirmDiscard": "Discard this form's unfinished work and use the current saved data?",
+  "reselectFile": "Please reselect your file before submitting. File contents are not stored in this draft."
+}

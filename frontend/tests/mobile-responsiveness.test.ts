@@ -36,7 +36,7 @@ test('video cards keep one flexible 16:9 window and never size the iframe in pix
   assert.match(styles, /\.drive-video\s*\{[\s\S]*width: 100%[\s\S]*max-width: 100%/);
   assert.equal((player.match(/<iframe/g) ?? []).length, 1);
   assert.doesNotMatch(player, /<iframe[^>]+(?:width|height)=/s);
-  assert.match(resources, /drive\.google\.com\/file\/d\/\$\{id\}\/preview/);
+  assert.match(resources, /youtube-nocookie\.com\/embed\/\$\{id\}/);
   assert.doesNotMatch(resources, /autoplay/i);
 });
 

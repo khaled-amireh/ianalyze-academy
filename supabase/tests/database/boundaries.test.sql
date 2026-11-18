@@ -4,7 +4,7 @@ create extension if not exists pgtap with schema extensions;
 set local search_path = public, extensions;
 select plan(15);
 select is((select count(*)::integer from pg_class c join pg_namespace n on n.oid=c.relnamespace
-  where n.nspname in ('public','app_private') and c.relkind='r' and c.relrowsecurity), 10, 'RLS on all ten application tables');
+  where n.nspname in ('public','app_private') and c.relkind='r' and c.relrowsecurity), 12, 'RLS on all twelve application tables');
 select ok(not has_table_privilege('anon','public.profiles','SELECT'), 'Anonymous cannot read profiles');
 select ok(not has_table_privilege('authenticated','app_private.user_roles','UPDATE'), 'Clients cannot grant roles');
 select ok(not has_table_privilege('authenticated','app_private.audit_events','INSERT'), 'Clients cannot forge audit events');
@@ -32,7 +32,7 @@ select is((select count(*) from pg_policies where schemaname='storage' and table
 select is((select count(*) from pg_proc p join pg_namespace n on n.oid=p.pronamespace
   where n.nspname='public' and p.prokind='f'
     and p.prorettype not in ('trigger'::regtype,'event_trigger'::regtype) and not p.prosecdef),
-  11::bigint, 'All eleven application RPCs are invokers');
+  13::bigint, 'All thirteen application RPCs are invokers');
 select ok(not has_function_privilege('authenticated','public.reserve_notebook(uuid,uuid,uuid,text,integer)','EXECUTE')
   and not has_function_privilege('authenticated','public.finalize_notebook(uuid,text)','EXECUTE')
   and not has_function_privilege('authenticated','public.claim_submission_request(uuid)','EXECUTE')

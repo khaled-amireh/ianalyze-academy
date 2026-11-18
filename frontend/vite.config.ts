@@ -16,6 +16,19 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
     watch: { ignored: ['**/artifacts/**'] },
+    // Retain Vite's sensitive-file defaults and keep private local review
+    // accounts, captured test evidence and isolated stack settings off HTTP.
+    fs: {
+      deny: [
+        '.env',
+        '.env.*',
+        '*.{crt,pem,key,p12,pfx,cer,der}',
+        '.npmrc',
+        '.yarnrc.yml',
+        '**/.git/**',
+        '**/artifacts/**',
+      ],
+    },
   },
   preview: { host: '127.0.0.1', port: 4174, strictPort: true },
 });

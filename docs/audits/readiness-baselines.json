@@ -1,0 +1,248 @@
+{
+  "baseCommit": "a93d18897ef88ee0168d872e950361d463cc6a3e",
+  "authorization": "User requested final local readiness review and justified test-baseline fixes. Current implementation hashes are pinned separately; no Git history or historical previous hashes rewritten. README stale expected hash is corrected in its existing approval record. Production integration adjustment: baseCommit is a93d188, the reviewed ancestor of main; all 46 original previousSha256 values match this commit byte-for-byte. The b64abda README-only commit is excluded. The historical 115-file source fingerprint is preserved in separate release evidence; no application or security-check bytes are changed.",
+  "addedMigrations": {
+    "supabase/migrations/20261114184131_week_one.sql": "af058357050c8a8c8cf8752c22f17702189011525dccc6f826648edc3b220b60",
+    "supabase/migrations/20261114200222_week1_bingo_rounds.sql": "b204d0c3cc5a3273606e5988d56d73c41d1b005d195b948f6f523b9b0802938f",
+    "supabase/migrations/20261115105446_week1_dataset_attempts.sql": "c418fc60eaf97ac265e22e6b5cb315ff082d2470ff49892139a76912fe898fc7",
+    "supabase/migrations/20261115115043_assignments_points_session.sql": "6fca445910884e70f5d143be1b002ef0672ffc4f5993227f8377172d2c455466",
+    "supabase/migrations/20261115123220_assignment_link_validation.sql": "f95ca74823880b0409690ce12ca2e9e6fae6bf89ee96e515e963509b5214a4b9",
+    "supabase/migrations/20261115130948_private_form_drafts_assignment_retry.sql": "edcda61eb66e6175f5a87a8c1e0da835fbe4e5959a2d138e12d1da539322312e",
+    "supabase/migrations/20261115172318_eligible_student_leaderboard.sql": "1a6ef9655f0dd1e964c74a06fc915b30f74dd3618c0d14edc27b482ff4dd9298",
+    "supabase/migrations/20261115193059_weekly_archives_release_readiness.sql": "cd34a3d4bec8b742d06ba71db75dff509daa7b751ec6bc8e8869813189da250b",
+    "supabase/migrations/20261115195955_archive_privacy_rank_preservation.sql": "5591ba45aa09259464e532e463981c91e19e084b1a16a967e4ac500a784a78e0",
+    "supabase/migrations/20261115203156_rankings_closed_gate.sql": "2446b87fba40e34e409bae3825e2fdd52658cee70e2c45185ddd0730ac638177"
+  },
+  "files": {
+    "frontend/package.json": {
+      "sha256": "9d3e6c118917503b48827f7e8734c34747434f1000cdc239653cc7167562deca",
+      "previousSha256": "d4a9348a96e7dcabadb957c65ddcf5e563541508767f203f06dc22d6a0b703ff",
+      "reason": "Only additive embedded-security test entry points; all dependencies, versions and lockfile remain unchanged."
+    },
+    "frontend/scripts/check-phase-03.mjs": {
+      "sha256": "dde47faadf000e38e943ba2524423516ea0e0bda80cd0f1e7d8fa0f46c238d5e",
+      "previousSha256": "d626b21be7b21062f682a36447a0cfaa86719e93d3d3fa5053ce60adc04831f2",
+      "reason": "Reviewed test infrastructure for isolated ports, browser synchronization and additive readiness baseline selection; no production deployment, migration history or application behavior changed."
+    },
+    "frontend/scripts/check-redesign.mjs": {
+      "sha256": "38bc1bddd7267113a810806d97aac640bf573ba0961878284be68a5db83b966b",
+      "previousSha256": "c886c6d8115b74541cdce3f4170cdb00d49b7d48fabd292c09178fa548531a97",
+      "reason": "Reviewed test infrastructure for isolated ports, browser synchronization and additive readiness baseline selection; no production deployment, migration history or application behavior changed. The redesign check also accepts the ten reviewed migration additions at their exact SHA-256 hashes. Separately authorized preservation security fix: verify every inventoried workflow YAML against its existing exact path and SHA-256 approval before extension filtering, including untracked files. No workflow allowlist, historical previous hash, migration approval, or application behavior is changed."
+    },
+    "frontend/scripts/generate-database-types.mjs": {
+      "sha256": "bac80d8ad8de4922bd4148155421faaa684320f062969be7563d2f7c864a2195",
+      "previousSha256": "737a8b8a5f68f7701616699d78cb0d9502ceaad7e51d8813141f27b139bdd4d0",
+      "reason": "Reviewed test infrastructure for isolated ports, browser synchronization and additive readiness baseline selection; no production deployment, migration history or application behavior changed."
+    },
+    "frontend/scripts/pre-presentation-browser-client.mjs": {
+      "sha256": "7c6cf769efe9fb492a2f5b3e4706f8c101c796a3fe028e0b90c37c61040f561b",
+      "previousSha256": "9aa23722c9fee85e861bc01ea9e6c4fedb65d99a769f826dbf1ba69e9a503c12",
+      "reason": "Reviewed test infrastructure for isolated ports, browser synchronization and additive readiness baseline selection; no production deployment, migration history or application behavior changed."
+    },
+    "frontend/scripts/verify-merge-preservation.mjs": {
+      "sha256": "ffa86eaf53b61cdbf8f558483e085e10b9576b5ca110fc50578d8ae73ba8bc73",
+      "previousSha256": "5239b86319cdd3f4805929ed42b45cb25655000c5920a78852f89c27eabfd0dd",
+      "reason": "Reviewed test infrastructure for isolated ports, browser synchronization and additive readiness baseline selection; no production deployment, migration history or application behavior changed."
+    },
+    "frontend/src/app/app.tsx": {
+      "sha256": "45fb9239ce3e975ac6c4ce8e37796d5f8543dfd3bb20dc92118872a8532734fb",
+      "previousSha256": "5cf6d91d87a780f309fa21a573c54ffc83bf83713cb8c190ccfa5fd250ab8e91",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration. Follow-up QA confirmed the app shell's Radix direction provider was still hardcoded RTL; it now follows the active locale and is covered by browser and focused locale tests."
+    },
+    "frontend/src/app/navigation.ts": {
+      "sha256": "722006a51933a08574be0b28c861ca051e327357a6f7e9d694e4e1152d6ed225",
+      "previousSha256": "d569b87b5c1285a12a3081a5133ae5b7b8f69d862d0ba6da74a399fabca7a6ff",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/app/route-effects.tsx": {
+      "sha256": "e9c81b0b0933dfbbf8b0ca3aa027986170c2c8dc7ba717f6abb8fd3358395fde",
+      "previousSha256": "deb1818451a653bc08f530fba29e5aeafdf2a61d38c09d008438c418a4a4ce06",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/components/layout/navbar.tsx": {
+      "sha256": "3c52c47e068c6702ea27e7a585f0dca80b13d169fc2b11d8a73f0c80bc8e8bdc",
+      "previousSha256": "85a9f6bb3a25b7f4e69fd000b98ffad754baa56e48ad49bbaadab1bd71f5d2da",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/components/shared/academy-content.tsx": {
+      "sha256": "4fd59eb8e190ba99a620ea475c4fecf7414875689161bcbf8be398a4f3f4819d",
+      "previousSha256": "8c5f5576734f04f5baa872bc507eab9c23eb6bdf96f6ac64da4795a178d9d5e9",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/components/shared/drive-video.tsx": {
+      "sha256": "b45ef67c7729de50ab6d773c050276a6770e24894afa3baf8aaedcbb28cb2ee3",
+      "previousSha256": "6c1cf3b9b84e19a741af2465a66f7b2044fef7a9452a65148eec87a67338463d",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/components/shared/simple-blocks.tsx": {
+      "sha256": "dac8e7737021b689098f95c815c343fc00bbd2bbc9241ca0e09c8af2f0ff881c",
+      "previousSha256": "ab3ceaa4837f1b23d6d1ce5e8770fe4fec673c16480925558823cb68f955f6d5",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/content/learning-tools.ts": {
+      "sha256": "810a5964fd12dec19f818cf0c1e4b425f2a9f5dd23f37afd96935af83449846b",
+      "previousSha256": "6e3739f7716720e39b2bbc3aeb782783a5250207a0b8627ca2feebdbad67a9ee",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/content/public-content.ts": {
+      "sha256": "7b706f062e060042ae1e3c89ed56759c3a6b1e66a0847d6b070f06142dbb2c45",
+      "previousSha256": "7448fdf281aaff41e76cb7d2939754fe09b190870611779f1dd55da4ba3db37f",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/content/video-resources.ts": {
+      "sha256": "18a991cf59d4dc20a95afe77e15b24b76d8a1b036e3888429e211639391e5ba3",
+      "previousSha256": "892248c7aa5af12e9a0c3034584c823dd19114a3210cd878042d8b077a5f6524",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/features/portal/announcements.tsx": {
+      "sha256": "23b743e8baad802232cc6eb0fd15c5ba34fc4b3342b550a9e6173d54517bdb55",
+      "previousSha256": "4b4c5f2bb2ff4b8bb88b1fd8c716c1fb7eb526f4152f8c7a5af76b0da1056606",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/features/portal/leaderboard.tsx": {
+      "sha256": "44fc9a1167f87f3081a7adb3ed7a9cd2162f2bbf75e4da2d81695643b5f1023e",
+      "previousSha256": "f03fde1ef5ac4448256ef299cec4027c3273924a3c346ba99da656fc3e732c14",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/features/portal/privacy-page.tsx": {
+      "sha256": "e21abefc1fca023f1f9a66fdceb183031954016073963a9b1a05e342b47a6653",
+      "previousSha256": "a01a115e7a789576512ac178a48e1ae78f7f79d6d08ab8ed0408e638dcd6dddf",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/features/portal/profile-page.tsx": {
+      "sha256": "cc848ba1f08725471ff510e5e02f8da0ecc8beb73334a27f1541cc12acec4530",
+      "previousSha256": "e382cdeae802fb297921f42001e2b42210afa641ba7a53f3cd08879b7ce70fba",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/features/portal/student-page.tsx": {
+      "sha256": "70b5a4b76aa5c4a7cda5e3d8c4b2efbcda8ade0d80ded69a54c353b2f57bb352",
+      "previousSha256": "0feb7015da9107230ff509325903a5ff3be5685683f0c747dfc6774348f21aa2",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/features/portal/team-page.tsx": {
+      "sha256": "655c04c4dac258e14734eaf83a29f5f1a6fcbaae57aafe653fbb0bb29baabe88",
+      "previousSha256": "c16d1b45b3dab31ae239b0a11b499bd59aa0c18795972a1cb9b36b62345fed56",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/lib/i18n.ts": {
+      "sha256": "d7d9e9ffe4718575fcaf67911197b12d69bfa6035e742dbcc8477a9dc7f023e1",
+      "previousSha256": "b6c3e399afd1eedca3339cc6a83bf63eedff1b5cdba948a4582746f1f7865af2",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration. Follow-up QA found global language application also hardcoded RTL; it now sets document direction from the active locale, with focused locale and browser tests."
+    },
+    "frontend/src/locales/ar.json": {
+      "sha256": "00921c9991fbfecfe2c887cb9a7048d501e9e1be524a140f41168a19fc393fbc",
+      "previousSha256": "c00b62bb5dbaf62982f34782985e16b0fd1f8b3e4e123c78f5e09249ee62559a",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/locales/en.json": {
+      "sha256": "35122f6114bd8a80f548e64c601185311406711b25cf28a229b7e48c2bc6c9e1",
+      "previousSha256": "a59d69e324afd7465fa673b7934478da41ef8c51762efa9a0bd051f3bc268959",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/pages/public/home-page.tsx": {
+      "sha256": "b5a75792294d914a7b957b0cff6f1baf46f21e5b0d77824d89332d0988139725",
+      "previousSha256": "62dc2383c1a8824024c968c2af5ea9a6a6c157c0867a62bc46500da567fce58b",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/pages/public/join-page.tsx": {
+      "sha256": "b0a8f35526d267d2f7a2f9133c103e0cd62d11732c14562f7166275e72fe9df3",
+      "previousSha256": "4796aed7f03bc3063172201e64787856d1e8f92a57ca435c64d6a4209b29dcdf",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/pages/public/syllabus-page.tsx": {
+      "sha256": "e8f8bbc0026c3fde628e306c84d81e646884ba763ba8c96e87277288c79b1619",
+      "previousSha256": "5c6e13a0830f25a29158c0a25255446b18a16734cf66423413653a7bcf089055",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/styles/academy.css": {
+      "sha256": "55c9f65613dc156e84df10f9042e24bc8beec7d2bf32679cbae52c724a5cfd58",
+      "previousSha256": "71fbf2d013495fae41247ae8d04e8fc7f763aea04d411f07580d0b143cddcc05",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/styles/navigation-footer.css": {
+      "sha256": "4b9f53ada8986f83985faee6d24d4fbe4d39aba18df174df50f0b06a78035b82",
+      "previousSha256": "c75e215e5e828ebd0425b007745e294f5ba6ed826c2083e39a7dac57d39e6456",
+      "reason": "Reviewed user-authorized Week 1 and responsive layout. Follow-up mobile browser testing measured a 36 by 40 pixel menu target; it now meets 44 by 44 pixels and passes phone/tablet touch checks."
+    },
+    "frontend/src/styles/simplify.css": {
+      "sha256": "9660959ec290d28a8239b4b6bcf8f533817f15b4d578a0c1e0175ab662fe7cbd",
+      "previousSha256": "0494467e924783065b0ae2bbb5f06d2e7acd4ccdb5b6f49633cef16cdf5062c5",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/types/database.ts": {
+      "sha256": "b5cbf77b9b1788e6a74dc086b5b600023734bc78ccd17a640930ec0fa3e1a095",
+      "previousSha256": "8e8cf872c9ac1abf990035411c7c95b5f294ff455cdf0219b6cc2128fe73204c",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/src/types/i18next.d.ts": {
+      "sha256": "319b7fa8f4de6bdf49c0cec3151eb597c997e008570e6f37eabeba30d02cb2f3",
+      "previousSha256": "b80f5dc7698aa68ca6a871e434a77008bda1a9fdb10aa9c8a9d47bdea0340214",
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+    },
+    "frontend/tests/auth-email.integration.test.mjs": {
+      "sha256": "38180ce1e00d64f7f64a956085c629e31de5cf5bf7ebfa99a330284ff7f64c33",
+      "previousSha256": "17bc7f1004e5c7f2b59355e13ba1ced24dba4c167c3ca19f5c1b057eecca3c55",
+      "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; no assertions are disabled and unrelated historical boundaries remain checked."
+    },
+    "frontend/tests/content-audit.test.ts": {
+      "sha256": "40004981267bb477c57ea6dd454fe86b5c7fec72eac23d695751112f8e9c3a3d",
+      "previousSha256": "334bc5eef32507dd93504fa347fc52c10cee33724ab77a62fc45da50606e3b7e",
+      "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; no assertions are disabled and unrelated historical boundaries remain checked."
+    },
+    "frontend/tests/content-encoding.test.ts": {
+      "sha256": "a770f19e2ebd1ea77e3a36c30ef910f3fd2e03836218afd90d4ff0168b0fa915",
+      "previousSha256": "9989b2c59adb474be211b354289698bb39f1b3511ccc70c50ab68e2afb5d8283",
+      "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; no assertions are disabled and unrelated historical boundaries remain checked."
+    },
+    "frontend/tests/database.security.test.mjs": {
+      "sha256": "1a8b9430b5bda6451e1c62ca04eef050b4dc6ff9878699275004a2a69b2066e8",
+      "previousSha256": "ad6f5853bac0aa19dd12cdf186275c7bd1397b19e1f8690f074a3e75955da37c",
+      "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; no assertions are disabled and unrelated historical boundaries remain checked."
+    },
+    "frontend/tests/delivery.security.test.mjs": {
+      "sha256": "5b7aad0aed56001b7e63898e98a4a7e4f17a332a9c815c3c8bd5d7501f7bf63f",
+      "previousSha256": "0053d57c2128df5d90cf6c02c4275e31cc7a76bd3bf3809c3ed30e3907732e60",
+      "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; no assertions are disabled and unrelated historical boundaries remain checked."
+    },
+    "frontend/tests/final-improvements.security.test.mjs": {
+      "sha256": "d5b65b3d0769362dd8eea4a9acc0b403e8185e7cb5f603d27611cf2c01123cc4",
+      "previousSha256": "e9c0a301a09f7d16130344d2745ba9147b555f025b919a30c6c23374ee952f43",
+      "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; no assertions are disabled and unrelated historical boundaries remain checked."
+    },
+    "frontend/tests/learning-resources.test.ts": {
+      "sha256": "333caf7b22eab6fd06d64f4359b433cae7755baf9982eb4205ffd640b5819f61",
+      "previousSha256": "ba7b6a24720ab739a62a7ce1eff65a1a841f84197455311c228db3da003f8a5e",
+      "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; no assertions are disabled and unrelated historical boundaries remain checked."
+    },
+    "frontend/tests/mobile-responsiveness.test.ts": {
+      "sha256": "c0f2f94db0c580481ba8cec28b497366a098dcf7862bbdf71a606c88620917bb",
+      "previousSha256": "8a008726654cb1d10c1bbeeca15a7fccf2f144c718aac9ef66042f0f2aea17ab",
+      "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; no assertions are disabled and unrelated historical boundaries remain checked."
+    },
+    "frontend/tests/pre-presentation.test.ts": {
+      "sha256": "d69b6841d519bf93320ae31d8ff2a8ee981abd05c2332b19578d5a8dff841e47",
+      "previousSha256": "7306203268c3a2c35338073817b46c077aa99caf61a2b13114463dd25ef93da0",
+      "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; also pin the narrowly scoped verified database-boundary baseline exception; no assertions are disabled and unrelated historical boundaries remain checked."
+    },
+    "frontend/tests/registration.integration.test.mjs": {
+      "sha256": "81656f350ba4ac1b9904bead3f0b77204f0448fb38a697a1b787d86ac5e98b4c",
+      "previousSha256": "8b87812e915aed1b28d05211006f6e52c808dab8fd9c777471123e9b73eb4729",
+      "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; no assertions are disabled and unrelated historical boundaries remain checked."
+    },
+    "frontend/tests/locales.test.ts": {
+      "sha256": "b85e742b309c5fddbcee51604bf09dc3e8b5c5039d89e1f9c823cf9cd374cf7e",
+      "previousSha256": "1d52b4807cd6f5e9fc7440f71776b535140fa5b7e2e8ff931a6792ceaf561053",
+      "reason": "Adds focused coverage that Arabic maps to RTL and English maps to LTR for the user-authorized locale-direction fix."
+    },
+    "frontend/tests/verification.integration.test.mjs": {
+      "sha256": "c889abec36c67758039933379ad6b4f5c12f7522f6ff3492eb6f2288be75bade",
+      "previousSha256": "41def71ca5bf45a09121a2a01685339e0435fdfe01fe9e37bbe55ada2999507f",
+      "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; no assertions are disabled and unrelated historical boundaries remain checked."
+    },
+    "frontend/vite.config.ts": {
+      "sha256": "033a17cd87dfbb07da1ef786333df0f9d4739b272ac81b14e70e17fb9c03bff7",
+      "previousSha256": "ac2bb1e46582e23d600f7c5aa8c7e9e2190d6784e9aa47d1e02d44e5c816b84c",
+      "reason": "Previously authorized preview protection denies private local artifacts and preserves the restrictive production CSP and asset behavior."
+    }
+  }
+}

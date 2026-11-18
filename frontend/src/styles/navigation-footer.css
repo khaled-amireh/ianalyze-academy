@@ -1,21 +1,21 @@
 /* Shared navigation and footer refinements; logo sizing stays in redesign.css. */
 .site-header .desktop-nav {
-  gap: 8px;
+  gap: 2px;
   min-width: 0;
-  flex: 0 1 560px;
-  grid-template-columns: 68px 104px 72px minmax(0, 1fr) 128px;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
 }
 .site-header .desktop-nav a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 44px;
-  padding: 8px 12px;
-  font-size: 15px;
+  padding: 8px 8px;
+  font-size: 14px;
   line-height: 1.5;
-  white-space: normal;
+  white-space: nowrap;
   text-align: center;
-  height: 62px;
+  height: 44px;
 }
 .site-header .header-actions {
   gap: 10px;
@@ -55,10 +55,16 @@ html[lang='en'] .account-menu [role='menuitem'] {
   direction: ltr;
 }
 .site-header .desktop-nav a,
-.mobile-dialog .mobile-nav-links a:not(.navigation-login, .navigation-join),
-.mobile-dialog .dialog-header,
 .account-menu [role='menuitem'] {
   text-align: start;
+}
+.mobile-dialog .mobile-nav-links a:not(.navigation-login, .navigation-join),
+.mobile-dialog .dialog-header {
+  text-align: left;
+}
+.mobile-dialog .dialog-header {
+  padding-left: 0;
+  padding-right: 30px;
 }
 :is(.site-header, .mobile-dialog) {
   --navigation-blue: #0d47a1;
@@ -179,7 +185,7 @@ html[lang='en'] .account-menu [role='menuitem'] {
 }
 @media (min-width: 1280px) {
   .site-header .desktop-nav {
-    display: grid;
+    display: flex;
   }
 }
 @media (max-width: 1279px) {
@@ -190,6 +196,8 @@ html[lang='en'] .account-menu [role='menuitem'] {
   }
   .site-header .mobile-menu-trigger {
     display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
   }
   .site-header .header-actions {
     margin-left: 0;

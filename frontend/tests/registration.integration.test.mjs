@@ -4,7 +4,7 @@ import { randomUUID } from 'node:crypto';
 import { createClient } from '@supabase/supabase-js';
 import postgres from 'postgres';
 import { saveAcademyProfile } from '../src/lib/academy-data.ts';
-import { localTestTarget } from '../scripts/local-test-target.mjs';
+import { week1TestTarget as localTestTarget } from '../scripts/week1-test-target.mjs';
 describe(
   'confirmed registration persistence without replacing the existing session or role',
   { skip: process.env.RUN_LOCAL_SUPABASE_TESTS !== '1' },

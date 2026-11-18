@@ -9,6 +9,9 @@ import { MixedText } from '@/components/shared/mixed-text';
 import { FormNotice } from './form-feedback';
 import type { PortalCopy } from './copy';
 import { AnnouncementManager } from './announcements';
+import { AssignmentManagement } from '@/features/assignments/assignment-management';
+import { useAssignmentCopy } from '@/features/assignments/copy';
+import { DraftForm, completeFormDraft } from '@/features/drafts';
 import { majorLabel, ZUJ } from './profile-fields';
 import { academicYearLabel } from './academic-years';
 import {
@@ -41,6 +44,7 @@ function ActivityEditor({
     ? new Date(due.getTime() - due.getTimezoneOffset() * 60000).toISOString().slice(0, 16)
     : '';
   async function save(event: FormEvent<HTMLFormElement>) {
+    const element = event.currentTarget;
     event.preventDefault();
     if (inFlight.current) return;
     inFlight.current = true;
@@ -68,9 +72,16 @@ function ActivityEditor({
         status,
       };
       const result = activity
-        ? await client().from('activities').update(values).eq('id', activity.id)
+        ? await client()
+            .from('activities')
+            .update(values)
+            .eq('id', activity.id)
+            .eq('version', activity.version)
+            .select('id')
+            .single()
         : await client().from('activities').insert(values);
       if (result.error) throw result.error;
+      await completeFormDraft(element);
       setMessage('saved');
       reload();
     } catch {
@@ -81,7 +92,12 @@ function ActivityEditor({
     }
   }
   return (
-    <form onSubmit={save} aria-busy={busy}>
+    <DraftForm
+      draftKey={`legacy-activity:${activity?.id ?? 'new'}`}
+      baseVersion={String(activity?.version ?? 0)}
+      onSubmit={save}
+      aria-busy={busy}
+    >
       <h3>
         <MixedText>
           {activity ? (arabic ? activity.title_ar : activity.title_en) : c.createActivity}
@@ -170,7 +186,7 @@ function ActivityEditor({
         message={message ? c[message] : ''}
         kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}
       />
-    </form>
+    </DraftForm>
   );
 }
 function RubricEditor({
@@ -188,6 +204,7 @@ function RubricEditor({
   const inFlight = useRef(false);
   const [busy, setBusy] = useState(false);
   async function create(event: FormEvent<HTMLFormElement>) {
+    const element = event.currentTarget;
     event.preventDefault();
     if (inFlight.current) return;
     inFlight.current = true;
@@ -204,6 +221,7 @@ function RubricEditor({
         p_criteria: rows,
       });
       if (result.error) throw result.error;
+      await completeFormDraft(element);
       setMessage('saved');
       reload();
     } catch {
@@ -271,7 +289,16 @@ function RubricEditor({
             )}
           </div>
         ))}
-      <form onSubmit={create} aria-busy={busy}>
+      <DraftForm
+        draftKey={`rubric-new:${activity.id}`}
+        baseVersion={JSON.stringify(data.rubrics.filter((r) => r.activity_id === activity.id))}
+        extra={{ count }}
+        restoreExtra={(value) =>
+          setCount(Math.max(1, Math.min(30, Number((value as { count?: number }).count) || 1)))
+        }
+        onSubmit={create}
+        aria-busy={busy}
+      >
         {Array.from({ length: count }, (_, i) => (
           <div className="portal-criterion" key={i}>
             <Input
@@ -311,7 +338,7 @@ function RubricEditor({
           {c.addCriterion}
         </Button>
         <Button disabled={busy}>{c.createRubric}</Button>
-      </form>
+      </DraftForm>
       <FormNotice
         message={message ? c[message] : ''}
         kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}
@@ -334,7 +361,13 @@ function DraftCriteria({
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<keyof PortalCopy | ''>('');
   return (
-    <form
+    <DraftForm
+      draftKey={`rubric-edit:${rubric.id}`}
+      baseVersion={JSON.stringify(criteria)}
+      extra={{ count }}
+      restoreExtra={(value) =>
+        setCount(Math.max(1, Math.min(30, Number((value as { count?: number }).count) || 1)))
+      }
       aria-busy={busy}
       onSubmit={async (event) => {
         event.preventDefault();
@@ -342,6 +375,7 @@ function DraftCriteria({
         inFlight.current = true;
         setBusy(true);
         const form = new FormData(event.currentTarget);
+        const element = event.currentTarget;
         try {
           const rows = Array.from({ length: count }, (_, i) => ({
             label_ar: String(form.get(`ar${i}`)),
@@ -351,8 +385,10 @@ function DraftCriteria({
           const result = await client().rpc('save_draft_rubric', {
             p_rubric_id: rubric.id,
             p_criteria: rows,
+            p_snapshot: criteria,
           });
           if (result.error) throw result.error;
+          await completeFormDraft(element);
           reload();
         } catch {
           setMessage('error');
@@ -405,7 +441,7 @@ function DraftCriteria({
         message={message ? c[message] : ''}
         kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}
       />
-    </form>
+    </DraftForm>
   );
 }
 function Review({
@@ -427,6 +463,7 @@ function Review({
   const student = data.profiles.find((p) => p.id === submission.student_id);
   const activity = data.activities.find((a) => a.id === submission.activity_id);
   async function grade(event: FormEvent<HTMLFormElement>) {
+    const element = event.currentTarget;
     event.preventDefault();
     if (inFlight.current) return;
     inFlight.current = true;
@@ -448,6 +485,7 @@ function Review({
         p_expected_revision: expected,
       });
       if (result.error) throw result.error;
+      await completeFormDraft(element);
       setMessage('saved');
       reload();
     } catch {
@@ -478,7 +516,12 @@ function Review({
         </Button>
       )}
       {submission.status !== 'uploading' && (
-        <form onSubmit={grade} aria-busy={busy}>
+        <DraftForm
+          draftKey={`legacy-review:${submission.id}`}
+          baseVersion={String(expected)}
+          onSubmit={grade}
+          aria-busy={busy}
+        >
           {data.criteria
             .filter((x) => x.rubric_id === submission.rubric_id)
             .map((x) => (
@@ -540,7 +583,7 @@ function Review({
               </Button>
             )}
           </div>
-        </form>
+        </DraftForm>
       )}
       <FormNotice
         message={message ? c[message] : ''}
@@ -585,11 +628,12 @@ function Materials() {
 }
 export function TeamPageLive() {
   const { c, arabic } = usePortalCopy();
+  const { c: assignmentCopy } = useAssignmentCopy();
   const auth = useAuth();
   const location = useLocation();
   const routeState = location.state as { profileSaved?: string; emailVerified?: boolean } | null;
   const profileSaved = routeState?.profileSaved;
-  const { data, error, reload } = useRemote(loadPortal);
+  const { data, error, refresh: reload } = useRemote(loadPortal);
   const [message, setMessage] = useState<keyof PortalCopy | ''>('');
   const [reviewPage, setReviewPage] = useState(0);
   const [reviewActivity, setReviewActivity] = useState('');
@@ -604,7 +648,7 @@ export function TeamPageLive() {
       </PageContainer>
     );
   const reviews = data.submissions.filter(
-    (s) => !reviewActivity || s.activity_id === reviewActivity,
+    (s) => !s.assignment_submission && (!reviewActivity || s.activity_id === reviewActivity),
   );
   const pageCount = Math.max(1, Math.ceil(reviews.length / 20));
   const currentPage = Math.min(reviewPage, pageCount - 1);
@@ -708,60 +752,72 @@ export function TeamPageLive() {
       </section>
       <section id="activities" className="content-card">
         <h2>{c.manage}</h2>
-        {topics.map((topic, i) => {
-          const week = data.weeks.find((w) => w.week_number === i + 1);
-          return (
-            <div className="portal-actions" key={topic}>
-              <span>
-                <bdi>{new Intl.NumberFormat(arabic ? 'ar-JO' : 'en-GB').format(i + 1)}</bdi>.{' '}
-                <MixedText>
-                  {week ? (arabic ? week.title_ar : week.title_en) : arabic ? topicsAr[i]! : topic}
-                </MixedText>{' '}
-                — {stateText(week?.status, c)}
-              </span>
-              <Button
-                variant="outline"
-                onClick={async () => {
-                  try {
-                    const result = week
-                      ? await client()
-                          .from('academy_weeks')
-                          .update({ status: week.status === 'draft' ? 'published' : 'draft' })
-                          .eq('id', week.id)
-                      : await client()
-                          .from('academy_weeks')
-                          .insert({
-                            week_number: i + 1,
-                            kind: 'teaching',
-                            title_ar: topicsAr[i]!,
-                            title_en: topic,
-                          });
-                    if (result.error) throw result.error;
-                    reload();
-                  } catch {
-                    setMessage('error');
-                  }
-                }}
-              >
-                {week ? (week.status === 'draft' ? c.publish : c.draftSave) : c.createWeek}
-              </Button>
-            </div>
-          );
-        })}
-        <ActivityEditor data={data} reload={reload} />
-        {data.activities.map((a) => (
-          <details key={a.id}>
-            <summary>
-              {arabic ? a.title_ar : a.title_en} — {stateText(a.status, c)}
-            </summary>
-            <ActivityEditor activity={a} data={data} reload={reload} />
-            <RubricEditor activity={a} data={data} reload={reload} />
-          </details>
-        ))}
-        <FormNotice
-          message={message ? c[message] : ''}
-          kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}
-        />
+        <AssignmentManagement data={data} reload={reload} />
+        <details>
+          <summary>{assignmentCopy.legacy}</summary>
+          {topics.map((topic, i) => {
+            const week = data.weeks.find((w) => w.week_number === i + 1);
+            return (
+              <div className="portal-actions" key={topic}>
+                <span>
+                  <bdi>{new Intl.NumberFormat(arabic ? 'ar-JO' : 'en-GB').format(i + 1)}</bdi>.{' '}
+                  <MixedText>
+                    {week
+                      ? arabic
+                        ? week.title_ar
+                        : week.title_en
+                      : arabic
+                        ? topicsAr[i]!
+                        : topic}
+                  </MixedText>{' '}
+                  — {stateText(week?.status, c)}
+                </span>
+                <Button
+                  variant="outline"
+                  onClick={async () => {
+                    try {
+                      const result = week
+                        ? await client()
+                            .from('academy_weeks')
+                            .update({ status: week.status === 'draft' ? 'published' : 'draft' })
+                            .eq('id', week.id)
+                        : await client()
+                            .from('academy_weeks')
+                            .insert({
+                              week_number: i + 1,
+                              kind: 'teaching',
+                              title_ar: topicsAr[i]!,
+                              title_en: topic,
+                            });
+                      if (result.error) throw result.error;
+                      reload();
+                    } catch {
+                      setMessage('error');
+                    }
+                  }}
+                >
+                  {week ? (week.status === 'draft' ? c.publish : c.draftSave) : c.createWeek}
+                </Button>
+              </div>
+            );
+          })}
+          <ActivityEditor data={data} reload={reload} />
+          {data.activities
+            .filter((a) => !a.assignment_mode)
+            .map((a) => (
+              <details key={a.id}>
+                <summary>
+                  {arabic ? a.title_ar : a.title_en} — {stateText(a.status, c)}
+                </summary>
+                <ActivityEditor activity={a} data={data} reload={reload} />
+                <RubricEditor activity={a} data={data} reload={reload} />
+              </details>
+            ))}
+          <FormNotice
+            message={message ? c[message] : ''}
+            kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}
+          />
+        </details>
       </section>
       <section id="reviews">
         <h2>{c.review}</h2>
@@ -775,11 +831,13 @@ export function TeamPageLive() {
             }}
           >
             <option value="">{c.allActivities}</option>
-            {data.activities.map((a) => (
-              <option key={a.id} value={a.id}>
-                {arabic ? a.title_ar : a.title_en}
-              </option>
-            ))}
+            {data.activities
+              .filter((a) => !a.assignment_mode)
+              .map((a) => (
+                <option key={a.id} value={a.id}>
+                  {arabic ? a.title_ar : a.title_en}
+                </option>
+              ))}
           </select>
         </label>
         <nav className="portal-actions" aria-label={c.review}>

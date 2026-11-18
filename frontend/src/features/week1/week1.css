@@ -1,0 +1,250 @@
+.week1-page {
+  min-width: 0;
+}
+.session-resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 1rem;
+  margin-block-start: 1rem;
+}
+.week1-resource-card {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.week1-resource-card a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+.week1-dataset-stats {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: none;
+}
+.week1-dataset-details {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.week1-attempt-summary {
+  overflow-wrap: anywhere;
+}
+.week1-dataset-details > a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+.week1-dataset-details > a svg {
+  display: inline;
+  vertical-align: middle;
+}
+.week1-submissions-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
+  gap: 1rem;
+  margin-block: 1.5rem;
+}
+.week1-submission-card {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.week1-submission-card > a {
+  display: inline;
+  color: var(--primary);
+  text-decoration: underline;
+}
+.week1-submission-card > a svg {
+  display: inline;
+  vertical-align: middle;
+}
+.week1-pending-claim {
+  padding-block: 1.5rem;
+  border-block-start: 1px solid var(--border);
+  margin-block-start: 1.5rem;
+}
+.week1-verification-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.week1-verification-actions button {
+  min-height: 48px;
+  white-space: normal;
+}
+.week1-activity-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.week1-activity-card .s-actions {
+  margin-block-start: auto;
+  padding-block-start: 1.5rem;
+}
+.week1-page .content-card {
+  margin-block: 1.5rem;
+}
+.week1-page label {
+  display: grid;
+  gap: 0.5rem;
+}
+.week1-page textarea,
+.week1-page select {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  background: var(--background);
+  color: var(--foreground);
+}
+.week1-page textarea {
+  resize: vertical;
+}
+.week1-instructions {
+  list-style: decimal;
+  padding-inline-start: 1.5rem;
+  line-height: 2;
+}
+.week1-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-block: 1rem 2rem;
+}
+.week1-logos .brand-logo {
+  width: 160px;
+  max-width: 40%;
+}
+.week1-logos .parent-logo {
+  width: 135px;
+  max-width: 40%;
+}
+.week1-board {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-block: 1rem 1.5rem;
+}
+.week1-square {
+  min-width: 0;
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.8rem;
+  background: var(--card);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  text-align: center;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+.week1-square-number {
+  font-weight: 800;
+  color: var(--primary);
+}
+.week1-square.is-complete {
+  border-color: var(--primary);
+  background: var(--muted);
+}
+.week1-square.is-winning {
+  box-shadow: inset 0 0 0 2px var(--primary);
+}
+.week1-square:disabled {
+  cursor: default;
+}
+.week1-square:focus-visible,
+.week1-page textarea:focus-visible,
+.week1-page select:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+}
+.week1-celebration {
+  padding: 1.5rem;
+  margin-block: 1rem;
+  border-radius: 0.8rem;
+  background: var(--muted);
+  text-align: center;
+}
+.week1-celebration > strong {
+  display: block;
+  font-size: 2rem;
+  color: var(--primary);
+  animation: week1-pop 0.4s ease-out;
+}
+.week1-reference {
+  display: inline-block;
+  user-select: all;
+  overflow-wrap: anywhere;
+}
+.week1-claim {
+  padding-block: 1rem;
+}
+.week1-claim ol {
+  list-style: decimal;
+  padding-inline-start: 1.5rem;
+}
+.week1-topic {
+  padding: 1rem;
+  margin-block: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.8rem;
+  min-width: 0;
+}
+.week1-fieldset {
+  min-width: 0;
+}
+.week1-page details {
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+.week1-page summary {
+  cursor: pointer;
+  padding-block: 0.5rem;
+}
+.week1-details {
+  display: grid;
+  gap: 1rem;
+  margin-block: 1rem;
+}
+.week1-details dt {
+  font-weight: 700;
+}
+.week1-details dd {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+@keyframes week1-pop {
+  from {
+    transform: scale(0.85);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .week1-celebration > strong {
+    animation: none;
+  }
+}
+@media (max-width: 560px) {
+  .week1-page .content-card {
+    padding: 0.85rem;
+  }
+  .week1-board {
+    gap: 0.3rem;
+  }
+  .week1-square {
+    min-height: 145px;
+    padding: 0.5rem 0.2rem;
+    font-size: 0.73rem;
+    border-radius: 0.5rem;
+  }
+  .week1-topic {
+    padding: 0.7rem;
+  }
+}

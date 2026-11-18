@@ -10,6 +10,7 @@ import { ProfileDetails } from './profile-details';
 import { ProfileForm } from './student-page';
 import { useOwnProfile } from './use-own-profile';
 import { FormNotice } from './form-feedback';
+import { DraftForm, completeFormDraft } from '@/features/drafts';
 
 export function ProfilePage({ edit = false }: { edit?: boolean }) {
   const { c, arabic } = usePortalCopy();
@@ -55,6 +56,7 @@ export function ProfilePage({ edit = false }: { edit?: boolean }) {
   );
 }
 function AccountSecurity() {
+  const ownerEmail = useAuth().user?.email ?? '';
   const { c } = usePortalCopy();
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<'sent' | 'error' | null>(null);
@@ -62,6 +64,7 @@ function AccountSecurity() {
     event.preventDefault();
     if (!academyClient || busy) return;
     const email = String(new FormData(event.currentTarget).get('email')).trim();
+    const element = event.currentTarget;
     setBusy(true);
     setMessage(null);
     try {
@@ -70,6 +73,7 @@ function AccountSecurity() {
         { emailRedirectTo: window.location.origin + '/auth/callback' },
       );
       if (error) throw error;
+      await completeFormDraft(element);
       setMessage('sent');
     } catch {
       setMessage('error');
@@ -80,7 +84,7 @@ function AccountSecurity() {
   return (
     <section className="content-card">
       <h2>{c.emailChange}</h2>
-      <form onSubmit={change}>
+      <DraftForm draftKey="email-change" baseVersion={ownerEmail} onSubmit={change}>
         <label>
           {c.email}
           <Input
@@ -94,7 +98,7 @@ function AccountSecurity() {
           />
         </label>
         <Button disabled={busy}>{c.emailChange}</Button>
-      </form>
+      </DraftForm>
       <FormNotice
         message={message === 'sent' ? c.emailChangeSent : message ? c.error : ''}
         kind={message === 'sent' ? 'success' : 'error'}

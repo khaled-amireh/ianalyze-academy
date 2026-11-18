@@ -12,7 +12,11 @@ const W = '10000000-0000-4000-8000-000000000091',
   ANN = '30000000-0000-4000-8000-000000000091';
 const ZUJ = 'Al-Zaytoonah University of Jordan';
 test('additive university migration preserves historical profiles, UUIDs, permissions and roles', async (t) => {
-  const all = migrations(),
+  // Test this historical forward migration independently of later features.
+  const all = migrations().slice(
+      0,
+      migrations().findIndex((sql) => sql.includes('add column university text')) + 1,
+    ),
     db = await createDatabase(all.slice(0, -1));
   t.after(() => db.close());
   await db.query(

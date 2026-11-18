@@ -29,6 +29,11 @@ export const mobileResponsivenessUpdate = JSON.parse(
 export const studentRegistrationUpdate = JSON.parse(
   readFileSync(new URL('docs/student-registration/approved-changes.json', root), 'utf8'),
 );
+// Current user-authorized implementation review is an additive test baseline.
+// Earlier approval records and their Git-anchored previous hashes stay checked.
+export const readinessBaseline = JSON.parse(
+  readFileSync(new URL('docs/audits/readiness-baselines.json', root), 'utf8'),
+);
 const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
 function tree(commit) {
   return new Map(
@@ -184,6 +189,23 @@ export function verifyMergePreservation() {
     resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };
   }
   const base = tree(baseCommit);
+  assert.equal(
+    git('merge-base', readinessBaseline.baseCommit, 'HEAD'),
+    readinessBaseline.baseCommit,
+  );
+  for (const [path, resolution] of Object.entries(readinessBaseline.files)) {
+    assert.ok(resolution.reason, `Readiness review reason missing: ${path}`);
+    assert.equal(
+      createHash('sha256')
+        .update(
+          execFileSync('git', ['show', `${readinessBaseline.baseCommit}:${path}`], { cwd: root }),
+        )
+        .digest('hex'),
+      resolution.previousSha256,
+      `Readiness original baseline changed: ${path}`,
+    );
+    resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };
+  }
   const functional = tree(functionalCommit);
   const redesign = tree(redesignCommit);
   const expected = new Map(functional);

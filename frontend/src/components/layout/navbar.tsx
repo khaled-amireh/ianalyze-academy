@@ -19,10 +19,10 @@ export function Navbar() {
   const direction = i18n.resolvedLanguage === 'ar' ? 'rtl' : 'ltr';
   return (
     <>
-      <header className="site-header">
+      <header className="site-header" dir="ltr">
         <PageContainer className="navbar-inner">
           <BrandLogo />
-          <nav className="desktop-nav" dir="ltr" aria-label={t('common.navigation')}>
+          <nav className="desktop-nav" aria-label={t('common.navigation')}>
             {publicNavigation.map((item) => (
               <NavLink key={item.id} to={item.to} end={item.to === '/'} dir={direction}>
                 <MixedText>{t(`nav.${item.id}`)}</MixedText>

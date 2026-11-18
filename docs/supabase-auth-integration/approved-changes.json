@@ -73,8 +73,8 @@
       "sha256": "baea732c873fbabdf794624672b68bbd67d38241b43366eed21f6d51acf2b202"
     },
     "supabase/tests/database/boundaries.test.sql": {
-      "reason": "Allow only the exact verified managed RLS event helper; reject arbitrary or altered public definers; verify invoker RPC and service/trigger authorization.",
-      "sha256": "ac80cfd594edc1ed9fe0eb4e5d0d9a6586817a7217e32cb9572a5b5db1fd4c65"
+      "reason": "Allow only the exact verified managed RLS event helper; reject arbitrary or altered public definers; verify invoker RPC and service/trigger authorization; pin verified catalog baselines of 12 RLS tables and 13 invoker RPCs.",
+      "sha256": "bd893f8f118a5694f6a31a28f1bda902db40539f7539719a5a29d8f595153805"
     },
     "frontend/scripts/build-pages-production.mjs": {
       "reason": "Open only registration/privacy after the owner-approved, freshly verified Leader checkpoint; preserve closed submissions, rankings and development previews.",

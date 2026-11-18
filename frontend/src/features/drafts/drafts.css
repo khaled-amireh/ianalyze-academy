@@ -1,0 +1,11 @@
+.form-draft-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+}
+.form-draft-status small:empty {
+  display: none;
+}

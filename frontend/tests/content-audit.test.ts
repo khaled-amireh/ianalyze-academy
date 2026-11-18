@@ -86,9 +86,14 @@ test('all three bilingual catalogues have unique keys, equivalent placeholders, 
           'common.english',
           'home.note',
           'home.toolkit',
+          'pages.eda.title',
+          'academy.syllabus.title',
+          'redesign.courseTitle',
+          'simple.courseTitle',
           'academy.team.khaled',
           'academy.team.yomna',
           'academy.team.hussein',
+          'week1.achieved', // Official Bingo celebration is intentionally BINGO! in both locales.
         ].includes(key)
       )
         assert.ok(/[\u0600-\u06FF]/.test(text), `${name}.${key}: untranslated Arabic`);

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { MixedText } from './mixed-text';
 import { Reveal } from './reveal';
 import { InstagramIcon, LinkedinIcon } from './social-icons';
+import './register-banner.css';
 
 export function TextLink({ to, children }: { to: string; children: string }) {
   return (
@@ -92,10 +93,10 @@ export function ModuleCards() {
 }
 
 export function JoinCallout() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <Reveal>
-      <section className="join-callout">
+      <section className="join-callout" dir={i18n.resolvedLanguage === 'ar' ? 'rtl' : 'ltr'}>
         <div>
           <h2>{t('academy.cta.title')}</h2>
           <p>{t('academy.cta.text')}</p>

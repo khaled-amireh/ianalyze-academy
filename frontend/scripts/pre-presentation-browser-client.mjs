@@ -8,24 +8,26 @@ mkdirSync(out, { recursive: true });
 export const pause = (ms) => new Promise((r) => setTimeout(r, ms));
 export const save = (name, data) =>
   writeFileSync(resolve(out, name), JSON.stringify(data, null, 2));
-export async function browser(engine = 'chrome', port = 9248) {
+export async function browser(engine = 'chrome', port = 9248, existing = false) {
   const exe =
     engine === 'edge'
       ? 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'
       : 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-  const child = spawn(
-    exe,
-    [
-      '--headless=new',
-      '--disable-gpu',
-      '--no-first-run',
-      '--no-default-browser-check',
-      `--remote-debugging-port=${port}`,
-      `--user-data-dir=${resolve(root, 'frontend/artifacts/pre-presentation-fixes/profile-' + engine + '-' + port)}`,
-      'about:blank',
-    ],
-    { windowsHide: true, stdio: 'ignore' },
-  );
+  const child = existing
+    ? null
+    : spawn(
+        exe,
+        [
+          '--headless=new',
+          '--disable-gpu',
+          '--no-first-run',
+          '--no-default-browser-check',
+          `--remote-debugging-port=${port}`,
+          `--user-data-dir=${resolve(root, 'frontend/artifacts/pre-presentation-fixes/profile-' + engine + '-' + port)}`,
+          'about:blank',
+        ],
+        { windowsHide: true, stdio: 'ignore' },
+      );
   let tabs;
   for (let i = 0; i < 100; i++) {
     try {
@@ -141,6 +143,12 @@ export async function browser(engine = 'chrome', port = 9248) {
     writeFileSync(resolve(out, name), Buffer.from(r.data, 'base64'));
   };
   const click = async (selector) => {
+    await ev(
+      `document.querySelector(${JSON.stringify(selector)})?.scrollIntoView({block:'center'})`,
+    );
+    await wait(
+      `!!document.querySelector(${JSON.stringify(selector)})&&document.querySelector(${JSON.stringify(selector)}).closest('form')?.dataset.draftState!=='loading'`,
+    );
     const p = await ev(
       `(()=>{const e=document.querySelector(${JSON.stringify(selector)});if(!e)throw Error('Missing ${selector}');e.scrollIntoView({block:'center'});const r=e.getBoundingClientRect();return{x:r.x+r.width/2,y:r.y+r.height/2}})()`,
     );
@@ -191,9 +199,9 @@ export async function browser(engine = 'chrome', port = 9248) {
     setTag: (t) => (tag = t),
     version: await send('Browser.getVersion'),
     close: async () => {
-      await send('Browser.close').catch(() => {});
+      if (!existing) await send('Browser.close').catch(() => {});
       ws.close();
-      child.kill();
+      child?.kill();
     },
   };
 }

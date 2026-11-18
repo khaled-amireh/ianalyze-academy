@@ -1,6 +1,6 @@
 import { writeFileSync, readFileSync } from 'node:fs';
 import { createDatabase } from './database-fixture.mjs';
-import { localTestTarget } from './local-test-target.mjs';
+import { week1TestTarget as localTestTarget } from './week1-test-target.mjs';
 
 const live = process.argv.includes('--local');
 let db;

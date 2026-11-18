@@ -9,17 +9,20 @@ import { TextLink } from '@/components/shared/academy-content';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import './join-page.css';
 
 export function JoinPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
-    <PageContainer>
-      <PageHeader
-        eyebrow={t('nav.join')}
-        title={t('pages.join.title')}
-        description={t('pages.join.description')}
-        icon={UserRoundPlus}
-      />
+    <PageContainer className="registration-page">
+      <div dir={i18n.resolvedLanguage === 'ar' ? 'rtl' : 'ltr'}>
+        <PageHeader
+          eyebrow={t('nav.join')}
+          title={t('pages.join.title')}
+          description={t('pages.join.description')}
+          icon={UserRoundPlus}
+        />
+      </div>
       <div className="registration-layout">
         <div>
           <section className="registration-notice">

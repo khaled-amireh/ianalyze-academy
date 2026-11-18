@@ -3,13 +3,17 @@ import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { createClient } from '@supabase/supabase-js';
 import postgres from 'postgres';
-import { localTestTarget } from '../scripts/local-test-target.mjs';
+import { week1TestTarget as localTestTarget } from '../scripts/week1-test-target.mjs';
 
 test(
   'local captured-email token hashes work across clients, remain single-use, expire and respect resend limits',
   { skip: process.env.RUN_LOCAL_SUPABASE_TESTS !== '1' },
   async (t) => {
     const url = localTestTarget(process.env.LOCAL_SUPABASE_URL);
+    const frontendOrigin =
+      new URL(url).port === '54331' ? 'http://localhost:5182' : 'http://localhost:5173';
+    const mailOrigin =
+      new URL(url).port === '54331' ? 'http://127.0.0.1:54334' : 'http://127.0.0.1:54324';
     const db = postgres(localTestTarget(process.env.LOCAL_SUPABASE_DB_URL, 'database'), { max: 1 });
     const key = process.env.LOCAL_SUPABASE_PUBLISHABLE_KEY;
     const options = {
@@ -30,7 +34,7 @@ test(
       const result = await source.auth.signUp({
         email,
         password,
-        options: { emailRedirectTo: 'http://localhost:5173/auth/callback' },
+        options: { emailRedirectTo: frontendOrigin + '/auth/callback' },
       });
       assert.equal(result.error, null);
       assert.equal(result.data.session, null);
@@ -40,14 +44,12 @@ test(
     async function tokenLink(email, type, excluded = new Set()) {
       for (let attempt = 0; attempt < 40; attempt++) {
         const messages = await (
-          await fetch(
-            `http://127.0.0.1:54324/api/v1/search?query=${encodeURIComponent('to:' + email)}`,
-          )
+          await fetch(`${mailOrigin}/api/v1/search?query=${encodeURIComponent('to:' + email)}`)
         ).json();
         for (const message of messages.messages ?? []) {
           const id = message.ID ?? message.id;
           if (excluded.has(id)) continue;
-          const body = await (await fetch(`http://127.0.0.1:54324/api/v1/message/${id}`)).json();
+          const body = await (await fetch(`${mailOrigin}/api/v1/message/${id}`)).json();
           const links =
             String(body.HTML ?? '')
               .replaceAll('&amp;', '&')
@@ -55,7 +57,7 @@ test(
           for (const href of links) {
             const link = new URL(href);
             if (
-              link.origin === 'http://localhost:5173' &&
+              link.origin === frontendOrigin &&
               link.pathname === '/auth/callback' &&
               link.searchParams.get('type') === type &&
               link.searchParams.has('token_hash')
@@ -126,7 +128,7 @@ test(
           assert.equal(
             (
               await client().auth.resetPasswordForEmail(account.email, {
-                redirectTo: 'http://localhost:5173/auth/callback?flow=recovery',
+                redirectTo: frontendOrigin + '/auth/callback?flow=recovery',
               })
             ).error,
             null,

@@ -40,7 +40,7 @@ export type Database = {
       activities: {
         Row: {
           id: string;
-          week_id: string;
+          week_id: string | null;
           title_ar: string;
           title_en: string;
           instructions_ar: string;
@@ -49,10 +49,19 @@ export type Database = {
           due_at: string | null;
           status: string;
           published_at: string | null;
+          assignment_mode: boolean;
+          publish_at: string | null;
+          submission_type: string;
+          reference_links: string;
+          phases: Json;
+          accepting: boolean;
+          archived: boolean;
+          sort_order: number;
+          version: number;
         };
         Insert: {
           id?: string;
-          week_id: string;
+          week_id?: string | null;
           title_ar: string;
           title_en: string;
           instructions_ar?: string;
@@ -61,10 +70,19 @@ export type Database = {
           due_at?: string | null;
           status?: string;
           published_at?: string | null;
+          assignment_mode?: boolean;
+          publish_at?: string | null;
+          submission_type?: string;
+          reference_links?: string;
+          phases?: Json;
+          accepting?: boolean;
+          archived?: boolean;
+          sort_order?: number;
+          version?: number;
         };
         Update: {
           id?: string;
-          week_id?: string;
+          week_id?: string | null;
           title_ar?: string;
           title_en?: string;
           instructions_ar?: string;
@@ -73,6 +91,15 @@ export type Database = {
           due_at?: string | null;
           status?: string;
           published_at?: string | null;
+          assignment_mode?: boolean;
+          publish_at?: string | null;
+          submission_type?: string;
+          reference_links?: string;
+          phases?: Json;
+          accepting?: boolean;
+          archived?: boolean;
+          sort_order?: number;
+          version?: number;
         };
         Relationships: [
           {
@@ -93,6 +120,7 @@ export type Database = {
           body_en: string;
           status: string;
           created_at: string;
+          version: number;
         };
         Insert: {
           id?: string;
@@ -102,6 +130,7 @@ export type Database = {
           body_en: string;
           status?: string;
           created_at?: string;
+          version?: number;
         };
         Update: {
           id?: string;
@@ -111,8 +140,44 @@ export type Database = {
           body_en?: string;
           status?: string;
           created_at?: string;
+          version?: number;
         };
         Relationships: [];
+      };
+      form_drafts: {
+        Row: {
+          owner_id: string;
+          form_key: string;
+          base_version: string;
+          payload: Json;
+          revision: number;
+          updated_at: string;
+        };
+        Insert: {
+          owner_id: string;
+          form_key: string;
+          base_version: string;
+          payload?: Json;
+          revision?: number;
+          updated_at?: string;
+        };
+        Update: {
+          owner_id?: string;
+          form_key?: string;
+          base_version?: string;
+          payload?: Json;
+          revision?: number;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'form_drafts_owner_id_fkey';
+            columns: ['owner_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       grade_criterion_scores: {
         Row: {
@@ -154,35 +219,38 @@ export type Database = {
         Row: {
           id: string;
           submission_id: string;
-          rubric_id: string;
+          rubric_id: string | null;
           reviewer_id: string;
           revision: number;
           feedback: string;
           status: string;
           created_at: string;
           published_at: string | null;
+          awarded_points: number | null;
         };
         Insert: {
           id?: string;
           submission_id: string;
-          rubric_id: string;
+          rubric_id?: string | null;
           reviewer_id: string;
           revision: number;
           feedback?: string;
           status: string;
           created_at?: string;
           published_at?: string | null;
+          awarded_points?: number | null;
         };
         Update: {
           id?: string;
           submission_id?: string;
-          rubric_id?: string;
+          rubric_id?: string | null;
           reviewer_id?: string;
           revision?: number;
           feedback?: string;
           status?: string;
           created_at?: string;
           published_at?: string | null;
+          awarded_points?: number | null;
         };
         Relationships: [
           {
@@ -241,6 +309,71 @@ export type Database = {
           },
         ];
       };
+      point_awards: {
+        Row: {
+          student_id: string;
+          source_key: string;
+          points: number;
+          period_start: string;
+          submission_id: string | null;
+          dataset_attempt_id: string | null;
+          reviewed_by: string;
+          reviewed_at: string;
+          scoring_week: number | null;
+        };
+        Insert: {
+          student_id: string;
+          source_key: string;
+          points: number;
+          period_start: string;
+          submission_id?: string | null;
+          dataset_attempt_id?: string | null;
+          reviewed_by: string;
+          reviewed_at?: string;
+          scoring_week?: number | null;
+        };
+        Update: {
+          student_id?: string;
+          source_key?: string;
+          points?: number;
+          period_start?: string;
+          submission_id?: string | null;
+          dataset_attempt_id?: string | null;
+          reviewed_by?: string;
+          reviewed_at?: string;
+          scoring_week?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'point_awards_dataset_attempt_id_fkey';
+            columns: ['dataset_attempt_id'];
+            isOneToOne: false;
+            referencedRelation: 'week1_datasets';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'point_awards_reviewed_by_fkey';
+            columns: ['reviewed_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'point_awards_student_id_fkey';
+            columns: ['student_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'point_awards_submission_id_fkey';
+            columns: ['submission_id'];
+            isOneToOne: false;
+            referencedRelation: 'submissions';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       profiles: {
         Row: {
           id: string;
@@ -258,6 +391,7 @@ export type Database = {
           created_at: string;
           updated_at: string;
           university: string | null;
+          leaderboard_name: string | null;
         };
         Insert: {
           id: string;
@@ -275,6 +409,7 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
           university?: string | null;
+          leaderboard_name?: string | null;
         };
         Update: {
           id?: string;
@@ -292,6 +427,7 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
           university?: string | null;
+          leaderboard_name?: string | null;
         };
         Relationships: [];
       };
@@ -359,12 +495,38 @@ export type Database = {
           },
         ];
       };
+      session_public_content: {
+        Row: {
+          week_number: number;
+          published: boolean;
+          topics: Json;
+        };
+        Insert: {
+          week_number: number;
+          published?: boolean;
+          topics?: Json;
+        };
+        Update: {
+          week_number?: number;
+          published?: boolean;
+          topics?: Json;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'session_public_content_week_number_fkey';
+            columns: ['week_number'];
+            isOneToOne: true;
+            referencedRelation: 'week1_session';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       submissions: {
         Row: {
           id: string;
           student_id: string;
           activity_id: string;
-          rubric_id: string;
+          rubric_id: string | null;
           attempt: number;
           object_path: string | null;
           status: string;
@@ -372,12 +534,20 @@ export type Database = {
           created_at: string;
           notebook_sha256: string | null;
           notebook_bytes: number | null;
+          assignment_submission: boolean;
+          link_url: string | null;
+          attachment_path: string | null;
+          file_name: string | null;
+          file_mime: string | null;
+          file_bytes: number | null;
+          phase_snapshot: Json | null;
+          max_eligible_points: number | null;
         };
         Insert: {
           id?: string;
           student_id: string;
           activity_id: string;
-          rubric_id: string;
+          rubric_id?: string | null;
           attempt?: number;
           object_path?: never;
           status?: string;
@@ -385,12 +555,20 @@ export type Database = {
           created_at?: string;
           notebook_sha256?: string | null;
           notebook_bytes?: number | null;
+          assignment_submission?: boolean;
+          link_url?: string | null;
+          attachment_path?: string | null;
+          file_name?: string | null;
+          file_mime?: string | null;
+          file_bytes?: number | null;
+          phase_snapshot?: Json | null;
+          max_eligible_points?: number | null;
         };
         Update: {
           id?: string;
           student_id?: string;
           activity_id?: string;
-          rubric_id?: string;
+          rubric_id?: string | null;
           attempt?: number;
           object_path?: never;
           status?: string;
@@ -398,6 +576,14 @@ export type Database = {
           created_at?: string;
           notebook_sha256?: string | null;
           notebook_bytes?: number | null;
+          assignment_submission?: boolean;
+          link_url?: string | null;
+          attachment_path?: string | null;
+          file_name?: string | null;
+          file_mime?: string | null;
+          file_bytes?: number | null;
+          phase_snapshot?: Json | null;
+          max_eligible_points?: number | null;
         };
         Relationships: [
           {
@@ -423,20 +609,226 @@ export type Database = {
           },
         ];
       };
+      week1_bingo_boards: {
+        Row: {
+          student_id: string;
+          board_order: Json;
+          completed: Json;
+          version: number;
+          created_at: string;
+          updated_at: string;
+          id: string;
+          retired_at: string | null;
+        };
+        Insert: {
+          student_id: string;
+          board_order: Json;
+          completed?: Json;
+          version?: number;
+          created_at?: string;
+          updated_at?: string;
+          id?: string;
+          retired_at?: string | null;
+        };
+        Update: {
+          student_id?: string;
+          board_order?: Json;
+          completed?: Json;
+          version?: number;
+          created_at?: string;
+          updated_at?: string;
+          id?: string;
+          retired_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'week1_bingo_boards_student_id_fkey';
+            columns: ['student_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      week1_bingo_claims: {
+        Row: {
+          id: string;
+          reference: string;
+          student_id: string;
+          board_snapshot: Json;
+          completed_snapshot: Json;
+          winning_line: Json;
+          challenges: Json;
+          status: string;
+          created_at: string;
+          reviewed_by: string | null;
+          reviewed_at: string | null;
+          rejection_reason: string | null;
+          round_id: string;
+        };
+        Insert: {
+          id?: string;
+          reference?: string;
+          student_id: string;
+          board_snapshot: Json;
+          completed_snapshot: Json;
+          winning_line: Json;
+          challenges: Json;
+          status?: string;
+          created_at?: string;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          rejection_reason?: string | null;
+          round_id: string;
+        };
+        Update: {
+          id?: string;
+          reference?: string;
+          student_id?: string;
+          board_snapshot?: Json;
+          completed_snapshot?: Json;
+          winning_line?: Json;
+          challenges?: Json;
+          status?: string;
+          created_at?: string;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          rejection_reason?: string | null;
+          round_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'week1_bingo_claims_reviewed_by_fkey';
+            columns: ['reviewed_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'week1_bingo_claims_round_id_student_id_fkey';
+            columns: ['round_id', 'student_id'];
+            isOneToOne: false;
+            referencedRelation: 'week1_bingo_boards';
+            referencedColumns: ['id', 'student_id'];
+          },
+        ];
+      };
+      week1_datasets: {
+        Row: {
+          student_id: string;
+          title: string;
+          url: string;
+          topic: string;
+          description: string;
+          column1: string;
+          column2: string;
+          column3: string;
+          question: string;
+          status: string;
+          created_at: string;
+          updated_at: string;
+          submitted_at: string | null;
+          version: number;
+          id: string;
+        };
+        Insert: {
+          student_id: string;
+          title: string;
+          url: string;
+          topic: string;
+          description: string;
+          column1: string;
+          column2: string;
+          column3: string;
+          question: string;
+          status: string;
+          created_at?: string;
+          updated_at?: string;
+          submitted_at?: string | null;
+          version?: number;
+          id?: string;
+        };
+        Update: {
+          student_id?: string;
+          title?: string;
+          url?: string;
+          topic?: string;
+          description?: string;
+          column1?: string;
+          column2?: string;
+          column3?: string;
+          question?: string;
+          status?: string;
+          created_at?: string;
+          updated_at?: string;
+          submitted_at?: string | null;
+          version?: number;
+          id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'week1_datasets_student_id_fkey';
+            columns: ['student_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      week1_session: {
+        Row: {
+          id: number;
+          topics: Json;
+          version: number;
+          updated_by: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          id?: number;
+          topics: Json;
+          version?: number;
+          updated_by?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          id?: number;
+          topics?: Json;
+          version?: number;
+          updated_by?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'week1_session_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
     };
     Views: { [_ in never]: never };
     Functions: {
       academy_capabilities: { Args: Record<string, never>; Returns: Json };
-      academy_leaderboard: { Args: Record<string, never>; Returns: Json };
+      academy_leaderboard: { Args: { p_weekly?: boolean }; Returns: Json };
       academy_notifications: { Args: Record<string, never>; Returns: Json };
+      academy_rankings: { Args: { p_view?: string; p_week?: number }; Returns: Json };
+      approve_dataset_participation: { Args: { p_attempt: string }; Returns: undefined };
       claim_submission_request: { Args: { p_student_id: string }; Returns: undefined };
       complete_registration: { Args: { p_consent_version: string }; Returns: undefined };
       create_draft_rubric: { Args: { p_activity_id: string; p_criteria: Json }; Returns: string };
       current_academy_role: { Args: Record<string, never>; Returns: string | null };
+      finalize_assignment: { Args: { p_submission: string }; Returns: undefined };
       finalize_notebook: {
         Args: { p_submission_id: string; p_sha256: string };
         Returns: undefined;
       };
+      move_assignment: {
+        Args: { p_id: string; p_direction: number; p_version: number };
+        Returns: undefined;
+      };
+      open_form_draft: { Args: { p_owner: string; p_form: string; p_base: string }; Returns: Json };
       read_notification: { Args: { p_event_key?: string }; Returns: undefined };
       request_resubmission: { Args: { p_submission_id: string }; Returns: undefined };
       reserve_notebook: {
@@ -449,7 +841,18 @@ export type Database = {
         };
         Returns: Json;
       };
-      save_draft_rubric: { Args: { p_rubric_id: string; p_criteria: Json }; Returns: undefined };
+      review_assignment: {
+        Args: { p_submission: string; p_points: number; p_feedback: string; p_revision: number };
+        Returns: string;
+      };
+      save_assignment: {
+        Args: { p_data: Json; p_version: number; p_id?: string; p_request?: string };
+        Returns: string;
+      };
+      save_draft_rubric: {
+        Args: { p_rubric_id: string; p_criteria: Json; p_snapshot?: Json };
+        Returns: undefined;
+      };
       save_grade: {
         Args: {
           p_submission_id: string;
@@ -459,6 +862,41 @@ export type Database = {
           p_expected_revision: number;
         };
         Returns: string;
+      };
+      save_session_content: {
+        Args: { p_week: number; p_topics: Json; p_published: boolean; p_version: number };
+        Returns: undefined;
+      };
+      submit_assignment: {
+        Args: { p_activity: string; p_request: string; p_link?: string; p_file?: Json };
+        Returns: string;
+      };
+      week1_claim_bingo: { Args: { p_round_id?: string }; Returns: undefined };
+      week1_mark_bingo: {
+        Args: { p_challenge: number; p_completed: boolean; p_version: number; p_round_id?: string };
+        Returns: undefined;
+      };
+      week1_play_again: { Args: { p_round_id: string }; Returns: undefined };
+      week1_review_bingo: {
+        Args: { p_id: string; p_status: string; p_reason: string };
+        Returns: undefined;
+      };
+      week1_save_dataset: {
+        Args: { p_data: Json; p_version: number; p_attempt_id?: string };
+        Returns: string;
+      };
+      week1_save_session: { Args: { p_topics: Json; p_version: number }; Returns: undefined };
+      week1_start_bingo: { Args: Record<string, never>; Returns: undefined };
+      week1_start_dataset_attempt: { Args: { p_previous_id?: string }; Returns: string };
+      write_form_draft: {
+        Args: {
+          p_owner: string;
+          p_form: string;
+          p_base: string;
+          p_payload: Json;
+          p_revision: number;
+        };
+        Returns: number;
       };
     };
     Enums: { [_ in never]: never };

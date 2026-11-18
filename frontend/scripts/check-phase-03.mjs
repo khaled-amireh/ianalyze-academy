@@ -10,6 +10,7 @@ import {
   finalUpdate,
   prePresentationUpdate,
   studentRegistrationUpdate,
+  readinessBaseline,
   verifyMergePreservation,
 } from './verify-merge-preservation.mjs';
 
@@ -37,7 +38,8 @@ for (const [path, hash] of Object.entries(manifest)) {
       .update(
         readFileSync(
           new URL(
-            studentRegistrationUpdate.files[path] ||
+            readinessBaseline.files[path] ||
+              studentRegistrationUpdate.files[path] ||
               prePresentationUpdate.files[path] ||
               finalUpdate.files[path]
               ? path
@@ -47,7 +49,8 @@ for (const [path, hash] of Object.entries(manifest)) {
         ),
       )
       .digest('hex'),
-    studentRegistrationUpdate.files[path]?.sha256 ??
+    readinessBaseline.files[path]?.sha256 ??
+      studentRegistrationUpdate.files[path]?.sha256 ??
       prePresentationUpdate.files[path]?.sha256 ??
       finalUpdate.files[path]?.sha256 ??
       qualityUpdate.files[path]?.sha256 ??

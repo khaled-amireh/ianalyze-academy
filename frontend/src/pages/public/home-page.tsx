@@ -18,7 +18,7 @@ import { RegisterBand, TeamRow } from '@/components/shared/simple-blocks';
 const homeFaq = ['beginner', 'python', 'registration', 'schedule'] as const;
 
 export function HomePage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <PageContainer>
       <section className="s-hero">
@@ -34,7 +34,7 @@ export function HomePage() {
           </p>
           <div className="s-actions">
             <Button asChild size="lg">
-              <Link to="/join">
+              <Link to="/join" dir={i18n.resolvedLanguage === 'ar' ? 'rtl' : 'ltr'}>
                 <MixedText>{t('nav.join')}</MixedText>
                 <ArrowRight className="directional" aria-hidden="true" />
               </Link>

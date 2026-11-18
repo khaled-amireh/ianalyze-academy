@@ -1,0 +1,123 @@
+.assignment-card {
+  margin-block: 1rem;
+  overflow-wrap: anywhere;
+}
+.assignment-instructions {
+  white-space: pre-wrap;
+}
+.assignment-phases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem;
+  margin-block: 1rem;
+}
+.assignment-phase-editor {
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-block: 1rem;
+  min-width: 0;
+}
+.assignment-card form,
+.assignment-card fieldset {
+  min-width: 0;
+}
+.assignment-card label {
+  display: grid;
+  gap: 0.5rem;
+  margin-block: 1rem;
+}
+.assignment-card [hidden] {
+  display: none;
+}
+.assignment-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block: 1rem;
+}
+.ranking-podium {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-block: 2rem;
+  align-items: start;
+}
+.ranking-podium .s-card {
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.ranking-podium .s-card:first-child {
+  border-color: var(--primary);
+  grid-column: 2;
+  grid-row: 1;
+  min-height: 16rem;
+}
+.ranking-podium .s-card:nth-child(2) {
+  grid-column: 1;
+  grid-row: 1;
+  min-height: 14rem;
+  margin-block-start: 2rem;
+}
+.ranking-podium .s-card:nth-child(3) {
+  grid-column: 3;
+  grid-row: 1;
+  min-height: 12rem;
+  margin-block-start: 4rem;
+}
+.ranking-podium .s-card h2 {
+  font-size: clamp(0.95rem, 2.2vw, 1.3rem);
+}
+.ranking-podium strong {
+  display: block;
+  font-size: 1.8rem;
+  color: var(--primary);
+}
+.ranking-table :is(th, td):first-child {
+  white-space: nowrap;
+  width: 4rem;
+}
+@media (max-width: 560px) {
+  .ranking-podium {
+    gap: 0.4rem;
+  }
+  .ranking-podium .s-card {
+    padding: 0.7rem;
+  }
+  .ranking-podium strong {
+    font-size: 1.3rem;
+  }
+  .ranking-podium .s-card:first-child {
+    min-height: 13rem;
+  }
+  .ranking-podium .s-card:nth-child(2) {
+    min-height: 11rem;
+  }
+  .ranking-podium .s-card:nth-child(3) {
+    min-height: 9rem;
+  }
+}
+.ranking-period-selector {
+  display: grid;
+  gap: 0.5rem;
+  margin-block: 1rem;
+}
+.ranking-period-selector select {
+  width: 100%;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 0.7rem;
+  color: var(--foreground);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+}
+.ranking-period {
+  margin-block: 1rem;
+  overflow-wrap: anywhere;
+}
+.ranking-adjustments ul {
+  display: grid;
+  gap: 0.5rem;
+  padding-block: 0.75rem;
+}

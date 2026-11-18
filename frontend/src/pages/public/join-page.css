@@ -1,0 +1,13 @@
+/* Only the Register header changes direction; the form keeps its existing layout. */
+.registration-page .page-heading {
+  text-align: start;
+}
+.registration-page .page-heading .eyebrow {
+  display: flex;
+  width: fit-content;
+  margin-inline-start: auto;
+}
+.registration-page .page-heading :is(h1, .lede) {
+  margin-inline-start: 0;
+  margin-inline-end: auto;
+}

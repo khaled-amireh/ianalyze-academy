@@ -1,18 +1,14 @@
 import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import { Direction } from 'radix-ui';
-import { LAYOUT_DIR } from '@/lib/i18n';
+import { useTranslation } from 'react-i18next';
+import { directionForLocale } from '@/lib/locale-direction';
 import { DEV_PREVIEWS } from './config';
 import { PublicLayout } from '@/components/layout/public-layout';
 import { HomePage } from '@/pages/public/home-page';
 import { NotFoundPage } from '@/pages/public/not-found-page';
 import { LoadingIndicator } from '@/components/shared/loading-indicator';
-import {
-  academyClient,
-  leaderboardEnabled,
-  privacyApproved,
-  registrationEnabled,
-} from '@/lib/academy-client';
+import { academyClient, privacyApproved, registrationEnabled } from '@/lib/academy-client';
 import { AuthCallback, AuthPage, ProtectedPortal } from '@/features/portal/auth-pages';
 const StudentPortal = lazy(() =>
   import('@/features/portal/student-page').then((m) => ({ default: m.StudentPage })),
@@ -41,6 +37,9 @@ const NotificationsPage = lazy(() =>
 const SyllabusPage = lazy(() =>
   import('@/pages/public/syllabus-page').then((m) => ({ default: m.SyllabusPage })),
 );
+const Week1Page = lazy(() =>
+  import('@/features/week1/week1-page').then((m) => ({ default: m.Week1Page })),
+);
 const JoinPage = lazy(() =>
   import('@/pages/public/join-page').then((m) => ({ default: m.JoinPage })),
 );
@@ -61,13 +60,18 @@ const ContactPage = lazy(() =>
 );
 
 export function App() {
+  const { i18n } = useTranslation();
+  const direction = directionForLocale(i18n.language === 'ar' ? 'ar' : 'en');
+
   return (
-    <Direction.Provider dir={LAYOUT_DIR}>
+    <Direction.Provider dir={direction}>
       <Routes>
         <Route element={<PublicLayout />}>
           <Route index element={<HomePage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="eda" element={<SyllabusPage />} />
+          <Route path="eda/week-1" element={<Week1Page />} />
+          <Route path="eda/week-1/:activity" element={<Week1Page />} />
           <Route path="ai-tools" element={<AiToolsPage />} />
           <Route path="ai-tools/:toolId" element={<ToolGuidePage />} />
           <Route path="videos" element={<VideosPage />} />
@@ -85,7 +89,7 @@ export function App() {
           <Route
             path="leaderboard"
             element={
-              academyClient && leaderboardEnabled ? (
+              academyClient ? (
                 <Suspense fallback={<LoadingIndicator />}>
                   <Rankings />
                 </Suspense>

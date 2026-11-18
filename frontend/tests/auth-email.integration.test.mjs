@@ -2,13 +2,17 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { createClient } from '@supabase/supabase-js';
-import { localTestTarget } from '../scripts/local-test-target.mjs';
+import { week1TestTarget as localTestTarget } from '../scripts/week1-test-target.mjs';
 
 test(
   'real local captured email: signup confirmation, PKCE login, recovery and logout',
   { skip: process.env.RUN_LOCAL_SUPABASE_TESTS !== '1' },
   async () => {
     const url = localTestTarget(process.env.LOCAL_SUPABASE_URL);
+    const frontendOrigin =
+      new URL(url).port === '54331' ? 'http://localhost:5182' : 'http://localhost:5173';
+    const mailOrigin =
+      new URL(url).port === '54331' ? 'http://127.0.0.1:54334' : 'http://127.0.0.1:54324';
     localTestTarget(process.env.LOCAL_SUPABASE_DB_URL, 'database');
     const key = process.env.LOCAL_SUPABASE_PUBLISHABLE_KEY,
       secret = process.env.LOCAL_SUPABASE_SECRET_KEY;
@@ -29,13 +33,11 @@ test(
     async function emailLink(type) {
       for (let i = 0; i < 40; i++) {
         const result = await (
-          await fetch(
-            `http://127.0.0.1:54324/api/v1/search?query=${encodeURIComponent(`to:${email}`)}`,
-          )
+          await fetch(`${mailOrigin}/api/v1/search?query=${encodeURIComponent(`to:${email}`)}`)
         ).json();
         for (const message of result.messages ?? []) {
           const body = await (
-            await fetch(`http://127.0.0.1:54324/api/v1/message/${message.ID ?? message.id}`)
+            await fetch(`${mailOrigin}/api/v1/message/${message.ID ?? message.id}`)
           ).json();
           const text = String(body.HTML ?? body.Text ?? '').replaceAll('&amp;', '&');
           const links = text.match(/https?:\/\/[^\s"<>]+/g) ?? [];
@@ -61,7 +63,7 @@ test(
       const response = await fetch(link, { redirect: 'manual' });
       assert.equal(response.status, 303);
       const location = new URL(response.headers.get('location'));
-      assert.equal(location.origin, 'http://localhost:5173');
+      assert.equal(location.origin, frontendOrigin);
       assert.equal(location.pathname, '/auth/callback');
       if (recovery) assert.equal(location.searchParams.get('flow'), 'recovery');
       const code = location.searchParams.get('code');
@@ -72,7 +74,7 @@ test(
       const signup = await client.auth.signUp({
         email,
         password,
-        options: { emailRedirectTo: 'http://localhost:5173/auth/callback' },
+        options: { emailRedirectTo: frontendOrigin + '/auth/callback' },
       });
       assert.equal(signup.error, null);
       assert.ok(signup.data.user);
@@ -87,7 +89,7 @@ test(
       assert.equal(
         (
           await client.auth.resetPasswordForEmail(email, {
-            redirectTo: 'http://localhost:5173/auth/callback?flow=recovery',
+            redirectTo: frontendOrigin + '/auth/callback?flow=recovery',
           })
         ).error,
         null,

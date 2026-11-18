@@ -33,9 +33,10 @@ export function PrivacyPage() {
           </p>
           <h2>الترتيب العام</h2>
           <p>
-            يستخدم الترتيب الدرجات المنشورة فقط ويعرض أسماء مستعارة مولدة، دون البريد أو واتساب أو
-            الرقم الجامعي أو الاسم الحقيقي. لن يُنشر الاسم الحقيقي دون موافقة مستقلة صريحة. لا تتضمن
-            الموافقة على التسجيل موافقة على نشر الاسم.
+            يستخدم الترتيب النقاط المعتمدة فقط ويعرض أسماء مستعارة افتراضيًا. يمكنك اختيار اسم ظاهر
+            للعامة بشكل مستقل من قسم الواجبات؛ حفظ هذا الاسم يعني اختيار نشره، ويمكنك مسحه للعودة
+            إلى الاسم المستعار. لا تُنشر بيانات البريد أو واتساب أو الرقم الجامعي أو التسليمات أو
+            الملاحظات الخاصة. لا تعني الموافقة على التسجيل الموافقة على نشر اسمك.
           </p>
           <h2>الخدمات الخارجية والحماية</h2>
           <p>
@@ -85,9 +86,11 @@ export function PrivacyPage() {
           </p>
           <h2>Public rankings</h2>
           <p>
-            Rankings use published grades and generated pseudonyms only. They do not return email,
-            WhatsApp, university ID or real names. Real-name display requires separate explicit
-            consent; registration consent does not authorize it.
+            Rankings use approved points and generated learner aliases by default. You can
+            separately choose a public leaderboard name in Assignments; saving that name is your
+            choice to display it publicly. Clear it to return to an alias. Email, WhatsApp,
+            university ID, submissions and private feedback are never included. Registration consent
+            does not authorize publishing your name.
           </p>
           <h2>Providers and safeguards</h2>
           <p>

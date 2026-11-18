@@ -22,6 +22,7 @@ import {
   type AnnouncementValues,
 } from './announcement-validation';
 import './announcements.css';
+import { DraftForm, completeFormDraft } from '@/features/drafts';
 
 async function loadAnnouncements() {
   return fetchAll((start, end) =>
@@ -59,6 +60,7 @@ export function AnnouncementManager() {
   }
 
   async function save(event: FormEvent<HTMLFormElement>) {
+    const element = event.currentTarget;
     event.preventDefault();
     if (inFlight.current) return;
     const invalid = validateAnnouncement(values);
@@ -81,6 +83,7 @@ export function AnnouncementManager() {
             .from('announcements')
             .update(trimmed)
             .eq('id', editing.id)
+            .eq('version', editing.version)
             .select('*')
             .single()
         : await client()
@@ -89,6 +92,7 @@ export function AnnouncementManager() {
             .select('*')
             .single();
       const saved = checked(result);
+      await completeFormDraft(element);
       if (editing) update((items) => items.map((item) => (item.id === saved.id ? saved : item)));
       else update((items) => [saved, ...items]);
       setNotice({
@@ -149,7 +153,16 @@ export function AnnouncementManager() {
           <p>{c.announcementSubtitle}</p>
         </div>
       </header>
-      <form ref={formRef} onSubmit={save} noValidate aria-busy={busy}>
+      <DraftForm
+        draftKey={`announcement:${editing?.id ?? 'new'}`}
+        baseVersion={String(editing?.version ?? 0)}
+        extra={values}
+        restoreExtra={(value) => setValues(value as AnnouncementValues)}
+        ref={formRef}
+        onSubmit={save}
+        noValidate
+        aria-busy={busy}
+      >
         {editing && (
           <p className="announcement-editing" role="status">
             {c.editingAnnouncement}: <bdi>{arabic ? editing.title_ar : editing.title_en}</bdi>
@@ -263,7 +276,7 @@ export function AnnouncementManager() {
             </Button>
           )}
         </div>
-      </form>
+      </DraftForm>
       <FormNotice message={notice ? c[notice.key] : ''} kind={notice?.kind} />
       <section
         className="announcement-list"

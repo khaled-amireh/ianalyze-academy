@@ -27,7 +27,7 @@ test('functional delivery database boundaries and atomic rubric configuration', 
   const criteria = [{ label_ar: 'اختبار', label_en: 'LOCAL TEST ONLY', max_points: 10 }];
   const call = (user, sql, params = []) => asUser(db, user, () => db.query(sql, params));
   await t.test(
-    'gates default closed and public output contains no private profile data',
+    'legacy notebook gate stays closed and the released leaderboard contains no private profile data',
     async () => {
       const result = await asUser(
         db,
@@ -39,7 +39,7 @@ test('functional delivery database boundaries and atomic rubric configuration', 
         'anon',
       );
       assert.deepEqual(result.rows[0], {
-        caps: { submissions: false, leaderboard: false },
+        caps: { submissions: false, leaderboard: true },
         ranks: [],
       });
       for (const fn of [

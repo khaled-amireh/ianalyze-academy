@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { directionForLocale } from '../src/lib/locale-direction.ts';
 function leaves(value: unknown, path = ''): string[] {
   if (value && typeof value === 'object')
     return Object.entries(value)
@@ -18,3 +19,8 @@ for (const directory of ['src/locales', 'src/dev/locales']) {
     assert.deepEqual(leaves(load('ar')), leaves(load('en')));
   });
 }
+
+test('document direction follows the selected Arabic or English locale', () => {
+  assert.equal(directionForLocale('ar'), 'rtl');
+  assert.equal(directionForLocale('en'), 'ltr');
+});

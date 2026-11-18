@@ -66,7 +66,7 @@ test('embedded PostgreSQL security (test-only Auth/Storage fixture)', async (t) 
       const { rows } = await db.query(
         "select c.relname,c.relrowsecurity from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname in ('public','app_private') and c.relkind='r'",
       );
-      assert.equal(rows.length, 12);
+      assert.equal(rows.length, 23); // Existing tables plus private award and eligibility archive events.
       assert.ok(rows.every((r) => r.relrowsecurity));
       assert.deepEqual(
         (
@@ -279,10 +279,16 @@ test('embedded PostgreSQL security (test-only Auth/Storage fixture)', async (t) 
     async () => {
       const buckets = (await db.query('select * from storage.buckets order by id')).rows;
       assert.ok(buckets.every((b) => b.public === false));
-      assert.equal(Number(buckets[0].file_size_limit), 262144);
+      assert.equal(Number(buckets[0].file_size_limit), 20971520);
       assert.deepEqual(buckets[0].allowed_mime_types, [
         'application/x-ipynb+json',
         'application/json',
+        'application/pdf',
+        'text/csv',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/zip',
+        'application/x-zip-compressed',
+        'application/octet-stream',
       ]);
       await forbidden(
         A,

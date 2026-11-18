@@ -8,20 +8,61 @@ import {
   qualityUpdate,
   finalUpdate,
   prePresentationUpdate,
+  readinessBaseline,
   verifyMergePreservation,
 } from './verify-merge-preservation.mjs';
 const root = new URL('../../', import.meta.url);
 const json = (path) => JSON.parse(readFileSync(new URL(path, root), 'utf8'));
 const hash = (content) => createHash('sha256').update(content).digest('hex');
+
+// Check the complete Git inventory, including untracked workflows, before text filtering.
+// Workflow approvals remain exact paths and SHA-256 pins in the existing approval record.
+export function verifyWorkflowInventory(paths, read = (path) => readFileSync(new URL(path, root))) {
+  for (const path of paths) {
+    if (!/^\.github\/workflows\/.*\.ya?ml$/i.test(path)) continue;
+    const approval = finalUpdate.files[path];
+    assert.ok(
+      Object.hasOwn(finalUpdate.files, path) &&
+        !approval.removed &&
+        /^[a-f0-9]{64}$/.test(approval.sha256 ?? ''),
+      `Unapproved workflow: ${path}`,
+    );
+    assert.equal(hash(read(path)), approval.sha256, `Reviewed workflow changed: ${path}`);
+  }
+}
 const approved = json('docs/ui-redesign/approved-presentation-changes.json');
 const baseline = json('docs/phase-03/baseline/preserved-frontend.json');
 verifyMergePreservation();
+const existingMigrations = new Set(
+  execFileSync(
+    'git',
+    ['ls-tree', '-r', '--name-only', readinessBaseline.baseCommit, '--', 'supabase/migrations/'],
+    { cwd: root, encoding: 'utf8' },
+  )
+    .trim()
+    .split('\n')
+    .filter(Boolean),
+);
+const reviewedMigrations = new Map(Object.entries(readinessBaseline.addedMigrations));
+for (const [path, expected] of reviewedMigrations) {
+  assert.match(path, /^supabase\/migrations\/\d{14}_[a-z0-9_]+\.sql$/);
+  assert.ok(
+    !existingMigrations.has(path),
+    `Reviewed migration is already in the baseline: ${path}`,
+  );
+  assert.equal(
+    hash(readFileSync(new URL(path, root))),
+    expected,
+    `Reviewed migration changed: ${path}`,
+  );
+}
 for (const [path, expected] of Object.entries(baseline)) {
   if (approved.replacedFrontendFiles.includes(path) || mergeResolution.resolvedFiles[path])
     continue;
   assert.equal(
     hash(readFileSync(new URL(path, root))),
-    prePresentationUpdate.files[path]?.sha256 ??
+    readinessBaseline.files[path]?.sha256 ??
+      prePresentationUpdate.files[path]?.sha256 ??
       finalUpdate.files[path]?.sha256 ??
       qualityUpdate.files[path]?.sha256 ??
       authIntegration.files[path]?.sha256 ??
@@ -73,7 +114,11 @@ const paths = execFileSync(
 )
   .split('\0')
   .filter(Boolean);
+verifyWorkflowInventory(paths);
 for (const path of paths) {
+  if (path.startsWith('supabase/migrations/') && !existingMigrations.has(path)) {
+    assert.ok(reviewedMigrations.has(path), `Protected integration changed: ${path}`);
+  }
   assert.ok(
     !/(?:^|\/)\.env(?:\.|$)/.test(path) || path.endsWith('.example'),
     `Real environment tracked: ${path}`,
@@ -97,7 +142,9 @@ const changed = execFileSync('git', ['diff', mergeResolution.functionalCommit, '
   .filter(Boolean);
 for (const path of changed)
   assert.ok(
-    authIntegration.files[path] ||
+    reviewedMigrations.has(path) ||
+      readinessBaseline.files[path] ||
+      authIntegration.files[path] ||
       prePresentationUpdate.files[path] ||
       finalUpdate.files[path] ||
       qualityUpdate.files[path] ||

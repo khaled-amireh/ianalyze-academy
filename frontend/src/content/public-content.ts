@@ -17,7 +17,7 @@ export const syllabus = {
     { id: 'visualization', week: '05' },
     { id: 'project', week: '06' },
   ],
-  tools: ['Google Colab', 'Python', 'Pandas', 'Matplotlib'],
+  tools: ['Power BI Desktop', 'Kaggle', 'CSV'],
 } as const;
 
 export const leaders = [

@@ -419,13 +419,20 @@
     },
     "README.md": {
       "sha256": "1670c3344e821d17a0c14083e989d973c7878cd6332efe383b0d15ccadb8a26e",
+      "supersededSha256": "1670c3344e821d17a0c14083e989d973c7878cd6332efe383b0d15ccadb8a26e",
+      "reviewedHead": "403f7fa0cb51d08ede3196e8c56e5ef15c543412",
       "previousSha256": "7d78dfefcf5373a1a8762833ffda268f91388df2a6a05e9ca69fb91914be7cee",
-      "reason": "User-authorized professional English README: official branding, current capabilities and production gates, verified stack, local setup, repository structure and community credits."
+      "reason": "Production release preparation preserves README.md inherited from verified main 403f7fa. The b64abda README-only commit is excluded from this release. Historical previousSha256 and supersededSha256 are retained; application behavior and preservation checks are unchanged."
     },
     "frontend/scripts/check-phase-02.mjs": {
       "sha256": "4fc7b06fbef263eb22fc98c0898fbc33af91aaa4fd7c2daaf9d169042493c6db",
       "previousSha256": "2fb6d24cbc926e0438b800155406cc8380f590aa2ee612c8fdce9e142fc5e56f",
       "reason": "Explicit user approval to accept only the root README hash-pinned documentation update while checking its previous hash against the unchanged historical Phase 02 baseline; all other preservation and dependency assertions remain unchanged."
+    },
+    ".github/workflows/credential-preflight.yml": {
+      "sha256": "d6d396667acb222092e118e77a9a19eb36dd9698b146da5b29035d391a3715ee",
+      "added": true,
+      "reason": "Owner-reviewed standalone manual read-only CI credential preflight merged through PR #16 at 403f7fa; no provider mutations or deployment."
     }
   }
 }

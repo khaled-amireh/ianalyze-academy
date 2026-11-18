@@ -1,29 +1,25 @@
-function driveVideo(id: string) {
+function youtubeVideo(id: string) {
   return {
-    provider: 'drive' as const,
+    provider: 'youtube' as const,
     id,
-    embedUrl: `https://drive.google.com/file/d/${id}/preview`,
-    fallbackUrl: `https://drive.google.com/file/d/${id}/view?usp=sharing`,
+    embedUrl: `https://www.youtube-nocookie.com/embed/${id}`,
+    fallbackUrl: `https://www.youtube.com/watch?v=${id}`,
+    sourceUrl: `https://youtu.be/${id}`,
+    cover: `/video-thumbnails/${id}.jpg`,
   };
 }
 
-export const introductoryVideo = driveVideo('147puYxGioHyoYjSwxktgGP4RRWeM_qn4');
+export const introductoryVideo = youtubeVideo('KE4KF03j_oM');
 export const featuredVideos = [
   {
     ...introductoryVideo,
     slug: 'data-science',
     copyKey: 'dataScience',
-    cover: 'brand' as const,
   },
   {
-    provider: 'youtube',
-    id: '_3m-0Fskfe8',
-    embedUrl: 'https://www.youtube-nocookie.com/embed/_3m-0Fskfe8',
-    fallbackUrl: 'https://www.youtube.com/watch?v=_3m-0Fskfe8',
+    ...youtubeVideo('2hqkdoqQ7IU'),
     slug: 'kaggle',
     copyKey: 'kaggle',
-    sourceUrl: 'https://youtu.be/_3m-0Fskfe8',
-    cover: '/video-thumbnails/kaggle-introduction.jpg',
   },
 ] as const;
 export type FeaturedVideo = (typeof featuredVideos)[number];

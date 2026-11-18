@@ -510,21 +510,6 @@ html[lang='en'] .about-info-cards .parent-logo .theme-logo img {
   padding: 2rem 2.25rem;
   position: relative;
 }
-.s-register::after {
-  animation: s-drift 14s ease-in-out infinite alternate;
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--brand-teal) 45%, transparent),
-    transparent 65%
-  );
-  content: '';
-  height: 18rem;
-  inset-block-start: -8rem;
-  inset-inline-end: -4rem;
-  pointer-events: none;
-  position: absolute;
-  width: 18rem;
-}
 .s-register > * {
   position: relative;
   z-index: 1;

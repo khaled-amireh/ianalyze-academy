@@ -1,0 +1,13 @@
+/* The site shell stays RTL, so the registration banner must own its layout
+   direction. Copy is at inline-start and the unchanged action at inline-end. */
+:is(.s-register, .join-callout)[dir] {
+  flex-direction: row;
+}
+:is(.s-register, .join-callout)[dir] > div {
+  flex: 1 1 20rem;
+  min-width: 0;
+  text-align: start;
+}
+:is(.s-register, .join-callout)[dir] > .academy-button {
+  margin-inline-start: auto;
+}

@@ -26,7 +26,10 @@ export function RouteEffects() {
   useEffect(() => {
     const page = publicPages.find((page) => pathname === `/${page}`);
     const tool = findLearningTool(pathname.match(/^\/ai-tools\/([^/]+)\/?$/)?.[1]);
-    const portalTitles: Record<string, string> = {
+    const routeTitles: Record<string, string> = {
+      '/eda/week-1': t('week1.title'),
+      '/eda/week-1/dataset': t('week1.dataset'),
+      '/eda/week-1/bingo': t('week1.bingo'),
       '/login': c.login,
       '/auth/callback': c.login,
       '/auth/recover': c.recover,
@@ -38,7 +41,7 @@ export function RouteEffects() {
       '/profile/edit': c.editProfile,
       '/notifications': c.notifications,
     };
-    document.title = `${portalTitles[pathname] ?? (tool ? `${tool.name} · ${t('nav.aiTools')}` : page ? t(`nav.${page === 'ai-tools' ? 'aiTools' : page}`) : pathname === '/' ? t('nav.home') : t('error.notFoundTitle'))} · iAnalyze Academy`;
+    document.title = `${routeTitles[pathname] ?? (tool ? `${tool.name} · ${t('nav.aiTools')}` : page ? t(`nav.${page === 'ai-tools' ? 'aiTools' : page}`) : pathname === '/' ? t('nav.home') : t('error.notFoundTitle'))} · iAnalyze Academy`;
   }, [pathname, t, c]);
   return null;
 }

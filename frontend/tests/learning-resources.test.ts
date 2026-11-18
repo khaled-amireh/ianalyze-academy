@@ -18,7 +18,7 @@ test('the five public tools use the approved official destinations and distingui
   );
   assert.deepEqual(
     learningTools.filter((tool) => tool.category === 'course').map((tool) => tool.id),
-    ['google-colab'],
+    ['power-bi'],
   );
   assert.deepEqual(
     learningTools.filter((tool) => tool.mode === 'online').map((tool) => tool.id),
@@ -48,27 +48,22 @@ test('each tool guide has complete English and Arabic content for every configur
   }
 });
 
-test('the introduction stays on Drive and Kaggle uses the approved Arabic tutorial', () => {
+test('both lessons use the exact requested YouTube IDs and privacy-enhanced embeds', () => {
   assert.deepEqual(
     featuredVideos.map((video) => video.id),
-    ['147puYxGioHyoYjSwxktgGP4RRWeM_qn4', '_3m-0Fskfe8'],
+    ['KE4KF03j_oM', '2hqkdoqQ7IU'],
   );
   assert.equal(featuredVideos[0].embedUrl, introductoryVideo.embedUrl);
-  assert.equal(featuredVideos[0].provider, 'drive');
-  assert.equal(
-    introductoryVideo.embedUrl,
-    'https://drive.google.com/file/d/147puYxGioHyoYjSwxktgGP4RRWeM_qn4/preview',
-  );
-  assert.equal(
-    introductoryVideo.fallbackUrl,
-    'https://drive.google.com/file/d/147puYxGioHyoYjSwxktgGP4RRWeM_qn4/view?usp=sharing',
-  );
+  assert.equal(featuredVideos[0].provider, 'youtube');
+  assert.equal(introductoryVideo.embedUrl, 'https://www.youtube-nocookie.com/embed/KE4KF03j_oM');
+  assert.equal(introductoryVideo.fallbackUrl, 'https://www.youtube.com/watch?v=KE4KF03j_oM');
   assert.equal(featuredVideos[1].provider, 'youtube');
-  assert.equal(featuredVideos[1].embedUrl, 'https://www.youtube-nocookie.com/embed/_3m-0Fskfe8');
-  assert.equal(featuredVideos[1].fallbackUrl, 'https://www.youtube.com/watch?v=_3m-0Fskfe8');
+  assert.equal(featuredVideos[1].embedUrl, 'https://www.youtube-nocookie.com/embed/2hqkdoqQ7IU');
+  assert.equal(featuredVideos[1].fallbackUrl, 'https://www.youtube.com/watch?v=2hqkdoqQ7IU');
   assert.ok(featuredVideos.every((video) => !video.embedUrl.includes('autoplay')));
-  assert.equal(featuredVideos[1].sourceUrl, 'https://youtu.be/_3m-0Fskfe8');
-  assert.equal(featuredVideos[1].cover, '/video-thumbnails/kaggle-introduction.jpg');
+  assert.equal(featuredVideos[1].sourceUrl, 'https://youtu.be/2hqkdoqQ7IU');
+  assert.equal(featuredVideos[1].cover, '/video-thumbnails/2hqkdoqQ7IU.jpg');
+  assert.equal(featuredVideos[0].cover, '/video-thumbnails/KE4KF03j_oM.jpg');
 });
 
 test('both cards defer their iframe until activation and share one persistent player', () => {

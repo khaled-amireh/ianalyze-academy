@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { leaders, syllabus } from '@/content/public-content';
 import { LinkedinIcon } from './social-icons';
 import { MixedText } from './mixed-text';
+import './register-banner.css';
 
 /** Small building blocks shared by the simplified home, study plan and about pages. */
 
@@ -94,9 +95,9 @@ export function TeamRow() {
 }
 
 export function RegisterBand() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
-    <section className="s-register">
+    <section className="s-register" dir={i18n.resolvedLanguage === 'ar' ? 'rtl' : 'ltr'}>
       <div>
         <h2>{t('academy.cta.title')}</h2>
         <p>{t('academy.cta.text')}</p>

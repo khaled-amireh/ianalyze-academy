@@ -26,6 +26,8 @@ export function VideoPlayer({ src, title, provider, cover }: VideoPlayerProps) {
   const [activated, setActivated] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [failedCover, setFailedCover] = useState<string | null>(null);
+  const brandCover = cover === 'brand' || failedCover === cover;
 
   const restoreInline = useCallback(() => {
     const element = dialog.current;
@@ -131,13 +133,21 @@ export function VideoPlayer({ src, title, provider, cover }: VideoPlayerProps) {
               {!activated ? (
                 <button
                   type="button"
-                  className={`video-cover${cover === 'brand' ? ' video-cover-brand' : ''}`}
+                  className={`video-cover${brandCover ? ' video-cover-brand' : ''}`}
                   aria-label={`${t('learning.playVideo')}: ${title}`}
                   onClick={() => setActivated(true)}
                 >
-                  {cover !== 'brand' && <img src={cover} alt="" />}
+                  {!brandCover && (
+                    <img
+                      src={cover}
+                      alt=""
+                      width={1280}
+                      height={720}
+                      onError={() => setFailedCover(cover)}
+                    />
+                  )}
                   <span className="video-cover-shade" aria-hidden="true" />
-                  {cover === 'brand' && (
+                  {brandCover && (
                     <span className="video-cover-brand-name" aria-hidden="true">
                       iAnalyze <b>Academy</b>
                     </span>

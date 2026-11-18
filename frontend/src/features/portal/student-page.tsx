@@ -13,6 +13,8 @@ import { academicYears, academicYearLabel } from './academic-years';
 import { PageContainer } from '@/components/shared/page-container';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { StudentAssignments } from '@/features/assignments/student-assignments';
+import { DraftForm, completeFormDraft } from '@/features/drafts';
 import { stateText, usePortalCopy } from './copy';
 import { MixedText } from '@/components/shared/mixed-text';
 import { FormField } from '@/components/shared/form-field';
@@ -92,6 +94,7 @@ export function ProfileForm({
         registering,
       );
       if (registering) draft.complete();
+      else await completeFormDraft(element);
       changeLocale(persisted.locale === 'en' ? 'en' : 'ar');
       onSaved(persisted, registering);
     } catch (error) {
@@ -107,7 +110,10 @@ export function ProfileForm({
     <section className="content-card" dir={arabic ? 'rtl' : 'ltr'}>
       <h2>{registering ? c.academyRegistration : c.profile}</h2>
       <p dir="ltr">{profile.email}</p>
-      <form
+      <DraftForm
+        draftKey="profile-edit"
+        baseVersion={profile.updated_at}
+        persist={!registering}
         ref={formRef}
         onSubmit={submit}
         noValidate
@@ -262,7 +268,7 @@ export function ProfileForm({
           message={message ? c[message] : ''}
           kind={message === 'draftCleared' ? 'success' : 'error'}
         />
-      </form>
+      </DraftForm>
     </section>
   );
 }
@@ -280,6 +286,7 @@ function NotebookUpload({
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<keyof PortalCopy | ''>('');
   async function upload(event: FormEvent<HTMLFormElement>) {
+    const element = event.currentTarget;
     event.preventDefault();
     if (inFlight.current || !open) return;
     const file = new FormData(event.currentTarget).get('notebook');
@@ -323,6 +330,7 @@ function NotebookUpload({
         },
       });
       if (result.error) throw result.error;
+      await completeFormDraft(element);
       setMessage('submitted');
       reload();
     } catch {
@@ -333,7 +341,12 @@ function NotebookUpload({
     }
   }
   return (
-    <form onSubmit={upload} aria-busy={busy}>
+    <DraftForm
+      draftKey={`legacy-notebook:${activity}`}
+      baseVersion="notebook"
+      onSubmit={upload}
+      aria-busy={busy}
+    >
       <p>{c.uploadHint}</p>
       {!open && <p>{c.uploadClosed}</p>}
       <Input
@@ -349,7 +362,7 @@ function NotebookUpload({
         message={message ? c[message] : ''}
         kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}
       />
-    </form>
+    </DraftForm>
   );
 }
 async function loadStudentProfile() {
@@ -439,6 +452,7 @@ export function StudentPage() {
           onCancel={() => setEditing(false)}
         />
       )}
+      {profile?.registered_at && <StudentAssignments />}
     </PageContainer>
   );
 }

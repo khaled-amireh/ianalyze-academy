@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import { productionFeatures } from './production-feature-approval.mjs';
 const root = new URL('../', import.meta.url);
 const configured = process.argv.includes('--configured');
 const expectedKey = configured ? process.env.VITE_SUPABASE_PUBLISHABLE_KEY : '';
@@ -76,6 +77,8 @@ if (configured) {
   const inputs = JSON.parse(readFileSync(new URL('artifacts/configured-build.json', root), 'utf8'));
   assert.equal(inputs.project, 'ocihwiqtgqplwgyhpwjv');
   assert.equal(inputs.publishableKeySha256, createHash('sha256').update(expectedKey).digest('hex'));
+  const registration = process.env.ACADEMY_REGISTRATION_APPROVED === 'true';
+  const expectedFeatures = productionFeatures(process.env, registration);
   for (const gate of [
     'registration',
     'submissions',
@@ -85,8 +88,9 @@ if (configured) {
   ])
     assert.equal(
       inputs[gate],
-      (gate === 'registration' || gate === 'privacyApproved') &&
-        process.env.ACADEMY_REGISTRATION_APPROVED === 'true',
+      gate === 'submissions' || gate === 'leaderboard'
+        ? expectedFeatures[gate]
+        : (gate === 'registration' || gate === 'privacyApproved') && registration,
       `Unapproved production gate: ${gate}`,
     );
 } else assert.equal(publishableKeys.length, 0, 'Unexpected key in unconfigured public artifact');

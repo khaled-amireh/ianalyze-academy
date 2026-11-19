@@ -4,8 +4,8 @@
   "files": {
     "frontend/scripts/check-pages-artifact.mjs": {
       "previousSha256": "baea732c873fbabdf794624672b68bbd67d38241b43366eed21f6d51acf2b202",
-      "sha256": "8c5b791995dad493997d4ab411b81fdde2548c2454fdc6515d974a88561694f7",
-      "reason": "Add an artifact invariant rejecting CSP-incompatible inlined fonts; retain all existing security/artifact assertions."
+      "sha256": "73fe321b329ebf1096096272dba08e17a3518a3c32f16c35afaed656834c42ea",
+      "reason": "Add an artifact invariant rejecting CSP-incompatible inlined fonts; retain all existing security/artifact assertions. November 19 owner-authorized student launch review: explicit default-closed notebook/leaderboard build approvals, exact matching artifact validation, unchanged registration/privacy/target and legacy-upload protections; associated approval/eligibility tests. Only this exact path and fingerprint are approved."
     },
     "frontend/scripts/check-phase-03.mjs": {
       "previousSha256": "de8190cca72da34d5d3f5941fe29a0377241279b0f40421682aa281865b91572",
@@ -81,6 +81,21 @@
       "added": true,
       "sha256": "fe78ad31af46e822c0b111d10126fe32a5fef671ae8c753a115b5e10b3895d0b",
       "reason": "Reproducible local production-mode fixture builder/server with synthetic configuration and unchanged CSP; no deployment or real credentials."
+    },
+    "frontend/scripts/build-pages-production.mjs": {
+      "previousSha256": "c8bf2884220170859dd3e45b0e436488ca047400007f409f95ee38e8295838ff",
+      "sha256": "63166db2736b604b875454a449180de869196e147a65a8ef09ac99bcfcf0b0cf",
+      "reason": " November 19 owner-authorized student launch review: explicit default-closed notebook/leaderboard build approvals, exact matching artifact validation, unchanged registration/privacy/target and legacy-upload protections; associated approval/eligibility tests. Only this exact path and fingerprint are approved."
+    },
+    "frontend/scripts/production-feature-approval.mjs": {
+      "added": true,
+      "sha256": "ee5831f95b21b307984c965eecda0a9d21dd9fb6eca132ea6e571c189b63fe37",
+      "reason": " November 19 owner-authorized student launch review: explicit default-closed notebook/leaderboard build approvals, exact matching artifact validation, unchanged registration/privacy/target and legacy-upload protections; associated approval/eligibility tests. Only this exact path and fingerprint are approved."
+    },
+    "frontend/tests/production-feature-approval.test.ts": {
+      "added": true,
+      "sha256": "364692b8a8a59d52df60cacab7dcc56784b307ee09eb8374f52c143c733ab248",
+      "reason": " November 19 owner-authorized student launch review: explicit default-closed notebook/leaderboard build approvals, exact matching artifact validation, unchanged registration/privacy/target and legacy-upload protections; associated approval/eligibility tests. Only this exact path and fingerprint are approved."
     }
   }
 }

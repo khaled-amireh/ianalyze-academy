@@ -6,6 +6,7 @@ import { createHash } from 'node:crypto';
 import { build } from 'vite';
 import { readSupabaseConfiguration } from '../src/lib/supabase-config.ts';
 import { registrationApproved } from './registration-approval.mjs';
+import { productionFeatures } from './production-feature-approval.mjs';
 
 const configuration = readSupabaseConfiguration(process.env);
 if (
@@ -16,6 +17,7 @@ if (
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const registration = registrationApproved();
+const features = productionFeatures(process.env, registration);
 const envDirectory = new URL('../artifacts/pages-empty-environment/', import.meta.url);
 mkdirSync(envDirectory, { recursive: true });
 if (readdirSync(envDirectory).length) throw new Error('Build environment directory must be empty.');
@@ -26,8 +28,8 @@ Object.assign(process.env, {
   VITE_SUPABASE_PUBLISHABLE_KEY: configuration.publishableKey,
   VITE_ENABLE_DEV_PREVIEWS: 'false',
   VITE_ENABLE_REGISTRATION: String(registration),
-  VITE_ENABLE_SUBMISSIONS: 'false',
-  VITE_ENABLE_LEADERBOARD: 'false',
+  VITE_ENABLE_SUBMISSIONS: String(features.submissions),
+  VITE_ENABLE_LEADERBOARD: String(features.leaderboard),
   VITE_PRIVACY_APPROVED: String(registration),
 });
 execFileSync(process.execPath, ['node_modules/typescript/bin/tsc', '-b'], {
@@ -47,8 +49,7 @@ writeFileSync(
       project: 'ocihwiqtgqplwgyhpwjv',
       publishableKeySha256: createHash('sha256').update(configuration.publishableKey).digest('hex'),
       registration,
-      submissions: false,
-      leaderboard: false,
+      ...features,
       privacyApproved: registration,
       developmentPreviews: false,
     },
@@ -57,5 +58,5 @@ writeFileSync(
   ) + '\n',
 );
 console.log(
-  `Configured production build complete; registration ${registration ? 'open after verified Leader approval' : 'closed'}; submissions and leaderboard closed.`,
+  `Configured production build complete; registration ${registration ? 'open after verified Leader approval' : 'closed'}; notebook submissions ${features.submissions ? 'approved' : 'closed'}; leaderboard ${features.leaderboard ? 'approved' : 'closed'}. Backend gates unchanged.`,
 );

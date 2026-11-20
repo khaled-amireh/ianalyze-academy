@@ -13,7 +13,7 @@ const W = '10000000-0000-4000-8000-000000000091',
 const ZUJ = 'Al-Zaytoonah University of Jordan';
 test('additive university migration preserves historical profiles, UUIDs, permissions and roles', async (t) => {
   const all = migrations(),
-    db = await createDatabase(all.slice(0, -1));
+    db = await createDatabase(all.slice(0, 5));
   t.after(() => db.close());
   await db.query(
     "insert into auth.users(id,email,email_confirmed_at) values($1,'old@example.test',now()),($2,'other@example.test',now())",
@@ -25,7 +25,7 @@ test('additive university migration preserves historical profiles, UUIDs, permis
   );
   const before = (await db.query('select * from public.profiles where id=$1', [H])).rows[0];
   const roles = (await db.query('select * from app_private.user_roles order by user_id')).rows;
-  await db.exec(all.at(-1));
+  await db.exec(all[5]);
   const { university, ...after } = (
     await db.query('select * from public.profiles where id=$1', [H])
   ).rows[0];

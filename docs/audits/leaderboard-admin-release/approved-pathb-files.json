@@ -1,0 +1,116 @@
+{
+  "baselineCommit": "28d6a7d386f494f53d883998132a35b17330346f",
+  "authorization": "Owner explicitly approved Path B on 2026-11-20 for candidate-local full-name consent and Admin manual awards designed for the current GitHub main schema. This approval does not authorize publication, migration execution, Admin promotion, or deployment.",
+  "files": {
+    "docs/audits/leaderboard-admin-release/FINAL_READINESS.md": {
+      "sha256": "d74ce96055dedef04228d1283a2c600484a3db9dbbd6ce4e78ebfc6fc8d1be42",
+      "reason": "Path B release review documentation and exact-path preservation evidence.",
+      "added": true
+    },
+    "docs/audits/leaderboard-admin-release/INITIAL_ADMIN_PROMOTION.md": {
+      "sha256": "1e30e5d7591fcebfc78aa5a17ee95fd098376ae69f19e33443214f9ac83d69a8",
+      "reason": "Path B release review documentation and exact-path preservation evidence.",
+      "added": true
+    },
+    "frontend/src/features/portal/admin-point-awards.tsx": {
+      "sha256": "88f4c6d6056894bc9412dc520b2fe432ada04ba6e52b7f8abad9408a3f4659d0",
+      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "added": true
+    },
+    "frontend/src/features/portal/leaderboard-name-consent.tsx": {
+      "sha256": "e20544529c17be87419d4e5060e23e0116437cd17000a84db4d05ceabad221e2",
+      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "added": true
+    },
+    "frontend/tests/leaderboard-consent-admin-awards.security.test.mjs": {
+      "sha256": "91c7881eaf48ddc024584f005c6b7f4e56e30b1cfd7ba33a1471805fd59647d7",
+      "reason": "Focused regression or preservation test for the owner-approved Path B behavior.",
+      "added": true
+    },
+    "supabase/migrations/20261119170000_leaderboard_name_consent.sql": {
+      "sha256": "51bbb8f1a6cc956664b01a990b6e55d1274173ac114a9f240d578e79aa76177b",
+      "reason": "Path B migration for the current-main leaderboard consent, private Admin registry, or append-only manual award ledger.",
+      "added": true
+    },
+    "supabase/migrations/20261119170100_application_admins.sql": {
+      "sha256": "f0234ea91cbc400c0157912b09741f185b22f17af692cd72d7d28793a4ecb4b2",
+      "reason": "Path B migration for the current-main leaderboard consent, private Admin registry, or append-only manual award ledger.",
+      "added": true
+    },
+    "supabase/migrations/20261119170200_admin_manual_point_awards.sql": {
+      "sha256": "f60dcddb6247ba7bcc7ff4d7e783195bcdb221437ac5116c87c49226f76666ad",
+      "reason": "Path B migration for the current-main leaderboard consent, private Admin registry, or append-only manual award ledger.",
+      "added": true
+    },
+    "frontend/package.json": {
+      "sha256": "b75dadf508dc0f166b86fd2148612fea4f313d79bdef027c013396372081c42b",
+      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "previousSha256": "d4a9348a96e7dcabadb957c65ddcf5e563541508767f203f06dc22d6a0b703ff"
+    },
+    "frontend/scripts/check-redesign.mjs": {
+      "sha256": "addd1efe183885567847960b26c1637cf8d28d16beeff1ae9e4424e081f2ac37",
+      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "previousSha256": "c886c6d8115b74541cdce3f4170cdb00d49b7d48fabd292c09178fa548531a97"
+    },
+    "frontend/scripts/database-fixture.mjs": {
+      "sha256": "df5b8817717e36a4f82458c6f7544b5dd3f51f45240372391fb1a05f580bd908",
+      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "previousSha256": "d41c5676b429d2e2fa63ae08c370583f7f8e57272611e917fc1c180f7f180a23"
+    },
+    "frontend/scripts/verify-merge-preservation.mjs": {
+      "sha256": "c255fdb49b414309450c2f40445611460fb8491ebdaf008abd3b239b3e61f897",
+      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "previousSha256": "5239b86319cdd3f4805929ed42b45cb25655000c5920a78852f89c27eabfd0dd"
+    },
+    "frontend/src/features/portal/copy.ts": {
+      "sha256": "db48a366c301242951ed5a72ab6297732ee06285ee72dee796f863b9c8fd199a",
+      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "previousSha256": "df0db412e88e41504a7376d42316889c2bec4fcc93216fb3a2db50f2d9762c35"
+    },
+    "frontend/src/features/portal/privacy-page.tsx": {
+      "sha256": "6e8b536b7a7ec33b332d57a029841a989be3ce850599a802d8364ccc71749eae",
+      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "previousSha256": "a01a115e7a789576512ac178a48e1ae78f7f79d6d08ab8ed0408e638dcd6dddf"
+    },
+    "frontend/src/features/portal/student-page.tsx": {
+      "sha256": "4a360275903a67699793dbd5625b5523b50fc0bafdc3f8da45ac168b672289d9",
+      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "previousSha256": "0feb7015da9107230ff509325903a5ff3be5685683f0c747dfc6774348f21aa2"
+    },
+    "frontend/src/features/portal/team-page.tsx": {
+      "sha256": "1efcd666f9ded33d6fe667fd539df66c64639c0f30e4435a1c8f7c24c3e92719",
+      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "previousSha256": "c16d1b45b3dab31ae239b0a11b499bd59aa0c18795972a1cb9b36b62345fed56"
+    },
+    "frontend/src/locales/ar.json": {
+      "sha256": "fa6551bc1b6a656f088b1f48ab745b16155b8f24d9da0e139cafd99dcc6e4983",
+      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "previousSha256": "c00b62bb5dbaf62982f34782985e16b0fd1f8b3e4e123c78f5e09249ee62559a"
+    },
+    "frontend/src/locales/en.json": {
+      "sha256": "5f0247f24fa8402b1dff033047067803e69a3a70d5e0833812a4d161c399bcd5",
+      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "previousSha256": "a59d69e324afd7465fa673b7934478da41ef8c51762efa9a0bd051f3bc268959"
+    },
+    "frontend/src/types/database.ts": {
+      "sha256": "632da482eec807c6e822fa7273988d2bf05cf44d7e3dd850f5eb5f7284b7e376",
+      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "previousSha256": "8e8cf872c9ac1abf990035411c7c95b5f294ff455cdf0219b6cc2128fe73204c"
+    },
+    "frontend/tests/database.security.test.mjs": {
+      "sha256": "429f4f51786b29b5b4aafd369f7dead0e06d1f8548c5015d7e3448117fb33dc1",
+      "reason": "Focused regression or preservation test for the owner-approved Path B behavior.",
+      "previousSha256": "ad6f5853bac0aa19dd12cdf186275c7bd1397b19e1f8690f074a3e75955da37c"
+    },
+    "frontend/tests/final-improvements.security.test.mjs": {
+      "sha256": "39a60ab71c1f211ca980c5a598fca23e770d98471ae46e739a559ee93601753c",
+      "reason": "Focused regression or preservation test for the owner-approved Path B behavior.",
+      "previousSha256": "e9c0a301a09f7d16130344d2745ba9147b555f025b919a30c6c23374ee952f43"
+    },
+    "frontend/tests/pre-presentation.test.ts": {
+      "sha256": "5cfddf02f12abafb3092f6524351e5e194cc49bf4b4291c9427392415085289b",
+      "reason": "Focused regression or preservation test for the owner-approved Path B behavior.",
+      "previousSha256": "7306203268c3a2c35338073817b46c077aa99caf61a2b13114463dd25ef93da0"
+    }
+  }
+}

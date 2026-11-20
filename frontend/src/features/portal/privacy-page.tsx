@@ -85,9 +85,10 @@ export function PrivacyPage() {
           </p>
           <h2>Public rankings</h2>
           <p>
-            Rankings use published grades and generated pseudonyms only. They do not return email,
-            WhatsApp, university ID or real names. Real-name display requires separate explicit
-            consent; registration consent does not authorize it.
+            Rankings use published grades and a generated pseudonym by default. A student may
+            separately opt in to display the saved profile name and can withdraw that consent at any
+            time. Registration consent does not authorize public name display. Rankings never return
+            email, WhatsApp or university ID.
           </p>
           <h2>Providers and safeguards</h2>
           <p>

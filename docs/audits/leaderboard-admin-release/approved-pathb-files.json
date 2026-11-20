@@ -1,9 +1,9 @@
 {
   "baselineCommit": "28d6a7d386f494f53d883998132a35b17330346f",
-  "authorization": "Owner explicitly approved Path B on 2026-11-20 for candidate-local full-name consent and Admin manual awards designed for the current GitHub main schema. This approval does not authorize publication, migration execution, Admin promotion, or deployment.",
+  "authorization": "Owner approved Path B and candidate-local production-build/v2-proof corrections. On 2026-11-21 the owner reported configured validation PASS and explicitly authorized committing and pushing the exact complete 31-path candidate to existing PR #19. This approval does not authorize merging, workflow activation, migration execution, Admin promotion, deployment, or production changes.",
   "files": {
     "docs/audits/leaderboard-admin-release/FINAL_READINESS.md": {
-      "sha256": "d74ce96055dedef04228d1283a2c600484a3db9dbbd6ce4e78ebfc6fc8d1be42",
+      "sha256": "ac6d896e370bcb7dc76e7f30afea5d404939e9e631a312d4a1ec0a3d64ec79bc",
       "reason": "Path B release review documentation and exact-path preservation evidence.",
       "added": true
     },
@@ -111,6 +111,46 @@
       "sha256": "5cfddf02f12abafb3092f6524351e5e194cc49bf4b4291c9427392415085289b",
       "reason": "Focused regression or preservation test for the owner-approved Path B behavior.",
       "previousSha256": "7306203268c3a2c35338073817b46c077aa99caf61a2b13114463dd25ef93da0"
+    },
+    ".github/workflows/production.yml": {
+      "sha256": "b0fb1b60a9a88689f4fa910fde4366e6a6fd15c021221fe34c20c661f85c9ef8",
+      "previousSha256": "564660d831416fe26b2933e17f28a724758b49f18a37f4bc32db231ca6a6c60d",
+      "reason": "Owner-authorized mapping for explicit production feature approvals and a narrow Edge Function change filter."
+    },
+    "frontend/scripts/build-pages-production.mjs": {
+      "sha256": "80590ec4266fa361ccf0beb90cee7fe5553a768c83a065f0bb6afe6c82fee0b7",
+      "previousSha256": "c8bf2884220170859dd3e45b0e436488ca047400007f409f95ee38e8295838ff",
+      "reason": "Use the explicit feature approvals in the configured build while preserving verified registration and privacy behavior."
+    },
+    "frontend/scripts/check-pages-artifact.mjs": {
+      "sha256": "a8e216fc21ef1ae2fcdc13299502c75b2d8cdf470f8448e2a5957fd36ffaba11",
+      "previousSha256": "8c5b791995dad493997d4ab411b81fdde2548c2454fdc6515d974a88561694f7",
+      "reason": "Verify configured artifact gates against the explicit approvals and existing registration/privacy rules."
+    },
+    "frontend/scripts/production-build-gates.mjs": {
+      "sha256": "8cc412d66bba8db149892e1d28db4c45c02a4d7c26937bbcaeee8720faa16b6f",
+      "reason": "Fail-closed mapping from explicit repository approvals to isolated production build gates.",
+      "added": true
+    },
+    "frontend/tests/production-build-release-gates.test.ts": {
+      "sha256": "ede500f5c06f193ad5644ba7d3fa7fa356cd496e02cdbcf9d6b47baf111b913a",
+      "reason": "Focused regression tests for production approval mapping, registration/privacy preservation, artifact expectations, and Edge triggers.",
+      "added": true
+    },
+    "frontend/scripts/check-registration-readiness.mjs": {
+      "sha256": "fd0b43e7f3f2098f51013890ab49b520e652c910833ef21ba2887e20860c0cc5",
+      "previousSha256": "73019f0eddb21c48657e18084afc60305e0ab5831fae6c0dc6cc52e3a91af7c3",
+      "reason": "Owner-authorized v2 SELECT-only proof generation with trusted Leader, exact approved gates, safe definitions, sanitized failures, and redirect rejection."
+    },
+    "frontend/scripts/registration-approval.mjs": {
+      "sha256": "81ff19c6aa79737a582cd13e0fcf188a8f2a4fa65bca794a5bf9ce099136ffe1",
+      "previousSha256": "ce30e1629718b3f094b8eae7e164cd24778f83393735efb677c2a8c731b6638d",
+      "reason": "Adapt the reviewed v2 proof to the Path B build approval helper; retain freshness, trusted identity, safe gates, legacy-upload denial, and fail-closed verification."
+    },
+    "frontend/tests/registration-approval.test.ts": {
+      "sha256": "5df046567d007b3b61ac87c50c85ef72f9a4e3a9ae74fa95fabf2b7c0041cda4",
+      "previousSha256": "e0f90bd2d1cb34fcff4781dd6c9d4f6d14bde35257b3de30b14f02a3284310fe",
+      "reason": "Focused synthetic PostgreSQL, eight-combination build agreement, freshness boundaries, and mocked SELECT-only transport/proof-write regression coverage."
     }
   }
 }

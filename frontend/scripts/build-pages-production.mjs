@@ -6,6 +6,7 @@ import { createHash } from 'node:crypto';
 import { build } from 'vite';
 import { readSupabaseConfiguration } from '../src/lib/supabase-config.ts';
 import { registrationApproved } from './registration-approval.mjs';
+import { resolveProductionBuildGates } from './production-build-gates.mjs';
 
 const configuration = readSupabaseConfiguration(process.env);
 if (
@@ -16,6 +17,7 @@ if (
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const registration = registrationApproved();
+const gates = resolveProductionBuildGates(process.env, registration);
 const envDirectory = new URL('../artifacts/pages-empty-environment/', import.meta.url);
 mkdirSync(envDirectory, { recursive: true });
 if (readdirSync(envDirectory).length) throw new Error('Build environment directory must be empty.');
@@ -24,11 +26,7 @@ for (const name of Object.keys(process.env))
 Object.assign(process.env, {
   VITE_SUPABASE_URL: configuration.url,
   VITE_SUPABASE_PUBLISHABLE_KEY: configuration.publishableKey,
-  VITE_ENABLE_DEV_PREVIEWS: 'false',
-  VITE_ENABLE_REGISTRATION: String(registration),
-  VITE_ENABLE_SUBMISSIONS: 'false',
-  VITE_ENABLE_LEADERBOARD: 'false',
-  VITE_PRIVACY_APPROVED: String(registration),
+  ...gates.vite,
 });
 execFileSync(process.execPath, ['node_modules/typescript/bin/tsc', '-b'], {
   cwd: root,
@@ -46,16 +44,12 @@ writeFileSync(
     {
       project: 'ocihwiqtgqplwgyhpwjv',
       publishableKeySha256: createHash('sha256').update(configuration.publishableKey).digest('hex'),
-      registration,
-      submissions: false,
-      leaderboard: false,
-      privacyApproved: registration,
-      developmentPreviews: false,
+      ...gates.metadata,
     },
     null,
     2,
   ) + '\n',
 );
 console.log(
-  `Configured production build complete; registration ${registration ? 'open after verified Leader approval' : 'closed'}; submissions and leaderboard closed.`,
+  `Configured production build complete; registration ${gates.metadata.registration ? 'open after verified Leader approval' : 'closed'}; submissions ${gates.metadata.submissions ? 'enabled' : 'closed'}; leaderboard ${gates.metadata.leaderboard ? 'enabled' : 'closed'}.`,
 );

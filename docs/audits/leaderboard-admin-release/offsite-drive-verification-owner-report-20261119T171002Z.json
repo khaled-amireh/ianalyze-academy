@@ -1,0 +1,16 @@
+{
+  "recordType": "owner-reported external offsite verification",
+  "recordedAt": "2026-11-19T17:10:02Z",
+  "backupId": "week1-predeploy-20261119T153809Z",
+  "driveLocation": "iAnalyze-Academy / Production-Backups",
+  "driveFileId": "1EULYBxPNGfpv6j7QPDuuvO67f7GRb1nm",
+  "driveFileUrl": "https://drive.google.com/file/d/1EULYBxPNGfpv6j7QPDuuvO67f7GRb1nm/view",
+  "reportedZipInventoryCount": 17,
+  "reportedChecksumsPassed": 16,
+  "reportedIndependentDownload": true,
+  "portableRecoveryComparisons": 78,
+  "portableRecoveryPassed": true,
+  "reportedBy": "project owner, reporting ChatGPT verification",
+  "codexRemoteReadback": false,
+  "evidenceLimit": "This Codex environment has no Google Drive connector or browser session for independent remote readback. Counts and downloaded-copy verification are recorded as externally reported; local package verification is separate."
+}

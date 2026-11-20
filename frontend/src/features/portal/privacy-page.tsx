@@ -33,10 +33,14 @@ export function PrivacyPage() {
           </p>
           <h2>الترتيب العام</h2>
           <p>
-            يستخدم الترتيب النقاط المعتمدة فقط ويعرض أسماء مستعارة افتراضيًا. يمكنك اختيار اسم ظاهر
-            للعامة بشكل مستقل من قسم الواجبات؛ حفظ هذا الاسم يعني اختيار نشره، ويمكنك مسحه للعودة
-            إلى الاسم المستعار. لا تُنشر بيانات البريد أو واتساب أو الرقم الجامعي أو التسليمات أو
-            الملاحظات الخاصة. لا تعني الموافقة على التسجيل الموافقة على نشر اسمك.
+            يعرض الترتيب النقاط المعتمدة وأسماء مستعارة افتراضيًا. يمكن للطالب المؤهل اختيار نشر
+            اسمه الكامل المحفوظ عند التسجيل في المراكز الثلاثة الأولى والجدول والأرشيف الأسبوعي. لا
+            يوجد اسم عام قابل للتحرير بشكل مستقل. الخيار غير محدد افتراضيًا في قسم الواجبات، ولا
+            يؤثر رفضه في الأهلية أو الترتيب أو النقاط أو المشاركة. يمكن سحبه للعودة إلى الاسم
+            المستعار في الترتيب الحالي والأرشيف، لكن لا يمكن استرجاع النسخ التي يحتفظ بها الآخرون.
+            يتولى الفريق تصحيح الاسم المسجل، ويتطلب الاسم المصحح اختيار نشر جديدًا. لا تُنشر بيانات
+            البريد أو واتساب أو الرقم الجامعي أو التسليمات أو الملاحظات الخاصة. موافقة التسجيل لا
+            تعني الموافقة على نشر الاسم.
           </p>
           <h2>الخدمات الخارجية والحماية</h2>
           <p>
@@ -86,11 +90,15 @@ export function PrivacyPage() {
           </p>
           <h2>Public rankings</h2>
           <p>
-            Rankings use approved points and generated learner aliases by default. You can
-            separately choose a public leaderboard name in Assignments; saving that name is your
-            choice to display it publicly. Clear it to return to an alias. Email, WhatsApp,
-            university ID, submissions and private feedback are never included. Registration consent
-            does not authorize publishing your name.
+            Rankings use approved points and generated learner aliases by default. Eligible students
+            may separately choose to publish their saved registration full name, including on the
+            podium and weekly archives. There is no separate editable public name. The unchecked
+            choice in Assignments does not affect eligibility, rank, points or participation.
+            Withdraw it there to return to an alias in current and archived rankings. Copies already
+            made by others cannot be recalled. Registered-name corrections require the Team, and a
+            changed name needs a new publication choice. Email, WhatsApp, university ID, submissions
+            and private feedback are never included. Registration consent does not authorize
+            publishing your name.
           </p>
           <h2>Providers and safeguards</h2>
           <p>

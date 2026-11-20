@@ -75,6 +75,10 @@ try {
       p.pronargdefaults as defaults,
       coalesce((select jsonb_agg(jsonb_build_object('name', p.proargnames[a.ordinality],
         'type', format_type(a.type, null)) order by a.ordinality)
+        from unnest(p.proallargtypes) with ordinality a(type, ordinality)
+        where p.proargmodes[a.ordinality] = 't'), '[]'::jsonb) as output_columns,
+      coalesce((select jsonb_agg(jsonb_build_object('name', p.proargnames[a.ordinality],
+        'type', format_type(a.type, null)) order by a.ordinality)
         from unnest(p.proargtypes) with ordinality a(type, ordinality)), '[]'::jsonb) as arguments
     from pg_proc p join pg_namespace n on n.oid=p.pronamespace
     where n.nspname='public' and p.prokind='f'
@@ -82,7 +86,16 @@ try {
     order by p.proname
   `);
   const sqlType = (name) => {
-    if (['uuid', 'text', 'character varying'].includes(name)) return 'string';
+    if (
+      [
+        'uuid',
+        'text',
+        'character varying',
+        'timestamp with time zone',
+        'timestamp without time zone',
+      ].includes(name)
+    )
+      return 'string';
     if (['smallint', 'integer', 'bigint', 'numeric', 'real', 'double precision'].includes(name))
       return 'number';
     if (name === 'boolean') return 'boolean';
@@ -104,7 +117,14 @@ try {
         : 'Record<string, never>';
       // PostgreSQL does not describe scalar function nullability; this role RPC denies
       // unverified/unknown identities by returning NULL, so retain its conservative type.
-      const result = sqlType(fn.result) + (fn.name === 'current_academy_role' ? ' | null' : '');
+      const result = fn.output_columns.length
+        ? `{ ${fn.output_columns
+            .map((column) => {
+              if (!column.name) throw new Error(`Named RPC output required: ${fn.name}`);
+              return `${column.name}: ${sqlType(column.type)}`;
+            })
+            .join('; ')} }[]`
+        : sqlType(fn.result) + (fn.name === 'current_academy_role' ? ' | null' : '');
       return `      ${fn.name}: { Args: ${args}; Returns: ${result} };`;
     })
     .join('\n');

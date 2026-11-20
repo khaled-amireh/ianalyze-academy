@@ -26,6 +26,11 @@ const env = {
   CLOUDFLARE_API_TOKEN: 'DUMMY_CLOUDFLARE_CREDENTIAL_FOR_OFFLINE_TESTS',
   ACADEMY_LEADER_USER_ID: '00000000-0000-4000-8000-000000000001',
 };
+const reviewedGates = {
+  leaderboard_enabled: true,
+  submission_service_enabled: true,
+  uploads_enabled: false,
+};
 const tokenId = 'b'.repeat(32);
 const policy = {
   policies: [
@@ -43,7 +48,7 @@ function fixture(changes: Record<string, unknown> = {}) {
   const responses: Record<string, unknown> = {
     '/v1/projects': [{ id: project, name: 'ianalyze-academy', status: 'ACTIVE_HEALTHY' }],
     [`/v1/projects/${project}/database/query`]: [
-      { read_only: true, verified_leader: true, gates_closed: true },
+      { read_only: true, verified_leader: true, gate_definitions_safe: true, gates: reviewedGates },
     ],
     [`/v1/projects/${project}/functions`]: [],
     [`/client/v4/accounts/${account}/pages/projects/ianalyze-academy`]: {
@@ -66,7 +71,19 @@ function fixture(changes: Record<string, unknown> = {}) {
     calls.push({ url, options });
     const response = responses[new URL(url).pathname];
     if (response instanceof Error) throw response;
-    return { ok: response !== undefined, json: async () => response };
+    if (response && typeof response === 'object' && 'httpStatus' in response) {
+      const status = Number(response.httpStatus);
+      return {
+        ok: status >= 200 && status < 300,
+        status,
+        json: async () => response.body,
+      };
+    }
+    return {
+      ok: response !== undefined,
+      status: response === undefined ? 404 : 200,
+      json: async () => response,
+    };
   };
   return { calls, fetcher };
 }
@@ -134,11 +151,23 @@ test('only fixed read routes and one SELECT-only POST are sent; credentials cann
   }
 });
 
-test('denied database access, invalid Team binding, open gates, and wrong Pages targets fail', async () => {
-  for (const patch of [{ read_only: false }, { verified_leader: false }, { gates_closed: false }]) {
+test('denied database access, invalid Team binding, mismatched gates, and wrong Pages targets fail', async () => {
+  for (const patch of [
+    { read_only: false },
+    { verified_leader: false },
+    { gate_definitions_safe: false },
+    { gates: { ...reviewedGates, uploads_enabled: true } },
+    { gates: { ...reviewedGates, leaderboard_enabled: false } },
+  ]) {
     const f = fixture({
       [`/v1/projects/${project}/database/query`]: [
-        { read_only: true, verified_leader: true, gates_closed: true, ...patch },
+        {
+          read_only: true,
+          verified_leader: true,
+          gate_definitions_safe: true,
+          gates: reviewedGates,
+          ...patch,
+        },
       ],
     });
     const r = await runCredentialPreflight(env, f.fetcher, now);
@@ -224,6 +253,58 @@ test('malicious provider messages, token values, UUIDs, and PII never reach resu
     'person@example.test',
   ])
     assert.ok(!output.includes(value));
+});
+
+test('Cloudflare HTTP failures are classified without exposing response bodies or implying revocation', async () => {
+  const route = `/client/v4/accounts/${account}/pages/projects/ianalyze-academy`;
+  const cases = [
+    [401, 'AUTHENTICATION_FAILED_HTTP_401'],
+    [403, 'AUTHORIZATION_FAILED_HTTP_403'],
+    [404, 'RESOURCE_NOT_FOUND_HTTP_404'],
+    [503, 'HTTP_ERROR_503'],
+  ] as const;
+  for (const [httpStatus, diagnostic] of cases) {
+    const f = fixture({
+      [route]: { httpStatus, body: { secret: 'never-print-this-provider-body' } },
+    });
+    const result = await runCredentialPreflight(env, f.fetcher, now);
+    assert.equal(status(result, 'Direct Upload project access'), 'FAIL');
+    assert.equal(status(result, 'Cloudflare Pages project diagnostic'), diagnostic);
+    const rendered = renderPreflight(result);
+    assert.ok(!rendered.includes('never-print-this-provider-body'));
+    assert.ok(!rendered.toLowerCase().includes('revoked'));
+  }
+});
+
+test('Cloudflare network, API-envelope, and target mismatches remain distinct and sanitized', async () => {
+  const route = `/client/v4/accounts/${account}/pages/projects/ianalyze-academy`;
+  const network = fixture({
+    [route]: new Error('credential person@example.test provider detail'),
+  });
+  const networkResult = await runCredentialPreflight(env, network.fetcher, now);
+  assert.equal(status(networkResult, 'Cloudflare Pages project diagnostic'), 'NETWORK_ERROR');
+  assert.ok(!renderPreflight(networkResult).includes('person@example.test'));
+
+  const api = fixture({
+    [route]: { success: false, errors: [{ message: 'private provider detail' }] },
+  });
+  const apiResult = await runCredentialPreflight(env, api.fetcher, now);
+  assert.equal(status(apiResult, 'Cloudflare Pages project diagnostic'), 'API_ERROR');
+  assert.ok(!renderPreflight(apiResult).includes('private provider detail'));
+
+  const mismatch = fixture({
+    [route]: {
+      success: true,
+      result: {
+        name: 'unexpected-project',
+        subdomain: 'unexpected.pages.dev',
+        production_branch: 'main',
+        source: null,
+      },
+    },
+  });
+  const mismatchResult = await runCredentialPreflight(env, mismatch.fetcher, now);
+  assert.equal(status(mismatchResult, 'Cloudflare Pages project diagnostic'), 'TARGET_MISMATCH');
 });
 
 test('workflow has manual-only execution, pinned actions, no npm install, build, migrations or deployment', () => {

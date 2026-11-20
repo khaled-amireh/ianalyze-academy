@@ -1,0 +1,96 @@
+{
+  "snapshot": "2026-11-20",
+  "scope": "Exact additions and package change authorized by final release readiness request; historical previous hashes and guard logic unchanged. A follow-on exact-hash reconciliation records only the credential-preflight checker and its tests from owner-merged PR #17.",
+  "files": [
+    {
+      "path": "frontend/scripts/release-readiness-preflight.mjs",
+      "added": true,
+      "sha256": "4d1dab84df91b452c1588279b63de2795772fb6ef79f2fec7b1eecb1ca1d614b",
+      "reason": "2026-11-20 user-authorized final blocker resolution: offline configuration preflight, isolated local stack/API/browser validation or synthetic encrypted recovery; no production access or credentials persisted."
+    },
+    {
+      "path": "frontend/scripts/run-release-local-integration.mjs",
+      "added": true,
+      "sha256": "8f70e6459ad40275029431af4f9fa067918aaddcf158c4509c3046c5b0204963",
+      "reason": "2026-11-20 user-authorized final blocker resolution: offline configuration preflight, isolated local stack/API/browser validation or synthetic encrypted recovery; no production access or credentials persisted."
+    },
+    {
+      "path": "frontend/scripts/prepare-release-local.mjs",
+      "added": true,
+      "sha256": "adf1830ff27052345c7726df07e3f630a230e11ab64ad94409741b0bfa1bf5a6",
+      "reason": "2026-11-20 user-authorized final blocker resolution: offline configuration preflight, isolated local stack/API/browser validation or synthetic encrypted recovery; no production access or credentials persisted."
+    },
+    {
+      "path": "frontend/tests/release-readiness-preflight.test.ts",
+      "added": true,
+      "sha256": "e77bf4d5c9b7d399d29980179c940f7d444230bbe3ebddd7888128113b0fe9af",
+      "reason": "2026-11-20 user-authorized final blocker resolution: offline configuration preflight, isolated local stack/API/browser validation or synthetic encrypted recovery; no production access or credentials persisted."
+    },
+    {
+      "path": "frontend/tests/release-local.integration.test.mjs",
+      "added": true,
+      "sha256": "c3f7f4fc051a59a4468ac0db2318df877a3b9258c5d0907a11549fec34607c1c",
+      "reason": "2026-11-20 user-authorized final blocker resolution: offline configuration preflight, isolated local stack/API/browser validation or synthetic encrypted recovery; no production access or credentials persisted. Clear test-browser authentication storage before closing."
+    },
+    {
+      "path": "frontend/tests/recovery-roundtrip.security.test.mjs",
+      "added": true,
+      "sha256": "be1c730fecd0dae8f5322dc50e5b12e656733064e9748717d1655beb1a2b0fd1",
+      "reason": "2026-11-20 user-authorized final blocker resolution: offline configuration preflight, isolated local stack/API/browser validation or synthetic encrypted recovery; no production access or credentials persisted."
+    },
+    {
+      "path": "frontend/package.json",
+      "previousCandidateSha256": "d3409f513c0911b3526fb5cd29d399bb221ea15569e15029de6ef6f60591800b",
+      "sha256": "5eb655ddeb261720e0f54799c00bfdf6f4664ec8c7087d6c0a9aa5557c95bda9",
+      "reason": "Mandatory recovery regression and local readiness/integration commands; lockfile unchanged. Updated under owner-authorized local release-preparation refinement to fail fast on missing readiness proof. Adds the owner-authorized focused Edge deployment filter test; no lockfile change."
+    },
+    {
+      "path": "frontend/scripts/backup-freshness.mjs",
+      "previousCandidateSha256": "b3b4dc0eb9fa481e866e337a8e64e259072732a3c70edbe61f29153021698be3",
+      "sha256": "40a76cbd83331ed06d87d4ce4a183654f8076209ea81c575d912373711e8e843",
+      "reason": "2026-11-20 authorized consolidated release review: exact consent, Admin/manual-award, local fixture or recovery-readiness implementation; no production operation. Final local blocker review: reject missing or malformed table fingerprints instead of certifying false freshness."
+    },
+    {
+      "path": "frontend/tests/backup-freshness.test.ts",
+      "previousCandidateSha256": "68cc1e4e9f476bcfe01f4d5c167193f4e75280e0c55856abb55369edafefc4e6",
+      "sha256": "dd0b3169512c9b0f8a0115ef5cb826733aebd596ca08b1d0580fcf2783f8621f",
+      "reason": "2026-11-20 authorized consolidated release review: exact consent, Admin/manual-award, local fixture or recovery-readiness implementation; no production operation. Final local blocker review: reject missing or malformed table fingerprints instead of certifying false freshness."
+    },
+    {
+      "path": "frontend/scripts/registration-approval.mjs",
+      "previousCandidateSha256": "684ccb1927a8a3f40d9806d487af4b0a16307b39e41b0ecd4fa58dca6635f13c",
+      "sha256": "f74072b02e48ada74d1b81ed9049cfa097b3731e44abf0af8c9e509debe57d33",
+      "reason": "Require a short-lived verified Leader proof before producing an open-registration production artifact. Consolidated consent/Admin release authorized 2026-11-20: validate exact approved active gates and safe constant definitions without closing services. Final blocker review: replace raw proof-file errors with a safe actionable missing/invalid proof error; approval validation remains unchanged."
+    },
+    {
+      "path": "frontend/tests/registration-approval.test.ts",
+      "previousCandidateSha256": "2c8cf50456aa47cf614178f7b024020822ddcfa36316aa45a676a268731b39f0",
+      "sha256": "84468164aed77474d4b96bed27950c1397493d49f97a73f5d0b7901bf33cef3e",
+      "reason": "Reject stale, missing, wrong-project or incomplete Leader release proofs and unexpectedly open unrelated gates. Consolidated local release review 2026-11-20: Fail-closed versioned gate-definition and approved-active-state checks, including embedded PostgreSQL metadata tests. Final blocker review: replace raw proof-file errors with a safe actionable missing/invalid proof error; approval validation remains unchanged."
+    },
+    {
+      "path": "frontend/scripts/check-ci-credentials.mjs",
+      "sha256": "01330c5f624b0c033b3779f1f5b12395ffd6519ba1631f966f20b501582fcaeb",
+      "reason": "Final blocker-resolution review: read-only credential preflight must preserve reviewed enabled leaderboard/submission services and disabled legacy uploads; reuse validated constant-definition metadata query, deny missing/mismatched/unsafe gates. Provider targets, read-only routes and manual-only workflow unchanged.",
+      "added": true
+    },
+    {
+      "path": "frontend/tests/ci-credential-preflight.test.ts",
+      "sha256": "1395a2d00b56ee84867fc930ef0312e13720eb7c950768397cf76657bb73d318",
+      "reason": "Final blocker-resolution review: read-only credential preflight must preserve reviewed enabled leaderboard/submission services and disabled legacy uploads; reuse validated constant-definition metadata query, deny missing/mismatched/unsafe gates. Provider targets, read-only routes and manual-only workflow unchanged.",
+      "added": true
+    },
+    {
+      "path": "frontend/scripts/check-ci-credentials.mjs",
+      "previousCandidateSha256": "01330c5f624b0c033b3779f1f5b12395ffd6519ba1631f966f20b501582fcaeb",
+      "sha256": "01eaa2b0eab1212620789392b0c7fea6397e59bb579285ef54908e53718f2bf6",
+      "reason": "Exact candidate integration of owner-merged PR #17 at 28d6a7d386f494f53d883998132a35b17330346f; reviewed gate correction and sanitized Cloudflare failure diagnostics. No workflow expansion, provider mutation, or release-guard change."
+    },
+    {
+      "path": "frontend/tests/ci-credential-preflight.test.ts",
+      "previousCandidateSha256": "1395a2d00b56ee84867fc930ef0312e13720eb7c950768397cf76657bb73d318",
+      "sha256": "2c13a2895098ad73fd9a4747dad7e990be2c33b592135fe4a428052749689aec",
+      "reason": "Exact candidate integration of owner-merged PR #17 at 28d6a7d386f494f53d883998132a35b17330346f; reviewed gate correction and sanitized Cloudflare failure diagnostics. No workflow expansion, provider mutation, or release-guard change."
+    }
+  ]
+}

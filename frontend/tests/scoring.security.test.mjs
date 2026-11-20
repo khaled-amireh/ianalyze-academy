@@ -47,9 +47,8 @@ test('Friday calendar, permanent cutoff history, late adjustments and private cl
         "update app_private.user_roles set role='team',grant_reason='Embedded scoring test' where user_id=$1",
         [ids[i]],
       );
-    await q(
-      ids[i],
-      "update public.profiles set full_name='PRIVATE NAME',whatsapp='+962790000001',university='Other',major='AI',academic_year=2,python_experience='none',leaderboard_name=$2 where id=$1",
+    await db.query(
+      "update public.profiles set full_name='PRIVATE NAME',whatsapp='+962790000001',university='Other',major='AI',academic_year=2,python_experience='none',leaderboard_alias=$2 where id=$1",
       [ids[i], names[i]],
     );
     await q(ids[i], "select public.complete_registration('registration-v1')");

@@ -121,6 +121,34 @@ test('the scoped presentation fixes preserve assets, security, navigation and cl
     )
       continue;
     let bytes = readFileSync(new URL(path, root));
+    if (path === '.github/workflows/production.yml') {
+      const approval = JSON.parse(
+        readFileSync(new URL('docs/final-improvements/approved-changes.json', root), 'utf8'),
+      ).files[path];
+      assert.ok(approval?.reason, path);
+      assert.equal(createHash('sha256').update(bytes).digest('hex'), approval.sha256, path);
+      continue;
+    }
+    if (
+      path === 'frontend/scripts/build-pages-production.mjs' ||
+      path === 'frontend/package.json'
+    ) {
+      // Current exact approval includes independent feature gates and the additive security suite.
+      const approval = JSON.parse(
+        readFileSync(
+          new URL(
+            path === 'frontend/package.json'
+              ? 'docs/audits/readiness-baselines.json'
+              : 'docs/pre-presentation-fixes/approved-changes.json',
+            root,
+          ),
+          'utf8',
+        ),
+      ).files[path];
+      assert.ok(approval?.reason, path);
+      assert.equal(createHash('sha256').update(bytes).digest('hex'), approval.sha256, path);
+      continue;
+    }
     if (path === 'frontend/src/content/learning-tools.ts') {
       // Only the requested course/optional grouping changes. Keep all tool
       // destinations, installation instructions and examples byte-for-byte.

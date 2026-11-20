@@ -44,39 +44,44 @@ export function StudentAssignments() {
           ))}
         </>
       )}
-      {data && <PublicName currentName={data.leaderboardName} reload={remote.refresh} />}
+      {data && (
+        <PublicName
+          key={String(data.publicFullNameConsent)}
+          consented={data.publicFullNameConsent}
+          reload={remote.refresh}
+        />
+      )}
     </section>
   );
 }
-function PublicName({ currentName, reload }: { currentName: string | null; reload: () => void }) {
+function PublicName({ consented, reload }: { consented: boolean; reload: () => void }) {
   const { c } = useAssignmentCopy();
   const flight = useRef(false);
   const [notice, setNotice] = useState('');
   const [busy, setBusy] = useState(false);
+  const [checkedConsent, setCheckedConsent] = useState(consented);
   return (
     <details className="content-card">
       <summary>{c.publicName}</summary>
       <p>{c.publicNameHelp}</p>
+      <p>{c.publicNamePrivacyNotice}</p>
       <DraftForm
         draftKey="public-name"
-        baseVersion={currentName ?? ''}
+        persist={false}
+        baseVersion={String(consented)}
         onSubmit={async (e) => {
           e.preventDefault();
           if (flight.current) return;
           flight.current = true;
           setBusy(true);
           setNotice('');
-          const name = String(new FormData(e.currentTarget).get('leaderboard_name') ?? '').trim();
+          const choice = new FormData(e.currentTarget).get('public_full_name_consent') === 'on';
           const element = e.currentTarget;
           try {
-            const user = await client().auth.getUser();
-            if (!user.data.user) throw Error();
-            requireWrite(
-              await client()
-                .from('profiles')
-                .update({ leaderboard_name: name || null })
-                .eq('id', user.data.user.id),
-            );
+            const { error } = await client().rpc('set_public_full_name_consent', {
+              p_consented: choice,
+            });
+            if (error) throw error;
             await completeFormDraft(element);
             setNotice(c.saved);
             reload();
@@ -88,17 +93,17 @@ function PublicName({ currentName, reload }: { currentName: string | null; reloa
           }
         }}
       >
-        <label>
-          {c.publicName}
-          <Input
-            key={currentName}
-            name="leaderboard_name"
-            maxLength={80}
-            defaultValue={currentName ?? ''}
+        <label className="portal-check-row">
+          <input
+            type="checkbox"
+            name="public_full_name_consent"
+            checked={checkedConsent}
+            onChange={(event) => setCheckedConsent(event.target.checked)}
             disabled={busy}
           />
+          {c.publicNameConsent}
         </label>
-        <Button disabled={busy}>{c.save}</Button>
+        <Button disabled={busy || checkedConsent === consented}>{c.save}</Button>
         <FormNotice message={notice} kind={notice === c.saved ? 'success' : 'error'} />
       </DraftForm>
     </details>

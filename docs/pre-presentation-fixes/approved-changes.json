@@ -64,8 +64,8 @@
     },
     "frontend/tests/pre-presentation.test.ts": {
       "added": true,
-      "sha256": "448eb659e056e8a746bd413d23f4accdeb982e8dc4255bdadc7f6b1d9478107b",
-      "reason": "Add regression coverage for font policy, unchanged CSP, exact existing learning copy/video metadata, protected assets/auth/navigation/gates."
+      "sha256": "01db4987e5aa9ac89d2209b52babf715e11a671fd10a29080ff2c6be4ff8f7d1",
+      "reason": "Add regression coverage for font policy, unchanged CSP, exact existing learning copy/video metadata, protected assets/auth/navigation/gates. Preserve the owner-approved production workflow change only through its exact approved SHA-256; credential-preflight and unapproved-workflow rejection checks remain exact."
     },
     "frontend/scripts/pre-presentation-browser-client.mjs": {
       "added": true,
@@ -94,8 +94,108 @@
     },
     "frontend/tests/production-feature-approval.test.ts": {
       "added": true,
-      "sha256": "364692b8a8a59d52df60cacab7dcc56784b307ee09eb8374f52c143c733ab248",
-      "reason": " November 19 owner-authorized student launch review: explicit default-closed notebook/leaderboard build approvals, exact matching artifact validation, unchanged registration/privacy/target and legacy-upload protections; associated approval/eligibility tests. Only this exact path and fingerprint are approved."
+      "sha256": "a5c989d6ab6543d82543723d95bbe9b5d035f62bb253975a4fb4a861ca6e9386",
+      "reason": " November 19 owner-authorized student launch review: explicit default-closed notebook/leaderboard build approvals, exact matching artifact validation, unchanged registration/privacy/target and legacy-upload protections; associated approval/eligibility tests. Only this exact path and fingerprint are approved. Consolidated local release review 2026-11-20: Eligible ranking fixtures use protected leaderboard aliases."
+    },
+    "frontend/src/features/assignments/data.ts": {
+      "reason": "2026-11-20 authorized consolidated release review: exact consent, Admin/manual-award, local fixture or recovery-readiness implementation; no production operation.",
+      "added": true,
+      "sha256": "790ba1f3b6ad51676d5397db6532d7fee7afaaf042719e785671ff697963f78d"
+    },
+    "frontend/src/features/assignments/student-assignments.tsx": {
+      "reason": "2026-11-20 authorized consolidated release review: exact consent, Admin/manual-award, local fixture or recovery-readiness implementation; no production operation.",
+      "added": true,
+      "sha256": "353b7605ac8deee592433dd33bff7b4c6153228b3d74987b64276b14e0a6d194"
+    },
+    "frontend/src/locales/assignments.ar.json": {
+      "reason": "2026-11-20 authorized consolidated release review: exact consent, Admin/manual-award, local fixture or recovery-readiness implementation; no production operation.",
+      "added": true,
+      "sha256": "6d5fe8d7c4b61b6a47297da175d4e3e5eb1f4ecc172da06991af44ce4f54f0be"
+    },
+    "frontend/src/locales/assignments.en.json": {
+      "reason": "2026-11-20 authorized consolidated release review: exact consent, Admin/manual-award, local fixture or recovery-readiness implementation; no production operation.",
+      "added": true,
+      "sha256": "a498f444dd5df48d1097aa01db620b062030e30bd99c15d8f2e830c9ea244f1f"
+    },
+    "frontend/tests/assignments.integration.test.mjs": {
+      "reason": "2026-11-20 authorized consolidated release review: exact consent, Admin/manual-award, local fixture or recovery-readiness implementation; no production operation.",
+      "added": true,
+      "sha256": "ac56e20a2d37a0d5e3bed692e0c91cba50a8e30a8a66a0b6a3e1085b4966400a"
+    },
+    "frontend/tests/full-qa.integration.test.mjs": {
+      "reason": "2026-11-20 authorized consolidated release review: exact consent, Admin/manual-award, local fixture or recovery-readiness implementation; no production operation.",
+      "added": true,
+      "sha256": "2c3574fd69fe10a4677e382283cade173097583309b1d91cb38d2c5e82f86720"
+    },
+    "frontend/tests/scoring.security.test.mjs": {
+      "reason": "2026-11-20 authorized consolidated release review: exact consent, Admin/manual-award, local fixture or recovery-readiness implementation; no production operation.",
+      "added": true,
+      "sha256": "10842ac6e12b0e282577221626ea3ba670648baddea14b8ab0516f44ebf33651"
+    },
+    "frontend/scripts/backup-freshness.mjs": {
+      "reason": "2026-11-20 authorized consolidated release review: exact consent, Admin/manual-award, local fixture or recovery-readiness implementation; no production operation. Final local blocker review: reject missing or malformed table fingerprints instead of certifying false freshness.",
+      "added": true,
+      "sha256": "40a76cbd83331ed06d87d4ce4a183654f8076209ea81c575d912373711e8e843"
+    },
+    "frontend/scripts/verify-current-release-prerequisites.mjs": {
+      "reason": "2026-11-20 authorized consolidated release review: exact consent, Admin/manual-award, local fixture or recovery-readiness implementation; no production operation. Owner-authorized final read-only release review 2026-11-20: use Node 24-compatible fileURLToPath for candidate-root resolution; no production write or backup operation. Owner-authorized 2026-11-20 legacy guard correction: bind to reviewed consolidated candidate and three independently pinned migrations; retain every live freshness/security/Storage check.",
+      "added": true,
+      "sha256": "49461c0bb9b03ad9d74556fd6423631c311686c0ec5cb73218fe0dd2b2f0bb01"
+    },
+    "frontend/src/features/portal/admin-point-awards.tsx": {
+      "reason": "2026-11-20 authorized consolidated release review: exact consent, Admin/manual-award, local fixture or recovery-readiness implementation; no production operation.",
+      "added": true,
+      "sha256": "fdd8883160e7b84d16e46cf748cfaf8d643fb627088a9f20de890edd6e780700"
+    },
+    "frontend/tests/backup-freshness.test.ts": {
+      "reason": "2026-11-20 authorized consolidated release review: exact consent, Admin/manual-award, local fixture or recovery-readiness implementation; no production operation. Final local blocker review: reject missing or malformed table fingerprints instead of certifying false freshness.",
+      "added": true,
+      "sha256": "dd0b3169512c9b0f8a0115ef5cb826733aebd596ca08b1d0580fcf2783f8621f"
+    },
+    "frontend/tests/leaderboard-consent-admin-awards.security.test.mjs": {
+      "reason": "2026-11-20 authorized consolidated release review: exact consent, Admin/manual-award, local fixture or recovery-readiness implementation; no production operation.",
+      "added": true,
+      "sha256": "d73ba6c3f2c5f03ee53a28ca0782dc6a3b1615cf0b064af926a549cb9b5f4601"
+    },
+    "frontend/scripts/release-readiness-preflight.mjs": {
+      "added": true,
+      "sha256": "4d1dab84df91b452c1588279b63de2795772fb6ef79f2fec7b1eecb1ca1d614b",
+      "reason": "2026-11-20 user-authorized final blocker resolution: offline configuration preflight, isolated local stack/API/browser validation or synthetic encrypted recovery; no production access or credentials persisted."
+    },
+    "frontend/scripts/run-release-local-integration.mjs": {
+      "added": true,
+      "sha256": "8f70e6459ad40275029431af4f9fa067918aaddcf158c4509c3046c5b0204963",
+      "reason": "2026-11-20 user-authorized final blocker resolution: offline configuration preflight, isolated local stack/API/browser validation or synthetic encrypted recovery; no production access or credentials persisted."
+    },
+    "frontend/scripts/prepare-release-local.mjs": {
+      "added": true,
+      "sha256": "adf1830ff27052345c7726df07e3f630a230e11ab64ad94409741b0bfa1bf5a6",
+      "reason": "2026-11-20 user-authorized final blocker resolution: offline configuration preflight, isolated local stack/API/browser validation or synthetic encrypted recovery; no production access or credentials persisted."
+    },
+    "frontend/tests/release-readiness-preflight.test.ts": {
+      "added": true,
+      "sha256": "183c6ecda34f3bfc73a6a86cc2a40aa273da4421c2d2b7635a944766f0890d4e",
+      "reason": "2026-11-20 user-authorized final blocker resolution: offline configuration preflight, isolated local stack/API/browser validation or synthetic encrypted recovery; no production access or credentials persisted. The existing offline readiness preflight now runs before the full release suite so missing/stale local evidence fails fast without repeated validation work."
+    },
+    "frontend/tests/release-local.integration.test.mjs": {
+      "added": true,
+      "sha256": "c3f7f4fc051a59a4468ac0db2318df877a3b9258c5d0907a11549fec34607c1c",
+      "reason": "2026-11-20 user-authorized final blocker resolution: offline configuration preflight, isolated local stack/API/browser validation or synthetic encrypted recovery; no production access or credentials persisted."
+    },
+    "frontend/tests/recovery-roundtrip.security.test.mjs": {
+      "added": true,
+      "sha256": "be1c730fecd0dae8f5322dc50e5b12e656733064e9748717d1655beb1a2b0fd1",
+      "reason": "2026-11-20 user-authorized final blocker resolution: offline configuration preflight, isolated local stack/API/browser validation or synthetic encrypted recovery; no production access or credentials persisted."
+    },
+    "frontend/scripts/check-ci-credentials.mjs": {
+      "sha256": "01eaa2b0eab1212620789392b0c7fea6397e59bb579285ef54908e53718f2bf6",
+      "reason": "Exact follow-on reconciliation of owner-merged PR #17 (merge 28d6a7d386f494f53d883998132a35b17330346f): retain the approved enabled leaderboard/submission and disabled legacy-upload checks, and sanitized Cloudflare HTTP diagnostics. Fixed targets, read-only operations and manual-only workflow remain unchanged. SHA-256 pinned to this exact reviewed candidate content.",
+      "added": true
+    },
+    "frontend/tests/ci-credential-preflight.test.ts": {
+      "sha256": "2c13a2895098ad73fd9a4747dad7e990be2c33b592135fe4a428052749689aec",
+      "reason": "Exact follow-on reconciliation of owner-merged PR #17 (merge 28d6a7d386f494f53d883998132a35b17330346f): retain the approved enabled leaderboard/submission and disabled legacy-upload checks, and sanitized Cloudflare HTTP diagnostics. Fixed targets, read-only operations and manual-only workflow remain unchanged. SHA-256 pinned to this exact reviewed candidate content.",
+      "added": true
     }
   }
 }

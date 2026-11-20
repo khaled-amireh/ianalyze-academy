@@ -1,0 +1,57 @@
+{
+  "snapshot": "2026-11-20",
+  "candidateHead": "b57a26d7eac32004110b0d5aef4a18f6b94281bf",
+  "authorization": "User authorized reconciliation and reviewed exact-path fingerprint resolution; local review only, no production operations.",
+  "consentMigration": "20261119170000_leaderboard_name_consent.sql",
+  "excludedAlternative": "20261119024031_leaderboard_registered_full_name.sql remains only in the separate untouched review tree; never apply both.",
+  "files": [
+    {
+      "path": "frontend/package.json",
+      "previousCandidateSha256": "9d3e6c118917503b48827f7e8734c34747434f1000cdc239653cc7167562deca",
+      "sha256": "d3409f513c0911b3526fb5cd29d399bb221ea15569e15029de6ef6f60591800b",
+      "reason": "Consolidated consent/Admin release authorized 2026-11-20: include dedicated consent/Admin embedded security tests in mandatory validation."
+    },
+    {
+      "path": "frontend/scripts/registration-approval.mjs",
+      "previousCandidateSha256": "ce30e1629718b3f094b8eae7e164cd24778f83393735efb677c2a8c731b6638d",
+      "sha256": "684ccb1927a8a3f40d9806d487af4b0a16307b39e41b0ecd4fa58dca6635f13c",
+      "reason": "Consolidated consent/Admin release authorized 2026-11-20: validate exact approved active gates and safe constant definitions without closing services."
+    },
+    {
+      "path": "frontend/scripts/check-registration-readiness.mjs",
+      "previousCandidateSha256": "73019f0eddb21c48657e18084afc60305e0ab5831fae6c0dc6cc52e3a91af7c3",
+      "sha256": "5d33f0a87ff5feae5cfe0c384ccf7f38e3b07b0876daee131a0ea44a63b49c22",
+      "reason": "Consolidated consent/Admin release authorized 2026-11-20: capture versioned read-only gate-definition evidence for registration approval."
+    },
+    {
+      "path": "frontend/src/features/portal/privacy-page.tsx",
+      "previousCandidateSha256": "e21abefc1fca023f1f9a66fdceb183031954016073963a9b1a05e342b47a6653",
+      "sha256": "3c4d6bf6678caaacdf94c51bc9d627fb286be9c860f740a73c3fabd3726d8cee",
+      "reason": "Consolidated consent/Admin release authorized 2026-11-20: explain explicit withdrawable full-name consent and trusted name corrections."
+    },
+    {
+      "path": "frontend/src/features/portal/student-page.tsx",
+      "previousCandidateSha256": "70b5a4b76aa5c4a7cda5e3d8c4b2efbcda8ade0d80ded69a54c353b2f57bb352",
+      "sha256": "617bc3e8214fe4b1554d1a8fbd0e5438df9f82b510b88059d7441937e4a6c8fa",
+      "reason": "Consolidated consent/Admin release authorized 2026-11-20: make registered names read-only and omit self-service name patches."
+    },
+    {
+      "path": "frontend/src/features/portal/team-page.tsx",
+      "previousCandidateSha256": "655c04c4dac258e14734eaf83a29f5f1a6fcbaae57aafe653fbb0bb29baabe88",
+      "sha256": "1741bd1985df54e4ca679cd65fc52250e1b0aee9f6604a6727143c41e2189699",
+      "reason": "Consolidated consent/Admin release authorized 2026-11-20: mount independently server-authorized Admin award UI; preserve Team workflows."
+    },
+    {
+      "path": "frontend/src/types/database.ts",
+      "previousCandidateSha256": "b5cbf77b9b1788e6a74dc086b5b600023734bc78ccd17a640930ec0fa3e1a095",
+      "sha256": "5d76097508a091b2a97a785731867e5931aae45ebb321f80de07560e76e86ee4",
+      "reason": "Consolidated consent/Admin release authorized 2026-11-20: catalog types for consent and Admin award RPCs."
+    },
+    {
+      "path": "frontend/tests/database.security.test.mjs",
+      "previousCandidateSha256": "1a8b9430b5bda6451e1c62ca04eef050b4dc6ff9878699275004a2a69b2066e8",
+      "sha256": "5d128f5b6407f4e17ec0fb4d06f0e0c9c7b76b8d8ada00056aea52ab015d41f6",
+      "reason": "Consolidated consent/Admin release authorized 2026-11-20: assert generated publication name and protect alias from direct writes."
+    }
+  ]
+}

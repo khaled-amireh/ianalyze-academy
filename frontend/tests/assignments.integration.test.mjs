@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { randomUUID } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createClient } from '@supabase/supabase-js';
 import postgres from 'postgres';
@@ -468,22 +468,15 @@ test(
         })
       ).error,
     );
-    assert.ifError(
-      (await a.api.from('profiles').update({ leaderboard_name: 'Local Ranking A' }).eq('id', a.id))
-        .error,
-    );
-    assert.ifError(
-      (await b.api.from('profiles').update({ leaderboard_name: 'Local Ranking B' }).eq('id', b.id))
-        .error,
-    );
     const all = (await a.api.rpc('academy_leaderboard', { p_weekly: false })).data,
       week = (await a.api.rpc('academy_leaderboard', { p_weekly: true })).data;
-    assert.equal(all.find((x) => x.alias === 'Local Ranking A').points, 21);
-    assert.equal(all.find((x) => x.alias === 'Local Ranking B').points, 16);
-    const expectedOrder =
-      a.id < b.id ? ['Local Ranking A', 'Local Ranking B'] : ['Local Ranking B', 'Local Ranking A'];
+    const aliasA = `Learner ${createHash('md5').update(a.id).digest('hex').slice(0, 10)}`;
+    const aliasB = `Learner ${createHash('md5').update(b.id).digest('hex').slice(0, 10)}`;
+    assert.equal(all.find((x) => x.alias === aliasA).points, 21);
+    assert.equal(all.find((x) => x.alias === aliasB).points, 16);
+    const expectedOrder = a.id < b.id ? [aliasA, aliasB] : [aliasB, aliasA];
     assert.deepEqual(
-      week.filter((x) => x.alias.startsWith('Local Ranking')).map((x) => x.alias),
+      week.filter((x) => [aliasA, aliasB].includes(x.alias)).map((x) => x.alias),
       expectedOrder,
     );
     const period = (await a.api.rpc('academy_rankings', { p_view: 'current' })).data;
@@ -494,7 +487,7 @@ test(
             .filter((x) => x.scoring_week === period.period.week)
             .reduce((sum, x) => sum + Number(x.points), 0)
         : 0;
-    assert.equal(week.find((x) => x.alias === 'Local Ranking A').points, currentPoints);
+    assert.equal(week.find((x) => x.alias === aliasA).points, currentPoints);
     assert.ok(!JSON.stringify(all).includes(a.id));
     assert.ok(!JSON.stringify(all).includes('feedback'));
     checks.push(

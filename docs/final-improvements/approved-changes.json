@@ -1,6 +1,6 @@
 {
   "baseCommit": "0b46b44719d7fd0c6dde2604e78d9a021cf19fee",
-  "authorization": "Final Website Improvements and user-authorized PR #8 public Tools Hub/Video Library and presentation refinements, 2026-11-06. Review branch only; no merge or deployment. User-approved merged PR #9 iTEAM page transition and explicit production preservation repair request; approval records only, no merge or deployment. User-authorized English root README redesign and explicitly approved README-only Phase 02 approval check; local documentation branch only, no push, PR, merge or deployment.",
+  "authorization": "Final Website Improvements and user-authorized PR #8 public Tools Hub/Video Library and presentation refinements, 2026-11-06. Review branch only; no merge or deployment. User-approved merged PR #9 iTEAM page transition and explicit production preservation repair request; approval records only, no merge or deployment. User-authorized English root README redesign and explicitly approved README-only Phase 02 approval check; local documentation branch only, no push, PR, merge or deployment. Owner-authorized backup identity architecture and candidate-local offline automation policy implementation, 2026-11-20; exact-path hashes pinned, no cloud activation or production recovery. Owner-approved final website completion and zero-cost weekly backup policy refinement, 2026-11-20; preserve the exact inactive weekly schedule and four-success retention policy, with no production execution or activation. Owner-authorized candidate-only production workflow correction, 2026-11-20: unrelated frontend package changes no longer trigger Edge Function deploy; exact function/script triggers remain and are tested. No workflow activation or production change.",
   "files": {
     "docs/final-improvements/release.md": {
       "sha256": "7b166d7aee84408e1cced42157929e8a8f17c7e85d5d7e69927842eb4f1665d8",
@@ -83,14 +83,14 @@
       "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
     },
     ".github/workflows/production.yml": {
-      "sha256": "564660d831416fe26b2933e17f28a724758b49f18a37f4bc32db231ca6a6c60d",
+      "sha256": "01cfc05eade5aede95b47706a6b35f6875146a83671a6354c7b5e9ad3fb8e87a",
       "previousSha256": "a588525894de0e140cb03f2650410e8ae4a655f74c24bd8eb74666cd822470fb",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification. Owner-authorized exact-path correction 2026-11-20: edge deployment change detection now excludes unrelated frontend package/lockfile changes while preserving Supabase Function and deployment-target triggers. Owner-authorized narrow candidate-local CI configuration fix, 2026-11-20: expose the two explicit repository feature approval variables to readiness/build/artifact steps; fail closed on missing/invalid approvals, no production gate or trigger change."
     },
     "frontend/package.json": {
-      "sha256": "d4a9348a96e7dcabadb957c65ddcf5e563541508767f203f06dc22d6a0b703ff",
+      "sha256": "5eb655ddeb261720e0f54799c00bfdf6f4664ec8c7087d6c0a9aa5557c95bda9",
       "previousSha256": "cc9d6cbb1b93658650ecded97b18a7040e1d6202d0d1f643b554a6075b212eb7",
-      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification."
+      "reason": "User-approved final website improvements: profiles, notifications, session persistence, public content and release verification. The existing offline readiness preflight now runs before the full release suite so missing/stale local evidence fails fast without repeated validation work. Adds the focused Edge change-detection test to the existing frontend test command; no dependency or lockfile change."
     },
     "frontend/scripts/check-phase-03.mjs": {
       "sha256": "de8190cca72da34d5d3f5941fe29a0377241279b0f40421682aa281865b91572",
@@ -433,6 +433,106 @@
       "sha256": "d6d396667acb222092e118e77a9a19eb36dd9698b146da5b29035d391a3715ee",
       "added": true,
       "reason": "Owner-reviewed standalone manual read-only CI credential preflight merged through PR #16 at 403f7fa; no provider mutations or deployment."
+    },
+    "frontend/scripts/backup-automation-policy.mjs": {
+      "sha256": "71be442b10c4325b7c32fd7839a648bb85f88dd4129d19365e118c158eaf9994",
+      "added": true,
+      "reason": "Owner-authorized backup identity architecture and candidate-local offline policy implementation (2026-11-20); no production access, credentials, cloud changes, transfer, deletion, schedule activation or recovery-cycle execution. Updated under the 2026-11-20 owner authorization to set the inactive weekly schedule and protect the latest four complete successful recovery points; no backup deletion or activation."
+    },
+    "frontend/tests/backup-automation-policy.test.mjs": {
+      "sha256": "fcc1cdf7e3940d0b2d18f297dce47ddf9da88412d7b967e215d3af7f07c1cf98",
+      "added": true,
+      "reason": "Owner-authorized backup identity architecture and candidate-local offline policy implementation (2026-11-20); no production access, credentials, cloud changes, transfer, deletion, schedule activation or recovery-cycle execution. Updated under the 2026-11-20 owner authorization to set the inactive weekly schedule and protect the latest four complete successful recovery points; no backup deletion or activation. Includes negative assertions for nonweekly schedule drift and fewer than four retained successful recovery points."
+    },
+    "frontend/artifacts/week1-isolated/backup-automation.example.json": {
+      "sha256": "72ff1bb49a74c0e177fa766779c8a2b5f654b5dbb25c4b89e07affff2f01cbed",
+      "added": true,
+      "reason": "Owner-authorized backup identity architecture and candidate-local offline policy implementation (2026-11-20); no production access, credentials, cloud changes, transfer, deletion, schedule activation or recovery-cycle execution. Updated under the 2026-11-20 owner authorization to set the inactive weekly schedule and protect the latest four complete successful recovery points; no backup deletion or activation."
+    },
+    "docs/audits/leaderboard-admin-release/BACKUP_AUTOMATION_DESIGN.md": {
+      "sha256": "a18a21e960dbb23c7c4aedf80a2e58ef57dce168eb7631b35d431b47c10dc357",
+      "added": true,
+      "reason": "Owner-authorized backup identity architecture and candidate-local offline policy implementation (2026-11-20); no production access, credentials, cloud changes, transfer, deletion, schedule activation or recovery-cycle execution. Updated under the 2026-11-20 owner authorization to set the inactive weekly schedule and protect the latest four complete successful recovery points; no backup deletion or activation."
+    },
+    "docs/audits/leaderboard-admin-release/FINAL_READINESS.md": {
+      "sha256": "0751202d91849cbaa286ebe1a8a56490b10eaf541c43954b29ba5107269f2b47",
+      "added": true,
+      "reason": "Owner-authorized backup identity architecture and candidate-local offline policy implementation (2026-11-20); no production access, credentials, cloud changes, transfer, deletion, schedule activation or recovery-cycle execution. Updated with current local website, security, and inactive zero-cost backup policy validation results on 2026-11-20; no production operation. Includes the current candidate-local fast-fail release preflight improvement and its focused validation. Final follow-up records 121 frontend tests and the release-preflight ordering check results. Updated with fresh read-only production release review on 2026-11-20; no writes or deployment. Updated with 2026-11-20 recovery stop, candidate-local Edge filter correction, focused validation, read-only queued-run/workflow state, and ordered gated release checklist; no production or GitHub mutation. Clarified that the previously approved one-cycle recovery scope remains pending, and identified out-of-scope changes requiring separate approval. Owner-authorized console-preflight diagnosis and explicit Win32 device path correction, with credential-free validation and mocked tests only, 2026-11-20. Owner-authorized final website candidate review: record owner-reported historical compatibility PASS, fresh local feature/security/Edge tests, accepted manual Drive arrangement and remaining operational approvals; no production or credential access. Owner-authorized read-only Drive preflight documentation: confirmed connector tool exposure limitation, approved 1 GiB reserve and unverified current access/quota; no Drive or production mutation. Owner-authorized planning-only one-cycle recovery checklist: existing commands, owner-reported Drive test/capacity, 1 GiB reserve, no-copy helper blocker, exact cleanup and approval boundaries; no execution or secret access. Owner-authorized final no-copy portable helper implementation and synthetic validation, 2026-11-20; no actual credentials, production or provider operations. Owner-authorized final read-only production backup preflight: current TLS/target, ACL/capacity/image/helpers, Storage counts and effective private-table privileges; NO-GO due host RAM; no backup/recovery or Drive operation, 2026-11-20. Owner-authorized one-cycle execution evidence: one read-only encrypted export and verified isolated restore, exact temporary-container cleanup; stopped at missing legacy release-bundle guard before portable/offsite steps, no production writes, 2026-11-20. Owner-authorized same-cycle guard correction and portable attempt evidence: corrected candidate hashes/negative tests and successful freshness revalidation; portable key recovery failed, stopped without retry/new backup/production change, 2026-11-20. Owner-authorized no-retry failure diagnosis: preserve only sanitized age duration/status/signal/error through generic rethrow, synthetic tests and timestamp evidence, no real credential or provider access, 2026-11-20. Owner-authorized verified encrypted ZIP packaging evidence: successful existing portable proof, 18-file allowlist and archive hashes, no upload/credentials/production operation, 2026-11-20. Owner-requested final release review with owner-attested offsite PASS, fresh read-only GitHub status, configured-build/CI approval gap and exact remaining authorization sequence, 2026-11-20; no production change. Owner-authorized narrow local CI feature mapping fix and focused validation results, 2026-11-20; no GitHub or production mutation. Owner-reported configured release check PASS (156 frontend, 55 embedded DB/security, types/lint/format/preservation/integrity/build/Pages artifact); local sanitized registration proof and configured-build metadata inspected. No production change, 2026-11-20."
+    },
+    "frontend/scripts/edge-deployment-change.mjs": {
+      "sha256": "73e13fcc8fc765fc4a79a76986d93f6c50370c2e5f27b878dc553e6f643d7abb",
+      "added": true,
+      "reason": "Owner-authorized candidate-only Edge deployment change detection and focused tests, 2026-11-20; unrelated frontend/package changes skip Edge deploy; deployment remains inactive."
+    },
+    "frontend/tests/edge-deployment-change.test.mjs": {
+      "sha256": "0f7414138ae41aa94fa3d2147b1d3df90fbeb5236eff652451304d94130c4522",
+      "added": true,
+      "reason": "Owner-authorized candidate-only Edge deployment change detection and focused tests, 2026-11-20; unrelated frontend/package changes skip Edge deploy; deployment remains inactive."
+    },
+    "frontend/scripts/check-recovery-compatibility.mjs": {
+      "added": true,
+      "sha256": "636f0d924a97e5f871a682cfda8db6435fc0e1733f9ceb10fdf7874b55e9d57b",
+      "reason": "Owner-authorized preparation of an interactive historical recovery compatibility wrapper, 2026-11-20; mocked offline validation only. No real decryption, credential access, backup, restore or production operation. Owner-authorized console-preflight diagnosis and explicit Win32 device path correction, with credential-free validation and mocked tests only, 2026-11-20."
+    },
+    "frontend/tests/recovery-compatibility.test.mjs": {
+      "added": true,
+      "sha256": "a09f346002bda06d9ccaf92db29577e5bdca65d9ed18c1b85e26b789f0e8647c",
+      "reason": "Owner-authorized preparation of an interactive historical recovery compatibility wrapper, 2026-11-20; mocked offline validation only. No real decryption, credential access, backup, restore or production operation. Owner-authorized console-preflight diagnosis and explicit Win32 device path correction, with credential-free validation and mocked tests only, 2026-11-20."
+    },
+    "frontend/tests/notebook-edge.test.ts": {
+      "added": true,
+      "sha256": "97661ed2c1836a139809abc50cd6ce4b509a457d378773dc3d6e30bf704fe872",
+      "reason": "Owner-authorized final candidate validation, 2026-11-20: execute the actual notebook Edge handler with synthetic provider adapters to test authorization, gates, quota/validation, overwrite-safe retry and finalization; no production or credential access."
+    },
+    "frontend/artifacts/week1-isolated/prepare-portable-recovery.mjs": {
+      "sha256": "21ad6ba8a5dedd614fcaa85d01b3203c55a8640c094211f86a430162bdaef5ec",
+      "added": true,
+      "reason": "Owner-authorized final portable helper blocker correction: external encrypted identity referenced in place, fresh AES-key wrapping, historical format compatibility and safe diagnostics; no actual recovery credentials or production operation, 2026-11-20."
+    },
+    "frontend/artifacts/week1-isolated/portable-recovery.mjs": {
+      "sha256": "537c51acbe90d118882e74a47b5badba46c868c5d4540eb21f5f6bed75cc2de4",
+      "added": true,
+      "reason": "Owner-authorized final portable helper blocker correction: external encrypted identity referenced in place, fresh AES-key wrapping, historical format compatibility and safe diagnostics; no actual recovery credentials or production operation, 2026-11-20. Owner-authorized no-retry failure diagnosis: preserve only sanitized age duration/status/signal/error through generic rethrow, synthetic tests and timestamp evidence, no real credential or provider access, 2026-11-20."
+    },
+    "frontend/artifacts/week1-isolated/verify-fresh-production-backup.mjs": {
+      "sha256": "1c81fcfad1d3f085058d7c66f7264ffec9470fb5b5405eef092bc7c6d23b3958",
+      "added": true,
+      "reason": "Owner-authorized final portable helper blocker correction: external encrypted identity referenced in place, fresh AES-key wrapping, historical format compatibility and safe diagnostics; no actual recovery credentials or production operation, 2026-11-20."
+    },
+    "frontend/artifacts/week1-isolated/portable-key-material.mjs": {
+      "sha256": "add62f7ec0e8f1db17b888b8488c62487f520842df5352716b6da77f7f832610",
+      "added": true,
+      "reason": "Owner-authorized final portable helper blocker correction: external encrypted identity referenced in place, fresh AES-key wrapping, historical format compatibility and safe diagnostics; no actual recovery credentials or production operation, 2026-11-20. Owner-authorized no-retry failure diagnosis: preserve only sanitized age duration/status/signal/error through generic rethrow, synthetic tests and timestamp evidence, no real credential or provider access, 2026-11-20."
+    },
+    "frontend/tests/portable-key-material.test.ts": {
+      "sha256": "8229c8139e67cd8bd922cd29c2e57a4b0f97654f1526fa3de34819e54a622f1f",
+      "added": true,
+      "reason": "Owner-authorized final portable helper blocker correction: external encrypted identity referenced in place, fresh AES-key wrapping, historical format compatibility and safe diagnostics; no actual recovery credentials or production operation, 2026-11-20. Owner-authorized no-retry failure diagnosis: preserve only sanitized age duration/status/signal/error through generic rethrow, synthetic tests and timestamp evidence, no real credential or provider access, 2026-11-20."
+    },
+    "frontend/scripts/verify-candidate-bundle.mjs": {
+      "added": true,
+      "sha256": "cbffe26317cd1723400e80b48bb1ea648f852a51dc6be4a510500f1ad359519c",
+      "reason": "Owner-authorized same-cycle legacy guard correction, 2026-11-20: exact candidate branch/HEAD/all reviewed file hashes and independently pinned three migrations; negative tests; no production writes or new backup."
+    },
+    "frontend/scripts/verify-current-release-prerequisites.mjs": {
+      "added": true,
+      "sha256": "49461c0bb9b03ad9d74556fd6423631c311686c0ec5cb73218fe0dd2b2f0bb01",
+      "reason": "Owner-authorized same-cycle legacy guard correction, 2026-11-20: exact candidate branch/HEAD/all reviewed file hashes and independently pinned three migrations; negative tests; no production writes or new backup."
+    },
+    "frontend/artifacts/week1-isolated/verify-current-release-prerequisites.mjs": {
+      "added": true,
+      "sha256": "e296e210971a26ac05e51c12b48d82021034901d30130c2434d764a5863fdc40",
+      "reason": "Owner-authorized same-cycle legacy guard correction, 2026-11-20: exact candidate branch/HEAD/all reviewed file hashes and independently pinned three migrations; negative tests; no production writes or new backup."
+    },
+    "frontend/tests/candidate-bundle.test.ts": {
+      "added": true,
+      "sha256": "8e954ed1d75734323a10d61706afdec247eda59f0219dcb3c3431fb4f82940cf",
+      "reason": "Owner-authorized same-cycle legacy guard correction, 2026-11-20: exact candidate branch/HEAD/all reviewed file hashes and independently pinned three migrations; negative tests; no production writes or new backup."
+    },
+    "frontend/tests/ci-feature-configuration.test.ts": {
+      "added": true,
+      "sha256": "876c421f7cda5c431e3731b65b78f396642ef6be777fd9f6788c219f3c4915ba",
+      "reason": "Owner-authorized focused CI feature environment mapping, negative/missing/stale approval and exact two-line workflow scope tests, 2026-11-20; offline fixtures only."
     }
   }
 }

@@ -88,11 +88,9 @@ export function ProfileForm({
     inFlight.current = true;
     setBusy(true);
     try {
-      const persisted = await saveAcademyProfile(
-        client(),
-        profilePatch(form, profile, registering),
-        registering,
-      );
+      const patch = profilePatch(form, profile, registering);
+      if (profile.registered_at) delete patch.full_name;
+      const persisted = await saveAcademyProfile(client(), patch, registering);
       if (registering) draft.complete();
       else await completeFormDraft(element);
       changeLocale(persisted.locale === 'en' ? 'en' : 'ar');
@@ -125,12 +123,20 @@ export function ProfileForm({
             <Input
               {...field('full_name')}
               name="full_name"
+              readOnly={Boolean(profile.registered_at)}
               autoComplete="name"
               maxLength={150}
               required={required('full_name')}
               {...draft.field('full_name')}
             />
           </FormField>
+          {profile.registered_at && (
+            <p>
+              {arabic
+                ? 'لتصحيح الاسم المسجل تواصل مع الفريق عبر صفحة التواصل.'
+                : 'Contact the Team through the contact page to correct your registered name.'}
+            </p>
+          )}
           <FormField id={id + '-whatsapp'} label={c.whatsapp} error={error('whatsapp')}>
             <Input
               {...field('whatsapp')}

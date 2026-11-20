@@ -1,5 +1,6 @@
 // No CLI subprocesses, downloads, uploads, arbitrary SQL, or provider mutations.
 import { appendFileSync } from 'node:fs';
+import { registrationReadinessQuery } from './registration-approval.mjs';
 import { pathToFileURL } from 'node:url';
 import { requirePagesTarget, requireSupabaseTarget, target } from './release-target.mjs';
 
@@ -8,7 +9,7 @@ const labels = Object.freeze({
   projects: 'Supabase intended project access and health',
   database: 'Supabase read-only database access',
   leader: 'CI Leader is active, confirmed, and Team-authorized',
-  gates: 'Production feature gates remain closed',
+  gates: 'Reviewed leaderboard/submission gates enabled; legacy uploads closed',
   functions: 'Supabase Edge Function listing access',
   pages: 'Cloudflare intended Direct Upload project access',
   token: 'Cloudflare token status and validity',
@@ -44,19 +45,12 @@ export function validatePreflightContext(env) {
 }
 
 function leaderQuery(owner) {
-  // Only the validated UUID is interpolated. No private records are returned.
-  return `select current_setting('transaction_read_only')='on' as read_only,
-    exists(select 1 from auth.users u join app_private.user_roles r on r.user_id=u.id
-      where u.id='${owner}'::uuid and u.email_confirmed_at is not null
-      and u.deleted_at is null and (u.banned_until is null or u.banned_until<=now())
-      and r.role='team') as verified_leader,
-    (select count(*)=3 and bool_and(p.prosrc ~ '^[[:space:]]*select[[:space:]]+false;?[[:space:]]*$'
-      and p.provolatile='i' and not p.prosecdef and p.pronargs=0
-      and p.prorettype='boolean'::regtype and l.lanname='sql')
-      from pg_catalog.pg_proc p join pg_catalog.pg_namespace n on n.oid=p.pronamespace
-      join pg_catalog.pg_language l on l.oid=p.prolang where n.nspname='app_private'
-      and p.proname in ('uploads_enabled','submission_service_enabled','leaderboard_enabled'))
-      as gates_closed`;
+  // The reviewed release preserves active leaderboard/submission services.
+  // Inspect constant definitions; never execute privileged gate functions.
+  return (
+    "select current_setting('transaction_read_only')='on' as read_only, " +
+    registrationReadinessQuery(owner).replace(/^select /, '')
+  );
 }
 
 export function assessCloudflarePolicy(metadata) {
@@ -90,8 +84,18 @@ export function assessCloudflarePolicy(metadata) {
   };
 }
 
+function cloudflareHttpDiagnostic(status) {
+  if (status === 401) return 'AUTHENTICATION_FAILED_HTTP_401';
+  if (status === 403) return 'AUTHORIZATION_FAILED_HTTP_403';
+  if (status === 404) return 'RESOURCE_NOT_FOUND_HTTP_404';
+  return Number.isInteger(status) && status >= 100 && status <= 599
+    ? `HTTP_ERROR_${status}`
+    : 'HTTP_ERROR';
+}
+
 export async function runCredentialPreflight(env, fetcher = globalThis.fetch, now = Date.now()) {
   const checks = [];
+  const cloudflareDiagnostics = [];
   const add = (id, status) => checks.push({ check: labels[id], status });
   try {
     validatePreflightContext(env);
@@ -125,10 +129,18 @@ export async function runCredentialPreflight(env, fetcher = globalThis.fetch, no
       `https://api.cloudflare.com/client/v4/accounts/${target.account}/tokens/verify`,
     ],
   };
-  const request = async (route) => {
+  const request = async (route, diagnosticLabel) => {
     const [provider, method, url] = route;
+    const diagnostic = (status) => {
+      if (provider === 'cloudflare')
+        cloudflareDiagnostics.push({
+          check: `Cloudflare ${diagnosticLabel} diagnostic`,
+          status,
+        });
+    };
+    let response;
     try {
-      const response = await fetcher(url, {
+      response = await fetcher(url, {
         method,
         redirect: 'error', // Never forward bearer credentials to another URL.
         headers: {
@@ -146,12 +158,33 @@ export async function runCredentialPreflight(env, fetcher = globalThis.fetch, no
           : {}),
         signal: AbortSignal.timeout(20000),
       });
-      if (!response.ok) return null;
-      return await response.json();
     } catch {
-      // Provider errors, request options and response text must never reach logs.
+      // Error messages may contain credentials or provider data; expose only a category.
+      diagnostic('NETWORK_ERROR');
       return null;
     }
+    if (!response.ok) {
+      diagnostic(cloudflareHttpDiagnostic(response.status));
+      return null;
+    }
+    let body;
+    try {
+      body = await response.json();
+    } catch {
+      diagnostic('INVALID_JSON_RESPONSE');
+      return null;
+    }
+    if (
+      provider === 'cloudflare' &&
+      (!body || typeof body !== 'object' || typeof body.success !== 'boolean')
+    ) {
+      diagnostic('INVALID_API_RESPONSE');
+      return null;
+    }
+    if (provider === 'cloudflare' && body.success === false) {
+      diagnostic('API_ERROR');
+    }
+    return body;
   };
 
   const projects = await request(routes.projects);
@@ -166,7 +199,20 @@ export async function runCredentialPreflight(env, fetcher = globalThis.fetch, no
     const row = Array.isArray(rows) && rows.length === 1 ? rows[0] : null;
     add('database', row?.read_only === true ? 'PASS' : 'FAIL');
     add('leader', row?.verified_leader === true ? 'PASS' : 'FAIL');
-    add('gates', row?.gates_closed === true ? 'PASS' : 'FAIL');
+    const expected = {
+      leaderboard_enabled: true,
+      submission_service_enabled: true,
+      uploads_enabled: false,
+    };
+    add(
+      'gates',
+      row?.gate_definitions_safe === true &&
+        row?.gates &&
+        Object.keys(row.gates).sort().join(',') === Object.keys(expected).sort().join(',') &&
+        Object.entries(expected).every(([name, value]) => row.gates[name] === value)
+        ? 'PASS'
+        : 'FAIL',
+    );
     const functions = await request(routes.functions);
     add('functions', Array.isArray(functions) ? 'PASS' : 'FAIL');
   } else {
@@ -176,22 +222,24 @@ export async function runCredentialPreflight(env, fetcher = globalThis.fetch, no
   // No documented PAT self-introspection endpoint is assumed or invented here.
   add('supabasePolicy', 'UNVERIFIED');
 
-  const pages = await request(routes.pages);
+  const pages = await request(routes.pages, 'Pages project');
   const p = pages?.result;
-  add(
-    'pages',
+  const pagesMatch =
     pages?.success === true &&
-      p?.name === target.pagesProject &&
-      p.subdomain === 'ianalyze-academy.pages.dev' &&
-      p.production_branch === target.productionBranch &&
-      !p.source
-      ? 'PASS'
-      : 'FAIL',
-  );
-  let verification = await request(routes.verifyUser);
+    p?.name === target.pagesProject &&
+    p.subdomain === 'ianalyze-academy.pages.dev' &&
+    p.production_branch === target.productionBranch &&
+    !p.source;
+  if (pages?.success === true && !pagesMatch)
+    cloudflareDiagnostics.push({
+      check: 'Cloudflare Pages project diagnostic',
+      status: 'TARGET_MISMATCH',
+    });
+  add('pages', pagesMatch ? 'PASS' : 'FAIL');
+  let verification = await request(routes.verifyUser, 'user token verification');
   let tokenBase = 'https://api.cloudflare.com/client/v4/user/tokens/';
   if (verification?.success !== true) {
-    verification = await request(routes.verifyAccount);
+    verification = await request(routes.verifyAccount, 'account token verification');
     tokenBase = `https://api.cloudflare.com/client/v4/accounts/${target.account}/tokens/`;
   }
   const token = verification?.success === true ? verification.result : null;
@@ -216,11 +264,15 @@ export async function runCredentialPreflight(env, fetcher = globalThis.fetch, no
   let policy = { policy: 'UNVERIFIED', restriction: 'UNVERIFIED' };
   // Self-token details only. No token enumeration and no extra permissions requested.
   if (/^[a-f0-9]{32}$/i.test(token?.id ?? '')) {
-    const details = await request(['cloudflare', 'GET', tokenBase + token.id]);
+    const details = await request(
+      ['cloudflare', 'GET', tokenBase + token.id],
+      'self token metadata',
+    );
     if (details?.success === true) policy = assessCloudflarePolicy(details.result);
   }
   add('policy', policy.policy);
   add('restriction', policy.restriction);
+  checks.push(...cloudflareDiagnostics);
   const required = ['context', 'projects', 'database', 'leader', 'gates', 'functions', 'pages'];
   return {
     checks,
@@ -240,6 +292,7 @@ export function renderPreflight(result) {
     ...result.checks.map((c) => `| ${c.check} | ${c.status} |`),
     '',
     'Read access does not establish deployment/write permissions. UNVERIFIED requires owner review.',
+    'Cloudflare diagnostics expose only HTTP/API categories, never response bodies; authentication failures do not establish token revocation.',
     'This run does not authorize a migration, publish a build, or open feature gates.',
     '',
   ].join('\n');

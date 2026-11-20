@@ -391,6 +391,9 @@ export type Database = {
           created_at: string;
           updated_at: string;
           university: string | null;
+          leaderboard_alias: string | null;
+          public_full_name_consent: boolean;
+          public_full_name_consent_at: string | null;
           leaderboard_name: string | null;
         };
         Insert: {
@@ -409,7 +412,10 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
           university?: string | null;
-          leaderboard_name?: string | null;
+          leaderboard_alias?: string | null;
+          public_full_name_consent?: boolean;
+          public_full_name_consent_at?: string | null;
+          leaderboard_name?: never;
         };
         Update: {
           id?: string;
@@ -427,7 +433,10 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
           university?: string | null;
-          leaderboard_name?: string | null;
+          leaderboard_alias?: string | null;
+          public_full_name_consent?: boolean;
+          public_full_name_consent_at?: string | null;
+          leaderboard_name?: never;
         };
         Relationships: [];
       };
@@ -814,10 +823,31 @@ export type Database = {
       academy_leaderboard: { Args: { p_weekly?: boolean }; Returns: Json };
       academy_notifications: { Args: Record<string, never>; Returns: Json };
       academy_rankings: { Args: { p_view?: string; p_week?: number }; Returns: Json };
+      admin_award_points: {
+        Args: { p_student: string; p_amount: number; p_reason: string; p_idempotency_key: string };
+        Returns: string;
+      };
+      admin_point_award_history: {
+        Args: { p_student?: string };
+        Returns: {
+          id: string;
+          actor_name: string;
+          student_id: string;
+          student_name: string;
+          amount: number;
+          reason: string;
+          created_at: string;
+        }[];
+      };
+      admin_search_students: {
+        Args: { p_query?: string };
+        Returns: { student_id: string; full_name: string; points: number }[];
+      };
       approve_dataset_participation: { Args: { p_attempt: string }; Returns: undefined };
       claim_submission_request: { Args: { p_student_id: string }; Returns: undefined };
       complete_registration: { Args: { p_consent_version: string }; Returns: undefined };
       create_draft_rubric: { Args: { p_activity_id: string; p_criteria: Json }; Returns: string };
+      current_academy_is_admin: { Args: Record<string, never>; Returns: boolean };
       current_academy_role: { Args: Record<string, never>; Returns: string | null };
       finalize_assignment: { Args: { p_submission: string }; Returns: undefined };
       finalize_notebook: {
@@ -867,6 +897,7 @@ export type Database = {
         Args: { p_week: number; p_topics: Json; p_published: boolean; p_version: number };
         Returns: undefined;
       };
+      set_public_full_name_consent: { Args: { p_consented: boolean }; Returns: undefined };
       submit_assignment: {
         Args: { p_activity: string; p_request: string; p_link?: string; p_file?: Json };
         Returns: string;

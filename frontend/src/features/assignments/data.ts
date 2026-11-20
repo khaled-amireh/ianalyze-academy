@@ -29,7 +29,7 @@ export async function loadAssignments(studentId: string) {
         .order('id')
         .range(start, end),
     ),
-    db.from('profiles').select('leaderboard_name').eq('id', studentId).single(),
+    db.from('profiles').select('public_full_name_consent').eq('id', studentId).single(),
   ]);
   return {
     activities,
@@ -37,7 +37,7 @@ export async function loadAssignments(studentId: string) {
     grades: grades.filter((grade) =>
       submissions.some((submission) => submission.id === grade.submission_id),
     ),
-    leaderboardName: checked(profile).leaderboard_name,
+    publicFullNameConsent: checked(profile).public_full_name_consent,
   };
 }
 export async function assignmentDownload(path: string, name: string) {

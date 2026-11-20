@@ -1,0 +1,40 @@
+{
+  "snapshot": "2026-11-20T07:26:29.444247+00:00",
+  "productionAccess": false,
+  "productionWrites": false,
+  "validate": "passed",
+  "frontendTests": {
+    "passed": 118,
+    "failed": 0
+  },
+  "embeddedDatabaseTests": {
+    "passed": 55,
+    "failed": 0
+  },
+  "realLocalAuthApiChrome": {
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntheticEncryptedRecovery": "passed; not production portable/offsite verification",
+  "providerSecurityTests": {
+    "passed": 7,
+    "liveProviderVerification": false
+  },
+  "preservation": {
+    "inheritedFiles": 404,
+    "exactPinnedResolutions": 180
+  },
+  "configuredBuildConfiguration": "validated from existing local file without copying values",
+  "releaseCheck": {
+    "exitCode": 1,
+    "passed": false,
+    "blockedStage": "build:production",
+    "category": "missing fresh production-only verification evidence",
+    "code": "REGISTRATION_READINESS_MISSING_OR_INVALID"
+  },
+  "productionBackupFreshness": "unverified; historical backup stale",
+  "reviewReady": true,
+  "deploymentReady": false,
+  "logSha256": "b88e40eaa8664d56e6c64ee84ce2b2c9ae2ffca7ea4e691211ea8d77a9f1a516"
+}

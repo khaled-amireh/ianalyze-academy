@@ -1,6 +1,6 @@
 {
   "baseCommit": "a93d18897ef88ee0168d872e950361d463cc6a3e",
-  "authorization": "User requested final local readiness review and justified test-baseline fixes. Current implementation hashes are pinned separately; no Git history or historical previous hashes rewritten. README stale expected hash is corrected in its existing approval record. Production integration adjustment: baseCommit is a93d188, the reviewed ancestor of main; all 46 original previousSha256 values match this commit byte-for-byte. The b64abda README-only commit is excluded. The historical 115-file source fingerprint is preserved in separate release evidence; no application or security-check bytes are changed.",
+  "authorization": "User requested final local readiness review and justified test-baseline fixes. Current implementation hashes are pinned separately; no Git history or historical previous hashes rewritten. README stale expected hash is corrected in its existing approval record. Production integration adjustment: baseCommit is a93d188, the reviewed ancestor of main; all 46 original previousSha256 values match this commit byte-for-byte. The b64abda README-only commit is excluded. The historical 115-file source fingerprint is preserved in separate release evidence; no application or security-check bytes are changed. User-authorized final release preparation refinement, 2026-11-20: run the existing offline readiness preflight before the full validation suite so missing/stale local proof fails fast; no provider access or production operation.",
   "addedMigrations": {
     "supabase/migrations/20261114184131_week_one.sql": "af058357050c8a8c8cf8752c22f17702189011525dccc6f826648edc3b220b60",
     "supabase/migrations/20261114200222_week1_bingo_rounds.sql": "b204d0c3cc5a3273606e5988d56d73c41d1b005d195b948f6f523b9b0802938f",
@@ -11,13 +11,16 @@
     "supabase/migrations/20261115172318_eligible_student_leaderboard.sql": "1a6ef9655f0dd1e964c74a06fc915b30f74dd3618c0d14edc27b482ff4dd9298",
     "supabase/migrations/20261115193059_weekly_archives_release_readiness.sql": "cd34a3d4bec8b742d06ba71db75dff509daa7b751ec6bc8e8869813189da250b",
     "supabase/migrations/20261115195955_archive_privacy_rank_preservation.sql": "5591ba45aa09259464e532e463981c91e19e084b1a16a967e4ac500a784a78e0",
-    "supabase/migrations/20261115203156_rankings_closed_gate.sql": "2446b87fba40e34e409bae3825e2fdd52658cee70e2c45185ddd0730ac638177"
+    "supabase/migrations/20261115203156_rankings_closed_gate.sql": "2446b87fba40e34e409bae3825e2fdd52658cee70e2c45185ddd0730ac638177",
+    "supabase/migrations/20261119170000_leaderboard_name_consent.sql": "0b8e466fa8e086775320c39862810294bad12de312638fcad16e561d3c909dd9",
+    "supabase/migrations/20261119170100_application_admins.sql": "5b81565bdcdc46131a6498d962e5cc51790e919713b0a6c0baca2bcb7acfbbb0",
+    "supabase/migrations/20261119170200_admin_manual_point_awards.sql": "d7c1030367d193411bfb83eeefa8514b5310607ad79c8302a4a41876176d9da0"
   },
   "files": {
     "frontend/package.json": {
-      "sha256": "9d3e6c118917503b48827f7e8734c34747434f1000cdc239653cc7167562deca",
+      "sha256": "5eb655ddeb261720e0f54799c00bfdf6f4664ec8c7087d6c0a9aa5557c95bda9",
       "previousSha256": "d4a9348a96e7dcabadb957c65ddcf5e563541508767f203f06dc22d6a0b703ff",
-      "reason": "Only additive embedded-security test entry points; all dependencies, versions and lockfile remain unchanged."
+      "reason": "Only additive embedded-security test entry points; all dependencies, versions and lockfile remain unchanged. Consolidated consent/Admin release authorized 2026-11-20: include dedicated consent/Admin embedded security tests in mandatory validation. 2026-11-20 final blocker-resolution review: add offline readiness/local integration commands and mandatory synthetic encrypted-recovery regression; exact source fingerprint recorded in blocker-resolution-approvals.json. User-authorized candidate-only release preparation change 2026-11-20: preserve the exact validation/build sequence while running the existing offline readiness gate first to avoid repeating full validation when local evidence is missing. Adds the focused Edge change-detection test command; no dependency, lockfile, or production activation change."
     },
     "frontend/scripts/check-phase-03.mjs": {
       "sha256": "dde47faadf000e38e943ba2524423516ea0e0bda80cd0f1e7d8fa0f46c238d5e",
@@ -30,9 +33,9 @@
       "reason": "Reviewed test infrastructure for isolated ports, browser synchronization and additive readiness baseline selection; no production deployment, migration history or application behavior changed. The redesign check also accepts the ten reviewed migration additions at their exact SHA-256 hashes. Separately authorized preservation security fix: verify every inventoried workflow YAML against its existing exact path and SHA-256 approval before extension filtering, including untracked files. No workflow allowlist, historical previous hash, migration approval, or application behavior is changed."
     },
     "frontend/scripts/generate-database-types.mjs": {
-      "sha256": "bac80d8ad8de4922bd4148155421faaa684320f062969be7563d2f7c864a2195",
+      "sha256": "bb4728de83792aaaeffa32976609d8f1abfac7073136369a895ebf0896bf7e96",
       "previousSha256": "737a8b8a5f68f7701616699d78cb0d9502ceaad7e51d8813141f27b139bdd4d0",
-      "reason": "Reviewed test infrastructure for isolated ports, browser synchronization and additive readiness baseline selection; no production deployment, migration history or application behavior changed."
+      "reason": "Reviewed test infrastructure for isolated ports, browser synchronization and additive readiness baseline selection; no production deployment, migration history or application behavior changed. Consolidated local release review 2026-11-20: Read named table-returning RPC columns from PostgreSQL catalog and fail closed on unknown types."
     },
     "frontend/scripts/pre-presentation-browser-client.mjs": {
       "sha256": "7c6cf769efe9fb492a2f5b3e4706f8c101c796a3fe028e0b90c37c61040f561b",
@@ -105,9 +108,9 @@
       "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
     },
     "frontend/src/features/portal/privacy-page.tsx": {
-      "sha256": "e21abefc1fca023f1f9a66fdceb183031954016073963a9b1a05e342b47a6653",
+      "sha256": "3c4d6bf6678caaacdf94c51bc9d627fb286be9c860f740a73c3fabd3726d8cee",
       "previousSha256": "a01a115e7a789576512ac178a48e1ae78f7f79d6d08ab8ed0408e638dcd6dddf",
-      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior. Consolidated consent/Admin release authorized 2026-11-20: explain explicit withdrawable full-name consent and trusted name corrections."
     },
     "frontend/src/features/portal/profile-page.tsx": {
       "sha256": "cc848ba1f08725471ff510e5e02f8da0ecc8beb73334a27f1541cc12acec4530",
@@ -115,14 +118,14 @@
       "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
     },
     "frontend/src/features/portal/student-page.tsx": {
-      "sha256": "70b5a4b76aa5c4a7cda5e3d8c4b2efbcda8ade0d80ded69a54c353b2f57bb352",
+      "sha256": "617bc3e8214fe4b1554d1a8fbd0e5438df9f82b510b88059d7441937e4a6c8fa",
       "previousSha256": "0feb7015da9107230ff509325903a5ff3be5685683f0c747dfc6774348f21aa2",
-      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior. Consolidated consent/Admin release authorized 2026-11-20: make registered names read-only and omit self-service name patches."
     },
     "frontend/src/features/portal/team-page.tsx": {
-      "sha256": "655c04c4dac258e14734eaf83a29f5f1a6fcbaae57aafe653fbb0bb29baabe88",
+      "sha256": "1741bd1985df54e4ca679cd65fc52250e1b0aee9f6604a6727143c41e2189699",
       "previousSha256": "c16d1b45b3dab31ae239b0a11b499bd59aa0c18795972a1cb9b36b62345fed56",
-      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior. Consolidated consent/Admin release authorized 2026-11-20: mount independently server-authorized Admin award UI; preserve Team workflows."
     },
     "frontend/src/lib/i18n.ts": {
       "sha256": "d7d9e9ffe4718575fcaf67911197b12d69bfa6035e742dbcc8477a9dc7f023e1",
@@ -170,9 +173,9 @@
       "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
     },
     "frontend/src/types/database.ts": {
-      "sha256": "b5cbf77b9b1788e6a74dc086b5b600023734bc78ccd17a640930ec0fa3e1a095",
+      "sha256": "de7e404835e584d85dd607db761bb4919c4abfb679ffcc7cfc9270c0ca9a82cd",
       "previousSha256": "8e8cf872c9ac1abf990035411c7c95b5f294ff455cdf0219b6cc2128fe73204c",
-      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior."
+      "reason": "Reviewed user-authorized Week 1, assignments, ledger/archives, resource visibility, Power BI/video, language/layout and profile integration; existing focused preservation tests plus real RLS and authenticated browser tests validate behavior. Consolidated consent/Admin release authorized 2026-11-20: catalog types for consent and Admin award RPCs. Consolidated local release review 2026-11-20: Regenerated complete migration catalog including generated consent fields and typed Admin RPC result rows."
     },
     "frontend/src/types/i18next.d.ts": {
       "sha256": "319b7fa8f4de6bdf49c0cec3151eb597c997e008570e6f37eabeba30d02cb2f3",
@@ -195,9 +198,9 @@
       "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; no assertions are disabled and unrelated historical boundaries remain checked."
     },
     "frontend/tests/database.security.test.mjs": {
-      "sha256": "1a8b9430b5bda6451e1c62ca04eef050b4dc6ff9878699275004a2a69b2066e8",
+      "sha256": "5d128f5b6407f4e17ec0fb4d06f0e0c9c7b76b8d8ada00056aea52ab015d41f6",
       "previousSha256": "ad6f5853bac0aa19dd12cdf186275c7bd1397b19e1f8690f074a3e75955da37c",
-      "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; no assertions are disabled and unrelated historical boundaries remain checked."
+      "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; no assertions are disabled and unrelated historical boundaries remain checked. Consolidated consent/Admin release authorized 2026-11-20: assert generated publication name and protect alias from direct writes."
     },
     "frontend/tests/delivery.security.test.mjs": {
       "sha256": "5b7aad0aed56001b7e63898e98a4a7e4f17a332a9c815c3c8bd5d7501f7bf63f",
@@ -220,9 +223,9 @@
       "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; no assertions are disabled and unrelated historical boundaries remain checked."
     },
     "frontend/tests/pre-presentation.test.ts": {
-      "sha256": "d69b6841d519bf93320ae31d8ff2a8ee981abd05c2332b19578d5a8dff841e47",
+      "sha256": "01db4987e5aa9ac89d2209b52babf715e11a671fd10a29080ff2c6be4ff8f7d1",
       "previousSha256": "7306203268c3a2c35338073817b46c077aa99caf61a2b13114463dd25ef93da0",
-      "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; also pin the narrowly scoped verified database-boundary baseline exception; no assertions are disabled and unrelated historical boundaries remain checked."
+      "reason": "Reviewed focused regression assertions for the authorized Week 1/assignment/privacy/content features; also pin the narrowly scoped verified database-boundary baseline exception; no assertions are disabled and unrelated historical boundaries remain checked. Consolidated local release review 2026-11-20: Keep current production build and mandatory security suite pinned to existing exact approval records rather than obsolete historical bytes. Owner-authorized production workflow filter correction 2026-11-20: accept the exact production.yml fingerprint from final-improvements approval while retaining rejection of unapproved/modified workflows."
     },
     "frontend/tests/registration.integration.test.mjs": {
       "sha256": "81656f350ba4ac1b9904bead3f0b77204f0448fb38a697a1b787d86ac5e98b4c",

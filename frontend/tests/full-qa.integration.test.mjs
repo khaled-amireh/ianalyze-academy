@@ -85,12 +85,7 @@ test(
     }
     await register(fresh);
     assert.ifError(
-      (
-        await earned.api
-          .from('profiles')
-          .update({ leaderboard_name: 'Explicit QA Alias' })
-          .eq('id', earned.id)
-      ).error,
+      (await earned.api.rpc('set_public_full_name_consent', { p_consented: true })).error,
     );
     const now = Date.now(),
       date = (n) => new Date(now + n).toISOString();

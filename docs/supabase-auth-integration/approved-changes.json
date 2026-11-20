@@ -2,8 +2,8 @@
   "baseCommit": "5baffefee9dbadd876c3fd53033f04fe81d3aa7a",
   "files": {
     "frontend/package.json": {
-      "reason": "Include the new guarded registration persistence suite in the existing serial real local Supabase command.",
-      "sha256": "4979790d62bdba611473e49cf7efd67239fc5c42e13b396c4cf115c7b02ac976"
+      "reason": "Include the new guarded registration persistence suite in the existing serial real local Supabase command. The existing offline readiness preflight now runs before the full release suite so missing/stale local evidence fails fast without repeated validation work. Adds the focused Edge change-detection test command; no dependency, lockfile, or production activation change.",
+      "sha256": "5eb655ddeb261720e0f54799c00bfdf6f4664ec8c7087d6c0a9aa5557c95bda9"
     },
     "frontend/scripts/phase-04-browser-qa.mjs": {
       "reason": "Retain existing real browser security/Auth checks and add server-confirmed role-aware Save navigation, retained sessions, failed-save values, duplicates and actual expiry handling.",
@@ -111,13 +111,13 @@
       "sha256": "2fb6d24cbc926e0438b800155406cc8380f590aa2ee612c8fdce9e142fc5e56f"
     },
     "frontend/scripts/check-registration-readiness.mjs": {
-      "reason": "Read-only hosted verification of the encrypted exact owner UUID, confirmed Auth state, Team assignment and unchanged closed unrelated gates; no role writes.",
-      "sha256": "73019f0eddb21c48657e18084afc60305e0ab5831fae6c0dc6cc52e3a91af7c3",
+      "reason": "Read-only hosted verification of the encrypted exact owner UUID, confirmed Auth state, Team assignment and unchanged closed unrelated gates; no role writes. Consolidated consent/Admin release authorized 2026-11-20: capture versioned read-only gate-definition evidence for registration approval.",
+      "sha256": "5d33f0a87ff5feae5cfe0c384ccf7f38e3b07b0876daee131a0ea44a63b49c22",
       "added": true
     },
     "frontend/scripts/registration-approval.mjs": {
-      "reason": "Require a short-lived verified Leader proof before producing an open-registration production artifact.",
-      "sha256": "ce30e1629718b3f094b8eae7e164cd24778f83393735efb677c2a8c731b6638d",
+      "reason": "Require a short-lived verified Leader proof before producing an open-registration production artifact. Consolidated consent/Admin release authorized 2026-11-20: validate exact approved active gates and safe constant definitions without closing services. Final blocker review: replace raw proof-file errors with a safe actionable missing/invalid proof error; approval validation remains unchanged.",
+      "sha256": "f74072b02e48ada74d1b81ed9049cfa097b3731e44abf0af8c9e509debe57d33",
       "added": true
     },
     "frontend/src/features/portal/form-feedback.tsx": {
@@ -151,8 +151,8 @@
       "added": true
     },
     "frontend/tests/registration-approval.test.ts": {
-      "reason": "Reject stale, missing, wrong-project or incomplete Leader release proofs and unexpectedly open unrelated gates.",
-      "sha256": "e0f90bd2d1cb34fcff4781dd6c9d4f6d14bde35257b3de30b14f02a3284310fe",
+      "reason": "Reject stale, missing, wrong-project or incomplete Leader release proofs and unexpectedly open unrelated gates. Consolidated local release review 2026-11-20: Fail-closed versioned gate-definition and approved-active-state checks, including embedded PostgreSQL metadata tests. Final blocker review: replace raw proof-file errors with a safe actionable missing/invalid proof error; approval validation remains unchanged.",
+      "sha256": "84468164aed77474d4b96bed27950c1397493d49f97a73f5d0b7901bf33cef3e",
       "added": true
     },
     "frontend/src/locales/ar.json": {

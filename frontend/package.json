@@ -11,7 +11,7 @@
     "check:types": "tsc -b",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "node --test tests/*.test.ts",
+    "test": "node --test tests/*.test.ts tests/edge-deployment-change.test.mjs",
     "check:production": "node scripts/check-production.mjs",
     "check:phase-02": "node scripts/check-phase-02.mjs",
     "test:browser:phase-02": "node scripts/phase-02-browser-qa.mjs",
@@ -20,7 +20,7 @@
     "check:pages": "node scripts/check-pages-artifact.mjs",
     "db:types": "node scripts/generate-database-types.mjs",
     "check:database-types": "node scripts/generate-database-types.mjs --check",
-    "test:database:embedded": "node --test tests/database.security.test.mjs tests/delivery.security.test.mjs tests/registration.security.test.mjs tests/final-improvements.security.test.mjs tests/week1.security.test.mjs tests/assignments.security.test.mjs tests/drafts.security.test.mjs tests/scoring.security.test.mjs",
+    "test:database:embedded": "node --test tests/database.security.test.mjs tests/delivery.security.test.mjs tests/registration.security.test.mjs tests/final-improvements.security.test.mjs tests/week1.security.test.mjs tests/assignments.security.test.mjs tests/drafts.security.test.mjs tests/scoring.security.test.mjs tests/leaderboard-consent-admin-awards.security.test.mjs tests/recovery-roundtrip.security.test.mjs",
     "test:integration": "node --test tests/supabase.integration.test.mjs",
     "check:phase-03": "node scripts/check-phase-03.mjs",
     "test:database:supabase": "supabase test db --local --workdir ..",
@@ -38,9 +38,11 @@
     "check:database-types:local": "node --env-file=artifacts/supabase-auth-integration/stack.env scripts/generate-database-types.mjs --local --check",
     "build:production": "node scripts/build-pages-production.mjs",
     "check:pages:production": "node scripts/check-pages-artifact.mjs --configured",
-    "release:check": "npm run validate && npm run build:production && npm run check:pages:production",
+    "release:check": "npm run check:readiness && npm run validate && npm run build:production && npm run check:pages:production",
     "release:pages": "node scripts/deploy-pages.mjs",
-    "release:edge": "node scripts/deploy-supabase-edge.mjs"
+    "release:edge": "node scripts/deploy-supabase-edge.mjs",
+    "check:readiness": "node scripts/release-readiness-preflight.mjs",
+    "test:release:local": "node scripts/run-release-local-integration.mjs"
   },
   "dependencies": {
     "@fontsource-variable/manrope": "5.3.0",

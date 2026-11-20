@@ -58,11 +58,9 @@ test('rankings include every eligible zero-point student and exclude incomplete,
       id,
       `launch-fixture-${i}@example.test`,
     ]);
-    await asUser(db, id, () =>
-      db.query(
-        "update public.profiles set full_name='PRIVATE CONTACT',whatsapp='+962790000001',university='Other',major='AI',academic_year=2,python_experience='none',leaderboard_name=$2 where id=$1",
-        [id, `Launch learner ${i}`],
-      ),
+    await db.query(
+      "update public.profiles set full_name='PRIVATE CONTACT',whatsapp='+962790000001',university='Other',major='AI',academic_year=2,python_experience='none',leaderboard_alias=$2 where id=$1",
+      [id, `Launch learner ${i}`],
     );
     if (i !== 26)
       await asUser(db, id, () =>

@@ -3,9 +3,9 @@
   "authorization": "User request: final comprehensive quality, branding, registration and authentication update; local implementation only.",
   "files": {
     "frontend/package.json": {
-      "reason": "Include focused registration, email and security regression commands.",
+      "reason": "Include focused registration, email and security regression commands. Adds the focused Edge change-detection test command; no dependency, lockfile, or production activation change.",
       "previousSha256": "4979790d62bdba611473e49cf7efd67239fc5c42e13b396c4cf115c7b02ac976",
-      "sha256": "cc9d6cbb1b93658650ecded97b18a7040e1d6202d0d1f643b554a6075b212eb7"
+      "sha256": "5eb655ddeb261720e0f54799c00bfdf6f4664ec8c7087d6c0a9aa5557c95bda9"
     },
     "frontend/scripts/check-phase-03.mjs": {
       "reason": "Recognize the hash-pinned user-authorized quality refinement while retaining historical checks.",

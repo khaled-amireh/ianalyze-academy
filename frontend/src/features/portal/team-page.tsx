@@ -14,6 +14,7 @@ import { useAssignmentCopy } from '@/features/assignments/copy';
 import { DraftForm, completeFormDraft } from '@/features/drafts';
 import { majorLabel, ZUJ } from './profile-fields';
 import { academicYearLabel } from './academic-years';
+import { AdminPointAwards } from './admin-point-awards';
 import {
   checked,
   client,
@@ -667,6 +668,7 @@ export function TeamPageLive() {
           {c.logout}
         </Button>
       </nav>
+      <AdminPointAwards />
       <FormNotice
         message={
           profileSaved === 'registered'

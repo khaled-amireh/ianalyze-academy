@@ -1,5 +1,9 @@
 ﻿import { writeFileSync, mkdirSync } from 'node:fs';
 import { requireSupabaseTarget, target } from './release-target.mjs';
+import {
+  registrationReadinessQuery,
+  verifyRegistrationApproval,
+} from './registration-approval.mjs';
 requireSupabaseTarget();
 if (process.env.ACADEMY_REGISTRATION_APPROVED !== 'true') {
   console.log('Public registration remains closed.');
@@ -15,47 +19,50 @@ if (process.env.ACADEMY_REGISTRATION_APPROVED !== 'true') {
       'Verified owner UUID and authorized CI credential are required before opening registration.',
     );
   // SELECT only; UUID is validated above. Privileged gates are inspected without EXECUTE.
-  const query = `select exists(select 1 from auth.users u join app_private.user_roles r on r.user_id=u.id where u.id='${owner}'::uuid and u.email_confirmed_at is not null and u.deleted_at is null and (u.banned_until is null or u.banned_until<=now()) and r.role='team') as verified_leader,
-    (select count(*)=3 and bool_and(p.prosrc ~ '^[[:space:]]*select[[:space:]]+false;?[[:space:]]*$' and p.provolatile='i' and not p.prosecdef and p.pronargs=0 and p.prorettype='boolean'::regtype and l.lanname='sql') from pg_catalog.pg_proc p join pg_catalog.pg_namespace n on n.oid=p.pronamespace join pg_catalog.pg_language l on l.oid=p.prolang where n.nspname='app_private' and p.proname in ('uploads_enabled','submission_service_enabled','leaderboard_enabled')) as unrelated_gates_closed`;
-  const response = await fetch(
-    `https://api.supabase.com/v1/projects/${target.project}/database/query`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${process.env.SUPABASE_ACCESS_TOKEN}`,
-        'Content-Type': 'application/json',
+  const query = registrationReadinessQuery(owner);
+  let response;
+  try {
+    response = await fetch(
+      `https://api.supabase.com/v1/projects/${target.project}/database/query`,
+      {
+        method: 'POST',
+        redirect: 'error',
+        headers: {
+          Authorization: `Bearer ${process.env.SUPABASE_ACCESS_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ read_only: true, query }),
+        signal: AbortSignal.timeout(20000),
       },
-      body: JSON.stringify({ read_only: true, query }),
-      signal: AbortSignal.timeout(20000),
-    },
-  );
+    );
+  } catch {
+    throw new Error('Read-only Leader readiness request failed; registration release stopped.');
+  }
   if (!response.ok)
     throw new Error('Read-only Leader readiness request failed; registration release stopped.');
-  const rows = await response.json();
-  if (
-    !Array.isArray(rows) ||
-    rows.length !== 1 ||
-    rows[0].verified_leader !== true ||
-    rows[0].unrelated_gates_closed !== true
-  )
-    throw new Error(
-      'Verified Leader or unrelated-gate checkpoint failed; registration release stopped.',
-    );
+  let rows;
+  try {
+    rows = await response.json();
+  } catch {
+    throw new Error('Unexpected read-only readiness response.');
+  }
+  if (!Array.isArray(rows) || rows.length !== 1 || !rows[0])
+    throw new Error('Unexpected read-only readiness response.');
+  const proof = {
+    schemaVersion: 2,
+    project: target.project,
+    verifiedLeader: rows[0].verified_leader,
+    gateDefinitionsSafe: rows[0].gate_definitions_safe,
+    gates: rows[0].gates,
+    verifiedAt: new Date().toISOString(),
+  };
+  verifyRegistrationApproval(proof, Date.now(), process.env);
   mkdirSync(new URL('../artifacts/', import.meta.url), { recursive: true });
   writeFileSync(
     new URL('../artifacts/registration-readiness.json', import.meta.url),
-    JSON.stringify(
-      {
-        project: target.project,
-        verifiedLeader: true,
-        unrelatedGatesClosed: true,
-        verifiedAt: new Date().toISOString(),
-      },
-      null,
-      2,
-    ) + '\n',
+    JSON.stringify(proof, null, 2) + '\n',
   );
   console.log(
-    'Verified owner UUID has a confirmed Auth account and Team access; unrelated gates remain closed.',
+    'Verified owner UUID has a confirmed Auth account and Team access; approved gate states match exactly; legacy uploads remain closed.',
   );
 }

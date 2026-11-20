@@ -1,11 +1,17 @@
 import { useId, useRef, useState, type FormEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { useAuth } from '@/features/auth/use-auth';
-import { privacyApproved, registrationEnabled, submissionsEnabled } from '@/lib/academy-client';
+import {
+  leaderboardEnabled,
+  privacyApproved,
+  registrationEnabled,
+  submissionsEnabled,
+} from '@/lib/academy-client';
 import { loadOwnProfile, saveAcademyProfile } from '@/lib/academy-data';
 import { changeLocale } from '@/lib/i18n';
 import { majors, profilePatch, selectedMajor } from './profile-fields';
 import { ProfileDetails } from './profile-details';
+import { LeaderboardNameConsent } from './leaderboard-name-consent';
 import { UniversityIdField } from './university-id-field';
 import { useRegistrationDraft } from './use-registration-draft';
 import { RegistrationDraftNotice } from './registration-draft-notice';
@@ -122,9 +128,11 @@ export function ProfileForm({
               autoComplete="name"
               maxLength={150}
               required={required('full_name')}
+              readOnly={Boolean(profile.registered_at)}
               {...draft.field('full_name')}
             />
           </FormField>
+          {profile.registered_at && <p>{c.profileNameCorrection}</p>}
           <FormField id={id + '-whatsapp'} label={c.whatsapp} error={error('whatsapp')}>
             <Input
               {...field('whatsapp')}
@@ -438,6 +446,9 @@ export function StudentPage() {
           onSaved={onSaved}
           onCancel={() => setEditing(false)}
         />
+      )}
+      {profile && (leaderboardEnabled || profile.public_full_name_consent) && (
+        <LeaderboardNameConsent profile={profile} canOptIn={leaderboardEnabled} />
       )}
     </PageContainer>
   );

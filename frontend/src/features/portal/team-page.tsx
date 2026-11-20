@@ -9,6 +9,7 @@ import { MixedText } from '@/components/shared/mixed-text';
 import { FormNotice } from './form-feedback';
 import type { PortalCopy } from './copy';
 import { AnnouncementManager } from './announcements';
+import { AdminPointAwards } from './admin-point-awards';
 import { majorLabel, ZUJ } from './profile-fields';
 import { academicYearLabel } from './academic-years';
 import {
@@ -706,6 +707,7 @@ export function TeamPageLive() {
           </table>
         </div>
       </section>
+      <AdminPointAwards />
       <section id="activities" className="content-card">
         <h2>{c.manage}</h2>
         {topics.map((topic, i) => {

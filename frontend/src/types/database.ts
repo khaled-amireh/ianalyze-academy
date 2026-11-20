@@ -258,6 +258,9 @@ export type Database = {
           created_at: string;
           updated_at: string;
           university: string | null;
+          public_full_name_consent: boolean;
+          public_full_name_consent_at: string | null;
+          public_full_name_consent_version: string | null;
         };
         Insert: {
           id: string;
@@ -275,6 +278,9 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
           university?: string | null;
+          public_full_name_consent?: boolean;
+          public_full_name_consent_at?: string | null;
+          public_full_name_consent_version?: string | null;
         };
         Update: {
           id?: string;
@@ -292,6 +298,9 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
           university?: string | null;
+          public_full_name_consent?: boolean;
+          public_full_name_consent_at?: string | null;
+          public_full_name_consent_version?: string | null;
         };
         Relationships: [];
       };
@@ -429,9 +438,25 @@ export type Database = {
       academy_capabilities: { Args: Record<string, never>; Returns: Json };
       academy_leaderboard: { Args: Record<string, never>; Returns: Json };
       academy_notifications: { Args: Record<string, never>; Returns: Json };
+      admin_award_history: { Args: { p_student_id?: string }; Returns: Json };
+      admin_award_points: {
+        Args: {
+          p_student_id: string;
+          p_points: number;
+          p_reason: string;
+          p_idempotency_key: string;
+        };
+        Returns: string;
+      };
+      admin_award_students: { Args: Record<string, never>; Returns: Json };
       claim_submission_request: { Args: { p_student_id: string }; Returns: undefined };
       complete_registration: { Args: { p_consent_version: string }; Returns: undefined };
+      correct_registered_student_name: {
+        Args: { p_student_id: string; p_full_name: string };
+        Returns: undefined;
+      };
       create_draft_rubric: { Args: { p_activity_id: string; p_criteria: Json }; Returns: string };
+      current_academy_is_admin: { Args: Record<string, never>; Returns: boolean };
       current_academy_role: { Args: Record<string, never>; Returns: string | null };
       finalize_notebook: {
         Args: { p_submission_id: string; p_sha256: string };
@@ -460,6 +485,7 @@ export type Database = {
         };
         Returns: string;
       };
+      set_public_full_name_consent: { Args: { p_consented: boolean }; Returns: undefined };
     };
     Enums: { [_ in never]: never };
     CompositeTypes: { [_ in never]: never };

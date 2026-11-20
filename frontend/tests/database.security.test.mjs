@@ -66,7 +66,7 @@ test('embedded PostgreSQL security (test-only Auth/Storage fixture)', async (t) 
       const { rows } = await db.query(
         "select c.relname,c.relrowsecurity from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname in ('public','app_private') and c.relkind='r'",
       );
-      assert.equal(rows.length, 12);
+      assert.equal(rows.length, 16);
       assert.ok(rows.every((r) => r.relrowsecurity));
       assert.deepEqual(
         (

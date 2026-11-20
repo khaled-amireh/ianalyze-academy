@@ -8,6 +8,7 @@ import {
   qualityUpdate,
   finalUpdate,
   prePresentationUpdate,
+  pathBUpdate,
   verifyMergePreservation,
 } from './verify-merge-preservation.mjs';
 const root = new URL('../../', import.meta.url);
@@ -17,7 +18,11 @@ const approved = json('docs/ui-redesign/approved-presentation-changes.json');
 const baseline = json('docs/phase-03/baseline/preserved-frontend.json');
 verifyMergePreservation();
 for (const [path, expected] of Object.entries(baseline)) {
-  if (approved.replacedFrontendFiles.includes(path) || mergeResolution.resolvedFiles[path])
+  if (
+    approved.replacedFrontendFiles.includes(path) ||
+    mergeResolution.resolvedFiles[path] ||
+    pathBUpdate.files[path]
+  )
     continue;
   assert.equal(
     hash(readFileSync(new URL(path, root))),
@@ -98,6 +103,7 @@ const changed = execFileSync('git', ['diff', mergeResolution.functionalCommit, '
 for (const path of changed)
   assert.ok(
     authIntegration.files[path] ||
+      pathBUpdate.files[path] ||
       prePresentationUpdate.files[path] ||
       finalUpdate.files[path] ||
       qualityUpdate.files[path] ||

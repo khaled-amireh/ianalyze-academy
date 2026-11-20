@@ -29,6 +29,12 @@ export const mobileResponsivenessUpdate = JSON.parse(
 export const studentRegistrationUpdate = JSON.parse(
   readFileSync(new URL('docs/student-registration/approved-changes.json', root), 'utf8'),
 );
+export const pathBUpdate = JSON.parse(
+  readFileSync(
+    new URL('docs/audits/leaderboard-admin-release/approved-pathb-files.json', root),
+    'utf8',
+  ),
+);
 const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
 function tree(commit) {
   return new Map(
@@ -180,6 +186,24 @@ export function verifyMergePreservation() {
           .digest('hex'),
         resolution.previousSha256,
         `Registration refinement baseline changed: ${path}`,
+      );
+    resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };
+  }
+  assert.equal(git('merge-base', pathBUpdate.baselineCommit, 'HEAD'), pathBUpdate.baselineCommit);
+  const pathBBaseline = tree(pathBUpdate.baselineCommit);
+  for (const [path, resolution] of Object.entries(pathBUpdate.files)) {
+    assert.ok(resolution.reason, `Path B approval reason missing: ${path}`);
+    if (resolution.added)
+      assert.ok(!pathBBaseline.has(path), `Path B addition already existed: ${path}`);
+    else
+      assert.equal(
+        createHash('sha256')
+          .update(
+            execFileSync('git', ['show', `${pathBUpdate.baselineCommit}:${path}`], { cwd: root }),
+          )
+          .digest('hex'),
+        resolution.previousSha256,
+        `Path B baseline changed: ${path}`,
       );
     resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };
   }

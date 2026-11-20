@@ -24,6 +24,9 @@ export async function createDatabase(migrationSql = migrations()) {
     create function auth.uid() returns uuid language sql stable as $$
       select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid;
     $$;
+    create function auth.role() returns text language sql stable as $$
+      select coalesce(nullif(current_setting('request.jwt.claim.role', true), ''), current_user::text);
+    $$;
     grant usage on schema auth to anon, authenticated;
     grant execute on function auth.uid() to anon, authenticated;
     create table storage.buckets (
@@ -47,6 +50,7 @@ export async function asUser(db, uid, callback, role = 'authenticated') {
   try {
     await db.exec(`set local role ${role === 'anon' ? 'anon' : 'authenticated'}`);
     await db.query("select set_config('request.jwt.claim.sub', $1, true)", [uid ?? '']);
+    await db.query("select set_config('request.jwt.claim.role', $1, true)", [role]);
     const result = await callback();
     await db.exec('commit');
     return result;

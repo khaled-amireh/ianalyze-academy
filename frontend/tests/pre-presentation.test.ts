@@ -15,6 +15,12 @@ const original = (path: string) =>
 const registrationUpdate = JSON.parse(
   readFileSync(new URL('docs/student-registration/approved-changes.json', root), 'utf8'),
 );
+const pathBUpdate = JSON.parse(
+  readFileSync(
+    new URL('docs/audits/leaderboard-admin-release/approved-pathb-files.json', root),
+    'utf8',
+  ),
+);
 
 test('production font output stays compatible with the unchanged restrictive CSP', () => {
   const policy = configuration.build?.assetsInlineLimit;
@@ -38,6 +44,16 @@ test('the authorized video redesign changes only its bilingual learning copy', (
   for (const locale of ['ar', 'en']) {
     const path = `frontend/src/locales/${locale}.json`;
     const current = JSON.parse(readFileSync(new URL(path, root), 'utf8'));
+    if (pathBUpdate.files[path]) {
+      assert.equal(
+        createHash('sha256')
+          .update(readFileSync(new URL(path, root)))
+          .digest('hex'),
+        pathBUpdate.files[path].sha256,
+        path,
+      );
+      continue;
+    }
     const previous = JSON.parse(original(path));
     for (const key of ['expandVideo', 'closeVideo', 'playVideo', 'loadingVideo'])
       delete current.learning[key];
@@ -85,6 +101,14 @@ test('the scoped presentation fixes preserve assets, security, navigation and cl
   );
   for (const path of protectedFiles) {
     const bytes = readFileSync(new URL(path, root));
+    if (pathBUpdate.files[path]) {
+      assert.equal(
+        createHash('sha256').update(bytes).digest('hex'),
+        pathBUpdate.files[path].sha256,
+        path,
+      );
+      continue;
+    }
     if (registrationUpdate.files[path]) {
       assert.equal(
         createHash('sha256').update(bytes).digest('hex'),
@@ -96,6 +120,15 @@ test('the scoped presentation fixes preserve assets, security, navigation and cl
     assert.equal(
       createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex'),
       tree.get(path),
+      path,
+    );
+  }
+  for (const [path, record] of Object.entries(pathBUpdate.files)) {
+    assert.equal(
+      createHash('sha256')
+        .update(readFileSync(new URL(path, root)))
+        .digest('hex'),
+      record.sha256,
       path,
     );
   }

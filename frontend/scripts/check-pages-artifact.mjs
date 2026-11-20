@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import { expectedProductionBuildMetadata } from './production-build-gates.mjs';
 const root = new URL('../', import.meta.url);
 const configured = process.argv.includes('--configured');
 const expectedKey = configured ? process.env.VITE_SUPABASE_PUBLISHABLE_KEY : '';
@@ -76,19 +77,8 @@ if (configured) {
   const inputs = JSON.parse(readFileSync(new URL('artifacts/configured-build.json', root), 'utf8'));
   assert.equal(inputs.project, 'ocihwiqtgqplwgyhpwjv');
   assert.equal(inputs.publishableKeySha256, createHash('sha256').update(expectedKey).digest('hex'));
-  for (const gate of [
-    'registration',
-    'submissions',
-    'leaderboard',
-    'privacyApproved',
-    'developmentPreviews',
-  ])
-    assert.equal(
-      inputs[gate],
-      (gate === 'registration' || gate === 'privacyApproved') &&
-        process.env.ACADEMY_REGISTRATION_APPROVED === 'true',
-      `Unapproved production gate: ${gate}`,
-    );
+  for (const [gate, expected] of Object.entries(expectedProductionBuildMetadata(process.env)))
+    assert.equal(inputs[gate], expected, `Unapproved production gate: ${gate}`);
 } else assert.equal(publishableKeys.length, 0, 'Unexpected key in unconfigured public artifact');
 for (const forbidden of [
   'http://127.0.0.1:54321',

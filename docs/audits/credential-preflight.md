@@ -3,9 +3,120 @@
 Prepared locally for owner review. Nothing has been committed, pushed, dispatched,
 migrated, or deployed. The existing production workflow is unchanged.
 
-## Review scope
+## Isolated CI preflight hotfix — 2026-11-20
 
-The separate preflight consists of exactly these four proposed files:
+The hotfix is prepared in the separate worktree
+`C:\Users\khale\Desktop\ianalyze-academy\.worktrees\ci-preflight-hotfix-review-20261120`,
+branch `codex/ci-preflight-hotfix-review-20261120`, based on current `origin/main`
+commit `403f7fa0cb51d08ede3196e8c56e5ef15c543412`. It is separate from the dirty
+application-release trees. The hotfix diff is limited to:
+
+- `frontend/scripts/check-ci-credentials.mjs`
+- `frontend/tests/ci-credential-preflight.test.ts`
+- `docs/final-improvements/approved-changes.json` (one exact hash-pinned workflow record)
+- `docs/audits/credential-preflight.md` (this review record)
+
+The already-existing `.github/workflows/credential-preflight.yml` is unchanged;
+it invokes the checker by path. No production workflow, secret, provider setting,
+or application code is part of this hotfix.
+
+The gate query now inspects only function definitions and literal boolean values;
+it never executes a gate function. It requires exactly three safe definitions and
+the reviewed values `leaderboard_enabled=true`,
+`submission_service_enabled=true`, and `uploads_enabled=false`. These values match
+the owner-reviewed release configuration and the repository decision to keep
+leaderboard/submission enabled and legacy uploads disabled. Local fixture tests
+verify the expected tuple and fail closed for unsafe definitions, missing/extra
+keys, disabled approved services, or enabled legacy uploads. This is local
+validation, not a fresh live production read.
+
+Cloudflare output includes only fixed diagnostic categories: HTTP 401
+authentication failure, 403 authorization failure, 404 resource not found, other
+HTTP status, network error, invalid/API response, or successful-response target
+mismatch. It omits response bodies, headers, credentials, provider messages and
+student data. An authentication failure does not establish token revocation. The
+previous Actions run suppressed these details, and the GitHub secret value is not
+available for local inspection; its current Cloudflare cause remains unknown.
+
+Focused local validation on the hotfix branch:
+
+```powershell
+if (-not (Test-Path node_modules)) { npm.cmd ci --ignore-scripts --no-audit --no-fund }
+node --test tests/ci-credential-preflight.test.ts
+npm.cmd exec -- eslint -- scripts/check-ci-credentials.mjs tests/ci-credential-preflight.test.ts
+npm.cmd exec -- prettier --check scripts/check-ci-credentials.mjs tests/ci-credential-preflight.test.ts ../docs/audits/credential-preflight.md
+node scripts/check-redesign.mjs
+```
+
+The focused suite passed 9/9; ESLint and Prettier passed. The preservation guard
+now passes: 404 inherited files and 154 explicit, hash-pinned resolutions. The
+only preservation amendment is the exact workflow path and SHA below; no wildcard
+or guard change was made.
+
+## Preservation fingerprint and publication safety — 2026-11-20
+
+The current `.github/workflows/credential-preflight.yml` SHA-256 is
+`d6d396667acb222092e118e77a9a19eb36dd9698b146da5b29035d391a3715ee`. The
+protected workflow did not exist at functional baseline commit
+`4019e9c844549c989e4fb4f8122397663f761bb8`; the exact historical diff is a
+38-line file addition in PR #16, merged as `403f7fa0cb51d08ede3196e8c56e5ef15c543412`.
+The file in PR #16 is byte-for-byte the current file. The guard failed because
+this protected `.github/` path was not registered, not because its current content
+drifted from an older version.
+
+The existing review document supplied the exact `added: true`, path-specific hash
+record below and calls it owner-reviewed. PR #16 was authored and merged by
+`khaled-amireh`; its only recorded review was a Copilot `COMMENTED` review, with no
+human `APPROVED` review. `main` has no classic branch protection, no effective
+branch rules, and no repository rulesets. I treated the owner's merge, together
+with the pre-existing audit record that explicitly described this exact proposed
+entry as owner-reviewed, as sufficient authorization to add the exact
+preservation fingerprint. This is owner acceptance, not an independent human
+review. The manifest entry is limited to this one file and exact digest.
+
+Read-only GitHub checks found no classic protection for `main` (the API reports
+“Branch not protected”), zero effective branch rules and zero repository
+rulesets. The only workflows on `main` are the active, manual-only credential
+preflight and `production.yml`, which is `disabled_manually`. The production
+workflow's source triggers on pushes to `main` and
+`codex/supabase-auth-integration`; it has no path filter.
+
+Run [43097299336](https://github.com/khaled-amireh/ianalyze-academy/actions/runs/43097299336)
+still reports `queued`, event `push`, branch `main`, head
+`a93d18897ef88ee0168d872e950361d463cc6a3e`, attempt 1, no conclusion, and no jobs.
+It has not updated since 2026-11-11. GitHub documents that a disabled workflow
+does not respond to new triggers, so a main push while it remains disabled should
+not create a new `production.yml` run. GitHub also documents that disabling a
+workflow does not cancel existing runs and that rerunning is unavailable while
+disabled ([workflow controls](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/disable-and-enable-workflows),
+[rerun rules](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/re-run-workflows-and-jobs)).
+The documented behavior and current metadata do not establish whether this old
+queued run can begin or resume independently. A new push does not change the
+recorded run SHA. No branch protection or required check ties this run to the
+hotfix. There is no evidence that publishing the hotfix branch or merging it to
+`main` would unblock, rerun, or otherwise affect this existing run. Its future
+execution remains unknown, but that uncertainty alone is not a demonstrated
+publication dependency. No cancellation or workflow change was attempted.
+
+The hotfix is source-separated from the application release. Publishing its
+review branch would not match either production workflow branch filter; the
+preflight workflow is manual-only. The queued run is **not a demonstrated blocker**
+to independent hotfix publication. Main has no enforced protection or review
+rules, so the owner must manually review and approve the exact four-file PR. Keep
+`production.yml` disabled; if its state changes before merge, re-evaluate because
+a main push would match its trigger. Do not resolve or rerun the historical queue
+as part of this hotfix. After the reviewed merge, verify the checker blob on
+`main`; then a separate authorization is required to dispatch the read-only
+preflight once and review the corrected gate result and Cloudflare diagnostic
+category. Do not change provider credentials or configuration based only on a
+diagnostic category.
+
+The steps below document the original preflight bootstrap proposal and are
+historical where they refer to introducing the workflow or closed feature gates.
+
+## Original bootstrap review scope
+
+The original bootstrap preflight consisted of exactly these four files:
 
 - `.github/workflows/credential-preflight.yml`
 - `frontend/scripts/check-ci-credentials.mjs`
@@ -35,8 +146,9 @@ separate approval unit and must not be silently included in that proposal.
 
 All requests reject redirects and have bounded timeouts. There are no configurable
 URLs, SQL inputs, arbitrary token identifiers, or access probes into other projects.
-Project lists, function records, token identifiers/policies and provider errors
-remain in memory. They are never included in stdout or the job summary.
+Project lists, function records, token identifiers/policies and provider error
+bodies remain in memory. They are never included in stdout or the job summary;
+the isolated hotfix above emits only bounded status categories.
 
 The SQL returns booleans only: server read-only mode, whether the configured UUID
 belongs to an active confirmed Team user, and whether all three established gates
@@ -113,9 +225,7 @@ release commit; its full production CI must run after release authorization.
 
 The current workflow SHA-256 is
 `d6d396667acb222092e118e77a9a19eb36dd9698b146da5b29035d391a3715ee`.
-For the separate approval amendment in step 6, the existing
-`docs/final-improvements/approved-changes.json` supports this exact proposed entry
-under `files` (not applied by this task):
+The exact local preservation record applied on this review branch is:
 
 ```json
 ".github/workflows/credential-preflight.yml": {
@@ -125,11 +235,8 @@ under `files` (not applied by this task):
 }
 ```
 
-Recompute and review that digest if the workflow changes. Applying the amendment
-changes an approval manifest in the historical release set, so record a revised
-release fingerprint explicitly rather than claiming that the old content hash
-still describes it. The four-file bootstrap itself can run independently of that
-later release-preservation amendment.
+Recompute and review that digest if the workflow changes. This manifest update is
+local to the isolated review branch; it has not been committed or pushed.
 
 ## Local validation
 

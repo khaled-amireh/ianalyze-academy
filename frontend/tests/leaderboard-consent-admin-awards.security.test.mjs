@@ -1,7 +1,315 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { asUser, createDatabase } from '../scripts/database-fixture.mjs';
+import { readFileSync } from 'node:fs';
+import { asUser, createDatabase, migrations } from '../scripts/database-fixture.mjs';
+
+test('pending consent migration refuses an unexpected zero-argument RPC baseline without partial changes', async (t) => {
+  const sql = migrations();
+  const db = await createDatabase(sql.slice(0, -3));
+  t.after(() => db.close());
+  await db.exec(
+    "create function app_private.academy_leaderboard() returns jsonb language sql set search_path='' as $$select '[]'::jsonb$$",
+  );
+  await assert.rejects(db.exec(sql.at(-3)), (error) => error.code === '55000');
+  await db.exec('rollback');
+  assert.equal(
+    (
+      await db.query(
+        "select count(*)::int as n from information_schema.columns where table_schema='public' and table_name='profiles' and column_name='public_full_name_consent'",
+      )
+    ).rows[0].n,
+    0,
+  );
+});
+
+test('production boolean RPC preserves both scoring views, consent privacy and manual-award security', async (t) => {
+  const sql = migrations();
+  const fixture = readFileSync(
+    new URL('./fixtures/production-leaderboard-scoring.sql', import.meta.url),
+    'utf8',
+  );
+  const db = await createDatabase([...sql.slice(0, -3), fixture]);
+  t.after(() => db.close());
+  const call = (uid, query, params = [], role = 'authenticated') =>
+    asUser(db, uid, () => db.query(query, params), role);
+  const rank = async (weekly = false) =>
+    (await call(null, 'select public.academy_leaderboard($1) as rows', [weekly], 'anon')).rows[0]
+      .rows;
+  const clock = async (time) => {
+    assert.match(time, /^2026-11-\d\d \d\d:\d\d Asia\/Amman$/);
+    await db.exec(
+      `create or replace function app_private.scoring_now() returns timestamptz language sql set search_path='' as $$select '${time}'::timestamptz$$`,
+    );
+  };
+  await db.exec(`
+    insert into auth.users(id,email,email_confirmed_at) values
+      ('${student}','synthetic-a@example.test',now()),
+      ('${gateStudent}','synthetic-b@example.test',now()),
+      ('${team}','synthetic-team@example.test',now()),
+      ('${admin}','synthetic-admin@example.test',now());
+    update app_private.user_roles set role='team' where user_id in ('${team}','${admin}');
+    update public.profiles set full_name='Synthetic Saved Name', whatsapp='+962790000001',
+      major='AI',university='Other University',academic_year=4,python_experience='basic',
+      consent_version='registration-v1',consent_at=now(),registered_at=now();
+    update public.profiles set leaderboard_name='Learner Stable A' where id='${student}';
+    update public.profiles set leaderboard_name='Learner Stable B' where id='${gateStudent}';
+    insert into public.point_awards(student_id,source_key,points,period_start,reviewed_by,reviewed_at,scoring_week) values
+      ('${student}','synthetic-prior',11,'2026-11-19','${team}','2026-11-19 12:00 Asia/Amman',1),
+      ('${student}','synthetic-current-a',7,'2026-11-20','${team}','2026-11-20 12:00 Asia/Amman',2),
+      ('${gateStudent}','synthetic-current-b',8,'2026-11-20','${team}','2026-11-20 12:00 Asia/Amman',2);
+    insert into app_private.scoring_membership_events(student_id,eligible,effective_at)
+      values ('${student}',true,'2026-11-19 00:00 Asia/Amman'),
+             ('${gateStudent}',true,'2026-11-19 00:00 Asia/Amman');
+    insert into app_private.scoring_award_events(student_id,source_key,scoring_week,delta,points_after,recorded_at,kind,legacy_period_start)
+      values ('${student}','synthetic-prior',1,11,11,'2026-11-19 12:00 Asia/Amman','synthetic','2026-11-19');
+    create or replace function app_private.leaderboard_enabled() returns boolean language sql immutable set search_path='' as $$select true$$;
+  `);
+  await clock('2026-11-21 12:00 Asia/Amman');
+  const beforeAll = await rank(false);
+  const beforeWeekly = await rank(true);
+  assert.deepEqual(
+    beforeAll.map((row) => [row.points, row.activities]),
+    [
+      [18, 2],
+      [8, 1],
+    ],
+  );
+  assert.deepEqual(
+    beforeWeekly.map((row) => [row.points, row.activities]),
+    [
+      [8, 1],
+      [7, 1],
+    ],
+  );
+  const archive = async () =>
+    (await db.query("select app_private.academy_rankings('archive',1) as value")).rows[0].value;
+  const beforeArchive = await archive();
+  const oldPoints = async () =>
+    (
+      await db.query(
+        'select md5(jsonb_agg(to_jsonb(a) order by student_id,source_key)::text) as hash from public.point_awards a',
+      )
+    ).rows[0].hash;
+  const beforePoints = await oldPoints();
+
+  await db.exec(sql.at(-3));
+  assert.deepEqual(await rank(false), beforeAll);
+  assert.deepEqual(await rank(true), beforeWeekly);
+  await db.exec(sql.at(-2));
+  await db.exec(sql.at(-1));
+  await db.exec(`insert into app_private.application_admins(user_id,reason) values('${admin}','SYNTHETIC TEST ONLY');
+    alter table app_private.manual_point_awards alter column created_at set default '2026-11-21 12:00 Asia/Amman'::timestamptz;`);
+
+  await t.test(
+    'exact optional boolean signatures, default calls and existing totals survive without overloads',
+    async () => {
+      const functions = (
+        await db.query(`
+      select n.nspname,p.pronargs,p.proargnames,p.pronargdefaults,p.prosecdef,p.proconfig
+      from pg_proc p join pg_namespace n on n.oid=p.pronamespace
+      where n.nspname in ('public','app_private') and p.proname='academy_leaderboard' order by n.nspname
+    `)
+      ).rows;
+      assert.equal(functions.length, 2);
+      for (const fn of functions) {
+        assert.equal(fn.pronargs, 1);
+        assert.deepEqual(fn.proargnames, ['p_weekly']);
+        assert.equal(fn.pronargdefaults, 1);
+        assert.deepEqual(fn.proconfig, ['search_path=""']);
+      }
+      assert.equal(functions.find((fn) => fn.nspname === 'public').prosecdef, false);
+      assert.deepEqual(await rank(false), beforeAll);
+      assert.deepEqual(await rank(true), beforeWeekly);
+      assert.deepEqual(await rank(null), beforeAll);
+      assert.deepEqual(
+        (await call(null, 'select public.academy_leaderboard() as rows', [], 'anon')).rows[0].rows,
+        beforeAll,
+      );
+      await assert.rejects(
+        call(null, 'select * from app_private.leaderboard_base_rows(false,now())', [], 'anon'),
+        (error) => error.code === '42501',
+      );
+      assert.equal(
+        (
+          await db.query(
+            "select relrowsecurity from pg_class where oid='public.point_awards'::regclass",
+          )
+        ).rows[0].relrowsecurity,
+        true,
+      );
+    },
+  );
+
+  await t.test(
+    'consent and withdrawal use the live public RPC in both views and keep fallback aliases',
+    async () => {
+      await call(student, 'select public.set_public_full_name_consent(true)');
+      for (const weekly of [false, true]) {
+        const rows = await rank(weekly);
+        assert.ok(rows.some((row) => row.alias === 'Synthetic Saved Name'));
+        for (const row of rows)
+          assert.deepEqual(Object.keys(row).sort(), ['activities', 'alias', 'points', 'rank']);
+      }
+      await call(student, 'select public.set_public_full_name_consent(false)');
+      assert.deepEqual(await rank(false), beforeAll);
+      assert.deepEqual(await rank(true), beforeWeekly);
+      await call(student, 'select public.set_public_full_name_consent(true)');
+      await assert.rejects(
+        call(team, 'select public.correct_registered_student_name($1,$2)', [
+          student,
+          'Untrusted Name',
+        ]),
+        (error) => error.code === '42501',
+      );
+      await call(admin, 'select public.correct_registered_student_name($1,$2)', [
+        student,
+        'Synthetic Corrected Name',
+      ]);
+      assert.deepEqual(await rank(false), beforeAll);
+      assert.deepEqual(await rank(true), beforeWeekly);
+    },
+  );
+
+  await t.test(
+    'only Admin awards; idempotent retries change totals once without increasing activity counts',
+    async () => {
+      const awardSql = 'select public.admin_award_points($1,$2,$3,$4) as id';
+      const args = [student, 5, 'SYNTHETIC CURRENT AWARD', awardKey];
+      for (const who of [student, team])
+        await assert.rejects(call(who, awardSql, args), (error) => error.code === '42501');
+      for (const points of [0, -1])
+        await assert.rejects(
+          call(admin, awardSql, [student, points, 'SYNTHETIC INVALID', awardKey]),
+          (error) => error.code === '22023',
+        );
+      const first = (await call(admin, awardSql, args)).rows[0].id;
+      assert.equal((await call(admin, awardSql, args)).rows[0].id, first);
+      await assert.rejects(
+        call(admin, awardSql, [student, 6, args[2], awardKey]),
+        (error) => error.code === '22023',
+      );
+      await assert.rejects(
+        call(admin, awardSql, [student, 1.5, 'SYNTHETIC FRACTION', awardKey]),
+        (error) => error.code === '22P02',
+      );
+      assert.deepEqual(
+        (await rank(false)).map((row) => [row.points, row.activities]),
+        [
+          [23, 2],
+          [8, 1],
+        ],
+      );
+      assert.deepEqual(
+        (await rank(true)).map((row) => [row.points, row.activities]),
+        [
+          [12, 1],
+          [8, 1],
+        ],
+      );
+      await assert.rejects(
+        call(student, 'select public.admin_award_history(null)'),
+        (error) => error.code === '42501',
+      );
+      await assert.rejects(
+        db.query('update app_private.manual_point_awards set points=99 where id=$1', [first]),
+        (error) => error.code === '42501',
+      );
+      await assert.rejects(
+        db.query('delete from app_private.manual_point_awards where id=$1', [first]),
+        (error) => error.code === '42501',
+      );
+    },
+  );
+
+  await t.test(
+    'Amman one-day first week, seven-day rollover and manual-award cutoffs remain exact',
+    async () => {
+      await db.query(
+        `insert into app_private.manual_point_awards(student_id,admin_id,points,reason,idempotency_key,created_at)
+      values($1,$2,20,'SYNTHETIC PRIOR AWARD','70000000-0000-4000-8000-000000000199','2026-11-19 23:59 Asia/Amman')`,
+        [gateStudent, admin],
+      );
+      assert.deepEqual(
+        (await rank(false)).map((row) => [row.points, row.activities]),
+        [
+          [28, 1],
+          [23, 2],
+        ],
+      );
+      await clock('2026-11-19 23:59 Asia/Amman');
+      assert.deepEqual(
+        (await rank(true)).map((row) => [row.points, row.activities]),
+        [
+          [20, 0],
+          [11, 1],
+        ],
+      );
+      await clock('2026-11-20 00:00 Asia/Amman');
+      assert.deepEqual(
+        (await rank(true)).map((row) => [row.points, row.activities]),
+        [
+          [12, 1],
+          [8, 1],
+        ],
+      );
+      await clock('2026-11-23 00:00 Asia/Amman');
+      assert.deepEqual(
+        (await rank(true)).map((row) => [row.points, row.activities]),
+        [
+          [12, 1],
+          [8, 1],
+        ],
+      );
+      await clock('2026-11-27 00:00 Asia/Amman');
+      assert.deepEqual(
+        (await rank(true)).map((row) => [row.points, row.activities]),
+        [
+          [0, 0],
+          [0, 0],
+        ],
+      );
+      assert.deepEqual(
+        (await rank(false)).map((row) => [row.points, row.activities]),
+        [
+          [28, 1],
+          [23, 2],
+        ],
+      );
+      await clock('2026-11-21 12:00 Asia/Amman');
+      assert.equal(await oldPoints(), beforePoints);
+      assert.deepEqual(await archive(), beforeArchive);
+    },
+  );
+
+  await t.test(
+    'banned and deleted accounts cannot reappear through manual awards; gates still close both views',
+    async () => {
+      await db.query(
+        "update auth.users set banned_until='2026-12-01 00:00 Asia/Amman' where id=$1",
+        [student],
+      );
+      for (const weekly of [false, true]) assert.equal((await rank(weekly)).length, 1);
+      await db.query('update auth.users set banned_until=null,deleted_at=now() where id=$1', [
+        student,
+      ]);
+      for (const weekly of [false, true]) assert.equal((await rank(weekly)).length, 1);
+      await db.query('update auth.users set deleted_at=null where id=$1', [student]);
+      await call(student, 'select public.set_public_full_name_consent(true)');
+      await db.exec(
+        "create or replace function app_private.leaderboard_enabled() returns boolean language sql immutable set search_path='' as $$select false$$",
+      );
+      await assert.rejects(
+        call(student, 'select public.set_public_full_name_consent(true)'),
+        (error) => error.code === '42501',
+      );
+      await call(student, 'select public.set_public_full_name_consent(false)');
+      assert.deepEqual(await rank(false), []);
+      assert.deepEqual(await rank(true), []);
+      assert.equal(await oldPoints(), beforePoints);
+    },
+  );
+});
 
 const student = '00000000-0000-4000-8000-000000000101';
 const team = '00000000-0000-4000-8000-000000000102';

@@ -100,41 +100,54 @@ language sql stable security invoker set search_path = '' as $$
   select app_private.admin_award_students();
 $$;
 
-create or replace function app_private.academy_leaderboard() returns jsonb
+create function app_private.manual_award_in_leaderboard_period(p_weekly boolean, p_created_at timestamptz, p_now timestamptz)
+returns boolean language plpgsql stable set search_path = '' as $$
+declare scoring_period integer;
+begin
+  if not coalesce(p_weekly, false) then return true; end if;
+  if to_regclass('public.point_awards') is not null then
+    scoring_period := coalesce(app_private.scoring_week(p_now), 1);
+    return app_private.scoring_week(p_created_at) = scoring_period
+      and p_now >= app_private.scoring_start(scoring_period);
+  end if;
+  return date_trunc('week', p_created_at) = date_trunc('week', p_now);
+end;
+$$;
+revoke all on function app_private.manual_award_in_leaderboard_period(boolean,timestamptz,timestamptz)
+  from public, anon, authenticated;
+
+create or replace function app_private.academy_leaderboard(p_weekly boolean default false) returns jsonb
 language sql stable security definer set search_path = '' as $$
-  with latest as (
-    select distinct on(g.submission_id) s.student_id,s.activity_id,g.id,g.published_at
-    from public.grades g join public.submissions s on s.id=g.submission_id
-    join public.activities a on a.id=s.activity_id join public.academy_weeks w on w.id=a.week_id
-    join public.profiles p on p.id=s.student_id join app_private.user_roles r on r.user_id=p.id
-    join auth.users u on u.id=p.id
-    where app_private.leaderboard_enabled() and g.status='published' and a.status='published'
-      and w.status='published' and w.kind='teaching' and p.registered_at is not null
-      and r.role='student' and u.email_confirmed_at is not null
-    order by g.submission_id,g.revision desc
-  ), scored as (
-    select l.student_id,l.activity_id,l.id,l.published_at,sum(c.points) as score
-    from latest l join public.grade_criterion_scores c on c.grade_id=l.id group by l.student_id,l.activity_id,l.id,l.published_at
-  ), best as (
-    select distinct on(student_id,activity_id) * from scored order by student_id,activity_id,score desc,published_at asc,id
+  with checkpoint as materialized (
+    select app_private.leaderboard_reference_time() as at
   ), graded_totals as (
-    select student_id,sum(score) as points,count(*)::bigint as activities,max(published_at) as completed_at
-    from best group by student_id
+    select t.* from checkpoint c cross join lateral app_private.leaderboard_base_rows(p_weekly,c.at) t
   ), award_totals as (
-    select student_id,sum(points)::numeric as points from app_private.manual_point_awards group by student_id
+    select student_id,sum(points)::numeric as points from app_private.manual_point_awards
+    cross join checkpoint c
+    where app_private.manual_award_in_leaderboard_period(p_weekly, created_at, c.at)
+    group by student_id
   ), totals as (
     select coalesce(g.student_id,a.student_id) as student_id,
       coalesce(g.points,0)+coalesce(a.points,0) as points,
-      coalesce(g.activities,0)::bigint as activities,g.completed_at
+      coalesce(g.activities,0)::bigint as activities,coalesce(g.tie_activities,0)::bigint as tie_activities,
+      g.completed_at,g.fallback_alias,g.student_id is not null as base_eligible
     from graded_totals g full join award_totals a using(student_id)
   ), eligible as (
-    select t.* from totals t join public.profiles p on p.id=t.student_id
+    select t.*,coalesce(t.fallback_alias,to_jsonb(p)->>'leaderboard_name',
+      'Learner '||substr(md5(t.student_id::text),1,10)) as display_alias
+    from totals t join public.profiles p on p.id=t.student_id
       join app_private.user_roles r on r.user_id=t.student_id join auth.users u on u.id=t.student_id
     where p.registered_at is not null and r.role='student' and u.email_confirmed_at is not null
+      and ((to_regclass('public.point_awards') is not null and t.base_eligible)
+        or (to_regclass('public.point_awards') is null
+          and (to_jsonb(u)->>'deleted_at') is null
+          and (nullif(to_jsonb(u)->>'banned_until','')::timestamptz is null
+            or (to_jsonb(u)->>'banned_until')::timestamptz <= now())))
   ), ranked as (
-    select row_number() over(order by e.points desc,e.activities desc,e.completed_at asc nulls last,e.student_id) as rank,
+    select row_number() over(order by e.points desc,e.tie_activities desc,e.completed_at asc nulls last,e.student_id) as rank,
       case when p.public_full_name_consent and p.public_full_name_consent_at is not null
-        then p.full_name else 'Learner '||substr(md5(e.student_id::text),1,10) end as alias,
+        then p.full_name else e.display_alias end as alias,
       e.points,e.activities
     from eligible e join public.profiles p on p.id=e.student_id
   ) select case when app_private.leaderboard_enabled()

@@ -436,7 +436,7 @@ export type Database = {
     Views: { [_ in never]: never };
     Functions: {
       academy_capabilities: { Args: Record<string, never>; Returns: Json };
-      academy_leaderboard: { Args: Record<string, never>; Returns: Json };
+      academy_leaderboard: { Args: { p_weekly?: boolean }; Returns: Json };
       academy_notifications: { Args: Record<string, never>; Returns: Json };
       admin_award_history: { Args: { p_student_id?: string }; Returns: Json };
       admin_award_points: {

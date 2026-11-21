@@ -1,10 +1,10 @@
 {
   "baselineCommit": "28d6a7d386f494f53d883998132a35b17330346f",
-  "authorization": "Owner approved Path B and candidate-local production-build/v2-proof corrections. On 2026-11-21 the owner reported configured validation PASS and explicitly authorized committing and pushing the exact complete 31-path candidate to existing PR #19. This approval does not authorize merging, workflow activation, migration execution, Admin promotion, deployment, or production changes.",
+  "authorization": "Owner approved Path B and candidate-local production-build/v2-proof corrections. On 2026-11-21 the owner reported configured validation PASS and explicitly authorized committing and pushing the exact complete 31-path candidate to existing PR #19. This approval does not authorize merging, workflow activation, migration execution, Admin promotion, deployment, or production changes. Owner authorized an isolated production leaderboard RPC compatibility patch on 2026-11-21; this allows candidate-local changes and tests only, not publication or production operations.",
   "files": {
     "docs/audits/leaderboard-admin-release/FINAL_READINESS.md": {
-      "sha256": "ac6d896e370bcb7dc76e7f30afea5d404939e9e631a312d4a1ec0a3d64ec79bc",
-      "reason": "Path B release review documentation and exact-path preservation evidence.",
+      "sha256": "ef6f31c37f01c01c34d2239aa59dfb30ff6521b6dcf23e813267f52c9f40f2b0",
+      "reason": "Documents the authorized candidate-local RPC compatibility patch and its evidence.",
       "added": true
     },
     "docs/audits/leaderboard-admin-release/INITIAL_ADMIN_PROMOTION.md": {
@@ -23,13 +23,13 @@
       "added": true
     },
     "frontend/tests/leaderboard-consent-admin-awards.security.test.mjs": {
-      "sha256": "91c7881eaf48ddc024584f005c6b7f4e56e30b1cfd7ba33a1471805fd59647d7",
-      "reason": "Focused regression or preservation test for the owner-approved Path B behavior.",
+      "sha256": "2b8f20caf2182ebf699d62dcfca0a16eea98e33b1504fb0fdd2d87cd270e0a4e",
+      "reason": "Focused regression suite verifies the observed boolean RPC contract, scoring views, privacy and award security.",
       "added": true
     },
     "supabase/migrations/20261119170000_leaderboard_name_consent.sql": {
-      "sha256": "51bbb8f1a6cc956664b01a990b6e55d1274173ac114a9f240d578e79aa76177b",
-      "reason": "Path B migration for the current-main leaderboard consent, private Admin registry, or append-only manual award ledger.",
+      "sha256": "d63849d6ecf0a7cdb71f1b9acf1f7c7313f880df100e624d036e5cfa5e6d8a3f",
+      "reason": "Adapt the approved consent migration to the inspected production boolean leaderboard RPC and preserve the live scoring contract.",
       "added": true
     },
     "supabase/migrations/20261119170100_application_admins.sql": {
@@ -38,8 +38,8 @@
       "added": true
     },
     "supabase/migrations/20261119170200_admin_manual_point_awards.sql": {
-      "sha256": "f60dcddb6247ba7bcc7ff4d7e783195bcdb221437ac5116c87c49226f76666ad",
-      "reason": "Path B migration for the current-main leaderboard consent, private Admin registry, or append-only manual award ledger.",
+      "sha256": "b70b545d042a325b9547e37d8c3b73d9c608acdbea7393aa6bf3d9435fcd0aee",
+      "reason": "Integrate append-only Admin awards into the inspected production boolean leaderboard RPC without changing activity counts or scoring boundaries.",
       "added": true
     },
     "frontend/package.json": {
@@ -53,8 +53,8 @@
       "previousSha256": "c886c6d8115b74541cdce3f4170cdb00d49b7d48fabd292c09178fa548531a97"
     },
     "frontend/scripts/database-fixture.mjs": {
-      "sha256": "df5b8817717e36a4f82458c6f7544b5dd3f51f45240372391fb1a05f580bd908",
-      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "sha256": "8fbe0d414ce85144d2937641234b086c392fa7ef64d661b9ab86d777c854a59a",
+      "reason": "Inject disposable production-contract/scoring fixtures for embedded migration regression tests only.",
       "previousSha256": "d41c5676b429d2e2fa63ae08c370583f7f8e57272611e917fc1c180f7f180a23"
     },
     "frontend/scripts/verify-merge-preservation.mjs": {
@@ -93,8 +93,8 @@
       "previousSha256": "a59d69e324afd7465fa673b7934478da41ef8c51762efa9a0bd051f3bc268959"
     },
     "frontend/src/types/database.ts": {
-      "sha256": "632da482eec807c6e822fa7273988d2bf05cf44d7e3dd850f5eb5f7284b7e376",
-      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "sha256": "6166264cc520c4b8e5b566e284dadfbd107770fcfa958b3327461f4198cd116c",
+      "reason": "Generated type reflects the production public RPC optional boolean argument.",
       "previousSha256": "8e8cf872c9ac1abf990035411c7c95b5f294ff455cdf0219b6cc2128fe73204c"
     },
     "frontend/tests/database.security.test.mjs": {
@@ -151,6 +151,17 @@
       "sha256": "5df046567d007b3b61ac87c50c85ef72f9a4e3a9ae74fa95fabf2b7c0041cda4",
       "previousSha256": "e0f90bd2d1cb34fcff4781dd6c9d4f6d14bde35257b3de30b14f02a3284310fe",
       "reason": "Focused synthetic PostgreSQL, eight-combination build agreement, freshness boundaries, and mocked SELECT-only transport/proof-write regression coverage."
+    },
+    "frontend/tests/fixtures/production-leaderboard-contract.sql": {
+      "sha256": "9768c69986491232ff02f43a9cc2c845fbd8dcdbc82df66dabb8b4409b8f2061",
+      "reason": "Disposable synthetic fixture for testing pending migrations against the read-only inspected RPC signature; never applied to production.",
+      "added": true
+    },
+    "frontend/tests/fixtures/production-leaderboard-scoring.sql": {
+      "sha256": "2d5f0b7af2bf505f2dd8f111ce7698b5adef6e4ec0fb8450293d2601cdcd5087",
+      "reason": "Disposable synthetic scoring-contract fixture using captured production function definitions and no live data.",
+      "added": true
     }
-  }
+  },
+  "compatibilityPatchBaselineCommit": "62ee81b991e87159886b94ef7f6bd2697ea7ff61"
 }

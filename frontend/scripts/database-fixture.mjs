@@ -6,7 +6,18 @@ export const migrations = () =>
   readdirSync(new URL('supabase/migrations/', root))
     .filter((name) => name.endsWith('.sql'))
     .sort()
-    .map((name) => readFileSync(new URL(`supabase/migrations/${name}`, root), 'utf8'));
+    .flatMap((name) => {
+      const sql = readFileSync(new URL(`supabase/migrations/${name}`, root), 'utf8');
+      return name === '20261119170000_leaderboard_name_consent.sql'
+        ? [
+            readFileSync(
+              new URL('frontend/tests/fixtures/production-leaderboard-contract.sql', root),
+              'utf8',
+            ),
+            sql,
+          ]
+        : [sql];
+    });
 
 // Test-only compatibility fixture. This is NOT GoTrue, PostgREST, or Storage API.
 export async function createDatabase(migrationSql = migrations()) {

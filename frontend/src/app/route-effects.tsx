@@ -26,6 +26,10 @@ export function RouteEffects() {
   useEffect(() => {
     const page = publicPages.find((page) => pathname === `/${page}`);
     const tool = findLearningTool(pathname.match(/^\/ai-tools\/([^/]+)\/?$/)?.[1]);
+    const week1 = pathname.match(/^\/eda\/week-1(?:\/([^/]+))?\/?$/);
+    const week1Title = week1
+      ? t(`week1.${week1[1] === 'dataset' || week1[1] === 'bingo' ? week1[1] : 'week'}`)
+      : undefined;
     const portalTitles: Record<string, string> = {
       '/login': c.login,
       '/auth/callback': c.login,
@@ -38,7 +42,7 @@ export function RouteEffects() {
       '/profile/edit': c.editProfile,
       '/notifications': c.notifications,
     };
-    document.title = `${portalTitles[pathname] ?? (tool ? `${tool.name} · ${t('nav.aiTools')}` : page ? t(`nav.${page === 'ai-tools' ? 'aiTools' : page}`) : pathname === '/' ? t('nav.home') : t('error.notFoundTitle'))} · iAnalyze Academy`;
+    document.title = `${portalTitles[pathname] ?? (week1Title ? week1Title : tool ? `${tool.name} · ${t('nav.aiTools')}` : page ? t(`nav.${page === 'ai-tools' ? 'aiTools' : page}`) : pathname === '/' ? t('nav.home') : t('error.notFoundTitle'))} · iAnalyze Academy`;
   }, [pathname, t, c]);
   return null;
 }

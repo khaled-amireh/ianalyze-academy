@@ -228,3 +228,126 @@ Focused verification on this follow-up passed **19/19** tests in `leaderboard-co
 ### Remaining production sequence
 
 Publish and review the candidate, recheck the exact production target/current role state and pending migration list, then apply only the two additive migrations above through the authorized CLI sequence. Stage the fixed Hussein approval row without changing roles. The owner signs into a secure local candidate session and confirms the one-time Student-to-Team transition; verify the role row, reason, audit actor UUID, and consumed approval. Complete configured artifact and Pages deployment preflight. Immediately before Cloudflare Direct Upload, the owner enrolls and verifies TOTP from the exact-target Team dashboard; without a staged Admin approval this only raises the owner's assurance and does not grant Admin. Deploy the reviewed `main` commit only after confirmation. After deployment, stage the exact single-use Admin approval, then guide the owner to refresh their Team dashboard, perform a fresh TOTP/AAL2 challenge, and consume the approval. Verify the Admin registry, append-only grant event, and consumed approval. No deployment, production migration, approval staging, or role change has yet occurred.
+
+## Pre-deployment regression review (2026-11-21)
+
+### Historical comparison and Week 1
+
+- Compared the local candidate against the available previous-live source commit `b57a26d7eac32004110b0d5aef4a18f6b94281bf`. That source contains the Week1 entry in the Study Plan, both Week1 activity modules, and their routes. Those modules/routes were absent from the consolidated candidate and this is a confirmed consolidation regression.
+- Restored the Week1 entry and routes in the candidate. The Study Plan now renders the Week1 entry independently of the intentionally hidden multiweek plan (`SHOW_WEEKLY_PLAN=false`). The Week1 overview links to Activity 1 (dataset) and Activity 2 (Bingo). No Week2 route or activity was added.
+- Restored the exact previously applied Week1 migration sources for reproducible local schema only. Read-only production migration history already contains these versions; none was executed or replayed.
+- The prior combined assignment/scoring migration was not restored. Week1 submission/review functionality is adapted to the current main schema; obsolete assignment/draft and point-award interfaces are excluded. Published session content uses the current RLS-protected public projection, validates links, and strips unknown/private fields.
+
+### Hussein Team transition control
+
+- The dashboard panel is restricted to a signed-in, email-confirmed Team session whose UUID exactly matches the verified owner UUID. It asks the server whether the fixed Hussein transition approval is still pending. The confirmation button is rendered only when that server check returns true; otherwise the panel shows a status and a read-only status-check control. The action calls only the reviewed owner transition RPC.
+- The latest already-observed read-only production evidence shows Hussein is already Team, the owner is Team, the exact approval is no longer pending, and the corresponding single audit event records the owner actor and approved reason. This explains the missing confirmation button: there is no pending transition to confirm. No approval was consumed and no role was changed during this review.
+- The control cannot appear in an unconfigured or signed-out public preview. Do not stage another approval or click a transition action for visual checking.
+
+### Feature regression audit
+
+- Preserved public home/about/contact, syllabus, video library, AI-tool guidance, join/login/auth recovery, profile, notifications, student dashboard, Team dashboard, Team grading/feedback, notebook submission gates, leaderboard consent/privacy, Admin AAL2 and manual-award authorization, and Arabic/English copy and direction. Existing feature approvals and the closed legacy upload gate remain in place. These paths are covered by the current frontend and embedded database/security suites; this is not a claim of a live production click-through.
+- Intentional boundaries remain: the general week-by-week plan is hidden; only Week1 is exposed. No Week2 content, old assignment/scoring stack, legacy uploads, test awards, new users, Admin grant, or role operation was introduced or performed. Admin actions remain AAL2 protected; the Hussein transition requires the exact owner session and server-pending approval.
+- Historical source review is complete from the locally available commit. Direct public-site visual inspection was unavailable in this session (the page fetch was inaccessible and the Windows browser-control pipe was unavailable); the owner should perform the local visual review below.
+
+### Validation after the regression fixes
+
+- `npm.cmd run validate` from `frontend/` — **PASS**: TypeScript, ESLint, 113/113 frontend tests, Prettier, public production build, production boundary, Pages artifact checks, Phase 02 integrity, redesign preservation, Phase 03 preservation, 61/61 embedded PostgreSQL/database security tests, and generated database-type drift check.
+- Build/artifact evidence: public build generated the Week1 route chunk and passed the 66-file Pages artifact check. It is intentionally an unconfigured public build with launch approvals disabled.
+- Preservation: both `check:redesign` and `check:phase-03` pass with 404 inherited files and 195 exact-path/hash-pinned resolutions. Phase 03 now honors a newer Path B SHA pin only when that exact path is explicitly approved; the original historical hash remains required for every other path. Source secret-pattern scan passed. `git diff --check` passed.
+- The owner-reported configured registration proof and `release:check` passed before this regression correction. They must be regenerated/rerun from the existing secure process-only PowerShell handoff after the source changes; no private configuration was available to this validation process, and no production configuration or data was changed.
+
+### Owner local visual review
+
+From the isolated candidate's `frontend/` directory, use the existing secure process-only configuration in the already-open PowerShell and run `npm.cmd run dev -- --host 127.0.0.1 --port 5173 --strictPort`. Visit `http://127.0.0.1:5173/eda`, then `/eda/week-1`, `/eda/week-1/dataset`, and `/eda/week-1/bingo`. Confirm the Week1 card and both activity pages render in Arabic and English; do not submit a dataset or Bingo claim.
+
+For the Team panel, open `http://127.0.0.1:5173/login`, authenticate with the owner's existing account under the approved local configuration, then visit `http://127.0.0.1:5173/workspace`. Given the observed consumed approval and Hussein Team role, expect the panel to say no owner-approved assignment is pending and show the status-check control; the confirmation button should remain absent. Do not click a role-transition action.
+
+No deployment, migration, approval staging/consumption, Admin promotion, award, or production role change was performed. The candidate remains isolated and unpublished.
+
+## Final release preparation and configured-check handoff (2026-11-22)
+
+### Candidate and configuration
+
+- Candidate worktree: `C:\Users\khale\Desktop\ianalyze-academy\.worktrees\production-release-98ad199-20261121`; branch `fix/database-security-owner-transition-20261121`; HEAD `98ad19916269f45c32e689f9226f6b1185bc99b3`. A read-only `git ls-remote` confirmed GitHub `main` still points to this baseline. The candidate has 39 unstaged status entries and no staged files; its existing Week 1, role-transition, and release changes remain intact.
+- Read-only GitHub repository-variable inspection returned the ten approved repository-level variables. The three approval flags are `true`; `SUPABASE_PROJECT_ID`, `PRODUCTION_ORIGIN`, and `VITE_SUPABASE_URL` match this production project; the browser publishable key is present and matches the `sb_publishable_` format; and the Cloudflare account/project/production-branch values identify `ianalyze-academy` on `main`. The key value was not printed. Metadata confirms the required repository secrets exist; their values were not read.
+- Root cause of the owner's earlier configured-build error: the multi-block PowerShell handoff wrapped `ConvertFrom-Json` output in an array. Under Windows PowerShell 5.1, that shape was counted as one object and the approval-name map was not populated. The code therefore failed closed with “registration closed” and missing-approval messages even though the repository variables were present. The corrected handoff parses GitHub CLI TSV rows, checks every approved target/value and browser-key format, and fails with an allowlisted stage/code.
+- Added `frontend/scripts/run-configured-release-check.ps1` as a single-entry, exact-candidate handoff. It reads repository variables without displaying the browser key, prompts via masked input only for missing process-only `SUPABASE_ACCESS_TOKEN` and `ACADEMY_LEADER_USER_ID`, generates the existing SELECT-only registration proof, clears private Management/Cloudflare variables before `npm.cmd run release:check`, restores the process environment, and verifies the configured artifact metadata. It does not modify production or publish an artifact. `frontend/tests/release-check-handoff.test.ts` covers the TSV parser, target/configuration pinning, private input and cleanup, native exit handling, and artifact gates. Both files have exact SHA-256 pins in the existing approved-path manifest.
+
+### Local validation
+
+- Focused handoff test: `node --wasm-num-compilation-tasks=1 --liftoff-only --test --test-concurrency=1 tests/release-check-handoff.test.ts` from `frontend/` — **4/4 PASS**. Windows PowerShell parser check — **PASS**.
+- Fresh `npm.cmd run validate` from `frontend/` — **PASS**: TypeScript, ESLint, Prettier, **117/117 frontend tests**, public build, production boundary check, public Pages artifact check (**66 files**), Phase 02 check, redesign preservation/integrity, Phase 03 preservation/integrity, **61/61 embedded database/security tests**, and database type drift check.
+- Preservation checks — **PASS**, 404 inherited files and 197 exact-path, hash-pinned integration resolutions; source secret-pattern scan clean. These were run again after the report/hash update. No candidate files were staged.
+- The owner-only fresh registration proof and configured `npm.cmd run release:check` have **not** run in this Codex process. This process has no process-only Supabase token or Leader UUID, and no credential was read or prompted for here. The prior proof must not be reused. The owner must run the single-entry handoff below from the existing approved PowerShell context to generate a fresh proof and the configured production build/artifact.
+
+### Cloudflare Direct Upload preflight
+
+- The connected Cloudflare identity reports `khaledamireh55@gmail.com`. Read-only API inspection confirmed project `ianalyze-academy`, `ianalyze-academy.pages.dev`, production branch `main`, no Git source binding, and an ad-hoc Direct Upload deployment. The latest successful production deployment remains commit `b57a26d7eac32004110b0d5aef4a18f6b94281bf` from 2026-11-19; this candidate has not been deployed.
+- Wrangler `4.156.0` is installed locally. `wrangler whoami --json` failed because this machine's stored Wrangler authorization is expired and the Codex shell is non-interactive. GitHub metadata confirms `CLOUDFLARE_API_TOKEN` exists but does not expose its value or prove the associated token's current Pages Write permission. Read access to the project does not establish upload permission. Before an authorized Direct Upload, the owner must authenticate Wrangler interactively as the intended Cloudflare account and verify the approved credential has Pages Write (Pages Edit) for this account/project. No upload-token endpoint was called and no deployment was attempted.
+- GitHub reports `production.yml` is still `disabled_manually`. The historical run `43097299336` remains queued; it was not restarted, cancelled, or enabled. Manual Direct Upload from a clean, reviewed, published `main` commit is independent of that queued workflow. Do not enable or rerun the workflow.
+
+For the later owner-authorized manual deployment, first sign Wrangler in interactively, verify `whoami --json` identifies the owner and `pages project list --json` lists the exact project, and verify Pages Write on the approved account token/member. From a clean checkout of the exact reviewed `main` commit, after its fresh configured `release:check`, use the locally installed Wrangler command:
+
+```powershell
+$branch = (& git branch --show-current).Trim()
+$releaseSha = (& git rev-parse HEAD).Trim()
+$remoteMain = ((& git ls-remote origin refs/heads/main) -split '\s+')[0]
+$dirty = (& git status --porcelain)
+if ($LASTEXITCODE -ne 0 -or $branch -cne 'main' -or $releaseSha -cne $remoteMain -or $dirty) {
+  throw 'Expected a clean checkout exactly at current origin/main.'
+}
+& node .\node_modules\wrangler\bin\wrangler.js pages deploy .\dist --project-name ianalyze-academy --branch main --commit-hash $releaseSha --commit-dirty=false --commit-message "Reviewed iAnalyze Academy release $releaseSha"
+if ($LASTEXITCODE -ne 0) { throw 'Pages Direct Upload failed; stop and inspect deployment status.' }
+```
+
+This is a prepared command only; it must not be run against this dirty candidate. After an approved upload, verify Cloudflare marks the deployment successful on production branch `main` with that exact SHA, then verify the canonical site's index/callback no-store response and the non-destructive feature checklist. Cloudflare documents Wrangler as a supported Pages Direct Upload path and requires Pages Write to create/update Pages content; this project-local Direct Upload route avoids activating the disabled GitHub workflow.
+
+### Admin readiness and remaining release gates
+
+- The manual-award UI is mounted on the Team dashboard but returns no content unless the server confirms application Admin membership. Its sensitive reads and award RPC call require AAL2, and the form validates positive whole-number points, reason, and idempotency. No award was created.
+- The initial Admin panel is bound to the owner account and Team/non-Admin state. TOTP enrollment and verification alone only display “Authenticator verified. No Admin access was granted.” Actual promotion remains post-deployment and requires the separately staged UUID-bound single-use approval plus the owner's authenticated AAL2 step-up. Neither enrollment nor promotion was performed here.
+- Owner's final pre-deployment MFA step: after configured validation and release publication are ready, sign in to the configured candidate with the existing owner account and open `/workspace`. In the owner-only “Prepare secure Admin authentication” panel, choose authenticator setup, scan the displayed QR directly into the owner's authenticator app, enter the current code only into the Academy prompt, and confirm the UI says the authenticator was verified with no Admin access granted. Do not send or save the QR/code in chat, screenshots, repository files, or logs. If a verified TOTP factor is already present, do not enroll another; confirm the panel recognizes it.
+- After a separately authorized deployment, a trusted operator stages the single-use approval for the exact owner UUID and reviewed reason. The owner signs into the live site, refreshes `/workspace`, invokes the promotion panel, and completes the fresh TOTP/AAL2 challenge in their own session. Verify Admin access and retained Team membership. The award panel should then appear after a refresh; inspect its history/list without submitting a test award.
+- The three production feature migrations, Hussein's Team transition, and the verified encrypted recovery/offsite readback are reused from the owner's completed evidence; none was repeated. No production data, role, configuration, workflow, or Pages deployment was changed.
+- **Deployment decision: NO-GO at this point.** The local code/security validation passes, but a fresh configured registration proof/build is pending owner-private input; Wrangler authentication and Pages Write remain unverified in the local deployment context; and this candidate still has uncommitted changes. Complete the owner handoff, review/publish the exact candidate through the separately authorized release process, then build from the exact reviewed `main` commit. Immediately before deployment, the owner completes/verifies TOTP enrollment without granting Admin. Use the approved Pages Direct Upload only after Wrangler identifies the intended account and write permission is verified. After the separately authorized deployment, stage the one-time owner-bound approval and let the owner perform the AAL2 promotion from the live Team dashboard.
+
+Owner's next local validation command, from the candidate `frontend/` directory and the already-open private PowerShell console:
+
+```powershell
+& '.\scripts\run-configured-release-check.ps1'
+```
+
+The handoff will use existing process values when present and ask only for missing approved inputs using masked prompts. Do not paste values into chat. A PASS will establish fresh registration readiness, `release:check`, and a configured Pages artifact for this candidate; it will not publish or deploy it.
+
+## Owner-confirmed configured validation and final publication review (2026-11-22)
+
+The owner reports that the exact candidate completed a fresh configured validation after the Week 1 and owner-transition fixes. This newer evidence supersedes the earlier pending-proof statement above. The successful check was not repeated.
+
+- Registration readiness: **PASS** at execution time.
+- `release:check`: **PASS** — 117/117 frontend tests; 61/61 embedded database/security tests; TypeScript, ESLint, formatting, preservation and database types all passed.
+- Configured production build and Pages artifact: **PASS**, 68 files. Owner-confirmed gate metadata: registration, submissions, leaderboard and privacy approval `true`; development previews `false`.
+- This is owner-reported execution evidence. No additional credentials were read, and no production writes, migrations, role changes, workflow activation or deployment occurred.
+
+### Candidate diff and GitHub publication state
+
+- GitHub `main` remains at `98ad19916269f45c32e689f9226f6b1185bc99b3`. The isolated branch is `fix/database-security-owner-transition-20261121` at that same HEAD, with **39 unstaged paths and zero staged paths**. Every changed/untracked path other than the approval manifest itself matches its exact SHA-256 approval pin; the preservation and source-secret checks passed. The scope consists of the readiness/approval records, release-test wiring and handoff, Week 1 routes/content/components/translations/types/security tests, the exact-owner transition UI/access test, and three historical Week 1 migration sources. There are no lockfile, environment, credential, backup, generated-build, or unrelated workflow changes. The historical migrations are source recovery for versions already applied; they are not newly pending production migrations.
+- The substantive diff preserves the hidden multiweek-plan gate while exposing only Week 1 and its Dataset/Bingo activities, keeps Arabic RTL and English LTR, adapts session/submission behavior to the current schema, and adds the Week 1 database/security tests to the normal embedded suite. The owner-transition UI is gated to the exact verified owner Team session, asks the fixed RPC whether the approval is pending, and only offers confirmation for a server-confirmed pending approval; server authorization/audit remains authoritative. No generic role editor or Admin bypass is introduced.
+- GitHub confirms the classic `main` branch-protection endpoint returns “Branch not protected”; the repository rulesets query is empty. The active Actions workflow is the manual-only read-only credential preflight. `production.yml` is still `disabled_manually`; its push trigger includes `main`, but it was not enabled. The old run `43097299336` remains queued, unchanged. It was not cancelled or rerun. The candidate branch does not match the production push trigger, and the later Direct Upload path does not depend on that queued Actions run.
+- No automatic PR validation workflow is configured. The owner should review the exact 39-path diff and local validation evidence in the PR. The disabled production workflow must remain disabled.
+
+### Exact publication and merge sequence (not executed)
+
+1. With separate publication authorization, stage exactly the 39 current reviewed paths and verify the staged list and diff. Proposed commit message: `feat: restore Week 1 and secure owner transition`.
+2. Create one commit on `fix/database-security-owner-transition-20261121`, push only to `https://github.com/khaled-amireh/ianalyze-academy.git`, and open a PR from that branch to `main`. Proposed title: `Restore Week 1 and secure owner transition`.
+3. Owner reviews the 39-path PR diff and existing validation evidence. Do not merge until that review is accepted and the owner separately authorizes merge; branch protection and automatic PR checks will not enforce this process.
+4. After merge, verify the exact `main` SHA and compare its Git tree with the validated candidate commit. Reuse the owner-validated 68-file configured artifact if the tree is identical and the artifact remains unchanged; do not repeat `release:check` solely for a different commit SHA. If the final tree or artifact differs, rerun configured validation from the final source before deployment.
+
+### Cloudflare and remaining owner actions
+
+- The current Cloudflare connector identity matches the owner account and can read the exact project. Project metadata still identifies `ianalyze-academy.pages.dev`, production branch `main`, Direct Upload (no Git source binding); latest successful production deployment remains commit `b57a26d7eac32004110b0d5aef4a18f6b94281bf` from 2026-11-19.
+- Local Wrangler `4.156.0` still reports its stored authorization expired in the non-interactive Codex shell. The repository secret exists by metadata, but its value/scope was not accessed. The owner must run `node .\node_modules\wrangler\bin\wrangler.js login` interactively, then `whoami --json` and `pages project list --json`, and confirm the intended account has Pages Write for the project. Pages API read access alone is not proof of upload permission. Cloudflare's Direct Upload documentation supports `wrangler pages deploy`; creating a deployment requires Pages Write ([Direct Upload](https://developers.cloudflare.com/pages/get-started/direct-upload/), [Pages API permissions](https://developers.cloudflare.com/pages/configuration/api/)).
+- No deployment is authorized by this review. Immediately before a later separately authorized deployment, the owner completes or confirms verified TOTP enrollment from the owner-only Team Dashboard panel. Enrollment alone does not grant Admin. After the deployment, use the reviewed exact-UUID, single-use approval and the owner's own AAL2 session for promotion; verify Admin and retained Team membership, then confirm the manual-award panel appears without creating a test award.
+- The immediate authorization needed is to publish the exact 39-path branch as one commit and a PR for review only. Merge and Cloudflare Direct Upload remain separate owner decisions. Existing migration, Team-role, backup/restore, and offsite-readback evidence remains reused; no new backup or migration is needed for this publication.
+
+**Final status:** local and configured release validation are **PASS** by owner-confirmed evidence; production deployment remains **NO-GO** until the candidate is published/reviewed/merged, the final source tree is confirmed against the validated artifact, and Wrangler owner authentication plus Pages Write are verified. No production change has been made.

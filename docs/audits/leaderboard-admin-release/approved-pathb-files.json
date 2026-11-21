@@ -1,9 +1,14 @@
 {
   "baselineCommit": "28d6a7d386f494f53d883998132a35b17330346f",
-  "authorization": "Owner approved Path B and candidate-local production-build/v2-proof corrections. On 2026-11-21 the owner reported configured validation PASS and explicitly authorized committing and pushing the exact complete 31-path candidate to existing PR #19. This approval does not authorize merging, workflow activation, migration execution, Admin promotion, deployment, or production changes. Owner authorized an isolated production leaderboard RPC compatibility patch on 2026-11-21; this allows candidate-local changes and tests only, not publication or production operations. Owner authorized this isolated candidate-local Admin AAL2 security correction on 2026-11-21; no publication or production operation is authorized. Owner requested review of the exact four-file Team-to-Admin eligibility correction and reconciliation through this documented exact-path/content-hash approval process on 2026-11-21. These entries pin only the candidate-local changes; production role changes, migration execution, publication, and deployment remain unauthorized. On 2026-11-21 the owner authorized the exact owner-designated Khaled Admin and Hussein Team release, including candidate-local implementation, release-specific publication, only the two new role-correction migrations, the narrowly scoped Hussein transition, and Cloudflare Pages Direct Upload after verified gates. The owner explicitly reserved their TOTP enrollment for the final pre-deployment interaction; no owner session, secret, or MFA step is fabricated. The owner-authorized role-transition implementation also records the explicit grant reason in the existing application audit event while preserving historical audit rows.",
+  "authorization": "Owner approved Path B and candidate-local production-build/v2-proof corrections. On 2026-11-21 the owner reported configured validation PASS and explicitly authorized committing and pushing the exact complete 31-path candidate to existing PR #19. This approval does not authorize merging, workflow activation, migration execution, Admin promotion, deployment, or production changes. Owner authorized an isolated production leaderboard RPC compatibility patch on 2026-11-21; this allows candidate-local changes and tests only, not publication or production operations. Owner authorized this isolated candidate-local Admin AAL2 security correction on 2026-11-21; no publication or production operation is authorized. Owner requested review of the exact four-file Team-to-Admin eligibility correction and reconciliation through this documented exact-path/content-hash approval process on 2026-11-21. These entries pin only the candidate-local changes; production role changes, migration execution, publication, and deployment remain unauthorized. On 2026-11-21 the owner authorized the exact owner-designated Khaled Admin and Hussein Team release, including candidate-local implementation, release-specific publication, only the two new role-correction migrations, the narrowly scoped Hussein transition, and Cloudflare Pages Direct Upload after verified gates. The owner explicitly reserved their TOTP enrollment for the final pre-deployment interaction; no owner session, secret, or MFA step is fabricated. The owner-authorized role-transition implementation also records the explicit grant reason in the existing application audit event while preserving historical audit rows. On 2026-11-21 the owner authorized this isolated pre-deployment regression review and candidate-local corrections only; this does not authorize deployment, migration execution, or role changes. On 2026-11-22 the owner authorized candidate-local diagnosis and correction of the configured-release PowerShell handoff, focused tests, preservation updates, and release validation only; no commit, push, merge, migration, role change, workflow activation, or deployment is authorized by this follow-up.",
   "files": {
+    ".github/workflows/production.yml": {
+      "sha256": "b0fb1b60a9a88689f4fa910fde4366e6a6fd15c021221fe34c20c661f85c9ef8",
+      "previousSha256": "564660d831416fe26b2933e17f28a724758b49f18a37f4bc32db231ca6a6c60d",
+      "reason": "Owner-authorized mapping for explicit production feature approvals and a narrow Edge Function change filter."
+    },
     "docs/audits/leaderboard-admin-release/FINAL_READINESS.md": {
-      "sha256": "3d27ed43f5271f9ebf21f0e7a8b4c7528b1649ec5d23c9ef4eb9ff57b9a33fb7",
+      "sha256": "13bebbfbec484118f0212a2ae94a3f874c45bf543f72ac70440dec0802311f4c",
       "reason": "Records the exact role transition, reasoned audit event, separated MFA enrollment/promotion sequence, focused validation, and remaining production steps.",
       "added": true,
       "previousSha256": "f95a8f0731d8b97d4e0e4a6367ddff659059967851b494d5da9a0e0d7bb745d2"
@@ -14,61 +19,109 @@
       "added": true,
       "previousSha256": "2ae5a76c04f3bc97e234b103ec3ee65c824b59fd898ef68e651537f27d2a6729"
     },
-    "frontend/src/features/portal/admin-point-awards.tsx": {
-      "sha256": "e533cfc4e7b66ce1f324b01cb55a75267af8eef6895b80d08b91eca27d1b3cb9",
-      "reason": "Requires TOTP/AAL2 step-up in the Admin awards UI; database RPCs remain authoritative.",
-      "added": true
-    },
-    "frontend/src/features/portal/leaderboard-name-consent.tsx": {
-      "sha256": "e20544529c17be87419d4e5060e23e0116437cd17000a84db4d05ceabad221e2",
-      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
-      "added": true
-    },
-    "frontend/tests/leaderboard-consent-admin-awards.security.test.mjs": {
-      "sha256": "f2723a54adea5d17cf16e61c9165b6bfbcb859eefd9e90e336e9310674a075d6",
-      "reason": "Adds synthetic positive and negative role-transition security coverage and guards the pre-deployment TOTP-only path from granting Admin without pending approval.",
-      "added": true,
-      "previousSha256": "c84d2a67ab69c5001f7960359fedd96878b69141f0e114e61cc960981b0372fb"
-    },
-    "supabase/migrations/20261119170000_leaderboard_name_consent.sql": {
-      "sha256": "d63849d6ecf0a7cdb71f1b9acf1f7c7313f880df100e624d036e5cfa5e6d8a3f",
-      "reason": "Adapt the approved consent migration to the inspected production boolean leaderboard RPC and preserve the live scoring contract.",
-      "added": true
-    },
-    "supabase/migrations/20261119170100_application_admins.sql": {
-      "sha256": "7aac05dcd5d8b299c2fff25232041fa13855a7f3a28cb8e6acdefa771b2d4f04",
-      "reason": "Adds private AAL2 assurance helpers and target-bound one-time promotion approval; retains invoker public wrappers and audited Admin registry.",
-      "added": true
-    },
-    "supabase/migrations/20261119170200_admin_manual_point_awards.sql": {
-      "sha256": "e0383238aed73d95b49efdedcc86dee1a9adae39fba2fbd659afd3bcbf560603",
-      "reason": "Requires server-verified AAL2 for award, history, and student-list Admin RPCs.",
-      "added": true
+    "docs/phase-03/schema-security.md": {
+      "reason": "Documents the RLS-bound one-time owner Team transition and clarifies that unauthenticated direct SQL does not provide an attributable auth.uid audit actor.",
+      "sha256": "57e651a711460280d6d6f51c27369e5e826d91233b51ee946b1c126b4ab48d94",
+      "previousSha256": "74d2855d0c728eab2ba0229783cda2b82bde95659d1f28d90fca6fbc3129d53a"
     },
     "frontend/package.json": {
-      "sha256": "b75dadf508dc0f166b86fd2148612fea4f313d79bdef027c013396372081c42b",
-      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "sha256": "9a9ecead7c451b793fa0078e3f20d42fae94cc0d4146290d8375d571de8a3347",
+      "reason": "Includes the synthetic Week 1 database security suite in the standard embedded database-security command.",
       "previousSha256": "d4a9348a96e7dcabadb957c65ddcf5e563541508767f203f06dc22d6a0b703ff"
+    },
+    "frontend/scripts/build-pages-production.mjs": {
+      "sha256": "80590ec4266fa361ccf0beb90cee7fe5553a768c83a065f0bb6afe6c82fee0b7",
+      "previousSha256": "c8bf2884220170859dd3e45b0e436488ca047400007f409f95ee38e8295838ff",
+      "reason": "Use the explicit feature approvals in the configured build while preserving verified registration and privacy behavior."
+    },
+    "frontend/scripts/check-pages-artifact.mjs": {
+      "sha256": "a8e216fc21ef1ae2fcdc13299502c75b2d8cdf470f8448e2a5957fd36ffaba11",
+      "previousSha256": "8c5b791995dad493997d4ab411b81fdde2548c2454fdc6515d974a88561694f7",
+      "reason": "Verify configured artifact gates against the explicit approvals and existing registration/privacy rules."
+    },
+    "frontend/scripts/check-phase-03.mjs": {
+      "sha256": "f51e420b9ae437b018f3f4b91c713b9ed4ac8858efac1e30b20f0205f25bec4c",
+      "reason": "Uses the existing exact-path Path B approval hash when verifying a Phase 03 preserved file intentionally updated by the reviewed release candidate; the baseline hash remains the fallback for all other paths.",
+      "added": false,
+      "previousSha256": "d626b21be7b21062f682a36447a0cfaa86719e93d3d3fa5053ce60adc04831f2"
     },
     "frontend/scripts/check-redesign.mjs": {
       "sha256": "addd1efe183885567847960b26c1637cf8d28d16beeff1ae9e4424e081f2ac37",
       "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
       "previousSha256": "c886c6d8115b74541cdce3f4170cdb00d49b7d48fabd292c09178fa548531a97"
     },
+    "frontend/scripts/check-registration-readiness.mjs": {
+      "sha256": "fd0b43e7f3f2098f51013890ab49b520e652c910833ef21ba2887e20860c0cc5",
+      "previousSha256": "73019f0eddb21c48657e18084afc60305e0ab5831fae6c0dc6cc52e3a91af7c3",
+      "reason": "Owner-authorized v2 SELECT-only proof generation with trusted Leader, exact approved gates, safe definitions, sanitized failures, and redirect rejection."
+    },
     "frontend/scripts/database-fixture.mjs": {
       "sha256": "818d779373aee9f5b938d94d609b649ec89f7e68f4cfbcc30f838e33d75a9daf",
       "reason": "Adds synthetic JWT claims and MFA factor fixtures for AAL2 authorization regression tests only.",
       "previousSha256": "d41c5676b429d2e2fa63ae08c370583f7f8e57272611e917fc1c180f7f180a23"
+    },
+    "frontend/scripts/production-build-gates.mjs": {
+      "sha256": "8cc412d66bba8db149892e1d28db4c45c02a4d7c26937bbcaeee8720faa16b6f",
+      "reason": "Fail-closed mapping from explicit repository approvals to isolated production build gates.",
+      "added": true
+    },
+    "frontend/scripts/registration-approval.mjs": {
+      "sha256": "81ff19c6aa79737a582cd13e0fcf188a8f2a4fa65bca794a5bf9ce099136ffe1",
+      "previousSha256": "ce30e1629718b3f094b8eae7e164cd24778f83393735efb677c2a8c731b6638d",
+      "reason": "Adapt the reviewed v2 proof to the Path B build approval helper; retain freshness, trusted identity, safe gates, legacy-upload denial, and fail-closed verification."
+    },
+    "frontend/scripts/run-configured-release-check.ps1": {
+      "sha256": "f1063f7c0eaed975ddd5fcbf90b6332f317046d7bec5d2d82bb0c0d31ef6ce6b",
+      "reason": "Owner-authorized single-entry fail-fast PowerShell handoff: verifies exact candidate and repository variables, obtains a fresh read-only registration proof, removes private process credentials before validation/build, and checks configured artifact metadata.",
+      "added": true
     },
     "frontend/scripts/verify-merge-preservation.mjs": {
       "sha256": "c255fdb49b414309450c2f40445611460fb8491ebdaf008abd3b239b3e61f897",
       "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
       "previousSha256": "5239b86319cdd3f4805929ed42b45cb25655000c5920a78852f89c27eabfd0dd"
     },
+    "frontend/src/app/app.tsx": {
+      "sha256": "d456843acffadd3d9ffd66192a1cd6a08b2948e61aad8ca5303acccd8f36b04f",
+      "reason": "Restores the Week 1 page and Activity 1/2 routes without enabling the hidden multiweek plan or adding Week 2.",
+      "added": false,
+      "previousSha256": "5cf6d91d87a780f309fa21a573c54ffc83bf83713cb8c190ccfa5fd250ab8e91"
+    },
+    "frontend/src/app/route-effects.tsx": {
+      "sha256": "06a72c29a40d872b5b71bbb51c883a5ce328778502833cabe953fca1adbf98be",
+      "reason": "Adds localized titles for restored Week 1 and activity routes.",
+      "added": false,
+      "previousSha256": "deb1818451a653bc08f530fba29e5aeafdf2a61d38c09d008438c418a4a4ce06"
+    },
+    "frontend/src/features/portal/admin-point-awards.tsx": {
+      "sha256": "e533cfc4e7b66ce1f324b01cb55a75267af8eef6895b80d08b91eca27d1b3cb9",
+      "reason": "Requires TOTP/AAL2 step-up in the Admin awards UI; database RPCs remain authoritative.",
+      "added": true
+    },
     "frontend/src/features/portal/copy.ts": {
       "sha256": "db48a366c301242951ed5a72ab6297732ee06285ee72dee796f863b9c8fd199a",
       "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
       "previousSha256": "df0db412e88e41504a7376d42316889c2bec4fcc93216fb3a2db50f2d9762c35"
+    },
+    "frontend/src/features/portal/initial-admin-promotion.tsx": {
+      "sha256": "c4b5a3aff89de5b4e6cb6019add7ffd75d4322c076c11f20f3e56b6f49c40a2f",
+      "reason": "Allows only the exact registered Team owner to enroll and verify TOTP before approval staging without granting Admin; promotion remains conditional on a pending single-use approval and AAL2.",
+      "added": true,
+      "previousSha256": "2475463618777c89c8df62178245c0b221085ad94da512f3a7a01283d2e39878"
+    },
+    "frontend/src/features/portal/leaderboard-name-consent.tsx": {
+      "sha256": "e20544529c17be87419d4e5060e23e0116437cd17000a84db4d05ceabad221e2",
+      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "added": true
+    },
+    "frontend/src/features/portal/owner-team-transition-access.ts": {
+      "sha256": "8fed46c1193be12e11b79a652799c35ef1376495acf0f0d25d11ec428879367f",
+      "reason": "Pure exact-owner UUID, confirmed-session and Team-role gate for the one-time transition status control.",
+      "added": true
+    },
+    "frontend/src/features/portal/owner-team-transition.tsx": {
+      "reason": "Shows owner-only, verified-session transition status and retry; exposes confirmation only when the fixed server RPC confirms an unconsumed approval.",
+      "added": true,
+      "sha256": "39a68c8abbd20dccfe97b5bb4aebba16f02adb99bb74f5611fed3bd4f6a63650"
     },
     "frontend/src/features/portal/privacy-page.tsx": {
       "sha256": "6e8b536b7a7ec33b332d57a029841a989be3ce850599a802d8364ccc71749eae",
@@ -85,75 +138,127 @@
       "reason": "Mounts only the target-bound Admin setup and one-time Team transition panels on the Team dashboard.",
       "previousSha256": "c16d1b45b3dab31ae239b0a11b499bd59aa0c18795972a1cb9b36b62345fed56"
     },
+    "frontend/src/features/week1/bingo-board.tsx": {
+      "sha256": "5aae9f9af9986a1d89d45f7996027dca7732cf3140a9e48624e3327ba416fd69",
+      "reason": "Restores the reviewed previous-live Week 1 activities and session view, adapted to the current main schema and current server RPCs; no separate assignments/scoring stack or Week 2 content is restored.",
+      "added": true
+    },
+    "frontend/src/features/week1/claim-details.tsx": {
+      "sha256": "b67817a7243f90af95035d3fc307171fa8f8ccb80a96f1b946595a7450e97e11",
+      "reason": "Restores the reviewed previous-live Week 1 activities and session view, adapted to the current main schema and current server RPCs; no separate assignments/scoring stack or Week 2 content is restored.",
+      "added": true
+    },
+    "frontend/src/features/week1/copy.ts": {
+      "sha256": "297e7cebfa2f8ba4d6ebfe8d247e49ada66feeb85ad0bad4cb130314735d8969",
+      "reason": "Restores the reviewed previous-live Week 1 activities and session view, adapted to the current main schema and current server RPCs; no separate assignments/scoring stack or Week 2 content is restored.",
+      "added": true
+    },
+    "frontend/src/features/week1/data.ts": {
+      "sha256": "f7f5fd0b0b6614d015c0c0440bdf30799f8163dda8681f9832c8a64f9ef9b083",
+      "reason": "Restores the reviewed previous-live Week 1 activities and session view, adapted to the current main schema and current server RPCs; no separate assignments/scoring stack or Week 2 content is restored.",
+      "added": true
+    },
+    "frontend/src/features/week1/dataset-activity.tsx": {
+      "sha256": "fe7f84fb0e37e574606a91fed4c66c613796d70024601721064fcfa50d3ba630",
+      "reason": "Restores the reviewed previous-live Week 1 activities and session view, adapted to the current main schema and current server RPCs; no separate assignments/scoring stack or Week 2 content is restored.",
+      "added": true
+    },
+    "frontend/src/features/week1/dataset-details.tsx": {
+      "sha256": "eea6e229dbb0b4b14081d7ddef3fcc8d40ddd41807826caf087c6b8d53a1be3c",
+      "reason": "Restores the reviewed previous-live Week 1 activities and session view, adapted to the current main schema and current server RPCs; no separate assignments/scoring stack or Week 2 content is restored.",
+      "added": true
+    },
+    "frontend/src/features/week1/dataset-submissions.tsx": {
+      "sha256": "dfafec5a73e599a8a8aa2625a8676017c50cbdba67c70b69390ff44c52ea8d5c",
+      "reason": "Restores the reviewed previous-live Week 1 activities and session view, adapted to the current main schema and current server RPCs; no separate assignments/scoring stack or Week 2 content is restored.",
+      "added": true
+    },
+    "frontend/src/features/week1/domain.ts": {
+      "sha256": "7d852de99dfc1cf54ebc4cb8973a327a85723219bc6a8b10a63be2ca74aa085e",
+      "reason": "Restores the reviewed previous-live Week 1 activities and session view, adapted to the current main schema and current server RPCs; no separate assignments/scoring stack or Week 2 content is restored.",
+      "added": true
+    },
+    "frontend/src/features/week1/inline-verification.tsx": {
+      "sha256": "fb436524a74d0494dc4aac28448e49c58e86294d5703f44df96240f963b9aa82",
+      "reason": "Restores the reviewed previous-live Week 1 activities and session view, adapted to the current main schema and current server RPCs; no separate assignments/scoring stack or Week 2 content is restored.",
+      "added": true
+    },
+    "frontend/src/features/week1/session-content.tsx": {
+      "sha256": "47217308a74fdac47211a23573116e771c535fe449ca9892a8a23034075a06c4",
+      "reason": "Restores the reviewed previous-live Week 1 activities and session view, adapted to the current main schema and current server RPCs; no separate assignments/scoring stack or Week 2 content is restored.",
+      "added": true
+    },
+    "frontend/src/features/week1/session-public-content.ts": {
+      "sha256": "59b1c813f4c0a2e4ed1a2333070b26df8908bfcb18837bac27f5b86edb3a80cb",
+      "reason": "Restores the reviewed previous-live Week 1 activities and session view, adapted to the current main schema and current server RPCs; no separate assignments/scoring stack or Week 2 content is restored.",
+      "added": true
+    },
+    "frontend/src/features/week1/use-claim-review.ts": {
+      "sha256": "4e9fda17ec8b46621550f5949a3bc1230588be56a04eebc304548630d813344c",
+      "reason": "Restores the reviewed previous-live Week 1 activities and session view, adapted to the current main schema and current server RPCs; no separate assignments/scoring stack or Week 2 content is restored.",
+      "added": true
+    },
+    "frontend/src/features/week1/use-week1-sync.ts": {
+      "sha256": "83e2a3e740b4bc7474cb971c2d795baae2d6c2507c75efc5f97a1c8151777588",
+      "reason": "Restores the reviewed previous-live Week 1 activities and session view, adapted to the current main schema and current server RPCs; no separate assignments/scoring stack or Week 2 content is restored.",
+      "added": true
+    },
+    "frontend/src/features/week1/week1-entry.tsx": {
+      "sha256": "ab38209543bb60a3489f89a523f4b7de7a41a827ed59e6eb5d8211b429f88851",
+      "reason": "Restores the reviewed previous-live Week 1 activities and session view, adapted to the current main schema and current server RPCs; no separate assignments/scoring stack or Week 2 content is restored.",
+      "added": true
+    },
+    "frontend/src/features/week1/week1-page.tsx": {
+      "sha256": "ccc3b0f8ce15059351bfb372e2d539b5b0d8b9d6303f067fc5650a22370e083f",
+      "reason": "Restores the reviewed previous-live Week 1 activities and session view, adapted to the current main schema and current server RPCs; no separate assignments/scoring stack or Week 2 content is restored.",
+      "added": true
+    },
+    "frontend/src/features/week1/week1.css": {
+      "sha256": "996e0b64598d1f92101ae9f7d03c821f92350270adcb5862dd0c2804119a5aa5",
+      "reason": "Restores the reviewed previous-live Week 1 activities and session view, adapted to the current main schema and current server RPCs; no separate assignments/scoring stack or Week 2 content is restored.",
+      "added": true
+    },
+    "frontend/src/lib/i18n.ts": {
+      "sha256": "17607e7fe17f5b1acfa97dd4fd6bb2c13a1a952279a56c06c35a9495530593d4",
+      "reason": "Applies locale-specific document direction when switching between Arabic and English.",
+      "added": false,
+      "previousSha256": "b6c3e399afd1eedca3339cc6a83bf63eedff1b5cdba948a4582746f1f7865af2"
+    },
+    "frontend/src/lib/locale-direction.ts": {
+      "sha256": "9eb41ab2a41f5910737d7a6bbce28658c75d0f87474002ddcb9c2d2eab9e37ff",
+      "reason": "Restores deterministic RTL Arabic and LTR English direction behavior with unit coverage.",
+      "added": true
+    },
     "frontend/src/locales/ar.json": {
-      "sha256": "fa6551bc1b6a656f088b1f48ab745b16155b8f24d9da0e139cafd99dcc6e4983",
-      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "sha256": "35b437aebdfd0f5ac175c97e25ab87ea4c19ff324774d83117fcecaa50d55dee",
+      "reason": "Restores Week 1 bilingual strings and adds the Team session publication and edit labels.",
       "previousSha256": "c00b62bb5dbaf62982f34782985e16b0fd1f8b3e4e123c78f5e09249ee62559a"
     },
     "frontend/src/locales/en.json": {
-      "sha256": "5f0247f24fa8402b1dff033047067803e69a3a70d5e0833812a4d161c399bcd5",
-      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "sha256": "886b44a1d773891d42c62294f7d217882bb88651ec8bbe4b9e06cf4d7b9a75ad",
+      "reason": "Restores Week 1 bilingual strings and adds the Team session publication and edit labels.",
       "previousSha256": "a59d69e324afd7465fa673b7934478da41ef8c51762efa9a0bd051f3bc268959"
     },
+    "frontend/src/pages/public/syllabus-page.tsx": {
+      "sha256": "e8f8bbc0026c3fde628e306c84d81e646884ba763ba8c96e87277288c79b1619",
+      "reason": "Places the Week 1 entry outside the hidden multiweek-plan gate so approved Week 1 content remains visible.",
+      "added": false,
+      "previousSha256": "5c6e13a0830f25a29158c0a25255446b18a16734cf66423413653a7bcf089055"
+    },
     "frontend/src/types/database.ts": {
-      "sha256": "4a6d06a3d99c89f6242fdaf7926e1429f457cf6f068095753e2aad69629b48ea",
-      "reason": "Adds type declarations for the two fixed-target owner Team-transition RPCs while preserving existing database types.",
+      "sha256": "06e7f7e896175249299755933a98f2df380f4b8abb7c3a0e948e953e6c64bd2f",
+      "reason": "Regenerates local database types from the restored, already-applied Week 1 migration catalog.",
       "previousSha256": "8e8cf872c9ac1abf990035411c7c95b5f294ff455cdf0219b6cc2128fe73204c"
     },
     "frontend/tests/database.security.test.mjs": {
-      "sha256": "4aeb3d112a5aa01df2b53f9748c1c90ae5b2aaaec66c95e9819211020bf6a810",
-      "reason": "Updates the RLS table-count assertion for the newly private approval table.",
+      "sha256": "c37c32452c874e74b193de2707c1c44e2533ccc79e4002996650a58ee1d58c17",
+      "reason": "Updates the protected-table count for the four restored Week 1 RLS tables and retains zero-row RLS denial plus unchanged-role and audit privacy assertions.",
       "previousSha256": "ad6f5853bac0aa19dd12cdf186275c7bd1397b19e1f8690f074a3e75955da37c"
     },
     "frontend/tests/final-improvements.security.test.mjs": {
       "sha256": "39a60ab71c1f211ca980c5a598fca23e770d98471ae46e739a559ee93601753c",
       "reason": "Focused regression or preservation test for the owner-approved Path B behavior.",
       "previousSha256": "e9c0a301a09f7d16130344d2745ba9147b555f025b919a30c6c23374ee952f43"
-    },
-    "frontend/tests/pre-presentation.test.ts": {
-      "sha256": "5cfddf02f12abafb3092f6524351e5e194cc49bf4b4291c9427392415085289b",
-      "reason": "Focused regression or preservation test for the owner-approved Path B behavior.",
-      "previousSha256": "7306203268c3a2c35338073817b46c077aa99caf61a2b13114463dd25ef93da0"
-    },
-    ".github/workflows/production.yml": {
-      "sha256": "b0fb1b60a9a88689f4fa910fde4366e6a6fd15c021221fe34c20c661f85c9ef8",
-      "previousSha256": "564660d831416fe26b2933e17f28a724758b49f18a37f4bc32db231ca6a6c60d",
-      "reason": "Owner-authorized mapping for explicit production feature approvals and a narrow Edge Function change filter."
-    },
-    "frontend/scripts/build-pages-production.mjs": {
-      "sha256": "80590ec4266fa361ccf0beb90cee7fe5553a768c83a065f0bb6afe6c82fee0b7",
-      "previousSha256": "c8bf2884220170859dd3e45b0e436488ca047400007f409f95ee38e8295838ff",
-      "reason": "Use the explicit feature approvals in the configured build while preserving verified registration and privacy behavior."
-    },
-    "frontend/scripts/check-pages-artifact.mjs": {
-      "sha256": "a8e216fc21ef1ae2fcdc13299502c75b2d8cdf470f8448e2a5957fd36ffaba11",
-      "previousSha256": "8c5b791995dad493997d4ab411b81fdde2548c2454fdc6515d974a88561694f7",
-      "reason": "Verify configured artifact gates against the explicit approvals and existing registration/privacy rules."
-    },
-    "frontend/scripts/production-build-gates.mjs": {
-      "sha256": "8cc412d66bba8db149892e1d28db4c45c02a4d7c26937bbcaeee8720faa16b6f",
-      "reason": "Fail-closed mapping from explicit repository approvals to isolated production build gates.",
-      "added": true
-    },
-    "frontend/tests/production-build-release-gates.test.ts": {
-      "sha256": "ede500f5c06f193ad5644ba7d3fa7fa356cd496e02cdbcf9d6b47baf111b913a",
-      "reason": "Focused regression tests for production approval mapping, registration/privacy preservation, artifact expectations, and Edge triggers.",
-      "added": true
-    },
-    "frontend/scripts/check-registration-readiness.mjs": {
-      "sha256": "fd0b43e7f3f2098f51013890ab49b520e652c910833ef21ba2887e20860c0cc5",
-      "previousSha256": "73019f0eddb21c48657e18084afc60305e0ab5831fae6c0dc6cc52e3a91af7c3",
-      "reason": "Owner-authorized v2 SELECT-only proof generation with trusted Leader, exact approved gates, safe definitions, sanitized failures, and redirect rejection."
-    },
-    "frontend/scripts/registration-approval.mjs": {
-      "sha256": "81ff19c6aa79737a582cd13e0fcf188a8f2a4fa65bca794a5bf9ce099136ffe1",
-      "previousSha256": "ce30e1629718b3f094b8eae7e164cd24778f83393735efb677c2a8c731b6638d",
-      "reason": "Adapt the reviewed v2 proof to the Path B build approval helper; retain freshness, trusted identity, safe gates, legacy-upload denial, and fail-closed verification."
-    },
-    "frontend/tests/registration-approval.test.ts": {
-      "sha256": "5df046567d007b3b61ac87c50c85ef72f9a4e3a9ae74fa95fabf2b7c0041cda4",
-      "previousSha256": "e0f90bd2d1cb34fcff4781dd6c9d4f6d14bde35257b3de30b14f02a3284310fe",
-      "reason": "Focused synthetic PostgreSQL, eight-combination build agreement, freshness boundaries, and mocked SELECT-only transport/proof-write regression coverage."
     },
     "frontend/tests/fixtures/production-leaderboard-contract.sql": {
       "sha256": "9768c69986491232ff02f43a9cc2c845fbd8dcdbc82df66dabb8b4409b8f2061",
@@ -165,26 +270,81 @@
       "reason": "Disposable synthetic scoring-contract fixture using captured production function definitions and no live data.",
       "added": true
     },
-    "frontend/src/features/portal/initial-admin-promotion.tsx": {
-      "sha256": "c4b5a3aff89de5b4e6cb6019add7ffd75d4322c076c11f20f3e56b6f49c40a2f",
-      "reason": "Allows only the exact registered Team owner to enroll and verify TOTP before approval staging without granting Admin; promotion remains conditional on a pending single-use approval and AAL2.",
+    "frontend/tests/leaderboard-consent-admin-awards.security.test.mjs": {
+      "sha256": "f2723a54adea5d17cf16e61c9165b6bfbcb859eefd9e90e336e9310674a075d6",
+      "reason": "Adds synthetic positive and negative role-transition security coverage and guards the pre-deployment TOTP-only path from granting Admin without pending approval.",
       "added": true,
-      "previousSha256": "2475463618777c89c8df62178245c0b221085ad94da512f3a7a01283d2e39878"
+      "previousSha256": "c84d2a67ab69c5001f7960359fedd96878b69141f0e114e61cc960981b0372fb"
+    },
+    "frontend/tests/owner-team-transition.test.ts": {
+      "sha256": "fbdccc79c9b1cb5043afe96eb3001ad5b57f27929655657b507d8a8b8ef6f177",
+      "reason": "Focused positive/negative coverage for exact owner session gating, server-pending-only confirmation, retry status and locale direction.",
+      "added": true
+    },
+    "frontend/tests/pre-presentation.test.ts": {
+      "sha256": "5cfddf02f12abafb3092f6524351e5e194cc49bf4b4291c9427392415085289b",
+      "reason": "Focused regression or preservation test for the owner-approved Path B behavior.",
+      "previousSha256": "7306203268c3a2c35338073817b46c077aa99caf61a2b13114463dd25ef93da0"
+    },
+    "frontend/tests/production-build-release-gates.test.ts": {
+      "sha256": "ede500f5c06f193ad5644ba7d3fa7fa356cd496e02cdbcf9d6b47baf111b913a",
+      "reason": "Focused regression tests for production approval mapping, registration/privacy preservation, artifact expectations, and Edge triggers.",
+      "added": true
+    },
+    "frontend/tests/registration-approval.test.ts": {
+      "sha256": "5df046567d007b3b61ac87c50c85ef72f9a4e3a9ae74fa95fabf2b7c0041cda4",
+      "previousSha256": "e0f90bd2d1cb34fcff4781dd6c9d4f6d14bde35257b3de30b14f02a3284310fe",
+      "reason": "Focused synthetic PostgreSQL, eight-combination build agreement, freshness boundaries, and mocked SELECT-only transport/proof-write regression coverage."
+    },
+    "frontend/tests/release-check-handoff.test.ts": {
+      "sha256": "e39fffccafcc96e0296bd1e9956774534469e9bd85b17fec33bd1727c2f9a191",
+      "reason": "Focused regression coverage for GitHub variable parsing, candidate/configuration pinning, secure process cleanup, native exit handling, and artifact gates in the owner-authorized PowerShell handoff.",
+      "added": true
+    },
+    "frontend/tests/week1.security.test.mjs": {
+      "sha256": "77e6ed2547c3858f014e28888bf0d676d714da90189fb56373c395f9b9555ac0",
+      "reason": "Restores synthetic Week 1 database security tests for ownership, RLS, session publishing, dataset attempts and Bingo review; test-only database.",
+      "added": true
+    },
+    "frontend/tests/week1.test.ts": {
+      "sha256": "04b5f80150c4e2168c6139d51a7f145c929c70428323c1a61e3d50fadfbb043b",
+      "reason": "Adds candidate regression coverage for Week 1 visibility/routes, both activities, safe published-session projection, current schema boundaries and bilingual direction.",
+      "added": true
+    },
+    "supabase/migrations/20261114184131_week_one.sql": {
+      "sha256": "af058357050c8a8c8cf8752c22f17702189011525dccc6f826648edc3b220b60",
+      "reason": "Exact historical Week 1 migration source restored from the reviewed previous-live commit; production history confirms this version is already applied. Restores reproducible local schema only; migration is not executed.",
+      "added": true
+    },
+    "supabase/migrations/20261114200222_week1_bingo_rounds.sql": {
+      "sha256": "b204d0c3cc5a3273606e5988d56d73c41d1b005d195b948f6f523b9b0802938f",
+      "reason": "Exact historical Week 1 Bingo-round migration source restored from the reviewed previous-live commit; production history confirms this version is already applied. Restores reproducible local schema only; migration is not executed.",
+      "added": true
+    },
+    "supabase/migrations/20261115105446_week1_dataset_attempts.sql": {
+      "sha256": "c418fc60eaf97ac265e22e6b5cb315ff082d2470ff49892139a76912fe898fc7",
+      "reason": "Exact historical Week 1 dataset-attempt migration source restored from the reviewed previous-live commit; production history confirms this version is already applied. Restores reproducible local schema only; migration is not executed.",
+      "added": true
+    },
+    "supabase/migrations/20261119170000_leaderboard_name_consent.sql": {
+      "sha256": "d63849d6ecf0a7cdb71f1b9acf1f7c7313f880df100e624d036e5cfa5e6d8a3f",
+      "reason": "Adapt the approved consent migration to the inspected production boolean leaderboard RPC and preserve the live scoring contract.",
+      "added": true
+    },
+    "supabase/migrations/20261119170100_application_admins.sql": {
+      "sha256": "7aac05dcd5d8b299c2fff25232041fa13855a7f3a28cb8e6acdefa771b2d4f04",
+      "reason": "Adds private AAL2 assurance helpers and target-bound one-time promotion approval; retains invoker public wrappers and audited Admin registry.",
+      "added": true
+    },
+    "supabase/migrations/20261119170200_admin_manual_point_awards.sql": {
+      "sha256": "e0383238aed73d95b49efdedcc86dee1a9adae39fba2fbd659afd3bcbf560603",
+      "reason": "Requires server-verified AAL2 for award, history, and student-list Admin RPCs.",
+      "added": true
     },
     "supabase/migrations/20261121161428_allow_team_initial_admin_promotion.sql": {
       "reason": "Adds a baseline-guarded eligibility correction for registered Student or Team targets; preserves UUID-bound one-time approval, AAL2, verified TOTP, empty-registry, audit-trigger, and atomic-consumption controls.",
       "added": true,
       "sha256": "89cfe0990822ea631e310c0e4c70b8b13ac687a7adfd3230a61c360bd5bd6c4f"
-    },
-    "docs/phase-03/schema-security.md": {
-      "reason": "Documents the RLS-bound one-time owner Team transition and clarifies that unauthenticated direct SQL does not provide an attributable auth.uid audit actor.",
-      "sha256": "57e651a711460280d6d6f51c27369e5e826d91233b51ee946b1c126b4ab48d94",
-      "previousSha256": "74d2855d0c728eab2ba0229783cda2b82bde95659d1f28d90fca6fbc3129d53a"
-    },
-    "frontend/src/features/portal/owner-team-transition.tsx": {
-      "reason": "Provides the bilingual owner-only UI for invoking the fixed, owner-approved one-time Team transition through the authenticated client.",
-      "added": true,
-      "sha256": "8bcac39ad1709a80ebf2a8ddf77965e248e70a2a0fa26d580253f3e9ffefd025"
     },
     "supabase/migrations/20261121163359_owner_approved_hussein_team_transition.sql": {
       "reason": "Adds the fixed-target, RLS-enforced, SECURITY INVOKER one-time Team transition with verified owner actor, expected Student role, reasoned application audit record, and atomic approval consumption.",

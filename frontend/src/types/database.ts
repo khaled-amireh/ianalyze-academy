@@ -450,6 +450,10 @@ export type Database = {
       };
       admin_award_students: { Args: Record<string, never>; Returns: Json };
       claim_submission_request: { Args: { p_student_id: string }; Returns: undefined };
+      complete_owner_approved_hussein_team_transition: {
+        Args: Record<string, never>;
+        Returns: undefined;
+      };
       complete_registration: { Args: { p_consent_version: string }; Returns: undefined };
       correct_registered_student_name: {
         Args: { p_student_id: string; p_full_name: string };
@@ -458,6 +462,10 @@ export type Database = {
       create_draft_rubric: { Args: { p_activity_id: string; p_criteria: Json }; Returns: string };
       current_academy_is_admin: { Args: Record<string, never>; Returns: boolean };
       current_academy_role: { Args: Record<string, never>; Returns: string | null };
+      current_user_can_complete_hussein_team_transition: {
+        Args: Record<string, never>;
+        Returns: boolean;
+      };
       current_user_has_initial_admin_promotion: { Args: Record<string, never>; Returns: boolean };
       finalize_notebook: {
         Args: { p_submission_id: string; p_sha256: string };

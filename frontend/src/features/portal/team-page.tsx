@@ -10,6 +10,8 @@ import { FormNotice } from './form-feedback';
 import type { PortalCopy } from './copy';
 import { AnnouncementManager } from './announcements';
 import { AdminPointAwards } from './admin-point-awards';
+import { InitialAdminPromotion } from './initial-admin-promotion';
+import { OwnerTeamTransition } from './owner-team-transition';
 import { majorLabel, ZUJ } from './profile-fields';
 import { academicYearLabel } from './academic-years';
 import {
@@ -611,6 +613,8 @@ export function TeamPageLive() {
   const currentPage = Math.min(reviewPage, pageCount - 1);
   return (
     <PageContainer className="portal-page">
+      <InitialAdminPromotion />
+      <OwnerTeamTransition />
       <h1 id="page-title" tabIndex={-1}>
         {c.team}
       </h1>

@@ -6,12 +6,14 @@ import { asUser, createDatabase, migrations } from '../scripts/database-fixture.
 
 test('pending consent migration refuses an unexpected zero-argument RPC baseline without partial changes', async (t) => {
   const sql = migrations();
-  const db = await createDatabase(sql.slice(0, -3));
+  const consentIndex = sql.findIndex((migration) => migration.includes('public_full_name_consent'));
+  assert.ok(consentIndex > 0, 'consent migration is present in the fixture');
+  const db = await createDatabase(sql.slice(0, consentIndex));
   t.after(() => db.close());
   await db.exec(
     "create function app_private.academy_leaderboard() returns jsonb language sql set search_path='' as $$select '[]'::jsonb$$",
   );
-  await assert.rejects(db.exec(sql.at(-3)), (error) => error.code === '55000');
+  await assert.rejects(db.exec(sql[consentIndex]), (error) => error.code === '55000');
   await db.exec('rollback');
   assert.equal(
     (
@@ -29,7 +31,9 @@ test('production boolean RPC preserves both scoring views, consent privacy and m
     new URL('./fixtures/production-leaderboard-scoring.sql', import.meta.url),
     'utf8',
   );
-  const db = await createDatabase([...sql.slice(0, -3), fixture]);
+  const consentIndex = sql.findIndex((migration) => migration.includes('public_full_name_consent'));
+  assert.ok(consentIndex > 0, 'consent migration is present in the fixture');
+  const db = await createDatabase([...sql.slice(0, consentIndex), fixture]);
   t.after(() => db.close());
   const call = (uid, query, params = [], role = 'authenticated', claims = { aal: 'aal1' }) =>
     asUser(db, uid, () => db.query(query, params), role, claims);
@@ -95,11 +99,12 @@ test('production boolean RPC preserves both scoring views, consent privacy and m
     ).rows[0].hash;
   const beforePoints = await oldPoints();
 
-  await db.exec(sql.at(-3));
+  await db.exec(sql[consentIndex]);
   assert.deepEqual(await rank(false), beforeAll);
   assert.deepEqual(await rank(true), beforeWeekly);
-  await db.exec(sql.at(-2));
-  await db.exec(sql.at(-1));
+  await db.exec(sql[consentIndex + 1]);
+  await db.exec(sql[consentIndex + 2]);
+  await db.exec(sql[consentIndex + 3]);
   await db.exec(`insert into app_private.application_admins(user_id,reason) values('${admin}','SYNTHETIC TEST ONLY');
     alter table app_private.manual_point_awards alter column created_at set default '2026-11-21 12:00 Asia/Amman'::timestamptz;`);
 
@@ -774,4 +779,310 @@ test('initial Admin promotion is one-time, owner-approved, registered, verified-
     call(null, { aal: 'aal2' }, 'service_role'),
     (error) => error.code === '42501',
   );
+});
+
+test('registered Team owner can consume only their own initial Admin approval under TOTP AAL2 without losing Team role', async (t) => {
+  const db = await createDatabase();
+  t.after(() => db.close());
+  const target = '00000000-0000-4000-8000-000000000311';
+  const approver = '00000000-0000-4000-8000-000000000312';
+  const call = (uid, query, claims = { aal: 'aal1' }, role = 'authenticated') =>
+    asUser(db, uid, () => db.query(query), role, claims);
+  const pendingFor = (uid, claims, role = 'authenticated') =>
+    call(uid, 'select public.current_user_has_initial_admin_promotion() as pending', claims, role);
+
+  await db.exec(`
+    insert into auth.users(id,email,email_confirmed_at) values
+      ('${target}','synthetic-team-owner@example.test',now()),
+      ('${approver}','synthetic-approved-operator@example.test',now());
+    update app_private.user_roles set role='team',grant_reason='SYNTHETIC TEAM ROLE ONLY'
+      where user_id='${target}';
+    update public.profiles set full_name='Synthetic Team Owner', whatsapp='+962790000311', major='AI',
+      university='Other University', academic_year=4, python_experience='basic',
+      consent_version='registration-v1', consent_at=now(), registered_at=now()
+      where id='${target}';
+    insert into app_private.initial_admin_promotion_approval(singleton,user_id,approved_by,reason)
+      values(true,'${target}','${approver}','SYNTHETIC TEAM OWNER APPROVAL ONLY');
+  `);
+
+  assert.equal((await pendingFor(target, { aal: 'aal1' })).rows[0].pending, true);
+  assert.equal((await pendingFor(approver, { aal: 'aal2' })).rows[0].pending, false);
+  await assert.rejects(pendingFor(target, null, 'anon'), (error) => error.code === '42501');
+  await assert.rejects(
+    call(target, 'select public.promote_initial_academy_admin()', { aal: 'aal1' }),
+    (error) => error.code === '42501',
+  );
+  await assert.rejects(
+    call(target, 'select public.promote_initial_academy_admin()', {}),
+    (error) => error.code === '42501',
+  );
+  await assert.rejects(
+    call(approver, 'select public.promote_initial_academy_admin()', { aal: 'aal2' }),
+    (error) => error.code === '42501',
+  );
+  assert.equal(
+    (
+      await db.query(
+        'select count(*)::int as n from app_private.initial_admin_promotion_approval where user_id=$1',
+        [target],
+      )
+    ).rows[0].n,
+    1,
+  );
+
+  await db.query(
+    "insert into auth.mfa_factors(user_id,factor_type,status) values($1,'totp','verified')",
+    [target],
+  );
+  await call(target, 'select public.promote_initial_academy_admin()', { aal: 'aal2' });
+
+  assert.equal(
+    (await db.query('select role from app_private.user_roles where user_id=$1', [target])).rows[0]
+      .role,
+    'team',
+  );
+  assert.equal(
+    (await call(target, 'select public.current_academy_role() as role', { aal: 'aal2' })).rows[0]
+      .role,
+    'team',
+  );
+  assert.equal(
+    (await call(target, 'select public.current_academy_is_admin() as is_admin', { aal: 'aal2' }))
+      .rows[0].is_admin,
+    true,
+  );
+  assert.equal(
+    (await call(target, 'select app_private.is_team() as is_team', { aal: 'aal2' })).rows[0]
+      .is_team,
+    true,
+  );
+  assert.equal(
+    (
+      await db.query(
+        'select actor_id,subject_id,event from app_private.application_admin_events where subject_id=$1',
+        [target],
+      )
+    ).rows[0].actor_id,
+    approver,
+  );
+  assert.equal(
+    (await db.query('select count(*)::int as n from app_private.initial_admin_promotion_approval'))
+      .rows[0].n,
+    0,
+  );
+  await assert.rejects(
+    call(target, 'select public.promote_initial_academy_admin()', { aal: 'aal2' }),
+    (error) => error.code === '42501',
+  );
+});
+
+test('Hussein Team transition is owner-authenticated, RLS-limited, one-time and audit-attributed', async (t) => {
+  const db = await createDatabase();
+  t.after(() => db.close());
+  const owner = '79b1672a-b609-4ec4-814a-15ed209796af';
+  const target = '4cadbb96-c6bf-484b-b239-7aceb3820fb3';
+  const otherTeam = '00000000-0000-4000-8000-000000000321';
+  const reason = 'Owner-approved assignment to the iAnalyze Academy team.';
+  const call = (uid, query, claims = { aal: 'aal1' }, role = 'authenticated') =>
+    asUser(db, uid, () => db.query(query), role, claims);
+
+  await db.exec(`
+    insert into auth.users(id,email,email_confirmed_at) values
+      ('${owner}','synthetic-owner@example.test',now()),
+      ('${target}','synthetic-target@example.test',now()),
+      ('${otherTeam}','synthetic-other-team@example.test',now());
+    update app_private.user_roles set role='team',grant_reason='SYNTHETIC OWNER TEAM ROLE'
+      where user_id='${owner}';
+    update app_private.user_roles set role='team',grant_reason='SYNTHETIC OTHER TEAM ROLE'
+      where user_id='${otherTeam}';
+    update public.profiles set full_name='Synthetic Registered User', whatsapp='+962790000321',
+      major='AI', university='Other University', academic_year=4, python_experience='basic',
+      consent_version='registration-v1', consent_at=now(), registered_at=now()
+      where id in ('${owner}','${target}','${otherTeam}');
+    insert into app_private.initial_hussein_team_transition_approval
+      (singleton,target_user_id,approved_by,reason)
+      values(true,'${target}','${owner}','${reason}');
+  `);
+
+  assert.equal(
+    (
+      await call(
+        owner,
+        'select public.current_user_can_complete_hussein_team_transition() as ready',
+      )
+    ).rows[0].ready,
+    true,
+  );
+  assert.equal(
+    (
+      await call(
+        otherTeam,
+        'select public.current_user_can_complete_hussein_team_transition() as ready',
+      )
+    ).rows[0].ready,
+    false,
+  );
+  await assert.rejects(
+    call(target, 'select public.complete_owner_approved_hussein_team_transition()'),
+    (error) => error.code === '42501',
+  );
+  await assert.rejects(
+    call(owner, 'select public.complete_owner_approved_hussein_team_transition()', null),
+    (error) => error.code === '42501',
+  );
+  await assert.rejects(
+    call(
+      owner,
+      'select public.complete_owner_approved_hussein_team_transition()',
+      { aal: 'aal1' },
+      'service_role',
+    ),
+    (error) => error.code === '42501',
+  );
+  assert.equal(
+    (
+      await asUser(db, otherTeam, () =>
+        db.query(
+          "update app_private.user_roles set role='team',grant_reason=$1 where user_id=$2 returning user_id",
+          [reason, otherTeam],
+        ),
+      )
+    ).rows.length,
+    0,
+  );
+
+  await call(owner, 'select public.complete_owner_approved_hussein_team_transition()');
+  const transitioned = await db.query(
+    'select role,grant_reason from app_private.user_roles where user_id=$1',
+    [target],
+  );
+  assert.deepEqual(transitioned.rows[0], { role: 'team', grant_reason: reason });
+  assert.equal(
+    (
+      await db.query(
+        "select count(*)::int as n from app_private.audit_events where actor_id=$1 and action='role:team' and target_id=$2 and reason=$3",
+        [owner, target, reason],
+      )
+    ).rows[0].n,
+    1,
+  );
+  assert.equal(
+    (
+      await db.query(
+        'select consumed_at is not null as consumed from app_private.initial_hussein_team_transition_approval where singleton',
+      )
+    ).rows[0].consumed,
+    true,
+  );
+  assert.deepEqual(
+    (
+      await db.query(
+        'select role from app_private.user_roles where user_id in ($1,$2) order by user_id',
+        [owner, otherTeam],
+      )
+    ).rows.map((row) => row.role),
+    ['team', 'team'],
+  );
+  await assert.rejects(
+    call(owner, 'select public.complete_owner_approved_hussein_team_transition()'),
+    (error) => error.code === '42501',
+  );
+
+  const functions = await db.query(`
+    select p.prosecdef from pg_proc p join pg_namespace n on n.oid=p.pronamespace
+    where (n.nspname='app_private' and p.proname in (
+      'complete_owner_approved_hussein_team_transition','consume_owner_hussein_team_transition'
+    )) or (n.nspname='public' and p.proname in (
+      'current_user_can_complete_hussein_team_transition','complete_owner_approved_hussein_team_transition'
+    ))
+  `);
+  assert.equal(functions.rows.length, 4);
+  assert.ok(functions.rows.every((fn) => fn.prosecdef === false));
+});
+
+test('Hussein transition fails closed when the exact target is no longer a Student', async (t) => {
+  const sql = migrations();
+  const transitionIndex = sql.findIndex((migration) =>
+    migration.includes('initial_hussein_team_transition_approval'),
+  );
+  assert.ok(transitionIndex > 0, 'owner transition migration is present in the fixture');
+  const db = await createDatabase(sql.slice(0, transitionIndex));
+  t.after(() => db.close());
+  const owner = '79b1672a-b609-4ec4-814a-15ed209796af';
+  const target = '4cadbb96-c6bf-484b-b239-7aceb3820fb3';
+  const reason = 'Owner-approved assignment to the iAnalyze Academy team.';
+  await db.exec(`
+    insert into auth.users(id,email,email_confirmed_at) values
+      ('${owner}','synthetic-owner@example.test',now()),
+      ('${target}','synthetic-target@example.test',now());
+    update app_private.user_roles set role='team',grant_reason='SYNTHETIC OWNER TEAM ROLE'
+      where user_id='${owner}';
+    update app_private.user_roles set role='team',grant_reason='PREEXISTING SYNTHETIC TEAM ROLE'
+      where user_id='${target}';
+    update public.profiles set full_name='Synthetic Registered User', whatsapp='+962790000322',
+      major='AI', university='Other University', academic_year=4, python_experience='basic',
+      consent_version='registration-v1', consent_at=now(), registered_at=now()
+      where id in ('${owner}','${target}');
+  `);
+  await db.exec(sql[transitionIndex]);
+  await db.exec(`
+    insert into app_private.initial_hussein_team_transition_approval
+      (singleton,target_user_id,approved_by,reason)
+      values(true,'${target}','${owner}','${reason}');
+  `);
+  const auditCountBefore = (
+    await db.query(
+      "select count(*)::int as n from app_private.audit_events where target_id=$1 and action='role:team'",
+      [target],
+    )
+  ).rows[0].n;
+
+  await assert.rejects(
+    asUser(db, owner, () =>
+      db.query('select public.complete_owner_approved_hussein_team_transition()'),
+    ),
+    (error) => error.code === '55000',
+  );
+  assert.deepEqual(
+    (
+      await db.query('select role,grant_reason from app_private.user_roles where user_id=$1', [
+        target,
+      ])
+    ).rows[0],
+    { role: 'team', grant_reason: 'PREEXISTING SYNTHETIC TEAM ROLE' },
+  );
+  assert.equal(
+    (
+      await db.query(
+        'select consumed_at is null as pending from app_private.initial_hussein_team_transition_approval where singleton',
+      )
+    ).rows[0].pending,
+    true,
+  );
+  assert.equal(
+    (
+      await db.query(
+        "select count(*)::int as n from app_private.audit_events where target_id=$1 and action='role:team'",
+        [target],
+      )
+    ).rows[0].n,
+    auditCountBefore,
+  );
+});
+
+test('owner TOTP can be enrolled and verified before approval without granting Admin', () => {
+  const source = readFileSync(
+    new URL('../src/features/portal/initial-admin-promotion.tsx', import.meta.url),
+    'utf8',
+  );
+  assert.match(source, /const initialAdminTarget = '79b1672a-b609-4ec4-814a-15ed209796af'/);
+  assert.match(source, /roleResult\.data !== 'team'/);
+  assert.match(source, /adminResult\.data !== false/);
+  assert.match(source, /assurance\.data\.currentLevel !== 'aal2'/);
+  assert.match(
+    source,
+    /if \(promotionPending\) \{\s*const promoted = await client\(\)\.rpc\('promote_initial_academy_admin'\)/,
+  );
+  assert.match(source, /\} else \{\s*setMode\('mfa-ready'\);/);
+  assert.match(source, /Authenticator verified\. No Admin access was granted\./);
 });

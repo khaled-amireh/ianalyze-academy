@@ -458,10 +458,12 @@ export type Database = {
       create_draft_rubric: { Args: { p_activity_id: string; p_criteria: Json }; Returns: string };
       current_academy_is_admin: { Args: Record<string, never>; Returns: boolean };
       current_academy_role: { Args: Record<string, never>; Returns: string | null };
+      current_user_has_initial_admin_promotion: { Args: Record<string, never>; Returns: boolean };
       finalize_notebook: {
         Args: { p_submission_id: string; p_sha256: string };
         Returns: undefined;
       };
+      promote_initial_academy_admin: { Args: Record<string, never>; Returns: undefined };
       read_notification: { Args: { p_event_key?: string }; Returns: undefined };
       request_resubmission: { Args: { p_submission_id: string }; Returns: undefined };
       reserve_notebook: {

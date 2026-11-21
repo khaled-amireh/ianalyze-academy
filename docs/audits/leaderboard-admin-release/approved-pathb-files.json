@@ -1,20 +1,20 @@
 {
   "baselineCommit": "28d6a7d386f494f53d883998132a35b17330346f",
-  "authorization": "Owner approved Path B and candidate-local production-build/v2-proof corrections. On 2026-11-21 the owner reported configured validation PASS and explicitly authorized committing and pushing the exact complete 31-path candidate to existing PR #19. This approval does not authorize merging, workflow activation, migration execution, Admin promotion, deployment, or production changes. Owner authorized an isolated production leaderboard RPC compatibility patch on 2026-11-21; this allows candidate-local changes and tests only, not publication or production operations.",
+  "authorization": "Owner approved Path B and candidate-local production-build/v2-proof corrections. On 2026-11-21 the owner reported configured validation PASS and explicitly authorized committing and pushing the exact complete 31-path candidate to existing PR #19. This approval does not authorize merging, workflow activation, migration execution, Admin promotion, deployment, or production changes. Owner authorized an isolated production leaderboard RPC compatibility patch on 2026-11-21; this allows candidate-local changes and tests only, not publication or production operations. Owner authorized this isolated candidate-local Admin AAL2 security correction on 2026-11-21; no publication or production operation is authorized.",
   "files": {
     "docs/audits/leaderboard-admin-release/FINAL_READINESS.md": {
-      "sha256": "ef6f31c37f01c01c34d2239aa59dfb30ff6521b6dcf23e813267f52c9f40f2b0",
-      "reason": "Documents the authorized candidate-local RPC compatibility patch and its evidence.",
+      "sha256": "c33adc7170518d7e6d2a8c28f44c0956b2b4bf4ec2ce56e926c624b6a3c9b24b",
+      "reason": "Documents the verified candidate-local Admin AAL2 security correction, its tests, and remaining production gates.",
       "added": true
     },
     "docs/audits/leaderboard-admin-release/INITIAL_ADMIN_PROMOTION.md": {
-      "sha256": "1e30e5d7591fcebfc78aa5a17ee95fd098376ae69f19e33443214f9ac83d69a8",
-      "reason": "Path B release review documentation and exact-path preservation evidence.",
+      "sha256": "2828e3b275b02dd5685334505e8ed2e2ca63d0a9d2410c26a25943dc6b764442",
+      "reason": "Documents the exact staged-approval plus authenticated AAL2 initial Admin promotion procedure; no service-role session is treated as a user AAL2 session.",
       "added": true
     },
     "frontend/src/features/portal/admin-point-awards.tsx": {
-      "sha256": "88f4c6d6056894bc9412dc520b2fe432ada04ba6e52b7f8abad9408a3f4659d0",
-      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "sha256": "e533cfc4e7b66ce1f324b01cb55a75267af8eef6895b80d08b91eca27d1b3cb9",
+      "reason": "Requires TOTP/AAL2 step-up in the Admin awards UI; database RPCs remain authoritative.",
       "added": true
     },
     "frontend/src/features/portal/leaderboard-name-consent.tsx": {
@@ -23,8 +23,8 @@
       "added": true
     },
     "frontend/tests/leaderboard-consent-admin-awards.security.test.mjs": {
-      "sha256": "2b8f20caf2182ebf699d62dcfca0a16eea98e33b1504fb0fdd2d87cd270e0a4e",
-      "reason": "Focused regression suite verifies the observed boolean RPC contract, scoring views, privacy and award security.",
+      "sha256": "453a95ce09b67e701f8bf56ec251cd8c14b0f2440b51d78d0c91b9b611c373ba",
+      "reason": "Tests AAL2-only Admin RPCs, fail-closed JWT claims, registration/role denials, and the atomic one-time promotion flow.",
       "added": true
     },
     "supabase/migrations/20261119170000_leaderboard_name_consent.sql": {
@@ -33,13 +33,13 @@
       "added": true
     },
     "supabase/migrations/20261119170100_application_admins.sql": {
-      "sha256": "f0234ea91cbc400c0157912b09741f185b22f17af692cd72d7d28793a4ecb4b2",
-      "reason": "Path B migration for the current-main leaderboard consent, private Admin registry, or append-only manual award ledger.",
+      "sha256": "7aac05dcd5d8b299c2fff25232041fa13855a7f3a28cb8e6acdefa771b2d4f04",
+      "reason": "Adds private AAL2 assurance helpers and target-bound one-time promotion approval; retains invoker public wrappers and audited Admin registry.",
       "added": true
     },
     "supabase/migrations/20261119170200_admin_manual_point_awards.sql": {
-      "sha256": "b70b545d042a325b9547e37d8c3b73d9c608acdbea7393aa6bf3d9435fcd0aee",
-      "reason": "Integrate append-only Admin awards into the inspected production boolean leaderboard RPC without changing activity counts or scoring boundaries.",
+      "sha256": "e0383238aed73d95b49efdedcc86dee1a9adae39fba2fbd659afd3bcbf560603",
+      "reason": "Requires server-verified AAL2 for award, history, and student-list Admin RPCs.",
       "added": true
     },
     "frontend/package.json": {
@@ -53,8 +53,8 @@
       "previousSha256": "c886c6d8115b74541cdce3f4170cdb00d49b7d48fabd292c09178fa548531a97"
     },
     "frontend/scripts/database-fixture.mjs": {
-      "sha256": "8fbe0d414ce85144d2937641234b086c392fa7ef64d661b9ab86d777c854a59a",
-      "reason": "Inject disposable production-contract/scoring fixtures for embedded migration regression tests only.",
+      "sha256": "818d779373aee9f5b938d94d609b649ec89f7e68f4cfbcc30f838e33d75a9daf",
+      "reason": "Adds synthetic JWT claims and MFA factor fixtures for AAL2 authorization regression tests only.",
       "previousSha256": "d41c5676b429d2e2fa63ae08c370583f7f8e57272611e917fc1c180f7f180a23"
     },
     "frontend/scripts/verify-merge-preservation.mjs": {
@@ -73,8 +73,8 @@
       "previousSha256": "a01a115e7a789576512ac178a48e1ae78f7f79d6d08ab8ed0408e638dcd6dddf"
     },
     "frontend/src/features/portal/student-page.tsx": {
-      "sha256": "4a360275903a67699793dbd5625b5523b50fc0bafdc3f8da45ac168b672289d9",
-      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "sha256": "7df855b1c9e797512199bf30b08cd4b46045a34e6ea76cd1db35d5734524219d",
+      "reason": "Displays the one-time promotion panel only to the registered user matching an owner-staged approval.",
       "previousSha256": "0feb7015da9107230ff509325903a5ff3be5685683f0c747dfc6774348f21aa2"
     },
     "frontend/src/features/portal/team-page.tsx": {
@@ -93,13 +93,13 @@
       "previousSha256": "a59d69e324afd7465fa673b7934478da41ef8c51762efa9a0bd051f3bc268959"
     },
     "frontend/src/types/database.ts": {
-      "sha256": "6166264cc520c4b8e5b566e284dadfbd107770fcfa958b3327461f4198cd116c",
-      "reason": "Generated type reflects the production public RPC optional boolean argument.",
+      "sha256": "768d27fcbbdec98c6430b02a7d9458aa2efd94a8121b93e54841bf4f467f2f4b",
+      "reason": "Adds the typed initial-promotion and target-only pending-promotion RPCs.",
       "previousSha256": "8e8cf872c9ac1abf990035411c7c95b5f294ff455cdf0219b6cc2128fe73204c"
     },
     "frontend/tests/database.security.test.mjs": {
-      "sha256": "429f4f51786b29b5b4aafd369f7dead0e06d1f8548c5015d7e3448117fb33dc1",
-      "reason": "Focused regression or preservation test for the owner-approved Path B behavior.",
+      "sha256": "4aeb3d112a5aa01df2b53f9748c1c90ae5b2aaaec66c95e9819211020bf6a810",
+      "reason": "Updates the RLS table-count assertion for the newly private approval table.",
       "previousSha256": "ad6f5853bac0aa19dd12cdf186275c7bd1397b19e1f8690f074a3e75955da37c"
     },
     "frontend/tests/final-improvements.security.test.mjs": {
@@ -161,7 +161,13 @@
       "sha256": "2d5f0b7af2bf505f2dd8f111ce7698b5adef6e4ec0fb8450293d2601cdcd5087",
       "reason": "Disposable synthetic scoring-contract fixture using captured production function definitions and no live data.",
       "added": true
+    },
+    "frontend/src/features/portal/initial-admin-promotion.tsx": {
+      "sha256": "2475463618777c89c8df62178245c0b221085ad94da512f3a7a01283d2e39878",
+      "reason": "Target-only Student dashboard flow completes TOTP and invokes one-time promotion with the authenticated AAL2 session.",
+      "added": true
     }
   },
-  "compatibilityPatchBaselineCommit": "62ee81b991e87159886b94ef7f6bd2697ea7ff61"
+  "compatibilityPatchBaselineCommit": "62ee81b991e87159886b94ef7f6bd2697ea7ff61",
+  "securityCorrectionBaselineCommit": "3b932e93c4d9a1a292cb7526660c46578f45dc26"
 }

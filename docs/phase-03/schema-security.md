@@ -92,13 +92,19 @@ directly to remove real files; that can leave underlying objects behind.
 
 ## Team bootstrap and revocation — future owner operation
 
-After separately approved hosted migration/application and verified account creation:
+After separately approved hosted migration/application and verified account creation, a future general Team grant may use an owner-controlled transaction only when the audit actor is attributable. The existing `audit_role()` trigger records `auth.uid()`; a direct SQL session without an end-user JWT records a null actor and is not sufficient for an attributable grant.
+
+For the one-time owner-approved Hussein transition in this release, use `20261121163359_owner_approved_hussein_team_transition.sql` only. A trusted operator stages its single fixed-target approval row with the owner-approved reason; this does not change any role. The verified owner then invokes `public.complete_owner_approved_hussein_team_transition()` from an authenticated Team session. The SECURITY INVOKER function and RLS policies constrain the actor, target, expected Student role, fixed reason, and one-time consumption. The existing role audit trigger records the owner session's non-null `auth.uid()`. Do not use service-role impersonation or a direct SQL role update for this transition.
+
+The general Team-grant procedure is:
 
 1. Confirm the exact Auth UUID and verified email in the Dashboard. Public Leaders cards
    and profile metadata never confer access.
-2. In an owner-authenticated SQL session, use a transaction to update that user's existing
-   `app_private.user_roles` row to `team`, with a meaningful `grant_reason`; verify exactly
-   one row changed. No general grant-role RPC is exposed.
+2. In an owner-authenticated context that supplies a verified non-null `auth.uid()`, use a
+   transaction to update that user's existing `app_private.user_roles` row to `team`, with
+   a meaningful `grant_reason`; verify exactly one row changed. No general grant-role RPC
+   is exposed. A plain Dashboard SQL Editor/CLI database session does not provide this
+   application actor identity for the role-audit trigger.
 3. Verify the audit event and actual Team/Student access using the approved test procedure.
 4. Revoke by changing the same assignment to `student` with a reason. Database access
    checks reflect the new role immediately; also arrange session revocation for account

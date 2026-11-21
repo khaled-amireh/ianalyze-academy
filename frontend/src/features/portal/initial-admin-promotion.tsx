@@ -3,11 +3,13 @@ import { Button } from '@/components/ui/button';
 import { client } from './data';
 import { usePortalCopy } from './copy';
 
-type Mode = 'checking' | 'hidden' | 'setup' | 'enroll-code' | 'challenge' | 'done';
+type Mode = 'checking' | 'hidden' | 'setup' | 'enroll-code' | 'challenge' | 'done' | 'mfa-ready';
+const initialAdminTarget = '79b1672a-b609-4ec4-814a-15ed209796af';
 
 export function InitialAdminPromotion() {
   const { arabic } = usePortalCopy();
   const [mode, setMode] = useState<Mode>('checking');
+  const [promotionPending, setPromotionPending] = useState(false);
   const [factorId, setFactorId] = useState('');
   const [qrCode, setQrCode] = useState('');
   const [code, setCode] = useState('');
@@ -18,21 +20,35 @@ export function InitialAdminPromotion() {
     let active = true;
     void (async () => {
       try {
-        const pending = await client().rpc('current_user_has_initial_admin_promotion');
-        if (pending.error) throw pending.error;
-        if (!active || pending.data !== true) {
-          if (active) setMode('hidden');
-          return;
-        }
-        const factors = await client().auth.mfa.listFactors();
+        const supabase = client();
+        const [userResult, roleResult, adminResult, pendingResult] = await Promise.all([
+          supabase.auth.getUser(),
+          supabase.rpc('current_academy_role'),
+          supabase.rpc('current_academy_is_admin'),
+          supabase.rpc('current_user_has_initial_admin_promotion'),
+        ]);
+        if (
+          userResult.error ||
+          userResult.data.user?.id !== initialAdminTarget ||
+          roleResult.error ||
+          roleResult.data !== 'team' ||
+          adminResult.error ||
+          adminResult.data !== false ||
+          pendingResult.error
+        )
+          throw new Error('Owner MFA setup is unavailable.');
+        if (!active) return;
+        const pending = pendingResult.data === true;
+        setPromotionPending(pending);
+        const factors = await supabase.auth.mfa.listFactors();
         if (factors.error) throw factors.error;
         const verifiedTotp = factors.data.totp.find((factor) => factor.status === 'verified');
         if (verifiedTotp) {
           setFactorId(verifiedTotp.id);
-          setMode('challenge');
-        } else {
-          setMode('setup');
+          setMode(pending ? 'challenge' : 'mfa-ready');
+          return;
         }
+        setMode('setup');
       } catch {
         if (active) {
           setError(true);
@@ -86,10 +102,14 @@ export function InitialAdminPromotion() {
       setCode('');
       const assurance = await client().auth.mfa.getAuthenticatorAssuranceLevel();
       if (assurance.error || assurance.data.currentLevel !== 'aal2') throw assurance.error;
-      const promoted = await client().rpc('promote_initial_academy_admin');
-      if (promoted.error) throw promoted.error;
       setQrCode('');
-      setMode('done');
+      if (promotionPending) {
+        const promoted = await client().rpc('promote_initial_academy_admin');
+        if (promoted.error) throw promoted.error;
+        setMode('done');
+      } else {
+        setMode('mfa-ready');
+      }
     } catch {
       setCode('');
       setError(true);
@@ -100,11 +120,15 @@ export function InitialAdminPromotion() {
 
   const text = {
     title: arabic
-      ? '\u0625\u0639\u062f\u0627\u062f \u0645\u0633\u0624\u0648\u0644 \u0627\u0644\u0623\u0643\u0627\u062f\u064a\u0645\u064a\u0629'
-      : 'Complete approved Admin setup',
+      ? '\u0625\u0639\u062f\u0627\u062f \u0627\u0644\u0645\u0635\u0627\u062f\u0642\u0629 \u0627\u0644\u0622\u0645\u0646\u0629'
+      : promotionPending
+        ? 'Complete approved Admin setup'
+        : 'Prepare secure Admin authentication',
     description: arabic
       ? '\u062a\u062d\u0642\u0642 \u0627\u0644\u0645\u0635\u0627\u062f\u0642\u0629 \u0628\u062e\u0637\u0648\u062a\u064a\u0646 \u0645\u0637\u0644\u0648\u0628 \u0644\u0625\u0643\u0645\u0627\u0644 \u0627\u0644\u062a\u0639\u064a\u064a\u0646.'
-      : 'A verified authenticator challenge is required to complete this owner-approved promotion.',
+      : promotionPending
+        ? 'A verified authenticator challenge is required to complete this owner-approved promotion.'
+        : 'Set up and verify your authenticator now. Admin access will remain unchanged until a separate approval is consumed after deployment.',
     enroll: arabic
       ? '\u0625\u0639\u062f\u0627\u062f \u062a\u0637\u0628\u064a\u0642 \u0627\u0644\u0645\u0635\u0627\u062f\u0642\u0629'
       : 'Set up an authenticator',
@@ -117,9 +141,15 @@ export function InitialAdminPromotion() {
     submit: arabic
       ? '\u062a\u062d\u0642\u0642 \u0648\u0625\u0643\u0645\u0627\u0644 \u0627\u0644\u062a\u0639\u064a\u064a\u0646'
       : 'Verify and complete promotion',
+    verify: arabic
+      ? '\u062a\u062d\u0642\u0642 \u0645\u0646 \u0627\u0644\u0645\u0635\u0627\u062f\u0642\u0629'
+      : 'Verify authenticator',
     done: arabic
       ? '\u062a\u0645 \u062a\u0641\u0639\u064a\u0644 \u0627\u0644\u062d\u0633\u0627\u0628 \u0627\u0644\u0645\u0633\u0624\u0648\u0644.'
       : 'Admin setup completed.',
+    mfaReady: arabic
+      ? '\u062a\u0645 \u062a\u062c\u0647\u064a\u0632 \u0627\u0644\u0645\u0635\u0627\u062f\u0642\u0629. \u0644\u0645 \u064a\u062a\u0645 \u0645\u0646\u062d \u0635\u0644\u0627\u062d\u064a\u0627\u062a \u0627\u0644\u0645\u0633\u0624\u0648\u0644.'
+      : 'Authenticator verified. No Admin access was granted.',
     error: arabic
       ? '\u062a\u0639\u0630\u0631 \u0625\u0643\u0645\u0627\u0644 \u0627\u0644\u062a\u062d\u0642\u0642. \u062a\u0623\u0643\u062f \u0645\u0646 \u0627\u0644\u0631\u0645\u0632 \u0648\u0627\u0644\u062d\u0633\u0627\u0628.'
       : 'Verification failed. Check the code and account, then try again.',
@@ -130,6 +160,8 @@ export function InitialAdminPromotion() {
       <h2>{text.title}</h2>
       {mode === 'done' ? (
         <p role="status">{text.done}</p>
+      ) : mode === 'mfa-ready' ? (
+        <p role="status">{text.mfaReady}</p>
       ) : (
         <>
           <p>{text.description}</p>
@@ -158,7 +190,7 @@ export function InitialAdminPromotion() {
                   onChange={(event) => setCode(event.target.value)}
                 />
               </label>
-              <Button disabled={busy}>{text.submit}</Button>
+              <Button disabled={busy}>{promotionPending ? text.submit : text.verify}</Button>
             </form>
           )}
           {error && <p role="alert">{text.error}</p>}

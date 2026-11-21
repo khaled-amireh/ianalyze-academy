@@ -1,16 +1,18 @@
 {
   "baselineCommit": "28d6a7d386f494f53d883998132a35b17330346f",
-  "authorization": "Owner approved Path B and candidate-local production-build/v2-proof corrections. On 2026-11-21 the owner reported configured validation PASS and explicitly authorized committing and pushing the exact complete 31-path candidate to existing PR #19. This approval does not authorize merging, workflow activation, migration execution, Admin promotion, deployment, or production changes. Owner authorized an isolated production leaderboard RPC compatibility patch on 2026-11-21; this allows candidate-local changes and tests only, not publication or production operations. Owner authorized this isolated candidate-local Admin AAL2 security correction on 2026-11-21; no publication or production operation is authorized.",
+  "authorization": "Owner approved Path B and candidate-local production-build/v2-proof corrections. On 2026-11-21 the owner reported configured validation PASS and explicitly authorized committing and pushing the exact complete 31-path candidate to existing PR #19. This approval does not authorize merging, workflow activation, migration execution, Admin promotion, deployment, or production changes. Owner authorized an isolated production leaderboard RPC compatibility patch on 2026-11-21; this allows candidate-local changes and tests only, not publication or production operations. Owner authorized this isolated candidate-local Admin AAL2 security correction on 2026-11-21; no publication or production operation is authorized. Owner requested review of the exact four-file Team-to-Admin eligibility correction and reconciliation through this documented exact-path/content-hash approval process on 2026-11-21. These entries pin only the candidate-local changes; production role changes, migration execution, publication, and deployment remain unauthorized. On 2026-11-21 the owner authorized the exact owner-designated Khaled Admin and Hussein Team release, including candidate-local implementation, release-specific publication, only the two new role-correction migrations, the narrowly scoped Hussein transition, and Cloudflare Pages Direct Upload after verified gates. The owner explicitly reserved their TOTP enrollment for the final pre-deployment interaction; no owner session, secret, or MFA step is fabricated. The owner-authorized role-transition implementation also records the explicit grant reason in the existing application audit event while preserving historical audit rows.",
   "files": {
     "docs/audits/leaderboard-admin-release/FINAL_READINESS.md": {
-      "sha256": "c33adc7170518d7e6d2a8c28f44c0956b2b4bf4ec2ce56e926c624b6a3c9b24b",
-      "reason": "Documents the verified candidate-local Admin AAL2 security correction, its tests, and remaining production gates.",
-      "added": true
+      "sha256": "3d27ed43f5271f9ebf21f0e7a8b4c7528b1649ec5d23c9ef4eb9ff57b9a33fb7",
+      "reason": "Records the exact role transition, reasoned audit event, separated MFA enrollment/promotion sequence, focused validation, and remaining production steps.",
+      "added": true,
+      "previousSha256": "f95a8f0731d8b97d4e0e4a6367ddff659059967851b494d5da9a0e0d7bb745d2"
     },
     "docs/audits/leaderboard-admin-release/INITIAL_ADMIN_PROMOTION.md": {
-      "sha256": "2828e3b275b02dd5685334505e8ed2e2ca63d0a9d2410c26a25943dc6b764442",
-      "reason": "Documents the exact staged-approval plus authenticated AAL2 initial Admin promotion procedure; no service-role session is treated as a user AAL2 session.",
-      "added": true
+      "sha256": "9c1671563506fdaf655d953e156b9adab44c6eea5383500699e60373ccf0374e",
+      "reason": "Documents TOTP enrollment separately from Admin approval consumption so pre-deployment MFA setup cannot promote the owner.",
+      "added": true,
+      "previousSha256": "2ae5a76c04f3bc97e234b103ec3ee65c824b59fd898ef68e651537f27d2a6729"
     },
     "frontend/src/features/portal/admin-point-awards.tsx": {
       "sha256": "e533cfc4e7b66ce1f324b01cb55a75267af8eef6895b80d08b91eca27d1b3cb9",
@@ -23,9 +25,10 @@
       "added": true
     },
     "frontend/tests/leaderboard-consent-admin-awards.security.test.mjs": {
-      "sha256": "453a95ce09b67e701f8bf56ec251cd8c14b0f2440b51d78d0c91b9b611c373ba",
-      "reason": "Tests AAL2-only Admin RPCs, fail-closed JWT claims, registration/role denials, and the atomic one-time promotion flow.",
-      "added": true
+      "sha256": "f2723a54adea5d17cf16e61c9165b6bfbcb859eefd9e90e336e9310674a075d6",
+      "reason": "Adds synthetic positive and negative role-transition security coverage and guards the pre-deployment TOTP-only path from granting Admin without pending approval.",
+      "added": true,
+      "previousSha256": "c84d2a67ab69c5001f7960359fedd96878b69141f0e114e61cc960981b0372fb"
     },
     "supabase/migrations/20261119170000_leaderboard_name_consent.sql": {
       "sha256": "d63849d6ecf0a7cdb71f1b9acf1f7c7313f880df100e624d036e5cfa5e6d8a3f",
@@ -78,8 +81,8 @@
       "previousSha256": "0feb7015da9107230ff509325903a5ff3be5685683f0c747dfc6774348f21aa2"
     },
     "frontend/src/features/portal/team-page.tsx": {
-      "sha256": "1efcd666f9ded33d6fe667fd539df66c64639c0f30e4435a1c8f7c24c3e92719",
-      "reason": "Path B application, generated type, fixture, preservation checker, or test-runner change required to integrate the feature into current main.",
+      "sha256": "2035652285802d8a869e05341a49ef708be71d3e50e5f98d24dee40462939411",
+      "reason": "Mounts only the target-bound Admin setup and one-time Team transition panels on the Team dashboard.",
       "previousSha256": "c16d1b45b3dab31ae239b0a11b499bd59aa0c18795972a1cb9b36b62345fed56"
     },
     "frontend/src/locales/ar.json": {
@@ -93,8 +96,8 @@
       "previousSha256": "a59d69e324afd7465fa673b7934478da41ef8c51762efa9a0bd051f3bc268959"
     },
     "frontend/src/types/database.ts": {
-      "sha256": "768d27fcbbdec98c6430b02a7d9458aa2efd94a8121b93e54841bf4f467f2f4b",
-      "reason": "Adds the typed initial-promotion and target-only pending-promotion RPCs.",
+      "sha256": "4a6d06a3d99c89f6242fdaf7926e1429f457cf6f068095753e2aad69629b48ea",
+      "reason": "Adds type declarations for the two fixed-target owner Team-transition RPCs while preserving existing database types.",
       "previousSha256": "8e8cf872c9ac1abf990035411c7c95b5f294ff455cdf0219b6cc2128fe73204c"
     },
     "frontend/tests/database.security.test.mjs": {
@@ -163,9 +166,31 @@
       "added": true
     },
     "frontend/src/features/portal/initial-admin-promotion.tsx": {
-      "sha256": "2475463618777c89c8df62178245c0b221085ad94da512f3a7a01283d2e39878",
-      "reason": "Target-only Student dashboard flow completes TOTP and invokes one-time promotion with the authenticated AAL2 session.",
-      "added": true
+      "sha256": "c4b5a3aff89de5b4e6cb6019add7ffd75d4322c076c11f20f3e56b6f49c40a2f",
+      "reason": "Allows only the exact registered Team owner to enroll and verify TOTP before approval staging without granting Admin; promotion remains conditional on a pending single-use approval and AAL2.",
+      "added": true,
+      "previousSha256": "2475463618777c89c8df62178245c0b221085ad94da512f3a7a01283d2e39878"
+    },
+    "supabase/migrations/20261121161428_allow_team_initial_admin_promotion.sql": {
+      "reason": "Adds a baseline-guarded eligibility correction for registered Student or Team targets; preserves UUID-bound one-time approval, AAL2, verified TOTP, empty-registry, audit-trigger, and atomic-consumption controls.",
+      "added": true,
+      "sha256": "89cfe0990822ea631e310c0e4c70b8b13ac687a7adfd3230a61c360bd5bd6c4f"
+    },
+    "docs/phase-03/schema-security.md": {
+      "reason": "Documents the RLS-bound one-time owner Team transition and clarifies that unauthenticated direct SQL does not provide an attributable auth.uid audit actor.",
+      "sha256": "57e651a711460280d6d6f51c27369e5e826d91233b51ee946b1c126b4ab48d94",
+      "previousSha256": "74d2855d0c728eab2ba0229783cda2b82bde95659d1f28d90fca6fbc3129d53a"
+    },
+    "frontend/src/features/portal/owner-team-transition.tsx": {
+      "reason": "Provides the bilingual owner-only UI for invoking the fixed, owner-approved one-time Team transition through the authenticated client.",
+      "added": true,
+      "sha256": "8bcac39ad1709a80ebf2a8ddf77965e248e70a2a0fa26d580253f3e9ffefd025"
+    },
+    "supabase/migrations/20261121163359_owner_approved_hussein_team_transition.sql": {
+      "reason": "Adds the fixed-target, RLS-enforced, SECURITY INVOKER one-time Team transition with verified owner actor, expected Student role, reasoned application audit record, and atomic approval consumption.",
+      "added": true,
+      "sha256": "3d11fb891cd16c21f97c6dd8fe88f4974f8124b34882bd40894f150e591a3cca",
+      "previousSha256": "4b7b916d6f117eb46f83356d9a9c8bdfb2b1dd67934e6098e2f92b1259242893"
     }
   },
   "compatibilityPatchBaselineCommit": "62ee81b991e87159886b94ef7f6bd2697ea7ff61",

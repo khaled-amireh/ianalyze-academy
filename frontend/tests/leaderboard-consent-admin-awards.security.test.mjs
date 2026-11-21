@@ -31,8 +31,10 @@ test('production boolean RPC preserves both scoring views, consent privacy and m
   );
   const db = await createDatabase([...sql.slice(0, -3), fixture]);
   t.after(() => db.close());
-  const call = (uid, query, params = [], role = 'authenticated') =>
-    asUser(db, uid, () => db.query(query, params), role);
+  const call = (uid, query, params = [], role = 'authenticated', claims = { aal: 'aal1' }) =>
+    asUser(db, uid, () => db.query(query, params), role, claims);
+  const adminCall = (uid, query, params = []) =>
+    call(uid, query, params, 'authenticated', { aal: 'aal2' });
   const rank = async (weekly = false) =>
     (await call(null, 'select public.academy_leaderboard($1) as rows', [weekly], 'anon')).rows[0]
       .rows;
@@ -162,7 +164,7 @@ test('production boolean RPC preserves both scoring views, consent privacy and m
         ]),
         (error) => error.code === '42501',
       );
-      await call(admin, 'select public.correct_registered_student_name($1,$2)', [
+      await adminCall(admin, 'select public.correct_registered_student_name($1,$2)', [
         student,
         'Synthetic Corrected Name',
       ]);
@@ -180,17 +182,17 @@ test('production boolean RPC preserves both scoring views, consent privacy and m
         await assert.rejects(call(who, awardSql, args), (error) => error.code === '42501');
       for (const points of [0, -1])
         await assert.rejects(
-          call(admin, awardSql, [student, points, 'SYNTHETIC INVALID', awardKey]),
+          adminCall(admin, awardSql, [student, points, 'SYNTHETIC INVALID', awardKey]),
           (error) => error.code === '22023',
         );
-      const first = (await call(admin, awardSql, args)).rows[0].id;
-      assert.equal((await call(admin, awardSql, args)).rows[0].id, first);
+      const first = (await adminCall(admin, awardSql, args)).rows[0].id;
+      assert.equal((await adminCall(admin, awardSql, args)).rows[0].id, first);
       await assert.rejects(
-        call(admin, awardSql, [student, 6, args[2], awardKey]),
+        adminCall(admin, awardSql, [student, 6, args[2], awardKey]),
         (error) => error.code === '22023',
       );
       await assert.rejects(
-        call(admin, awardSql, [student, 1.5, 'SYNTHETIC FRACTION', awardKey]),
+        adminCall(admin, awardSql, [student, 1.5, 'SYNTHETIC FRACTION', awardKey]),
         (error) => error.code === '22P02',
       );
       assert.deepEqual(
@@ -326,8 +328,10 @@ const awardKey = '70000000-0000-4000-8000-000000000101';
 test('main-schema leaderboard consent and Admin awards enforce privacy and audit boundaries', async (t) => {
   const db = await createDatabase();
   t.after(() => db.close());
-  const call = (uid, sql, params = [], role = 'authenticated') =>
-    asUser(db, uid, () => db.query(sql, params), role);
+  const call = (uid, sql, params = [], role = 'authenticated', claims = { aal: 'aal1' }) =>
+    asUser(db, uid, () => db.query(sql, params), role, claims);
+  const adminCall = (uid, sql, params = []) =>
+    call(uid, sql, params, 'authenticated', { aal: 'aal2' });
 
   await db.exec(`
     insert into auth.users(id,email,email_confirmed_at) values
@@ -465,6 +469,69 @@ test('main-schema leaderboard consent and Admin awards enforce privacy and audit
   );
 
   await t.test(
+    'sensitive Admin RPCs require AAL2 and reject missing, invalid, unregistered or unauthorized sessions',
+    async () => {
+      const awardSql = 'select public.admin_award_points($1,$2,$3,$4)';
+      const awardArgs = [student, 4, 'AAL2 boundary test', awardKey];
+      assert.equal(
+        (await call(admin, 'select public.current_academy_is_admin() as allowed')).rows[0].allowed,
+        true,
+      );
+      for (const claims of [{ aal: 'aal1' }, {}, { aal: 'aal3' }, { aal: ['aal2'] }, null]) {
+        await assert.rejects(
+          call(admin, awardSql, awardArgs, 'authenticated', claims),
+          (error) => error.code === '42501',
+        );
+        await assert.rejects(
+          call(admin, 'select public.admin_award_students()', [], 'authenticated', claims),
+          (error) => error.code === '42501',
+        );
+        await assert.rejects(
+          call(admin, 'select public.admin_award_history(null)', [], 'authenticated', claims),
+          (error) => error.code === '42501',
+        );
+        await assert.rejects(
+          call(
+            admin,
+            "select public.correct_registered_student_name($1,'Denied')",
+            [student],
+            'authenticated',
+            claims,
+          ),
+          (error) => error.code === '42501',
+        );
+      }
+      await assert.rejects(
+        call(student, awardSql, awardArgs, 'authenticated', { aal: 'aal2' }),
+        (error) => error.code === '42501',
+      );
+      await assert.rejects(
+        call(null, awardSql, awardArgs, 'anon', { aal: 'aal2' }),
+        (error) => error.code === '42501',
+      );
+      await db.query('update public.profiles set registered_at=null where id=$1', [admin]);
+      await assert.rejects(
+        adminCall(admin, awardSql, awardArgs),
+        (error) => error.code === '42501',
+      );
+      await db.query('update public.profiles set registered_at=now() where id=$1', [admin]);
+      assert.equal(
+        (await adminCall(admin, 'select public.current_academy_is_admin() as allowed')).rows[0]
+          .allowed,
+        true,
+      );
+      assert.equal(
+        (
+          await db.query(
+            "select has_function_privilege('anon','public.admin_award_points(uuid,integer,text,uuid)','EXECUTE') as allowed",
+          )
+        ).rows[0].allowed,
+        false,
+      );
+    },
+  );
+
+  await t.test(
     'Team and Student cannot award; Admin correction withdraws name consent',
     async () => {
       assert.equal(
@@ -472,12 +539,13 @@ test('main-schema leaderboard consent and Admin awards enforce privacy and audit
         'team',
       );
       assert.equal(
-        (await call(admin, 'select public.current_academy_is_admin() as allowed')).rows[0].allowed,
+        (await adminCall(admin, 'select public.current_academy_is_admin() as allowed')).rows[0]
+          .allowed,
         true,
       );
       for (const table of ['application_admins', 'application_admin_events']) {
         await assert.rejects(
-          call(admin, `select * from app_private.${table}`),
+          adminCall(admin, `select * from app_private.${table}`),
           (error) => error.code === '42501',
         );
       }
@@ -516,7 +584,7 @@ test('main-schema leaderboard consent and Admin awards enforce privacy and audit
         (error) => error.code === '42501',
       );
       await assert.rejects(
-        call(admin, 'select public.admin_award_points($1,$2,$3,$4)', [
+        adminCall(admin, 'select public.admin_award_points($1,$2,$3,$4)', [
           student,
           0,
           'Invalid',
@@ -529,7 +597,7 @@ test('main-schema leaderboard consent and Admin awards enforce privacy and audit
         call(team, "select public.correct_registered_student_name($1,'Corrected Name')", [student]),
         (error) => error.code === '42501',
       );
-      await call(admin, "select public.correct_registered_student_name($1,'Corrected Name')", [
+      await adminCall(admin, "select public.correct_registered_student_name($1,'Corrected Name')", [
         student,
       ]);
       const profile = (
@@ -562,11 +630,19 @@ test('main-schema leaderboard consent and Admin awards enforce privacy and audit
     'Admin awards are idempotent, append-only, and included in leaderboard totals',
     async () => {
       const args = [student, 10, 'Approved local test award', awardKey];
-      const first = await call(admin, 'select public.admin_award_points($1,$2,$3,$4) as id', args);
-      const second = await call(admin, 'select public.admin_award_points($1,$2,$3,$4) as id', args);
+      const first = await adminCall(
+        admin,
+        'select public.admin_award_points($1,$2,$3,$4) as id',
+        args,
+      );
+      const second = await adminCall(
+        admin,
+        'select public.admin_award_points($1,$2,$3,$4) as id',
+        args,
+      );
       assert.equal(second.rows[0].id, first.rows[0].id);
       await assert.rejects(
-        call(admin, 'select public.admin_award_points($1,$2,$3,$4)', [
+        adminCall(admin, 'select public.admin_award_points($1,$2,$3,$4)', [
           student,
           11,
           'Conflicting payload',
@@ -577,7 +653,9 @@ test('main-schema leaderboard consent and Admin awards enforce privacy and audit
       const result = await db.query('select public.academy_leaderboard() as rows');
       assert.equal(result.rows[0].rows[0].points, 18);
       assert.equal(result.rows[0].rows[0].activities, 1);
-      const history = await call(admin, 'select public.admin_award_history($1) as rows', [student]);
+      const history = await adminCall(admin, 'select public.admin_award_history($1) as rows', [
+        student,
+      ]);
       assert.equal(history.rows[0].rows.length, 1);
       assert.equal(history.rows[0].rows[0].points, 10);
       await assert.rejects(
@@ -600,5 +678,100 @@ test('main-schema leaderboard consent and Admin awards enforce privacy and audit
       );
       assert.equal(grant.rows[0].allowed, false);
     },
+  );
+});
+
+test('initial Admin promotion is one-time, owner-approved, registered, verified-TOTP and AAL2 bound', async (t) => {
+  const db = await createDatabase();
+  t.after(() => db.close());
+  const target = '00000000-0000-4000-8000-000000000301';
+  const approver = '00000000-0000-4000-8000-000000000302';
+  const call = (uid, claims, role = 'authenticated') =>
+    asUser(db, uid, () => db.query('select public.promote_initial_academy_admin()'), role, claims);
+  const pendingFor = (uid, claims, role = 'authenticated') =>
+    asUser(
+      db,
+      uid,
+      () => db.query('select public.current_user_has_initial_admin_promotion() as pending'),
+      role,
+      claims,
+    );
+  await db.exec(`
+    insert into auth.users(id,email,email_confirmed_at) values
+      ('${target}','synthetic-target@example.test',now()),
+      ('${approver}','synthetic-approver@example.test',now());
+    update public.profiles set full_name='Synthetic Owner', whatsapp='+962790000301', major='AI',
+      university='Other University', academic_year=4, python_experience='basic',
+      consent_version='registration-v1', consent_at=now(), registered_at=now() where id='${target}';
+    insert into app_private.initial_admin_promotion_approval(singleton,user_id,approved_by,reason)
+      values(true,'${target}','${approver}','SYNTHETIC OWNER APPROVAL ONLY');
+  `);
+  assert.equal((await pendingFor(target, { aal: 'aal1' })).rows[0].pending, true);
+  assert.equal((await pendingFor(approver, { aal: 'aal2' })).rows[0].pending, false);
+  await assert.rejects(
+    pendingFor(null, { aal: 'aal2' }, 'anon'),
+    (error) => error.code === '42501',
+  );
+  await assert.rejects(call(target, { aal: 'aal1' }), (error) => error.code === '42501');
+  await assert.rejects(call(target, {}), (error) => error.code === '42501');
+  await assert.rejects(call(approver, { aal: 'aal2' }), (error) => error.code === '42501');
+  await assert.rejects(call(target, { aal: 'aal2' }), (error) => error.code === '42501');
+  await db.query(
+    "insert into auth.mfa_factors(user_id,factor_type,status) values($1,'totp','verified')",
+    [target],
+  );
+  await call(target, { aal: 'aal2' });
+  assert.equal(
+    (
+      await db.query(
+        'select count(*)::int as n from app_private.application_admins where user_id=$1',
+        [target],
+      )
+    ).rows[0].n,
+    1,
+  );
+  assert.equal(
+    (
+      await db.query(
+        'select actor_id,subject_id,event,reason from app_private.application_admin_events where subject_id=$1',
+        [target],
+      )
+    ).rows[0].actor_id,
+    approver,
+  );
+  assert.equal(
+    (await db.query('select count(*)::int as n from app_private.initial_admin_promotion_approval'))
+      .rows[0].n,
+    0,
+  );
+  assert.equal((await pendingFor(target, { aal: 'aal2' })).rows[0].pending, false);
+  await assert.rejects(call(target, { aal: 'aal2' }), (error) => error.code === '42501');
+  assert.equal(
+    (
+      await db.query(
+        "select has_table_privilege('authenticated','app_private.initial_admin_promotion_approval','SELECT,INSERT,UPDATE,DELETE') as allowed",
+      )
+    ).rows[0].allowed,
+    false,
+  );
+  assert.equal(
+    (
+      await db.query(
+        "select has_table_privilege('service_role','app_private.initial_admin_promotion_approval','SELECT,INSERT,DELETE') as allowed",
+      )
+    ).rows[0].allowed,
+    true,
+  );
+  assert.equal(
+    (
+      await db.query(
+        "select has_function_privilege('service_role','public.promote_initial_academy_admin()','EXECUTE') as allowed",
+      )
+    ).rows[0].allowed,
+    false,
+  );
+  await assert.rejects(
+    call(null, { aal: 'aal2' }, 'service_role'),
+    (error) => error.code === '42501',
   );
 });

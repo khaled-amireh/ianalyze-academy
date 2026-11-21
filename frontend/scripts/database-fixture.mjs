@@ -32,6 +32,13 @@ export async function createDatabase(migrationSql = migrations()) {
       id uuid primary key, email text, email_confirmed_at timestamptz,
       raw_user_meta_data jsonb not null default '{}'
     );
+    create table auth.mfa_factors (
+      id uuid primary key default gen_random_uuid(), user_id uuid not null references auth.users(id),
+      factor_type text not null, status text not null
+    );
+    create function auth.jwt() returns jsonb language sql stable as $$
+      select coalesce(nullif(current_setting('request.jwt.claims', true), '')::jsonb, '{}'::jsonb);
+    $$;
     create function auth.uid() returns uuid language sql stable as $$
       select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid;
     $$;
@@ -40,6 +47,7 @@ export async function createDatabase(migrationSql = migrations()) {
     $$;
     grant usage on schema auth to anon, authenticated;
     grant execute on function auth.uid() to anon, authenticated;
+    grant execute on function auth.jwt() to anon, authenticated;
     create table storage.buckets (
       id text primary key, name text not null, public boolean not null default false,
       file_size_limit bigint, allowed_mime_types text[]
@@ -56,12 +64,16 @@ export async function createDatabase(migrationSql = migrations()) {
   return db;
 }
 
-export async function asUser(db, uid, callback, role = 'authenticated') {
+export async function asUser(db, uid, callback, role = 'authenticated', claims = { aal: 'aal1' }) {
   await db.exec('begin');
   try {
-    await db.exec(`set local role ${role === 'anon' ? 'anon' : 'authenticated'}`);
+    const dbRole =
+      role === 'anon' ? 'anon' : role === 'service_role' ? 'service_role' : 'authenticated';
+    await db.exec(`set local role ${dbRole}`);
     await db.query("select set_config('request.jwt.claim.sub', $1, true)", [uid ?? '']);
     await db.query("select set_config('request.jwt.claim.role', $1, true)", [role]);
+    const jwt = claims === null ? '' : JSON.stringify({ sub: uid ?? '', role, ...claims });
+    await db.query("select set_config('request.jwt.claims', $1, true)", [jwt]);
     const result = await callback();
     await db.exec('commit');
     return result;

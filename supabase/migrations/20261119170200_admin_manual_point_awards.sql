@@ -32,7 +32,7 @@ create function app_private.admin_award_points(
 language plpgsql security definer set search_path = '' as $$
 declare actor_id uuid := (select auth.uid()); award_id uuid; prior app_private.manual_point_awards;
 begin
-  if not app_private.is_admin() then raise exception 'Application Admin required' using errcode = '42501'; end if;
+  perform app_private.require_admin_aal2();
   if p_student_id is null or p_points is null or p_points <= 0 or p_idempotency_key is null
     or p_reason is null or length(trim(p_reason)) not between 1 and 500 then
     raise exception 'Positive whole points, a reason and an idempotency key are required' using errcode = '22023';
@@ -66,7 +66,7 @@ $$;
 create function app_private.admin_award_history(p_student_id uuid default null) returns jsonb
 language plpgsql stable security definer set search_path = '' as $$
 begin
-  if not app_private.is_admin() then raise exception 'Application Admin required' using errcode = '42501'; end if;
+  perform app_private.require_admin_aal2();
   return coalesce((
     select jsonb_agg(jsonb_build_object(
       'id', a.id, 'student_id', a.student_id, 'admin_id', a.admin_id,
@@ -85,7 +85,7 @@ $$;
 create function app_private.admin_award_students() returns jsonb
 language plpgsql stable security definer set search_path = '' as $$
 begin
-  if not app_private.is_admin() then raise exception 'Application Admin required' using errcode = '42501'; end if;
+  perform app_private.require_admin_aal2();
   return coalesce((
     select jsonb_agg(jsonb_build_object('id', p.id, 'full_name', p.full_name, 'email', p.email)
       order by p.full_name, p.id)

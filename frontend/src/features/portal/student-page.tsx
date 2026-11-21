@@ -12,6 +12,7 @@ import { changeLocale } from '@/lib/i18n';
 import { majors, profilePatch, selectedMajor } from './profile-fields';
 import { ProfileDetails } from './profile-details';
 import { LeaderboardNameConsent } from './leaderboard-name-consent';
+import { InitialAdminPromotion } from './initial-admin-promotion';
 import { UniversityIdField } from './university-id-field';
 import { useRegistrationDraft } from './use-registration-draft';
 import { RegistrationDraftNotice } from './registration-draft-notice';
@@ -415,6 +416,7 @@ export function StudentPage() {
     );
   return (
     <PageContainer className="portal-page" dir={arabic ? 'rtl' : 'ltr'} data-student-dashboard>
+      <InitialAdminPromotion />
       <h1 id="page-title" tabIndex={-1}>
         {c.dashboard}
       </h1>

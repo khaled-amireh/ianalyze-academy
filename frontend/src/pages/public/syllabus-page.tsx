@@ -7,6 +7,7 @@ import { PageContainer } from '@/components/shared/page-container';
 import { MixedText } from '@/components/shared/mixed-text';
 import { VideoLibraryPreview } from '@/components/shared/learning-video';
 import { CourseFacts, RegisterBand, WeekList } from '@/components/shared/simple-blocks';
+import { Week1Entry } from '@/features/week1/week1-entry';
 
 // Hidden for now; set to true to show the week-by-week plan again.
 const SHOW_WEEKLY_PLAN = false;
@@ -25,6 +26,7 @@ export function SyllabusPage() {
         </p>
       </header>
       <CourseFacts wide />
+      <Week1Entry />
 
       <div className="s-cards">
         {(

@@ -66,8 +66,14 @@ test('embedded PostgreSQL security (test-only Auth/Storage fixture)', async (t) 
       const { rows } = await db.query(
         "select c.relname,c.relrowsecurity from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname in ('public','app_private') and c.relkind='r'",
       );
-      assert.equal(rows.length, 17);
+      assert.equal(rows.length, 22);
       assert.ok(rows.every((r) => r.relrowsecurity));
+      assert.ok(
+        rows.some(
+          (r) =>
+            r.relname === 'initial_hussein_team_transition_approval' && r.relrowsecurity === true,
+        ),
+      );
       assert.deepEqual(
         (
           await db.query(
@@ -166,11 +172,45 @@ test('embedded PostgreSQL security (test-only Auth/Storage fixture)', async (t) 
       await forbidden(A, "select public.complete_registration('unapproved-policy')", [], '22023');
     },
   );
-  await t.test('Student and Team cannot read/write roles or audit tables', async () => {
-    for (const uid of [A, T]) {
-      await forbidden(uid, "update app_private.user_roles set role='team' where user_id=$1", [uid]);
+  await t.test('Student and Team cannot change roles or read audit records', async () => {
+    const attempts = [
+      [
+        A,
+        [
+          [A, 'team'],
+          [B, 'team'],
+        ],
+      ],
+      [
+        T,
+        [
+          [T, 'student'],
+          [A, 'team'],
+        ],
+      ],
+    ];
+    for (const [uid, roleChanges] of attempts) {
+      for (const [target, role] of roleChanges) {
+        const { rows } = await queryAs(
+          uid,
+          'update app_private.user_roles set role=$2 where user_id=$1 returning user_id,role',
+          [target, role],
+        );
+        assert.deepEqual(rows, [], 'RLS must reject role writes for unrelated accounts');
+      }
       await forbidden(uid, 'select * from app_private.user_roles');
       await forbidden(uid, 'select * from app_private.audit_events');
+    }
+    for (const [uid, expectedRole] of [
+      [A, 'student'],
+      [B, 'student'],
+      [T, 'team'],
+    ]) {
+      assert.equal(
+        (await queryAs(uid, 'select public.current_academy_role() as role')).rows[0].role,
+        expectedRole,
+        'The attempted writes must leave the caller role unchanged',
+      );
     }
   });
   await t.test('students see only released learning records and cannot manage them', async () => {

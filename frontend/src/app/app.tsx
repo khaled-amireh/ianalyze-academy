@@ -1,7 +1,8 @@
 import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import { Direction } from 'radix-ui';
-import { LAYOUT_DIR } from '@/lib/i18n';
+import { useTranslation } from 'react-i18next';
+import { directionForLocale } from '@/lib/i18n';
 import { DEV_PREVIEWS } from './config';
 import { PublicLayout } from '@/components/layout/public-layout';
 import { HomePage } from '@/pages/public/home-page';
@@ -41,6 +42,9 @@ const NotificationsPage = lazy(() =>
 const SyllabusPage = lazy(() =>
   import('@/pages/public/syllabus-page').then((m) => ({ default: m.SyllabusPage })),
 );
+const Week1Page = lazy(() =>
+  import('@/features/week1/week1-page').then((m) => ({ default: m.Week1Page })),
+);
 const JoinPage = lazy(() =>
   import('@/pages/public/join-page').then((m) => ({ default: m.JoinPage })),
 );
@@ -61,13 +65,17 @@ const ContactPage = lazy(() =>
 );
 
 export function App() {
+  const { i18n } = useTranslation();
+  const direction = directionForLocale(i18n.resolvedLanguage === 'ar' ? 'ar' : 'en');
   return (
-    <Direction.Provider dir={LAYOUT_DIR}>
+    <Direction.Provider dir={direction}>
       <Routes>
         <Route element={<PublicLayout />}>
           <Route index element={<HomePage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="eda" element={<SyllabusPage />} />
+          <Route path="eda/week-1" element={<Week1Page />} />
+          <Route path="eda/week-1/:activity" element={<Week1Page />} />
           <Route path="ai-tools" element={<AiToolsPage />} />
           <Route path="ai-tools/:toolId" element={<ToolGuidePage />} />
           <Route path="videos" element={<VideosPage />} />

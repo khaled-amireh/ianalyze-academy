@@ -432,6 +432,204 @@ export type Database = {
           },
         ];
       };
+      week1_bingo_boards: {
+        Row: {
+          student_id: string;
+          board_order: Json;
+          completed: Json;
+          version: number;
+          created_at: string;
+          updated_at: string;
+          id: string;
+          retired_at: string | null;
+        };
+        Insert: {
+          student_id: string;
+          board_order: Json;
+          completed?: Json;
+          version?: number;
+          created_at?: string;
+          updated_at?: string;
+          id?: string;
+          retired_at?: string | null;
+        };
+        Update: {
+          student_id?: string;
+          board_order?: Json;
+          completed?: Json;
+          version?: number;
+          created_at?: string;
+          updated_at?: string;
+          id?: string;
+          retired_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'week1_bingo_boards_student_id_fkey';
+            columns: ['student_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      week1_bingo_claims: {
+        Row: {
+          id: string;
+          reference: string;
+          student_id: string;
+          board_snapshot: Json;
+          completed_snapshot: Json;
+          winning_line: Json;
+          challenges: Json;
+          status: string;
+          created_at: string;
+          reviewed_by: string | null;
+          reviewed_at: string | null;
+          rejection_reason: string | null;
+          round_id: string;
+        };
+        Insert: {
+          id?: string;
+          reference?: string;
+          student_id: string;
+          board_snapshot: Json;
+          completed_snapshot: Json;
+          winning_line: Json;
+          challenges: Json;
+          status?: string;
+          created_at?: string;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          rejection_reason?: string | null;
+          round_id: string;
+        };
+        Update: {
+          id?: string;
+          reference?: string;
+          student_id?: string;
+          board_snapshot?: Json;
+          completed_snapshot?: Json;
+          winning_line?: Json;
+          challenges?: Json;
+          status?: string;
+          created_at?: string;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          rejection_reason?: string | null;
+          round_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'week1_bingo_claims_reviewed_by_fkey';
+            columns: ['reviewed_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'week1_bingo_claims_round_id_student_id_fkey';
+            columns: ['round_id', 'student_id'];
+            isOneToOne: false;
+            referencedRelation: 'week1_bingo_boards';
+            referencedColumns: ['id', 'student_id'];
+          },
+        ];
+      };
+      week1_datasets: {
+        Row: {
+          student_id: string;
+          title: string;
+          url: string;
+          topic: string;
+          description: string;
+          column1: string;
+          column2: string;
+          column3: string;
+          question: string;
+          status: string;
+          created_at: string;
+          updated_at: string;
+          submitted_at: string | null;
+          version: number;
+          id: string;
+        };
+        Insert: {
+          student_id: string;
+          title: string;
+          url: string;
+          topic: string;
+          description: string;
+          column1: string;
+          column2: string;
+          column3: string;
+          question: string;
+          status: string;
+          created_at?: string;
+          updated_at?: string;
+          submitted_at?: string | null;
+          version?: number;
+          id?: string;
+        };
+        Update: {
+          student_id?: string;
+          title?: string;
+          url?: string;
+          topic?: string;
+          description?: string;
+          column1?: string;
+          column2?: string;
+          column3?: string;
+          question?: string;
+          status?: string;
+          created_at?: string;
+          updated_at?: string;
+          submitted_at?: string | null;
+          version?: number;
+          id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'week1_datasets_student_id_fkey';
+            columns: ['student_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      week1_session: {
+        Row: {
+          id: number;
+          topics: Json;
+          version: number;
+          updated_by: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          id?: number;
+          topics: Json;
+          version?: number;
+          updated_by?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          id?: number;
+          topics?: Json;
+          version?: number;
+          updated_by?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'week1_session_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
     };
     Views: { [_ in never]: never };
     Functions: {
@@ -496,6 +694,23 @@ export type Database = {
         Returns: string;
       };
       set_public_full_name_consent: { Args: { p_consented: boolean }; Returns: undefined };
+      week1_claim_bingo: { Args: { p_round_id?: string }; Returns: undefined };
+      week1_mark_bingo: {
+        Args: { p_challenge: number; p_completed: boolean; p_version: number; p_round_id?: string };
+        Returns: undefined;
+      };
+      week1_play_again: { Args: { p_round_id: string }; Returns: undefined };
+      week1_review_bingo: {
+        Args: { p_id: string; p_status: string; p_reason: string };
+        Returns: undefined;
+      };
+      week1_save_dataset: {
+        Args: { p_data: Json; p_version: number; p_attempt_id?: string };
+        Returns: string;
+      };
+      week1_save_session: { Args: { p_topics: Json; p_version: number }; Returns: undefined };
+      week1_start_bingo: { Args: Record<string, never>; Returns: undefined };
+      week1_start_dataset_attempt: { Args: { p_previous_id?: string }; Returns: string };
     };
     Enums: { [_ in never]: never };
     CompositeTypes: { [_ in never]: never };

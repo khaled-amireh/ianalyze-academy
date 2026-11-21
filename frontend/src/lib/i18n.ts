@@ -5,15 +5,12 @@ import en from '@/locales/en.json';
 import { DEFAULT_LOCALE, LOCALE_KEY } from '@/app/config';
 import { readPreference, savePreference } from '@/lib/preferences';
 import type { Locale } from '@/types/preferences';
-
-// The page layout stays right-to-left in both languages so switching language
-// only swaps the text. English paragraphs still read left-to-right through
-// `unicode-bidi: plaintext` in styles/simplify.css.
-export const LAYOUT_DIR = 'rtl';
+import { directionForLocale } from './locale-direction';
+export { directionForLocale } from './locale-direction';
 
 export function applyLocale(locale: Locale) {
   document.documentElement.lang = locale;
-  document.documentElement.dir = LAYOUT_DIR;
+  document.documentElement.dir = directionForLocale(locale);
 }
 
 const locale = readPreference(LOCALE_KEY, ['ar', 'en'] as const, DEFAULT_LOCALE);

@@ -28,6 +28,24 @@ test('dynamic file submissions enforce identity, reservations, private storage, 
   const denied = (uid, sql, params = []) =>
     assert.rejects(call(uid, sql, params), (error) => error.code === '42501');
 
+  const serviceFunctionAcl = await db.query(`
+    select
+      has_function_privilege('service_role', 'app_private.finalize_activity_submission(uuid,jsonb)', 'EXECUTE') as service_finalize,
+      has_function_privilege('anon', 'app_private.finalize_activity_submission(uuid,jsonb)', 'EXECUTE') as anon_finalize,
+      has_function_privilege('authenticated', 'app_private.finalize_activity_submission(uuid,jsonb)', 'EXECUTE') as authenticated_finalize,
+      has_function_privilege('service_role', 'app_private.cancel_activity_submission(uuid)', 'EXECUTE') as service_cancel,
+      has_function_privilege('anon', 'app_private.cancel_activity_submission(uuid)', 'EXECUTE') as anon_cancel,
+      has_function_privilege('authenticated', 'app_private.cancel_activity_submission(uuid)', 'EXECUTE') as authenticated_cancel
+  `);
+  assert.deepEqual(serviceFunctionAcl.rows[0], {
+    service_finalize: true,
+    anon_finalize: false,
+    authenticated_finalize: false,
+    service_cancel: true,
+    anon_cancel: false,
+    authenticated_cancel: false,
+  });
+
   await db.exec(`
     insert into auth.users(id,email,email_confirmed_at) values
       ('${studentA}','activity-a@example.test',now()),

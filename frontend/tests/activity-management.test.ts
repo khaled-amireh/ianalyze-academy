@@ -166,6 +166,28 @@ test('new activity uploads use an independent fail-closed gate from Week 1 noteb
   assert.doesNotMatch(notebookHandler, /ACADEMY_ACTIVITY_UPLOADS_ENABLED/);
 });
 
+test('Edge release preserves the Week 1 gate and deploys both functions with activity uploads closed', () => {
+  const deployer = readFileSync(
+    new URL('../scripts/deploy-supabase-edge.mjs', import.meta.url),
+    'utf8',
+  );
+  const workflow = readFileSync(
+    new URL('../../.github/workflows/production.yml', import.meta.url),
+    'utf8',
+  );
+  assert.match(deployer, /ACADEMY_ACTIVITY_UPLOADS_ENABLED=false/);
+  assert.doesNotMatch(deployer, /ACADEMY_UPLOADS_ENABLED\s*=/);
+  assert.doesNotMatch(deployer, /ACADEMY_ACTIVITY_UPLOADS_ENABLED=true/);
+  assert.match(deployer, /functionsToDeploy = \['notebook-submit', 'activity-submit'\]/);
+  assert.match(deployer, /for \(const functionName of functionsToDeploy\)/);
+  assert.match(deployer, /deployed\?\.status !== 'ACTIVE' \|\| deployed\.verify_jwt !== false/);
+  assert.match(deployer, /activityRejected\.status !== 401/);
+  const edgeTrigger = workflow.split('git diff --quiet')[1]?.split('; then')[0] ?? '';
+  assert.match(edgeTrigger, /supabase\/functions/);
+  assert.match(workflow, /steps\.edge_changes\.outputs\.changed == 'true'/);
+  assert.match(workflow, /npm --prefix frontend run release:edge/);
+});
+
 test('new activity upload gates cover UI, reservation, Storage, finalization and Edge', () => {
   const migration = readFileSync(
     new URL(

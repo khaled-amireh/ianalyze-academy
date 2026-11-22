@@ -612,6 +612,10 @@ grant execute on function app_private.finalize_activity_submission(uuid,jsonb),
   public.finalize_activity_submission(uuid,jsonb) to service_role;
 grant execute on function app_private.cancel_activity_submission(uuid),
   public.cancel_activity_submission(uuid) to service_role;
+-- SECURITY INVOKER public wrappers execute their private callees as service_role.
+-- Keep these privileged helpers unavailable to PUBLIC, anon, and authenticated.
+grant execute on function app_private.finalize_activity_submission(uuid,jsonb),
+  app_private.cancel_activity_submission(uuid) to service_role;
 
 -- Preserve the established ranking source, adding only the new file-activity grade totals.
 alter function app_private.leaderboard_base_rows(boolean, timestamptz)

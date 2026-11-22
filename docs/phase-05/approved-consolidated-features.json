@@ -5,9 +5,9 @@
   "manifestPath": "docs/phase-05/approved-consolidated-features.json",
   "files": {
     "docs/audits/leaderboard-admin-release/FINAL_READINESS.md": {
-      "sha256": "6cd922ea574f740598d684a11ca23a308d50cc4ef171a114e5aed863380d8935",
+      "sha256": "08d54bfe2caf6d1b4bded801a629aeadd7f43fc61a2ebf60ad6a399251d44d3e",
       "previousSha256": "13bebbfbec484118f0212a2ae94a3f874c45bf543f72ac70440dec0802311f4c",
-      "reason": "Owner-authorized final production release preparation: supersede stale Phase 2 status with the latest owner-reported configured validation, isolated authenticated E2E, exact current artifact/migration fingerprints, and refreshed read-only production snapshot.",
+      "reason": "Owner-authorized PR #24 blocker correction: record the exact private service-role grants, safe two-function Edge deployment behavior, updated hashes, validation results, and remaining activation gates.",
       "previousCandidateSha256": "bad145ee827a76de19ec72eaf2f28fedffb81ca16db41c6f7c15b6f9f146ce91",
       "revisionHistory": [
         {
@@ -49,6 +49,18 @@
         {
           "supersededSha256": "744b263c782f39601817d3ab943f7e16b9f606ee68e8174f2f902215263d50b3",
           "reason": "Clarify that configured artifact verification stopped at missing process-only variables and the public-mode check was inapplicable to configured output."
+        },
+        {
+          "supersededSha256": "6cd922ea574f740598d684a11ca23a308d50cc4ef171a114e5aed863380d8935",
+          "reason": "Owner-authorized PR #24 blocker correction: record the exact private service-role grants, safe two-function Edge deployment behavior, updated hashes, validation results, and remaining activation gates."
+        },
+        {
+          "supersededSha256": "a66810ec86d6d42a61af43d9456d5ad1b1db30faeb865d8b01cd6859f73394fd",
+          "reason": "Correct the recorded preservation-guard resolution count to the exact final check output."
+        },
+        {
+          "supersededSha256": "cb4ab4895e092a10205617c472fa9b1b2168d118978d33df9f5f6e492e3cfef1",
+          "reason": "Record that local validate rebuilt the public-only artifact and that final configured artifact generation is still required."
         }
       ]
     },
@@ -205,9 +217,9 @@
       ]
     },
     "frontend/tests/activity-management.test.ts": {
-      "sha256": "225e73a509324f79f1b412e413d821c8084c001bf3ee9709bcd7cd44fdff3a99",
+      "sha256": "c966d3b23347854b05760eed36b8f4862e24f4a9ea3fb19021be7c4d1f5883ae",
       "added": true,
-      "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation.",
+      "reason": "Owner-authorized PR #24 blocker fix: grant service_role only the private finalize/cancel RPC execution rights and add a target-pinned Edge release path that preserves the Week 1 gate, deploys both functions, and leaves activity uploads disabled.",
       "previousCandidateSha256": "a4c1ec81e67829320613fe3930068f4a445f182ea5bd5a6ab35ec0ac71a409c0",
       "revisionHistory": [
         {
@@ -229,14 +241,18 @@
         {
           "supersededSha256": "77a87ef9b4088d321832a6100c7975da087f20b721e0e43d7bfc2781e726d245",
           "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation."
+        },
+        {
+          "supersededSha256": "225e73a509324f79f1b412e413d821c8084c001bf3ee9709bcd7cd44fdff3a99",
+          "reason": "Owner-authorized PR #24 blocker fix: grant service_role only the private finalize/cancel RPC execution rights and add a target-pinned Edge release path that preserves the Week 1 gate, deploys both functions, and leaves activity uploads disabled."
         }
       ],
       "previousSha256": "77a87ef9b4088d321832a6100c7975da087f20b721e0e43d7bfc2781e726d245"
     },
     "frontend/tests/activity-submissions.security.test.mjs": {
-      "sha256": "a0d3d322f163acbee151937cfb57f0902ed0195aa8924cbc80200fc7f99db2c9",
+      "sha256": "e128bcbcefea24d1b66b5fb76b9b8d28f54c30d24045d8c98cc3e325c2054ac8",
       "added": true,
-      "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation.",
+      "reason": "Owner-authorized PR #24 blocker fix: grant service_role only the private finalize/cancel RPC execution rights and add a target-pinned Edge release path that preserves the Week 1 gate, deploys both functions, and leaves activity uploads disabled.",
       "previousCandidateSha256": "c29935304a24c1a873afa7f71e3a2285952bdf2ebf3a5592922fb4b0b0db0f44",
       "revisionHistory": [
         {
@@ -250,6 +266,10 @@
         {
           "supersededSha256": "53b5921bcfeaa982075f934899db170c9ce977fcf0c85126b1ba33bad608340e",
           "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation."
+        },
+        {
+          "supersededSha256": "a0d3d322f163acbee151937cfb57f0902ed0195aa8924cbc80200fc7f99db2c9",
+          "reason": "Owner-authorized PR #24 blocker fix: grant service_role only the private finalize/cancel RPC execution rights and add a target-pinned Edge release path that preserves the Week 1 gate, deploys both functions, and leaves activity uploads disabled."
         }
       ],
       "previousSha256": "53b5921bcfeaa982075f934899db170c9ce977fcf0c85126b1ba33bad608340e"
@@ -298,9 +318,9 @@
       ]
     },
     "supabase/migrations/20261122120000_dynamic_activity_submissions.sql": {
-      "sha256": "851979d7cb84b3bf618bcf8eeb4d55c9a2279fdf28178089ef32273aeb50ae21",
+      "sha256": "769d9a502fa504639806bbd31ba899a1e379153930726bee080a8c75d4cb2a16",
       "added": true,
-      "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation.",
+      "reason": "Owner-authorized PR #24 blocker fix: grant service_role only the private finalize/cancel RPC execution rights and add a target-pinned Edge release path that preserves the Week 1 gate, deploys both functions, and leaves activity uploads disabled.",
       "previousCandidateSha256": "256bc5c2cb76fdbf666705f13685229ea85935ded589a7ecb5bf93c9e2acf7b6",
       "revisionHistory": [
         {
@@ -314,6 +334,10 @@
         {
           "supersededSha256": "c3e63b7eb8acd97f90d88a337e1bbfa5e267ac12b9d370b6a296e802ddcd7375",
           "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation."
+        },
+        {
+          "supersededSha256": "851979d7cb84b3bf618bcf8eeb4d55c9a2279fdf28178089ef32273aeb50ae21",
+          "reason": "Owner-authorized PR #24 blocker fix: grant service_role only the private finalize/cancel RPC execution rights and add a target-pinned Edge release path that preserves the Week 1 gate, deploys both functions, and leaves activity uploads disabled."
         }
       ],
       "previousSha256": "c3e63b7eb8acd97f90d88a337e1bbfa5e267ac12b9d370b6a296e802ddcd7375"
@@ -332,6 +356,11 @@
       "sha256": "e5a5a397284f72ad9aaafab5de9a7c06c2a32b911070e26289cb3f4cb38c7796",
       "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation. Baseline classification corrected: this path already exists at be870c7d087d10d32d0a776cc6352d32e661387b; candidate content remains pinned by SHA-256.",
       "previousSha256": "0053d57c2128df5d90cf6c02c4275e31cc7a76bd3bf3809c3ed30e3907732e60"
+    },
+    "frontend/scripts/deploy-supabase-edge.mjs": {
+      "previousSha256": "017f9a3ada89186202a3876faddc49e20e1cb44ff07974f8b967a3bb474f5ba8",
+      "sha256": "6cc0f7819c9bde6e9923a55fdd163ef9958337d71957a104d28bf9cc0674c073",
+      "reason": "Owner-authorized PR #24 blocker fix: grant service_role only the private finalize/cancel RPC execution rights and add a target-pinned Edge release path that preserves the Week 1 gate, deploys both functions, and leaves activity uploads disabled."
     }
   }
 }

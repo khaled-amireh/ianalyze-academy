@@ -284,7 +284,7 @@ await load('/');
 await evaluate('document.querySelector(".mobile-menu-trigger").focus()');
 await key('Enter');
 interactions.menuOpens = await evaluate(
-  '!!document.querySelector("[role=dialog][aria-modal=true]")&&document.querySelectorAll(".mobile-nav-links a").length===8',
+  '!!document.querySelector("[role=dialog][aria-modal=true]")&&document.querySelectorAll(".mobile-nav-links a").length===9',
 );
 let focusContained = true;
 for (let n = 0; n < 16; n++) {

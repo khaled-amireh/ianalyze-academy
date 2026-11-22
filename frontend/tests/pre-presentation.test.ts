@@ -5,6 +5,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import configuration from '../vite.config.ts';
+import { phase2Update } from '../scripts/verify-merge-preservation.mjs';
 
 const base = 'db4bb8eff14d2120107f756272c07eae4bda1341';
 const root = new URL('../../', import.meta.url);
@@ -44,12 +45,12 @@ test('the authorized video redesign changes only its bilingual learning copy', (
   for (const locale of ['ar', 'en']) {
     const path = `frontend/src/locales/${locale}.json`;
     const current = JSON.parse(readFileSync(new URL(path, root), 'utf8'));
-    if (pathBUpdate.files[path]) {
+    if (phase2Update.files[path] || pathBUpdate.files[path]) {
       assert.equal(
         createHash('sha256')
           .update(readFileSync(new URL(path, root)))
           .digest('hex'),
-        pathBUpdate.files[path].sha256,
+        phase2Update.files[path]?.sha256 ?? pathBUpdate.files[path].sha256,
         path,
       );
       continue;
@@ -101,10 +102,10 @@ test('the scoped presentation fixes preserve assets, security, navigation and cl
   );
   for (const path of protectedFiles) {
     const bytes = readFileSync(new URL(path, root));
-    if (pathBUpdate.files[path]) {
+    if (phase2Update.files[path] || pathBUpdate.files[path]) {
       assert.equal(
         createHash('sha256').update(bytes).digest('hex'),
-        pathBUpdate.files[path].sha256,
+        phase2Update.files[path]?.sha256 ?? pathBUpdate.files[path].sha256,
         path,
       );
       continue;
@@ -123,7 +124,7 @@ test('the scoped presentation fixes preserve assets, security, navigation and cl
       path,
     );
   }
-  for (const [path, record] of Object.entries(pathBUpdate.files)) {
+  for (const [path, record] of Object.entries({ ...pathBUpdate.files, ...phase2Update.files })) {
     assert.equal(
       createHash('sha256')
         .update(readFileSync(new URL(path, root)))

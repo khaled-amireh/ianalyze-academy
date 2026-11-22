@@ -4,7 +4,7 @@ $stage = 'target'
 $failureCode = 'RELEASE_TARGET_MISMATCH'
 $resultCode = 0
 $frontendRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-$expectedRoot = [IO.Path]::GetFullPath('C:\Users\khale\Desktop\ianalyze-academy\.worktrees\production-release-98ad199-20261121\frontend')
+$expectedRoot = [IO.Path]::GetFullPath('C:\Users\khale\Desktop\ianalyze-academy\.worktrees\phase2-consolidated-20261122\frontend')
 $privateNames = @('SUPABASE_ACCESS_TOKEN', 'ACADEMY_LEADER_USER_ID', 'CLOUDFLARE_API_TOKEN')
 $originalEnvironment = @{}
 $environmentNames = @(
@@ -34,11 +34,11 @@ try {
     if ($frontendRoot -ine $expectedRoot) { throw 'path' }
 
     $branch = Get-GitOutput @('branch', '--show-current')
-    if ($branch -cne 'fix/database-security-owner-transition-20261121') { throw 'branch' }
+    if ($branch -cne 'release/phase2-consolidated-20261122') { throw 'branch' }
     $remote = Get-GitOutput @('remote', 'get-url', 'origin')
     if ($remote -cne 'https://github.com/khaled-amireh/ianalyze-academy.git') { throw 'remote' }
     $head = Get-GitOutput @('rev-parse', 'HEAD')
-    if ($head -cne '98ad19916269f45c32e689f9226f6b1185bc99b3') { throw 'head' }
+    if ($head -cne 'be870c7d087d10d32d0a776cc6352d32e661387b') { throw 'head' }
     $mainLine = Get-GitOutput @('ls-remote', 'origin', 'refs/heads/main')
     $mainSha = ($mainLine -split '\s+')[0]
     if ($mainSha -cne $head) { throw 'main' }

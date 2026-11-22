@@ -670,6 +670,7 @@
     "noSelectedTopics": "الجلسة منشورة، لكن لم يتم اختيار أي موضوع.",
     "topicVisibility": "ظاهر للطلاب المسجلين",
     "waitingForSession": "انشر الجلسة لإظهار هذا الموضوع.",
-    "hiddenTopic": "غير مضمن في الجلسة المنشورة"
+    "hiddenTopic": "غير مضمن في الجلسة المنشورة",
+    "completedBadge": "مكتمل"
   }
 }

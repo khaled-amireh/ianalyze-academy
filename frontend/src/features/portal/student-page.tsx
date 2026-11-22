@@ -1,4 +1,4 @@
-import { useId, useRef, useState, type FormEvent } from 'react';
+import { useCallback, useId, useRef, useState, type FormEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { useAuth } from '@/features/auth/use-auth';
 import {
@@ -35,12 +35,14 @@ import {
 import {
   client,
   downloadNotebook,
+  downloadActivitySubmissionFile,
   loadPortal,
-  topics,
-  topicsAr,
   useRemote,
+  type PortalData,
   type Row,
 } from './data';
+import { ActivityFileSubmission } from './activity-file-submission';
+import { submissionWindowState } from './submission-window';
 
 export function ProfileForm({
   profile,
@@ -361,10 +363,11 @@ function NotebookUpload({
     </form>
   );
 }
-async function loadStudentProfile() {
+async function loadStudentProfile(includePlan: boolean) {
   const result = await loadOwnProfile(client());
   if (result.error) throw result.error;
-  return { profiles: [result.data] };
+  const portal = includePlan && result.data.registered_at ? await loadPortal() : null;
+  return { profiles: [result.data], portal };
 }
 
 export function StudentPage() {
@@ -373,7 +376,8 @@ export function StudentPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const emailVerified = (location.state as { emailVerified?: boolean } | null)?.emailVerified;
-  const { data, error, reload, update, refresh } = useRemote(loadStudentProfile);
+  const loadPage = useCallback(() => loadStudentProfile(auth.role === 'student'), [auth.role]);
+  const { data, error, reload, update, refresh } = useRemote(loadPage);
   const [saved, setSaved] = useState<'registered' | 'saved' | null>(null);
   const [editing, setEditing] = useState(false);
   const onSaved = (profile: Row<'profiles'>, registered: boolean) => {
@@ -452,18 +456,17 @@ export function StudentPage() {
       {profile && (leaderboardEnabled || profile.public_full_name_consent) && (
         <LeaderboardNameConsent profile={profile} canOptIn={leaderboardEnabled} />
       )}
+      {profile?.registered_at && auth.role === 'student' && data.portal && (
+        <section className="content-card" id="student-learning-plan">
+          <StudentLearningPlan data={data.portal} reload={reload} />
+        </section>
+      )}
     </PageContainer>
   );
 }
 
-// Retained for a future learning-plan launch; intentionally not mounted for students.
-export function StudentLearningPlan({
-  data,
-  reload,
-}: {
-  data: Awaited<ReturnType<typeof loadPortal>>;
-  reload: () => void;
-}) {
+// Drafts, reserve weeks and archived activities are excluded both here and by database RLS.
+export function StudentLearningPlan({ data, reload }: { data: PortalData; reload: () => void }) {
   const { c, arabic } = usePortalCopy();
   const auth = useAuth();
   const profile = data.profiles.find((p) => p.id === auth.user?.id);
@@ -471,111 +474,179 @@ export function StudentLearningPlan({
   return (
     <>
       <h2>{c.activities}</h2>
-      {topics.map((topic, index) => {
-        const week = data.weeks.find((w) => w.week_number === index + 1);
-        const activities = data.activities.filter((a) => a.week_id === week?.id);
-        return (
-          <section className="content-card" key={topic}>
-            <h3>
-              <bdi>{new Intl.NumberFormat(arabic ? 'ar-JO' : 'en-GB').format(index + 1)}</bdi>.{' '}
-              <MixedText>
-                {week
-                  ? arabic
-                    ? week.title_ar
-                    : week.title_en
-                  : arabic
-                    ? topicsAr[index]!
-                    : topic}
-              </MixedText>
-            </h3>
-            {week && (arabic ? week.description_ar : week.description_en) && (
-              <p>
-                <MixedText>{arabic ? week.description_ar : week.description_en}</MixedText>
-              </p>
-            )}
-            {activities.length === 0 && <p>{c.unpublished}</p>}
-            {activities.map((activity) => {
-              const rubric = data.rubrics
-                .filter((r) => r.activity_id === activity.id && r.status === 'published')
-                .at(-1);
-              const mine = data.submissions.filter(
-                (s) => s.activity_id === activity.id && s.student_id === auth.user?.id,
-              );
-              return (
-                <article key={activity.id}>
-                  <h3>
-                    <MixedText>{arabic ? activity.title_ar : activity.title_en}</MixedText>
-                  </h3>
-                  <pre>{arabic ? activity.instructions_ar : activity.instructions_en}</pre>
-                  <p>
-                    {c.deadline}:{' '}
-                    {activity.due_at
-                      ? new Intl.DateTimeFormat(arabic ? 'ar-JO' : 'en-GB', {
-                          dateStyle: 'medium',
-                          timeStyle: 'short',
-                          timeZone: 'Asia/Amman',
-                        }).format(new Date(activity.due_at))
-                      : c.noDeadline}
-                  </p>
-                  {rubric && (
-                    <>
-                      <h4>{c.rubric}</h4>
-                      <ul>
-                        {data.criteria
-                          .filter((x) => x.rubric_id === rubric.id)
-                          .map((x) => (
-                            <li key={x.id}>
-                              {arabic ? x.label_ar : x.label_en}: {x.max_points}
-                            </li>
-                          ))}
-                      </ul>
-                    </>
-                  )}
-                  {profile?.registered_at && (
-                    <NotebookUpload
-                      activity={activity.id}
-                      open={Boolean(submissionsEnabled && data.capabilities.submissions && rubric)}
-                      reload={reload}
-                    />
-                  )}
-                  {mine.map((s) => (
-                    <div key={s.id}>
-                      <p>
-                        {c.submissions} #{s.attempt} — {stateText(s.status, c)}
-                      </p>
-                      {s.status !== 'uploading' && s.object_path && (
-                        <Button
-                          variant="outline"
-                          onClick={() =>
-                            void downloadNotebook(s.object_path!).catch(() => setMessage('error'))
-                          }
-                        >
-                          {c.download}
-                        </Button>
+      {data.weeks
+        .filter(
+          (week) =>
+            week.week_number === 1 && week.kind === 'teaching' && week.status === 'published',
+        )
+        .map((week) => {
+          const activities = data.activities.filter(
+            (activity) =>
+              activity.week_id === week.id &&
+              activity.status === 'published' &&
+              !activity.archived_at,
+          );
+          return (
+            <section className="content-card" key={week.id}>
+              <h3>
+                <bdi>
+                  {new Intl.NumberFormat(arabic ? 'ar-JO' : 'en-GB').format(week.week_number)}
+                </bdi>
+                . <MixedText>{arabic ? week.title_ar : week.title_en}</MixedText>
+              </h3>
+              {(arabic ? week.description_ar : week.description_en) && (
+                <p>
+                  <MixedText>{arabic ? week.description_ar : week.description_en}</MixedText>
+                </p>
+              )}
+              {activities.length === 0 && <p>{c.unpublished}</p>}
+              {activities.map((activity) => {
+                const windowState = submissionWindowState(activity.opens_at, activity.due_at);
+                const rubric = data.rubrics
+                  .filter((r) => r.activity_id === activity.id && r.status === 'published')
+                  .at(-1);
+                const canSubmit = Boolean(
+                  submissionsEnabled &&
+                  data.capabilities.submissions &&
+                  data.capabilities.activity_file_submissions &&
+                  rubric &&
+                  windowState === 'open',
+                );
+                const mine = data.submissions.filter(
+                  (s) => s.activity_id === activity.id && s.student_id === auth.user?.id,
+                );
+                return (
+                  <article key={activity.id}>
+                    <h3>
+                      <MixedText>{arabic ? activity.title_ar : activity.title_en}</MixedText>
+                    </h3>
+                    <pre>{arabic ? activity.instructions_ar : activity.instructions_en}</pre>
+                    <p>
+                      {activity.opens_at && (
+                        <>
+                          {c.opensAt}:{' '}
+                          {new Intl.DateTimeFormat(arabic ? 'ar-JO' : 'en-GB', {
+                            dateStyle: 'medium',
+                            timeStyle: 'short',
+                            timeZone: 'Asia/Amman',
+                          }).format(new Date(activity.opens_at))}
+                          {' · '}
+                        </>
                       )}
-                      {data.grades
-                        .filter((g) => g.submission_id === s.id && g.status === 'published')
-                        .map((g) => (
-                          <section key={g.id}>
-                            <h4>
-                              {c.grades}:{' '}
-                              {data.scores
-                                .filter((x) => x.grade_id === g.id)
-                                .reduce((sum, x) => sum + Number(x.points), 0)}{' '}
-                              / {activity.max_score}
-                            </h4>
-                            <p>{c.feedback}</p>
-                            <pre>{g.feedback}</pre>
-                          </section>
-                        ))}
-                    </div>
-                  ))}
-                </article>
-              );
-            })}
-          </section>
-        );
-      })}
+                      {c.deadline}:{' '}
+                      {activity.due_at
+                        ? new Intl.DateTimeFormat(arabic ? 'ar-JO' : 'en-GB', {
+                            dateStyle: 'medium',
+                            timeStyle: 'short',
+                            timeZone: 'Asia/Amman',
+                          }).format(new Date(activity.due_at))
+                        : c.noDeadline}
+                    </p>
+                    <p>
+                      {c.maximum}: {activity.max_score}
+                    </p>
+                    {windowState === 'upcoming' && <p role="status">{c.activityNotOpen}</p>}
+                    {windowState === 'closed' && <p role="status">{c.activityClosed}</p>}
+                    {rubric && (
+                      <>
+                        <h4>{c.rubric}</h4>
+                        <ul>
+                          {data.criteria
+                            .filter((x) => x.rubric_id === rubric.id)
+                            .map((x) => (
+                              <li key={x.id}>
+                                {arabic ? x.label_ar : x.label_en}: {x.max_points}
+                              </li>
+                            ))}
+                        </ul>
+                      </>
+                    )}
+                    {profile?.registered_at && activity.submission_mode === 'notebook' && (
+                      <NotebookUpload activity={activity.id} open={canSubmit} reload={reload} />
+                    )}
+                    {profile?.registered_at && activity.submission_mode === 'files' && (
+                      <ActivityFileSubmission
+                        activity={activity}
+                        enabled={canSubmit}
+                        pendingSubmissions={mine.filter(
+                          (submission) => submission.status === 'uploading',
+                        )}
+                        submissionFiles={data.submissionFiles}
+                        reload={reload}
+                      />
+                    )}
+                    {mine.map((s) => (
+                      <div key={s.id}>
+                        <p>
+                          {c.submissions} #{s.attempt} — {stateText(s.status, c)}
+                          {s.submission_phase &&
+                            ` · ${c[s.submission_phase === 'early' ? 'phaseEarly' : s.submission_phase === 'middle' ? 'phaseMiddle' : 'phaseLate']}`}
+                        </p>
+                        {s.submission_phase && <p>{c.phaseRecorded}</p>}
+                        {s.submission_mode === 'notebook' &&
+                          s.status !== 'uploading' &&
+                          s.object_path && (
+                            <Button
+                              variant="outline"
+                              onClick={() =>
+                                void downloadNotebook(s.object_path!).catch(() =>
+                                  setMessage('error'),
+                                )
+                              }
+                            >
+                              {c.download}
+                            </Button>
+                          )}
+                        {s.submission_mode === 'files' &&
+                          s.status !== 'uploading' &&
+                          data.submissionFiles
+                            .filter((file) => file.submission_id === s.id)
+                            .map((file) => (
+                              <Button
+                                key={file.id}
+                                variant="outline"
+                                onClick={() =>
+                                  void downloadActivitySubmissionFile(
+                                    file.storage_path,
+                                    file.original_name,
+                                  ).catch(() => setMessage('error'))
+                                }
+                              >
+                                {c.downloadFile}: <bdi dir="auto">{file.original_name}</bdi>
+                              </Button>
+                            ))}
+                        {data.grades
+                          .filter((g) => g.submission_id === s.id && g.status === 'published')
+                          .map((g) => {
+                            const rubricPoints = data.scores
+                              .filter((x) => x.grade_id === g.id)
+                              .reduce((sum, x) => sum + Number(x.points), 0);
+                            const timeBonus = Number(g.time_bonus_points);
+                            return (
+                              <section key={g.id}>
+                                <h4>
+                                  {c.grades}:{' '}
+                                  {Math.min(Number(activity.max_score), rubricPoints + timeBonus)} /{' '}
+                                  {activity.max_score}
+                                </h4>
+                                {timeBonus > 0 && (
+                                  <p>
+                                    {c.points}: +{timeBonus}
+                                  </p>
+                                )}
+                                <p>{c.feedback}</p>
+                                <pre>{g.feedback}</pre>
+                              </section>
+                            );
+                          })}
+                      </div>
+                    ))}
+                  </article>
+                );
+              })}
+            </section>
+          );
+        })}
       <FormNotice
         message={message ? c[message] : ''}
         kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}

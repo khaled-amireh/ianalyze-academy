@@ -28,9 +28,15 @@
       "sha256": "5bd177043090423cac5549587e43290d20b3d0dbe47cb3f6e033c244769b793f"
     },
     "frontend/scripts/redesign-browser-qa.mjs": {
-      "reason": "Date browser evidence using the current Asia/Amman date rather than a historical hardcoded date.",
       "previousSha256": "66e3fa498f1262dd948e4d71e086815d3044b4c32d8e1867c09c5fe35c1c32eb",
-      "sha256": "09df5c268ec63ec10c1100776895b5354ded1f61fd5764b75ae9114b33438f6f"
+      "sha256": "b52feebc838d7fe6cf119f50714bfd03dc62d7499beca670444c9d7bf55aef9a",
+      "reason": "Owner-authorized Phase 2 final browser QA correction: verify the current /team redirect, Week 1 entry and activities, and click-to-load video contract without third-party network access.",
+      "revisionHistory": [
+        {
+          "supersededSha256": "09df5c268ec63ec10c1100776895b5354ded1f61fd5764b75ae9114b33438f6f",
+          "reason": "Date browser evidence using the current Asia/Amman date rather than a historical hardcoded date."
+        }
+      ]
     },
     "frontend/scripts/verify-merge-preservation.mjs": {
       "reason": "Layer this authorized scope over previous frozen scopes, checking both baseline and final hashes.",

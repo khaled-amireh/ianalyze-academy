@@ -49,6 +49,16 @@ export type Database = {
           due_at: string | null;
           status: string;
           published_at: string | null;
+          opens_at: string | null;
+          submission_mode: string;
+          max_submission_files: number;
+          max_submission_file_bytes: number;
+          phase_1_ends_at: string | null;
+          phase_2_ends_at: string | null;
+          phase_1_bonus_points: number;
+          phase_2_bonus_points: number;
+          phase_3_bonus_points: number;
+          archived_at: string | null;
         };
         Insert: {
           id?: string;
@@ -61,6 +71,16 @@ export type Database = {
           due_at?: string | null;
           status?: string;
           published_at?: string | null;
+          opens_at?: string | null;
+          submission_mode?: string;
+          max_submission_files?: number;
+          max_submission_file_bytes?: number;
+          phase_1_ends_at?: string | null;
+          phase_2_ends_at?: string | null;
+          phase_1_bonus_points?: number;
+          phase_2_bonus_points?: number;
+          phase_3_bonus_points?: number;
+          archived_at?: string | null;
         };
         Update: {
           id?: string;
@@ -73,6 +93,16 @@ export type Database = {
           due_at?: string | null;
           status?: string;
           published_at?: string | null;
+          opens_at?: string | null;
+          submission_mode?: string;
+          max_submission_files?: number;
+          max_submission_file_bytes?: number;
+          phase_1_ends_at?: string | null;
+          phase_2_ends_at?: string | null;
+          phase_1_bonus_points?: number;
+          phase_2_bonus_points?: number;
+          phase_3_bonus_points?: number;
+          archived_at?: string | null;
         };
         Relationships: [
           {
@@ -80,6 +110,53 @@ export type Database = {
             columns: ['week_id'];
             isOneToOne: false;
             referencedRelation: 'academy_weeks';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      activity_submission_files: {
+        Row: {
+          id: string;
+          submission_id: string;
+          position: number;
+          original_name: string;
+          content_type: string;
+          size_bytes: number;
+          storage_path: string;
+          expected_sha256: string;
+          sha256: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          submission_id: string;
+          position: number;
+          original_name: string;
+          content_type: string;
+          size_bytes: number;
+          storage_path: string;
+          expected_sha256: string;
+          sha256?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          submission_id?: string;
+          position?: number;
+          original_name?: string;
+          content_type?: string;
+          size_bytes?: number;
+          storage_path?: string;
+          expected_sha256?: string;
+          sha256?: string | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'activity_submission_files_submission_id_fkey';
+            columns: ['submission_id'];
+            isOneToOne: false;
+            referencedRelation: 'submissions';
             referencedColumns: ['id'];
           },
         ];
@@ -161,6 +238,7 @@ export type Database = {
           status: string;
           created_at: string;
           published_at: string | null;
+          time_bonus_points: number;
         };
         Insert: {
           id?: string;
@@ -172,6 +250,7 @@ export type Database = {
           status: string;
           created_at?: string;
           published_at?: string | null;
+          time_bonus_points?: number;
         };
         Update: {
           id?: string;
@@ -183,6 +262,7 @@ export type Database = {
           status?: string;
           created_at?: string;
           published_at?: string | null;
+          time_bonus_points?: number;
         };
         Relationships: [
           {
@@ -381,6 +461,11 @@ export type Database = {
           created_at: string;
           notebook_sha256: string | null;
           notebook_bytes: number | null;
+          submission_mode: string;
+          submission_phase: string | null;
+          received_at: string;
+          activity_snapshot: Json;
+          submission_request_hash: string | null;
         };
         Insert: {
           id?: string;
@@ -394,6 +479,11 @@ export type Database = {
           created_at?: string;
           notebook_sha256?: string | null;
           notebook_bytes?: number | null;
+          submission_mode?: string;
+          submission_phase?: string | null;
+          received_at?: string;
+          activity_snapshot?: Json;
+          submission_request_hash?: string | null;
         };
         Update: {
           id?: string;
@@ -407,6 +497,11 @@ export type Database = {
           created_at?: string;
           notebook_sha256?: string | null;
           notebook_bytes?: number | null;
+          submission_mode?: string;
+          submission_phase?: string | null;
+          received_at?: string;
+          activity_snapshot?: Json;
+          submission_request_hash?: string | null;
         };
         Relationships: [
           {
@@ -635,6 +730,7 @@ export type Database = {
     Functions: {
       academy_capabilities: { Args: Record<string, never>; Returns: Json };
       academy_leaderboard: { Args: { p_weekly?: boolean }; Returns: Json };
+      academy_leaderboard_period: { Args: Record<string, never>; Returns: Json };
       academy_notifications: { Args: Record<string, never>; Returns: Json };
       admin_award_history: { Args: { p_student_id?: string }; Returns: Json };
       admin_award_points: {
@@ -647,6 +743,8 @@ export type Database = {
         Returns: string;
       };
       admin_award_students: { Args: Record<string, never>; Returns: Json };
+      archive_activity: { Args: { p_activity_id: string }; Returns: undefined };
+      cancel_activity_submission: { Args: { p_submission_id: string }; Returns: undefined };
       claim_submission_request: { Args: { p_student_id: string }; Returns: undefined };
       complete_owner_approved_hussein_team_transition: {
         Args: Record<string, never>;
@@ -665,6 +763,11 @@ export type Database = {
         Returns: boolean;
       };
       current_user_has_initial_admin_promotion: { Args: Record<string, never>; Returns: boolean };
+      delete_activity_draft: { Args: { p_activity_id: string }; Returns: undefined };
+      finalize_activity_submission: {
+        Args: { p_submission_id: string; p_files: Json };
+        Returns: undefined;
+      };
       finalize_notebook: {
         Args: { p_submission_id: string; p_sha256: string };
         Returns: undefined;
@@ -672,6 +775,10 @@ export type Database = {
       promote_initial_academy_admin: { Args: Record<string, never>; Returns: undefined };
       read_notification: { Args: { p_event_key?: string }; Returns: undefined };
       request_resubmission: { Args: { p_submission_id: string }; Returns: undefined };
+      reserve_activity_submission: {
+        Args: { p_activity_id: string; p_request_id: string; p_files: Json };
+        Returns: Json;
+      };
       reserve_notebook: {
         Args: {
           p_student_id: string;

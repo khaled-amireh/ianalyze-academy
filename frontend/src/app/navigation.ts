@@ -6,11 +6,9 @@ export const publicNavigation = [
   { id: 'about', to: '/about' },
   { id: 'aiTools', to: '/ai-tools' },
   { id: 'videos', to: '/videos' },
-] as const;
-export const secondaryNavigation = [
   { id: 'leaderboard', to: '/leaderboard' },
-  { id: 'contact', to: '/contact' },
 ] as const;
+export const secondaryNavigation = [{ id: 'contact', to: '/contact' }] as const;
 export const publicPages = [
   'about',
   'eda',

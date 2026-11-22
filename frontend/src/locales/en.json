@@ -670,6 +670,7 @@
     "noSelectedTopics": "The session is published, but no topics are selected.",
     "topicVisibility": "Visible to registered students",
     "waitingForSession": "Publish the session to show this topic.",
-    "hiddenTopic": "Not included in the published session"
+    "hiddenTopic": "Not included in the published session",
+    "completedBadge": "Completed"
   }
 }

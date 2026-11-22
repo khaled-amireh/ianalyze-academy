@@ -117,7 +117,7 @@ test('Week 1 keeps session management inside its activity pages and preserves or
   );
   assert.match(
     source('features/portal/team-page.tsx'),
-    /<RubricEditor activity={a} data={data} reload={reload}/,
+    /<RubricEditor[\s\S]*?activity=\{a\}[\s\S]*?data=\{data\}[\s\S]*?reload=\{reload\}[\s\S]*?\/>/,
   );
   assert.match(
     source('features/week1/session-content.tsx'),

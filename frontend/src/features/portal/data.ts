@@ -26,6 +26,7 @@ export async function loadPortal() {
     submissions,
     grades,
     scores,
+    submissionFiles,
     capabilities,
   ] = await Promise.all([
     fetchAll((start, end) =>
@@ -86,6 +87,13 @@ export async function loadPortal() {
         .order('criterion_id')
         .range(start, end),
     ),
+    fetchAll((start, end) =>
+      db
+        .from('activity_submission_files')
+        .select('*', { count: 'exact' })
+        .order('position')
+        .range(start, end),
+    ),
     db.rpc('academy_capabilities'),
   ]);
   return {
@@ -97,7 +105,12 @@ export async function loadPortal() {
     submissions,
     grades,
     scores,
-    capabilities: checked(capabilities) as { submissions: boolean; leaderboard: boolean },
+    submissionFiles,
+    capabilities: checked(capabilities) as {
+      submissions: boolean;
+      leaderboard: boolean;
+      activity_file_submissions: boolean;
+    },
   };
 }
 export type PortalData = Awaited<ReturnType<typeof loadPortal>>;
@@ -137,6 +150,16 @@ export async function downloadNotebook(path: string, bucket = 'student-submissio
   const anchor = document.createElement('a');
   anchor.href = url;
   anchor.download = path.split('/').at(-1) ?? 'download';
+  anchor.rel = 'noopener';
+  anchor.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+export async function downloadActivitySubmissionFile(path: string, filename: string) {
+  const blob = checked(await client().storage.from('activity-submissions').download(path));
+  const url = URL.createObjectURL(new Blob([blob], { type: 'application/octet-stream' }));
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = filename;
   anchor.rel = 'noopener';
   anchor.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);

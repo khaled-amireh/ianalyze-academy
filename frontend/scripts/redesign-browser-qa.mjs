@@ -69,11 +69,14 @@ async function settle() {
 }
 async function load(path) {
   await send('Page.navigate', { url: `${origin}${path}` });
+  // /team is an intentional compatibility alias for the About page's team section.
+  const expectedPath = path === '/team' ? '/about' : path;
+  const expectedHash = path === '/team' ? '#team' : '';
   for (let n = 0; n < 100; n++) {
     await pause(25);
     if (
       await evaluate(
-        `location.pathname===${JSON.stringify(path)} && !!document.querySelector('h1')`,
+        `location.pathname===${JSON.stringify(expectedPath)} && location.hash===${JSON.stringify(expectedHash)} && !!document.querySelector('h1')`,
       )
     ) {
       await settle();
@@ -137,8 +140,10 @@ await send('Runtime.enable');
 await send('Network.enable');
 // This matrix repeatedly tears down documents; avoid reusing cancelled font requests.
 await send('Network.setCacheDisabled', { cacheDisabled: true });
-// Keep the layout matrix independent of third-party connectivity; test Drive separately below.
-await send('Network.setBlockedURLs', { urls: ['https://drive.google.com/*'] });
+// Keep all browser checks independent of third-party connectivity.
+await send('Network.setBlockedURLs', {
+  urls: ['https://drive.google.com/*', 'https://*.youtube.com/*', 'https://youtu.be/*'],
+});
 await send('Emulation.setEmulatedMedia', {
   features: [
     { name: 'prefers-reduced-motion', value: 'reduce' },
@@ -301,7 +306,7 @@ await load('/');
 await evaluate('document.querySelector(".mobile-menu-trigger").focus()');
 await key('Enter');
 interactions.menuOpens = await evaluate(
-  '!!document.querySelector("[role=dialog][aria-modal=true]")&&document.querySelectorAll(".mobile-nav-links a").length===8',
+  '!!document.querySelector("[role=dialog][aria-modal=true]")&&document.querySelectorAll(".mobile-nav-links a").length===9',
 );
 let focusContained = true;
 for (let n = 0; n < 16; n++) {
@@ -334,12 +339,18 @@ interactions.faqArrowNavigation = await evaluate(
   'document.activeElement===document.querySelectorAll("[data-slot=accordion-trigger]")[1]',
 );
 await load('/eda');
-await evaluate(
-  'document.querySelectorAll("[data-slot=accordion-trigger]").forEach(e=>{if(e.getAttribute("aria-expanded")==="false")e.click()})',
+interactions.weekOneEntryVisible = await evaluate(
+  "Boolean(document.querySelector('#week1-entry .week1-completed-badge'))&&document.querySelector('#week1-entry')?.textContent.trim().length>0&&Boolean(document.querySelector('a[href=\"/eda/week-1\"]'))",
 );
-await pause(50);
-interactions.allSyllabusModulesExpand = await evaluate(
-  'document.querySelectorAll("[data-slot=accordion-trigger][aria-expanded=true]").length===6&&!!document.querySelector(".buffer-note")',
+interactions.noWeekTwoLink = await evaluate(
+  '![...document.querySelectorAll("a")].some((link)=>link.getAttribute("href")?.startsWith("/eda/week-2"))',
+);
+await evaluate('document.querySelector(\'a[href="/eda/week-1"]\').click()');
+await waitFor(
+  "location.pathname==='/eda/week-1'&&Boolean(document.querySelector('#week1-activities-title'))",
+);
+interactions.weekOneActivitiesVisible = await evaluate(
+  '(()=>{const hrefs=[...document.querySelectorAll(".week1-activity-card a")].map((link)=>link.getAttribute("href"));return hrefs.includes("/eda/week-1/dataset")&&hrefs.includes("/eda/week-1/bingo")})()',
 );
 await load('/join');
 interactions.disabledRegistration = await evaluate(
@@ -414,60 +425,42 @@ interactions.blockedStorageSwitch = await evaluate('document.documentElement.lan
 await send('Page.removeScriptToEvaluateOnNewDocument', { identifier: injection.identifier });
 await load('/');
 
-// New presentation interactions: RTL switching, keyboard controls and touch drag.
+// Keyboard and touch-sized navigation for the current Week 1 study-plan entry.
 await size(390);
 await evaluate(
   "localStorage.setItem('ianalyze.language','en');localStorage.setItem('ianalyze.theme','light')",
 );
 await load('/');
-await evaluate("document.querySelector('.carousel-controls button:last-child').focus()");
+await evaluate("document.querySelector('.s-plan-teaser').focus()");
 await key('Enter');
-interactions.carouselKeyboardNext = await evaluate(
-  "document.querySelector('.carousel-status').textContent==='Module 2 of 6'",
+await waitFor("location.pathname==='/eda'&&Boolean(document.querySelector('#week1-entry'))");
+interactions.keyboardStudyPlanNavigation = await evaluate(
+  "location.pathname==='/eda'&&Boolean(document.querySelector('a[href=\"/eda/week-1\"]'))",
 );
-await evaluate("document.querySelector('.carousel-controls button:first-child').click()");
-interactions.carouselPrevious = await evaluate(
-  "document.querySelector('.carousel-status').textContent==='Module 1 of 6'",
+await evaluate('document.querySelector(\'a[href="/eda/week-1"]\').click()');
+await waitFor(
+  "location.pathname==='/eda/week-1'&&Boolean(document.querySelector('#week1-activities-title'))",
 );
-await evaluate("document.querySelectorAll('[data-slide] a')[5].focus()");
-interactions.carouselFocusRevealsSlide = await evaluate(
-  "(()=>{const r=document.activeElement.getBoundingClientRect();const v=document.querySelector('.curriculum-viewport').getBoundingClientRect();return r.left>=v.left-1&&r.right<=v.right+1})()",
+interactions.keyboardWeekOneNavigation = await evaluate(
+  "location.pathname==='/eda/week-1'&&document.querySelectorAll('.week1-activity-card').length===2",
 );
-await evaluate("document.querySelectorAll('[data-slide] a')[0].focus()");
-const drag = await evaluate(
-  "(()=>{document.querySelector('.curriculum-viewport').scrollIntoView({block:'center'});const r=document.querySelector('.curriculum-viewport').getBoundingClientRect();return {x:r.right-30,y:r.top+r.height/2}})()",
+await load('/eda/week-1/dataset');
+interactions.datasetActivityRoute = await evaluate(
+  "location.pathname==='/eda/week-1/dataset'&&Boolean(document.querySelector('a[href=\"/login\"]'))&&Boolean(document.querySelector('.week1-instructions'))",
 );
-await send('Input.dispatchTouchEvent', {
-  type: 'touchStart',
-  touchPoints: [{ x: drag.x, y: drag.y }],
-});
-for (let n = 1; n <= 8; n++) {
-  await send('Input.dispatchTouchEvent', {
-    type: 'touchMove',
-    touchPoints: [{ x: drag.x - n * 30, y: drag.y }],
-  });
-  await pause(16);
-}
-await send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
-await pause(400);
-interactions.carouselTouchDrag = await evaluate(
-  "document.querySelector('.carousel-status').textContent!=='Module 1 of 6'",
+await load('/eda/week-1/bingo');
+interactions.bingoActivityRoute = await evaluate(
+  "location.pathname==='/eda/week-1/bingo'&&Boolean(document.querySelector('a[href=\"/login\"]'))",
 );
+await load('/');
 await evaluate("document.querySelector('.mobile-menu-trigger').click()");
 await evaluate(
   "document.querySelector('[role=dialog] .language-switcher button[lang=ar]').click()",
 );
 await key('Escape');
 await pause(100);
-await evaluate("document.querySelectorAll('[data-slide] a')[0].focus()");
-await evaluate("document.querySelector('.carousel-controls button:last-child').click()");
-interactions.carouselLiveRtlSwitch = await evaluate(
-  "document.documentElement.dir==='rtl'&&document.querySelector('.carousel-status').textContent==='الوحدة 2 من 6'",
-);
-await evaluate("document.querySelectorAll('[data-slide] a')[1].click()");
-await waitFor("location.pathname==='/eda'&&document.activeElement.id==='weekly-modules'");
-interactions.curriculumAnchor = await evaluate(
-  "location.pathname==='/eda'&&location.hash==='#weekly-modules'&&document.activeElement.id==='weekly-modules'&&document.querySelector('#weekly-modules').getBoundingClientRect().top>=70",
+interactions.mobileRtlSwitch = await evaluate(
+  "document.documentElement.lang==='ar'&&document.documentElement.dir==='rtl'",
 );
 await send('Emulation.setEmulatedMedia', {
   features: [
@@ -490,68 +483,21 @@ await send('Emulation.setEmulatedMedia', {
   ],
 });
 
-// A real external embed attempt, with no authentication or download.
-await send('Network.setBlockedURLs', { urls: [] });
+// Verify the approved lazy-player contract without contacting third-party hosts.
 await size(1440);
 await load('/videos');
-interactions.iframeContract = await evaluate(
-  '(()=>{const f=document.querySelector("iframe");const r=f.getBoundingClientRect();return f.src==="https://drive.google.com/file/d/147puYxGioHyoYjSwxktgGP4RRWeM_qn4/preview"&&f.loading==="lazy"&&f.allowFullscreen&&!!f.title&&Math.abs(r.width/r.height-16/9)<.01})()',
+interactions.videoIframeWaitsForPlay = await evaluate(
+  'Boolean(document.querySelector(".learning-video .video-cover"))&&!document.querySelector(".learning-video iframe")',
 );
-await pause(5000);
-const frames = await send('Page.getFrameTree');
-const targetInfo = await send('Target.getTargets');
-const playerSessions = [];
-for (const target of targetInfo.targetInfos.filter((t) => t.type === 'iframe')) {
-  const attached = await send('Target.attachToTarget', {
-    targetId: target.targetId,
-    flatten: true,
-  });
-  playerSessions.push({ url: target.url, sessionId: attached.sessionId });
-}
-let playControlFound = false;
-for (const player of playerSessions.filter((p) => p.url.startsWith('https://drive.google.com/'))) {
-  const click = await send(
-    'Runtime.evaluate',
-    {
-      expression: `(()=>{const b=[...document.querySelectorAll('button')].find(e=>e.getAttribute('aria-label')?.endsWith(': k')&&e.offsetWidth>0);if(b){b.click();return true}return false})()`,
-      returnByValue: true,
-      userGesture: true,
-    },
-    player.sessionId,
-  );
-  playControlFound ||= click.result.value === true;
-}
-let playback = [];
-for (let attempt = 0; attempt < 10; attempt++) {
-  await pause(1000);
-  playback = [];
-  for (const player of playerSessions) {
-    const state = await send(
-      'Runtime.evaluate',
-      {
-        expression: `[...document.querySelectorAll('video')].map(v=>({readyState:v.readyState,paused:v.paused,currentTime:v.currentTime,videoWidth:v.videoWidth,error:v.error?.code}))`,
-        returnByValue: true,
-      },
-      player.sessionId,
-    );
-    if (state.result?.value) playback.push(...state.result.value);
-  }
-  if (playback.some((v) => !v.paused && v.currentTime > 1 && v.readyState >= 2 && v.videoWidth > 0))
-    break;
-}
-await screenshot('video-embed-attempt', false);
+await evaluate("document.querySelector('.learning-video .video-cover').click()");
+await waitFor("Boolean(document.querySelector('.learning-video iframe'))");
+interactions.iframeContract = await evaluate(
+  '(()=>{const f=document.querySelector(".learning-video iframe");const r=f.getBoundingClientRect();return f.src==="https://drive.google.com/file/d/147puYxGioHyoYjSwxktgGP4RRWeM_qn4/preview"&&f.allowFullscreen&&f.referrerPolicy==="strict-origin-when-cross-origin"&&!!f.title&&Math.abs(r.width/r.height-16/9)<.01})()',
+);
 const videoAttempt = {
-  responses: externalResponses,
-  frames: frames.frameTree.childFrames?.map((f) => ({
-    url: f.frame.url,
-    unreachableUrl: f.frame.unreachableUrl,
-  })),
-  screenshot: 'video-embed-attempt.png',
-  playControlFound,
-  playback,
-  playbackVerified: playback.some(
-    (v) => !v.paused && v.currentTime > 1 && v.readyState >= 2 && v.videoWidth > 0,
-  ),
+  iframeMountedAfterPlay: interactions.videoIframeWaitsForPlay && interactions.iframeContract,
+  thirdPartyRequestsBlocked: true,
+  playbackTested: false,
 };
 const results = {
   date: new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Amman', dateStyle: 'short' }).format(

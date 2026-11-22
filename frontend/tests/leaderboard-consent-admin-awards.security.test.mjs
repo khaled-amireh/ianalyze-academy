@@ -387,10 +387,42 @@ test('main-schema leaderboard consent and Admin awards enforce privacy and audit
     assert.deepEqual(Object.keys(result.rows[0].rows[0]).sort(), [
       'activities',
       'alias',
+      'is_you',
       'points',
       'rank',
     ]);
   });
+
+  await t.test(
+    'leaderboard identifies only the authenticated viewer without exposing their UUID',
+    async () => {
+      for (const weekly of [false, true]) {
+        const own = await call(student, 'select public.academy_leaderboard($1) as rows', [weekly]);
+        const rows = own.rows[0].rows;
+        assert.equal(rows.filter((row) => row.is_you).length, 1);
+        assert.match(rows.find((row) => row.is_you).alias, /^Learner /);
+        for (const row of rows) {
+          assert.equal(typeof row.is_you, 'boolean');
+          assert.deepEqual(Object.keys(row).sort(), [
+            'activities',
+            'alias',
+            'is_you',
+            'points',
+            'rank',
+          ]);
+          assert.equal('student_id' in row, false);
+          assert.equal('id' in row, false);
+        }
+        const anonymous = await call(
+          null,
+          'select public.academy_leaderboard($1) as rows',
+          [weekly],
+          'anon',
+        );
+        assert.ok(anonymous.rows[0].rows.every((row) => row.is_you === false));
+      }
+    },
+  );
 
   await t.test('consent and public ranking respect the server-side leaderboard gate', async () => {
     await call(gateStudent, 'select public.set_public_full_name_consent(true)');

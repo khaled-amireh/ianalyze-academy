@@ -11,6 +11,7 @@ import {
   prePresentationUpdate,
   studentRegistrationUpdate,
   pathBUpdate,
+  phase2Update,
   verifyMergePreservation,
 } from './verify-merge-preservation.mjs';
 
@@ -48,7 +49,8 @@ for (const [path, hash] of Object.entries(manifest)) {
         ),
       )
       .digest('hex'),
-    pathBUpdate.files[path]?.sha256 ??
+    phase2Update.files[path]?.sha256 ??
+      pathBUpdate.files[path]?.sha256 ??
       studentRegistrationUpdate.files[path]?.sha256 ??
       prePresentationUpdate.files[path]?.sha256 ??
       finalUpdate.files[path]?.sha256 ??

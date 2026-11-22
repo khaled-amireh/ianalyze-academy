@@ -15,10 +15,10 @@ test('PowerShell handoff parses GitHub variables as TSV rows, not a nested JSON 
 
 test('PowerShell handoff pins the exact candidate, remote, baseline, and approved configuration', () => {
   for (const value of [
-    'production-release-98ad199-20261121\\frontend',
-    'fix/database-security-owner-transition-20261121',
+    'phase2-consolidated-20261122\\frontend',
+    'release/phase2-consolidated-20261122',
     'https://github.com/khaled-amireh/ianalyze-academy.git',
-    '98ad19916269f45c32e689f9226f6b1185bc99b3',
+    'be870c7d087d10d32d0a776cc6352d32e661387b',
     'ocihwiqtgqplwgyhpwjv',
     'https://ianalyze-academy.pages.dev',
     'ACADEMY_REGISTRATION_APPROVED',

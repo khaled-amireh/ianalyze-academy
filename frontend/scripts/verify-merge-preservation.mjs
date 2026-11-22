@@ -35,6 +35,9 @@ export const pathBUpdate = JSON.parse(
     'utf8',
   ),
 );
+export const phase2Update = JSON.parse(
+  readFileSync(new URL('docs/phase-05/approved-consolidated-features.json', root), 'utf8'),
+);
 const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
 function tree(commit) {
   return new Map(
@@ -207,6 +210,25 @@ export function verifyMergePreservation() {
       );
     resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };
   }
+  assert.equal(git('merge-base', phase2Update.baseCommit, 'HEAD'), phase2Update.baseCommit);
+  const phase2Baseline = tree(phase2Update.baseCommit);
+  for (const [path, resolution] of Object.entries(phase2Update.files)) {
+    assert.ok(resolution.reason, `Phase 2 approval reason missing: ${path}`);
+    if (resolution.added) {
+      assert.ok(!phase2Baseline.has(path), `Phase 2 addition already existed: ${path}`);
+    } else {
+      assert.equal(
+        createHash('sha256')
+          .update(
+            execFileSync('git', ['show', `${phase2Update.baseCommit}:${path}`], { cwd: root }),
+          )
+          .digest('hex'),
+        resolution.previousSha256,
+        `Phase 2 baseline changed: ${path}`,
+      );
+    }
+    resolvedFiles[path] = { ...resolvedFiles[path], ...resolution };
+  }
   const base = tree(baseCommit);
   const functional = tree(functionalCommit);
   const redesign = tree(redesignCommit);
@@ -214,9 +236,16 @@ export function verifyMergePreservation() {
   // The redesign owns its changed presentation files; functional delivery owns the rest.
   for (const [path, sha] of redesign) if (sha !== base.get(path)) expected.set(path, sha);
   for (const path of base.keys()) if (!redesign.has(path)) expected.delete(path);
+  assert.ok(phase2Update.manifestPath);
+  assert.ok(
+    !Object.hasOwn(phase2Update.files, phase2Update.manifestPath),
+    'Approval manifest cannot self-hash',
+  );
+  expected.set(phase2Update.manifestPath, 'self-exempt-approval-record');
   for (const path of Object.keys(resolvedFiles))
     assert.ok(expected.has(path) || resolvedFiles[path].added, `Unrecorded addition: ${path}`);
   for (const path of new Set([...expected.keys(), ...Object.keys(resolvedFiles)])) {
+    if (path === phase2Update.manifestPath) continue;
     const resolved = resolvedFiles[path];
     if (resolved?.removed) {
       assert.ok(resolved.reason, `Removal reason missing: ${path}`);

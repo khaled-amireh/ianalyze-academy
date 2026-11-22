@@ -41,29 +41,34 @@ try {
   const settings = join(temporary, 'runtime.env');
   writeFileSync(
     settings,
-    `ACADEMY_ALLOWED_ORIGINS=${target.origin}\nACADEMY_UPLOADS_ENABLED=false\n`,
+    `ACADEMY_ALLOWED_ORIGINS=${target.origin}\nACADEMY_ACTIVITY_UPLOADS_ENABLED=false\n`,
     { mode: 0o600 },
   );
   run(['secrets', 'set', '--project-ref', target.project, '--env-file', settings]);
-  run([
-    'functions',
-    'deploy',
-    'notebook-submit',
-    '--project-ref',
-    target.project,
-    '--use-api',
-    '--no-verify-jwt',
-    '--workdir',
-    root,
-  ]);
+  const functionsToDeploy = ['notebook-submit', 'activity-submit'];
+  for (const functionName of functionsToDeploy)
+    run([
+      'functions',
+      'deploy',
+      functionName,
+      '--project-ref',
+      target.project,
+      '--use-api',
+      '--no-verify-jwt',
+      '--workdir',
+      root,
+    ]);
   const functions = JSON.parse(run(['functions', 'list', '--project-ref', target.project]));
-  const deployed = (Array.isArray(functions) ? functions : (functions.functions ?? [])).find(
-    (item) => item.slug === 'notebook-submit' || item.name === 'notebook-submit',
-  );
-  if (deployed?.status !== 'ACTIVE' || deployed.verify_jwt !== false)
-    throw new Error(
-      'Deployed notebook function does not match the reviewed gateway configuration.',
+  const deployedFunctions = Array.isArray(functions) ? functions : (functions.functions ?? []);
+  for (const functionName of functionsToDeploy) {
+    const deployed = deployedFunctions.find(
+      (item) => item.slug === functionName || item.name === functionName,
     );
+    if (deployed?.status !== 'ACTIVE' || deployed.verify_jwt !== false)
+      throw new Error(
+        `Deployed ${functionName} function does not match the reviewed gateway configuration.`,
+      );
+  }
   const key = process.env.SUPABASE_PUBLISHABLE_KEY;
   if (!/^sb_publishable_[A-Za-z0-9_-]+$/.test(key ?? ''))
     throw new Error('Browser-safe key is required for the unauthenticated security probe.');
@@ -80,7 +85,22 @@ try {
   });
   if (rejected.status !== 401)
     throw new Error('Notebook identity rejection failed; frontend deployment must stop.');
-  console.log('Notebook function released and anonymous access rejected; uploads remain closed.');
+  const activityRejected = await fetch(`${target.supabaseUrl}/functions/v1/activity-submit`, {
+    method: 'POST',
+    headers: {
+      apikey: key,
+      Authorization: 'Bearer invalid-release-probe',
+      Origin: target.origin,
+      'Content-Type': 'application/json',
+    },
+    body: '{}',
+    signal: AbortSignal.timeout(20000),
+  });
+  if (activityRejected.status !== 401)
+    throw new Error('Activity function identity rejection failed; frontend deployment must stop.');
+  console.log(
+    'Notebook and activity functions released; anonymous access rejected and activity uploads remain closed.',
+  );
 } finally {
   rmSync(temporary, { recursive: true, force: true });
 }

@@ -66,13 +66,16 @@ test('embedded PostgreSQL security (test-only Auth/Storage fixture)', async (t) 
       const { rows } = await db.query(
         "select c.relname,c.relrowsecurity from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname in ('public','app_private') and c.relkind='r'",
       );
-      assert.equal(rows.length, 22);
+      assert.equal(rows.length, 23);
       assert.ok(rows.every((r) => r.relrowsecurity));
       assert.ok(
         rows.some(
           (r) =>
             r.relname === 'initial_hussein_team_transition_approval' && r.relrowsecurity === true,
         ),
+      );
+      assert.ok(
+        rows.some((r) => r.relname === 'activity_submission_files' && r.relrowsecurity === true),
       );
       assert.deepEqual(
         (
@@ -319,11 +322,15 @@ test('embedded PostgreSQL security (test-only Auth/Storage fixture)', async (t) 
     async () => {
       const buckets = (await db.query('select * from storage.buckets order by id')).rows;
       assert.ok(buckets.every((b) => b.public === false));
-      assert.equal(Number(buckets[0].file_size_limit), 262144);
-      assert.deepEqual(buckets[0].allowed_mime_types, [
+      const notebookBucket = buckets.find((b) => b.id === 'student-submissions');
+      const fileBucket = buckets.find((b) => b.id === 'activity-submissions');
+      assert.equal(Number(notebookBucket.file_size_limit), 262144);
+      assert.deepEqual(notebookBucket.allowed_mime_types, [
         'application/x-ipynb+json',
         'application/json',
       ]);
+      assert.equal(Number(fileBucket.file_size_limit), 10485760);
+      assert.ok(fileBucket.allowed_mime_types.includes('application/pdf'));
       await forbidden(
         A,
         'insert into public.submissions(student_id,activity_id,rubric_id,attempt) values ($1,$2,$3,2)',

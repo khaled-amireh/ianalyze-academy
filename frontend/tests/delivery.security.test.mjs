@@ -39,7 +39,7 @@ test('functional delivery database boundaries and atomic rubric configuration', 
         'anon',
       );
       assert.deepEqual(result.rows[0], {
-        caps: { submissions: false, leaderboard: false },
+        caps: { submissions: false, leaderboard: false, activity_file_submissions: false },
         ranks: [],
       });
       for (const fn of [

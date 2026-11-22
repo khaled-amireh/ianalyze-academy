@@ -1,0 +1,366 @@
+{
+  "authorization": "Owner-authorized Phase 2 consolidated implementation and final-review candidate-local corrections; no hosted writes, publication, or deployment.",
+  "baseCommit": "be870c7d087d10d32d0a776cc6352d32e661387b",
+  "branch": "release/phase2-consolidated-20261122",
+  "manifestPath": "docs/phase-05/approved-consolidated-features.json",
+  "files": {
+    "docs/audits/leaderboard-admin-release/FINAL_READINESS.md": {
+      "sha256": "08d54bfe2caf6d1b4bded801a629aeadd7f43fc61a2ebf60ad6a399251d44d3e",
+      "previousSha256": "13bebbfbec484118f0212a2ae94a3f874c45bf543f72ac70440dec0802311f4c",
+      "reason": "Owner-authorized PR #24 blocker correction: record the exact private service-role grants, safe two-function Edge deployment behavior, updated hashes, validation results, and remaining activation gates.",
+      "previousCandidateSha256": "bad145ee827a76de19ec72eaf2f28fedffb81ca16db41c6f7c15b6f9f146ce91",
+      "revisionHistory": [
+        {
+          "supersededSha256": "bad145ee827a76de19ec72eaf2f28fedffb81ca16db41c6f7c15b6f9f146ce91",
+          "reason": "Prettier formatting of the newly added production readiness section only."
+        },
+        {
+          "supersededSha256": "2a359dc06d06adf5515681fe83b9e45062feafee0b87bf3992c7834615d5c546",
+          "reason": "Owner-authorized final production release preparation: refresh configured validation, E2E, migration and Edge hashes, artifact identity, current production snapshot, recovery freshness, and staged activation gates."
+        },
+        {
+          "supersededSha256": "b66551d015b3fd856e37663b1a30f1b99caf77cf7578fe07f5af18ed7ed8ae79",
+          "reason": "Owner-authorized Phase 2 final review: record confirmed fixes, test results, hosted read-only observations, migration-lineage risk, and remaining release gates."
+        },
+        {
+          "supersededSha256": "2be36329fbaebea356a8d0e802f70dc3d7bf4906e1563dd30d4725fa09369dd5",
+          "reason": "Owner-authorized Phase 2 readiness follow-up: document candidate-bound secure handoff, verified 22-source migration workspace and exact-one dry run, expired CLI login-role side effect, current storage/Edge findings, RAM-constrained local E2E, and recovery-point metadata."
+        },
+        {
+          "supersededSha256": "707038da1cb176edac3928220b4b57f07e35f8ef0b54c042b1c8bcaaa2ac9922",
+          "reason": "Owner-authorized Phase 2 final blocker resolution: reconcile owner-reported configured validation, refreshed RAM/Docker/disk readings, hosted Storage/Edge limits, CLI role authentication semantics, migration history, and recovery evidence with a final activation matrix."
+        },
+        {
+          "supersededSha256": "c63c69c214407696e943c3542910c0a061bd8eeb469282bc9a7bd6fb5363f041",
+          "reason": "Owner-authorized autonomous final Phase 2 readiness update: document the cross-week scoring correction, focused local security/API evidence, refreshed hosted read-only findings, and current production blockers."
+        },
+        {
+          "supersededSha256": "a06f22744d0ec36d4c2c261c93db186b83f7455e855ca70ec96fd1b8c538edb8",
+          "reason": "Owner-authorized final preflight update: record the isolated browser startup resource measurement, stop-before-navigation gate, and exact remaining RAM requirement."
+        },
+        {
+          "supersededSha256": "31ce1c545e3b0c322dce41c13d9271316e0324e47f26a332b51242baf2775333",
+          "reason": "Owner-authorized final resource cleanup update: include the later post-cleanup RAM reading after the isolated browser attempt."
+        },
+        {
+          "supersededSha256": "4b49d06b2b05d57e5abbfbaa275fc8ce792b222e39ec3e54cb966c90ffaab2f7",
+          "reason": "Prior owner-authorized Phase 2 readiness addendum before final offline/browser validation."
+        },
+        {
+          "supersededSha256": "744b263c782f39601817d3ab943f7e16b9f606ee68e8174f2f902215263d50b3",
+          "reason": "Clarify that configured artifact verification stopped at missing process-only variables and the public-mode check was inapplicable to configured output."
+        },
+        {
+          "supersededSha256": "6cd922ea574f740598d684a11ca23a308d50cc4ef171a114e5aed863380d8935",
+          "reason": "Owner-authorized PR #24 blocker correction: record the exact private service-role grants, safe two-function Edge deployment behavior, updated hashes, validation results, and remaining activation gates."
+        },
+        {
+          "supersededSha256": "a66810ec86d6d42a61af43d9456d5ad1b1db30faeb865d8b01cd6859f73394fd",
+          "reason": "Correct the recorded preservation-guard resolution count to the exact final check output."
+        },
+        {
+          "supersededSha256": "cb4ab4895e092a10205617c472fa9b1b2168d118978d33df9f5f6e492e3cfef1",
+          "reason": "Record that local validate rebuilt the public-only artifact and that final configured artifact generation is still required."
+        }
+      ]
+    },
+    "frontend/package.json": {
+      "sha256": "146b4321ef0f3e6c7a5c8e1e253d7acf11ae2c811a8681719c9e7257c30bef03",
+      "previousSha256": "9a9ecead7c451b793fa0078e3f20d42fae94cc0d4146290d8375d571de8a3347",
+      "reason": "Owner-authorized Phase 2 leaderboard, Week 1 indicator, activity management, submission, and localization implementation."
+    },
+    "frontend/scripts/check-phase-03.mjs": {
+      "sha256": "4126c290016f3b6ad5ed2d3c03c95c442ad536b4c55d90b8998ea18bdcc17105",
+      "previousSha256": "f51e420b9ae437b018f3f4b91c713b9ed4ac8858efac1e30b20f0205f25bec4c",
+      "reason": "Owner-authorized Phase 2 implementation, focused validation, or exact-path preservation evidence."
+    },
+    "frontend/scripts/check-redesign.mjs": {
+      "sha256": "eefbc4920e7f4304d6885a11486134b657b154f13fd7f2ccdcab6532cbb7b022",
+      "previousSha256": "addd1efe183885567847960b26c1637cf8d28d16beeff1ae9e4424e081f2ac37",
+      "reason": "Owner-authorized Phase 2 implementation, focused validation, or exact-path preservation evidence."
+    },
+    "frontend/scripts/phase-02-browser-qa.mjs": {
+      "sha256": "216e620ec71c87caca5190faaac0c475b05f6ee01d4a1504b14a8317dcd1914b",
+      "previousSha256": "5a89b7d99195d1be4125531d52f41184a499e5f60b66cdcd32dfba093f786b2d",
+      "reason": "Owner-authorized primary navigation integration: update the mobile menu regression expectation to include the shared Leaderboard link."
+    },
+    "frontend/scripts/redesign-browser-qa.mjs": {
+      "sha256": "b52feebc838d7fe6cf119f50714bfd03dc62d7499beca670444c9d7bf55aef9a",
+      "previousSha256": "09df5c268ec63ec10c1100776895b5354ded1f61fd5764b75ae9114b33438f6f",
+      "reason": "Owner-authorized Phase 2 final browser QA correction: verify the current /team redirect, Week 1 entry and activities, and click-to-load video contract without third-party network access.",
+      "revisionHistory": [
+        {
+          "supersededSha256": "b22dc95c51c36bcbe17f513c258319589902778ed9ed88d5819a3ec4d3e4a742",
+          "reason": "Owner-authorized Phase 2 final browser QA correction: accept the intentional /team alias redirect; replace obsolete carousel/module expectations with current Week 1 navigation and activity checks; verify lazy video iframe behavior while blocking third-party requests."
+        }
+      ]
+    },
+    "frontend/scripts/verify-merge-preservation.mjs": {
+      "sha256": "4e66962fa455d792269cfd2cae4067baec9aa2260a2aba8622b8f2546e689980",
+      "previousSha256": "c255fdb49b414309450c2f40445611460fb8491ebdaf008abd3b239b3e61f897",
+      "reason": "Owner-authorized Phase 2 implementation, focused validation, or exact-path preservation evidence."
+    },
+    "frontend/src/app/navigation.ts": {
+      "sha256": "fc68c0efb806d158e924fafb0ac27c220294b382ab195fd51ace93349566e156",
+      "previousSha256": "d569b87b5c1285a12a3081a5133ae5b7b8f69d862d0ba6da74a399fabca7a6ff",
+      "reason": "Owner-authorized Phase 2 leaderboard, Week 1 indicator, activity management, submission, and localization implementation."
+    },
+    "frontend/src/features/portal/activity-file-submission.tsx": {
+      "sha256": "aa8a1ab4f0ee03e6aa783a6649b84e083c7857f4e82f34d6acd186beafc1b9d0",
+      "added": true,
+      "reason": "Owner-authorized Phase 2 leaderboard, Week 1 indicator, activity management, submission, and localization implementation."
+    },
+    "frontend/src/features/portal/copy.ts": {
+      "sha256": "9792944b9882afffdcde40c9c3172bbb0b5f7793a0c011e5ef3915c9d72dd3f4",
+      "previousSha256": "db48a366c301242951ed5a72ab6297732ee06285ee72dee796f863b9c8fd199a",
+      "reason": "Owner-authorized Phase 2 leaderboard, Week 1 indicator, activity management, submission, and localization implementation."
+    },
+    "frontend/src/features/portal/data.ts": {
+      "sha256": "d1e8ffaebf90e3d725f348c71e6d7a5b889f0f8cb403964bb95231f381903b23",
+      "previousSha256": "e200f2657d8987c7bf3950c471338847ef4c541aad5d937e97b6dbb244b1d368",
+      "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation.",
+      "revisionHistory": [
+        {
+          "supersededSha256": "0dfb8fc0cf0fe2265565b03567f21ff1509edae9a47338eaa84bd8f824da0928",
+          "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation."
+        },
+        {
+          "supersededSha256": "0dfb8fc0cf0fe2265565b03567f21ff1509edae9a47338eaa84bd8f824da0928",
+          "reason": "Correct stale Phase 2 baseline fingerprint to the verified content hash at be870c7d087d10d32d0a776cc6352d32e661387b; candidate content hash remains pinned and guard logic is unchanged."
+        }
+      ]
+    },
+    "frontend/src/features/portal/date-time.ts": {
+      "sha256": "12c1b44203a80605aa5ef917d2d9d4be5446f4a01fa24061507bc41253159522",
+      "added": true,
+      "reason": "Owner-authorized Phase 2 leaderboard, Week 1 indicator, activity management, submission, and localization implementation."
+    },
+    "frontend/src/features/portal/leaderboard.tsx": {
+      "sha256": "1b2cff6bbb3e1a543c91d3f2c569a3e8788af19113ddc53b847ba408bdd7cc10",
+      "previousSha256": "f03fde1ef5ac4448256ef299cec4027c3273924a3c346ba99da656fc3e732c14",
+      "reason": "Owner-authorized Phase 2 leaderboard, Week 1 indicator, activity management, submission, and localization implementation."
+    },
+    "frontend/src/features/portal/portal.css": {
+      "sha256": "9f11bdaa21e0e1ad1ec1f9ca4fcffd597dcec28117f600870c9e385cdeaf66c7",
+      "previousSha256": "5e76de84e3493daeb931a7c1dca01558e3f97fd677e824750a3f04914660bcfe",
+      "reason": "Owner-authorized Phase 2 leaderboard, Week 1 indicator, activity management, submission, and localization implementation."
+    },
+    "frontend/src/features/portal/student-page.tsx": {
+      "sha256": "99642255185d050338a3769b5186dfc6e1156f1242e0f6386e6f27fcc06f3331",
+      "previousSha256": "7df855b1c9e797512199bf30b08cd4b46045a34e6ea76cd1db35d5734524219d",
+      "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation.",
+      "revisionHistory": [
+        {
+          "supersededSha256": "0f29d669b305d47cf66f749d6944ce4fd81de7f1ebbb9ddb164866abc1371eea",
+          "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation."
+        },
+        {
+          "supersededSha256": "0f29d669b305d47cf66f749d6944ce4fd81de7f1ebbb9ddb164866abc1371eea",
+          "reason": "Correct stale Phase 2 baseline fingerprint to the verified content hash at be870c7d087d10d32d0a776cc6352d32e661387b; candidate hash remains unchanged."
+        }
+      ]
+    },
+    "frontend/src/features/portal/submission-file-validation.ts": {
+      "sha256": "ce8fe967eaa1d06648348f478f9c2e6282aa0904d991f477fe0dea1e1510d46a",
+      "added": true,
+      "reason": "Owner-authorized Phase 2 leaderboard, Week 1 indicator, activity management, submission, and localization implementation."
+    },
+    "frontend/src/features/portal/submission-window.ts": {
+      "sha256": "4eec3ad422ea323e5aa67cc26fd5e79ea4fc378435b1b22ded3a1125f50076a9",
+      "added": true,
+      "reason": "Owner-authorized Phase 2 leaderboard, Week 1 indicator, activity management, submission, and localization implementation."
+    },
+    "frontend/src/features/portal/team-page.tsx": {
+      "sha256": "a94b02021ea092ce396dab1212ff2c5b4b2c370d76b464e217601f2ad69fb97e",
+      "previousSha256": "2035652285802d8a869e05341a49ef708be71d3e50e5f98d24dee40462939411",
+      "reason": "Owner-authorized Phase 2 leaderboard, Week 1 indicator, activity management, submission, and localization implementation."
+    },
+    "frontend/src/features/portal/timing-bonus.ts": {
+      "sha256": "31b984c41ea9c157be777fc24350d3a013d9c3a3614c798159d3a1b960ebdc3d",
+      "added": true,
+      "reason": "Owner-authorized Phase 2 leaderboard, Week 1 indicator, activity management, submission, and localization implementation."
+    },
+    "frontend/src/features/week1/week1-entry.tsx": {
+      "sha256": "bc7f0f724b078d58af912c85ef9b73e4c3f4e73fab2bd6258e299266362322b6",
+      "previousSha256": "ab38209543bb60a3489f89a523f4b7de7a41a827ed59e6eb5d8211b429f88851",
+      "reason": "Owner-authorized Phase 2 leaderboard, Week 1 indicator, activity management, submission, and localization implementation."
+    },
+    "frontend/src/features/week1/week1.css": {
+      "sha256": "d33e4cf08bc5218373970dd69d59e356ef4da68a9c77bf64bbd7254bed8371b8",
+      "previousSha256": "996e0b64598d1f92101ae9f7d03c821f92350270adcb5862dd0c2804119a5aa5",
+      "reason": "Owner-authorized Phase 2 leaderboard, Week 1 indicator, activity management, submission, and localization implementation."
+    },
+    "frontend/src/locales/ar.json": {
+      "sha256": "9405b0f5824f57c0ba917c6500a52a64090784db6f75df66a51bec8a0e7d692c",
+      "previousSha256": "35b437aebdfd0f5ac175c97e25ab87ea4c19ff324774d83117fcecaa50d55dee",
+      "reason": "Owner-authorized Phase 2 leaderboard, Week 1 indicator, activity management, submission, and localization implementation."
+    },
+    "frontend/src/locales/en.json": {
+      "sha256": "ea3cc4db75937d754c98cb05ce8989c9f6f46dcefc1ebb51ec2e5f57bbad7482",
+      "previousSha256": "886b44a1d773891d42c62294f7d217882bb88651ec8bbe4b9e06cf4d7b9a75ad",
+      "reason": "Owner-authorized Phase 2 leaderboard, Week 1 indicator, activity management, submission, and localization implementation."
+    },
+    "frontend/src/types/database.ts": {
+      "sha256": "c451b5c9ee2277ca6cf4cbdd4ca4d87bb967907fb20986e25f92894b5552bea4",
+      "previousSha256": "06e7f7e896175249299755933a98f2df380f4b8abb7c3a0e948e953e6c64bd2f",
+      "reason": "Owner-authorized Phase 2 schema, private submission, scoring, and generated-contract implementation."
+    },
+    "frontend/tests/activity-leaderboard.security.test.mjs": {
+      "sha256": "e3edd0c2b76475705d1581f33aa3f2a4e3668abf8b81a8529555e6f8c98ad28e",
+      "added": true,
+      "reason": "Owner-authorized Phase 2 regression test: verify delayed file/notebook grading preserves canonical weekly award attribution and all-time totals.",
+      "revisionHistory": [
+        {
+          "supersededSha256": "70f01f1cfefec7f4bb5b4d0a695f4bb8bf152f6fd454199d6946d69f9b43d230",
+          "reason": "Owner-authorized Phase 2 regression test: verify delayed file/notebook grading preserves canonical weekly award attribution and all-time totals."
+        }
+      ]
+    },
+    "frontend/tests/activity-management.test.ts": {
+      "sha256": "c966d3b23347854b05760eed36b8f4862e24f4a9ea3fb19021be7c4d1f5883ae",
+      "added": true,
+      "reason": "Owner-authorized PR #24 blocker fix: grant service_role only the private finalize/cancel RPC execution rights and add a target-pinned Edge release path that preserves the Week 1 gate, deploys both functions, and leaves activity uploads disabled.",
+      "previousCandidateSha256": "a4c1ec81e67829320613fe3930068f4a445f182ea5bd5a6ab35ec0ac71a409c0",
+      "revisionHistory": [
+        {
+          "supersededSha256": "df23ffb4df8a1d354c9f4bd7262c7c2e41fc988da70bacf81764bfc3d8805211",
+          "reason": "Prettier normalization after focused regression checks; no behavior change."
+        },
+        {
+          "supersededSha256": "6a9872d190c74b42cb81d8f8d9e0c3b465eb105c261d364a84e36722f8292558",
+          "reason": "Owner-authorized correction: test the independent, fail-closed activity-upload gate and preserve the existing Week 1 notebook gate."
+        },
+        {
+          "supersededSha256": "fe7655a33f27e715302836cc59ab2f08f007727c1e6e492f56f6cbca6df9eb4f",
+          "reason": "Normalize whitespace in source-order assertions so formatting does not change security-test behavior."
+        },
+        {
+          "supersededSha256": "ce3b9c622405f4a83c1b6fdd816ec962ca0018b6bc833f79ee2d71ca5ba4171e",
+          "reason": "Make authentication-order assertion insensitive to formatter-inserted whitespace."
+        },
+        {
+          "supersededSha256": "77a87ef9b4088d321832a6100c7975da087f20b721e0e43d7bfc2781e726d245",
+          "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation."
+        },
+        {
+          "supersededSha256": "225e73a509324f79f1b412e413d821c8084c001bf3ee9709bcd7cd44fdff3a99",
+          "reason": "Owner-authorized PR #24 blocker fix: grant service_role only the private finalize/cancel RPC execution rights and add a target-pinned Edge release path that preserves the Week 1 gate, deploys both functions, and leaves activity uploads disabled."
+        }
+      ],
+      "previousSha256": "77a87ef9b4088d321832a6100c7975da087f20b721e0e43d7bfc2781e726d245"
+    },
+    "frontend/tests/activity-submissions.security.test.mjs": {
+      "sha256": "e128bcbcefea24d1b66b5fb76b9b8d28f54c30d24045d8c98cc3e325c2054ac8",
+      "added": true,
+      "reason": "Owner-authorized PR #24 blocker fix: grant service_role only the private finalize/cancel RPC execution rights and add a target-pinned Edge release path that preserves the Week 1 gate, deploys both functions, and leaves activity uploads disabled.",
+      "previousCandidateSha256": "c29935304a24c1a873afa7f71e3a2285952bdf2ebf3a5592922fb4b0b0db0f44",
+      "revisionHistory": [
+        {
+          "supersededSha256": "ef82c58636c5a4747a442bdffb7f6958b3afee9ae15a01762ed153a3eb8de4b8",
+          "reason": "Prettier normalization after focused regression checks; no behavior change."
+        },
+        {
+          "supersededSha256": "bdbe6619df8cc1a283df2f5c9bc50b9eb272ca99310c8201c783890d3791d62b",
+          "reason": "Owner-authorized final Phase 2 preservation review: reviewed the current synthetic activity-submission security coverage and confirmed it remains within the approved feature scope; refreshed the exact-path fingerprint after the recorded baseline drift."
+        },
+        {
+          "supersededSha256": "53b5921bcfeaa982075f934899db170c9ce977fcf0c85126b1ba33bad608340e",
+          "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation."
+        },
+        {
+          "supersededSha256": "a0d3d322f163acbee151937cfb57f0902ed0195aa8924cbc80200fc7f99db2c9",
+          "reason": "Owner-authorized PR #24 blocker fix: grant service_role only the private finalize/cancel RPC execution rights and add a target-pinned Edge release path that preserves the Week 1 gate, deploys both functions, and leaves activity uploads disabled."
+        }
+      ],
+      "previousSha256": "53b5921bcfeaa982075f934899db170c9ce977fcf0c85126b1ba33bad608340e"
+    },
+    "frontend/tests/database.security.test.mjs": {
+      "sha256": "620fa2785c7dfaf8719208521d62884cfc77b6b4cb636ef63e9eb2eb7add7d93",
+      "previousSha256": "c37c32452c874e74b193de2707c1c44e2533ccc79e4002996650a58ee1d58c17",
+      "reason": "Owner-authorized Phase 2 implementation, focused validation, or exact-path preservation evidence."
+    },
+    "frontend/tests/leaderboard-consent-admin-awards.security.test.mjs": {
+      "sha256": "a4a8f32ef3c037bdda88ca60c3a09844eaa3969f809d067f80619327a27aae6b",
+      "previousSha256": "f2723a54adea5d17cf16e61c9165b6bfbcb859eefd9e90e336e9310674a075d6",
+      "reason": "Owner-authorized Phase 2 implementation, focused validation, or exact-path preservation evidence."
+    },
+    "frontend/tests/pre-presentation.test.ts": {
+      "sha256": "825f284396a4894e9a14df15579a5156d9122b1caf922829530c64fca50d98d8",
+      "previousSha256": "5cfddf02f12abafb3092f6524351e5e194cc49bf4b4291c9427392415085289b",
+      "reason": "Owner-authorized Phase 2 implementation, focused validation, or exact-path preservation evidence."
+    },
+    "frontend/tests/week1.test.ts": {
+      "sha256": "6e6ab2ab05acfc1e3d665d578d61c8688b6903a450eafd12d989c32dc004ef6c",
+      "previousSha256": "04b5f80150c4e2168c6139d51a7f145c929c70428323c1a61e3d50fadfbb043b",
+      "reason": "Owner-authorized Phase 2 implementation, focused validation, or exact-path preservation evidence."
+    },
+    "supabase/config.toml": {
+      "sha256": "a9fd831ae331a7850f2220ab3b58cbc4192f843d4b6385be6c0ef1557c759077",
+      "previousSha256": "2b6b88329351814f272b3922c960157c695f87cc547ab6be0775d25e7d6d0a5c",
+      "reason": "Owner-authorized Phase 2 schema, private submission, scoring, and generated-contract implementation."
+    },
+    "supabase/functions/_shared/activity-files.ts": {
+      "sha256": "bb129c558c8f301a56ee77deee74eab01195a02fabbd623f9151c306bee1f886",
+      "added": true,
+      "reason": "Owner-authorized Phase 2 schema, private submission, scoring, and generated-contract implementation."
+    },
+    "supabase/functions/activity-submit/index.ts": {
+      "sha256": "5c2000c5b1cefec2fa2353876230df26d0b1a3af7b9fc23e07b90b23bd618e21",
+      "added": true,
+      "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation.",
+      "previousCandidateSha256": "e1cb025b77c20233bcb687ba497c8e454313c43853ff616227e8571423af2b25",
+      "previousSha256": "e10ee20e330e7e7aad8687120b63abccd3ab8e6dac025cdcd86fdeb8de54e4f7",
+      "revisionHistory": [
+        {
+          "supersededSha256": "e10ee20e330e7e7aad8687120b63abccd3ab8e6dac025cdcd86fdeb8de54e4f7",
+          "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation."
+        }
+      ]
+    },
+    "supabase/migrations/20261122120000_dynamic_activity_submissions.sql": {
+      "sha256": "769d9a502fa504639806bbd31ba899a1e379153930726bee080a8c75d4cb2a16",
+      "added": true,
+      "reason": "Owner-authorized PR #24 blocker fix: grant service_role only the private finalize/cancel RPC execution rights and add a target-pinned Edge release path that preserves the Week 1 gate, deploys both functions, and leaves activity uploads disabled.",
+      "previousCandidateSha256": "256bc5c2cb76fdbf666705f13685229ea85935ded589a7ecb5bf93c9e2acf7b6",
+      "revisionHistory": [
+        {
+          "supersededSha256": "af2453febce22c4dde39c8fe342cc1d12965db1629d2c90156be7e2f03a63031",
+          "reason": "Owner-authorized Phase 2 final-review correction: attribute file/notebook time bonuses to the canonical scoring week of their linked grade award; prevent delayed reviews from shifting bonuses into another leaderboard week."
+        },
+        {
+          "supersededSha256": "fe7f0f5d75d76d35f1ac85431bd7d9260d0863af8aa859f8adac17c3967195e5",
+          "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation."
+        },
+        {
+          "supersededSha256": "c3e63b7eb8acd97f90d88a337e1bbfa5e267ac12b9d370b6a296e802ddcd7375",
+          "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation."
+        },
+        {
+          "supersededSha256": "851979d7cb84b3bf618bcf8eeb4d55c9a2279fdf28178089ef32273aeb50ae21",
+          "reason": "Owner-authorized PR #24 blocker fix: grant service_role only the private finalize/cancel RPC execution rights and add a target-pinned Edge release path that preserves the Week 1 gate, deploys both functions, and leaves activity uploads disabled."
+        }
+      ],
+      "previousSha256": "c3e63b7eb8acd97f90d88a337e1bbfa5e267ac12b9d370b6a296e802ddcd7375"
+    },
+    "frontend/scripts/run-configured-release-check.ps1": {
+      "sha256": "03b149af8cb81fcc42d890ca132ac099157335364dbac92fa78b3a02f452c7e2",
+      "previousSha256": "f1063f7c0eaed975ddd5fcbf90b6332f317046d7bec5d2d82bb0c0d31ef6ce6b",
+      "reason": "Owner-authorized Phase 2 readiness correction: pin the approved process-only handoff to the exact Phase 2 worktree, branch, and reviewed base commit; retain all existing credential and artifact safeguards."
+    },
+    "frontend/tests/release-check-handoff.test.ts": {
+      "sha256": "9a76221b4abf0b147bd97552a4bd6f358b6b742db447ece329851c81390ac828",
+      "previousSha256": "e39fffccafcc96e0296bd1e9956774534469e9bd85b17fec33bd1727c2f9a191",
+      "reason": "Owner-authorized Phase 2 readiness correction: assert the secure handoff targets the exact Phase 2 worktree, branch, and reviewed base commit."
+    },
+    "frontend/tests/delivery.security.test.mjs": {
+      "sha256": "e5a5a397284f72ad9aaafab5de9a7c06c2a32b911070e26289cb3f4cb38c7796",
+      "reason": "Owner-authorized final upload safety correction: keep Week 1 notebook uploads on their existing gate and fail closed for new activity-file reservation, Storage upload, finalization, Edge processing, and student UI until separately reviewed activation. Baseline classification corrected: this path already exists at be870c7d087d10d32d0a776cc6352d32e661387b; candidate content remains pinned by SHA-256.",
+      "previousSha256": "0053d57c2128df5d90cf6c02c4275e31cc7a76bd3bf3809c3ed30e3907732e60"
+    },
+    "frontend/scripts/deploy-supabase-edge.mjs": {
+      "previousSha256": "017f9a3ada89186202a3876faddc49e20e1cb44ff07974f8b967a3bb474f5ba8",
+      "sha256": "6cc0f7819c9bde6e9923a55fdd163ef9958337d71957a104d28bf9cc0674c073",
+      "reason": "Owner-authorized PR #24 blocker fix: grant service_role only the private finalize/cancel RPC execution rights and add a target-pinned Edge release path that preserves the Week 1 gate, deploys both functions, and leaves activity uploads disabled."
+    }
+  }
+}

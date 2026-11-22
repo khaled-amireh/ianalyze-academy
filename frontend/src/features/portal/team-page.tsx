@@ -14,13 +14,14 @@ import { InitialAdminPromotion } from './initial-admin-promotion';
 import { OwnerTeamTransition } from './owner-team-transition';
 import { majorLabel, ZUJ } from './profile-fields';
 import { academicYearLabel } from './academic-years';
+import { fromAmmanDateTimeLocal, toAmmanDateTimeLocal } from './date-time';
+import { validateTimingBonuses } from './timing-bonus';
 import {
   checked,
   client,
   downloadNotebook,
+  downloadActivitySubmissionFile,
   loadPortal,
-  topics,
-  topicsAr,
   useRemote,
   type PortalData,
   type Row,
@@ -30,19 +31,26 @@ function ActivityEditor({
   data,
   reload,
   activity,
+  readOnly = false,
+  canUnpublish = true,
 }: {
   data: PortalData;
   reload: () => void;
   activity?: Row<'activities'>;
+  readOnly?: boolean;
+  canUnpublish?: boolean;
 }) {
   const { c, arabic } = usePortalCopy();
   const inFlight = useRef(false);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<keyof PortalCopy | ''>('');
-  const due = activity?.due_at ? new Date(activity.due_at) : null;
-  const dueInput = due
-    ? new Date(due.getTime() - due.getTimezoneOffset() * 60000).toISOString().slice(0, 16)
-    : '';
+  const dueInput = toAmmanDateTimeLocal(activity?.due_at);
+  const opensInput = toAmmanDateTimeLocal(activity?.opens_at);
+  const phaseEarlyInput = toAmmanDateTimeLocal(activity?.phase_1_ends_at);
+  const phaseMiddleInput = toAmmanDateTimeLocal(activity?.phase_2_ends_at);
+  const hasSubmissions = Boolean(
+    activity && data.submissions.some((s) => s.activity_id === activity.id),
+  );
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (inFlight.current) return;
@@ -60,6 +68,22 @@ function ActivityEditor({
       )
         throw new Error('Published rubric/instructions required');
       const due = String(form.get('due_at') ?? '');
+      const opens = String(form.get('opens_at') ?? '');
+      const phaseEarly = String(form.get('phase_1_ends_at') ?? '');
+      const phaseMiddle = String(form.get('phase_2_ends_at') ?? '');
+      const phaseEarlyBonus = Number(form.get('phase_1_bonus_points'));
+      const phaseMiddleBonus = Number(form.get('phase_2_bonus_points'));
+      const phaseLateBonus = Number(form.get('phase_3_bonus_points'));
+      validateTimingBonuses({
+        opensAt: opens,
+        phaseOneEndsAt: phaseEarly,
+        phaseTwoEndsAt: phaseMiddle,
+        dueAt: due,
+        earlyBonus: phaseEarlyBonus,
+        middleBonus: phaseMiddleBonus,
+        lateBonus: phaseLateBonus,
+      });
+      const submissionMode = String(form.get('submission_mode'));
       const values = {
         week_id: String(form.get('week_id')),
         title_ar: String(form.get('title_ar')).trim(),
@@ -67,7 +91,18 @@ function ActivityEditor({
         instructions_ar: String(form.get('instructions_ar')).trim(),
         instructions_en: String(form.get('instructions_en')).trim(),
         max_score: Number(form.get('max_score')),
-        due_at: due ? new Date(due).toISOString() : null,
+        due_at: due ? fromAmmanDateTimeLocal(due) : null,
+        opens_at: opens ? fromAmmanDateTimeLocal(opens) : null,
+        phase_1_ends_at: phaseEarly ? fromAmmanDateTimeLocal(phaseEarly) : null,
+        phase_2_ends_at: phaseMiddle ? fromAmmanDateTimeLocal(phaseMiddle) : null,
+        phase_1_bonus_points: phaseEarlyBonus,
+        phase_2_bonus_points: phaseMiddleBonus,
+        phase_3_bonus_points: phaseLateBonus,
+        submission_mode: submissionMode,
+        max_submission_files: Number(form.get('max_submission_files')),
+        max_submission_file_bytes: Math.round(
+          Number(form.get('max_submission_file_mib')) * 1048576,
+        ),
         status,
       };
       const result = activity
@@ -90,85 +125,202 @@ function ActivityEditor({
           {activity ? (arabic ? activity.title_ar : activity.title_en) : c.createActivity}
         </MixedText>
       </h3>
-      <div className="portal-grid">
-        <label>
-          {c.week}
-          <select name="week_id" defaultValue={activity?.week_id ?? ''} required>
-            <option value="">{c.select}</option>
-            {data.weeks.map((w) => (
-              <option value={w.id} key={w.id}>
-                {new Intl.NumberFormat(arabic ? 'ar-JO' : 'en-GB').format(w.week_number)}.{' '}
-                {arabic ? w.title_ar : w.title_en}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          {c.maximum}
-          <Input
-            type="number"
-            name="max_score"
-            min="0.01"
-            max="999999"
-            step="0.01"
-            defaultValue={activity?.max_score ?? ''}
-            required
+      <fieldset disabled={readOnly || hasSubmissions}>
+        <div className="portal-grid">
+          <label>
+            {c.week}
+            <select name="week_id" defaultValue={activity?.week_id ?? ''} required>
+              <option value="">{c.select}</option>
+              {data.weeks
+                .filter((w) => w.week_number === 1)
+                .map((w) => (
+                  <option value={w.id} key={w.id}>
+                    {new Intl.NumberFormat(arabic ? 'ar-JO' : 'en-GB').format(w.week_number)}.{' '}
+                    {arabic ? w.title_ar : w.title_en}
+                  </option>
+                ))}
+            </select>
+          </label>
+          <label>
+            {c.submissionMode}
+            <select
+              name="submission_mode"
+              defaultValue={activity?.submission_mode ?? 'notebook'}
+              disabled={readOnly}
+            >
+              <option value="notebook">{c.notebookMode}</option>
+              <option value="files">{c.filesMode}</option>
+            </select>
+          </label>
+          <label>
+            {c.maximum}
+            <Input
+              type="number"
+              name="max_score"
+              min="0.01"
+              max="999999"
+              step="0.01"
+              defaultValue={activity?.max_score ?? ''}
+              required
+            />
+          </label>
+          <label>
+            {c.titleAr}
+            <Input
+              name="title_ar"
+              dir="rtl"
+              maxLength={200}
+              defaultValue={activity?.title_ar ?? ''}
+              required
+            />
+          </label>
+          <label>
+            {c.titleEn}
+            <Input
+              name="title_en"
+              dir="ltr"
+              maxLength={200}
+              defaultValue={activity?.title_en ?? ''}
+              required
+            />
+          </label>
+          <label>
+            {c.instructionsAr}
+            <textarea
+              name="instructions_ar"
+              dir="rtl"
+              rows={5}
+              defaultValue={activity?.instructions_ar ?? ''}
+            />
+          </label>
+          <label>
+            {c.instructionsEn}
+            <textarea
+              name="instructions_en"
+              dir="ltr"
+              rows={5}
+              defaultValue={activity?.instructions_en ?? ''}
+            />
+          </label>
+          <label>
+            {c.opensAt}
+            <Input
+              type="datetime-local"
+              name="opens_at"
+              defaultValue={opensInput}
+              disabled={readOnly}
+            />
+            <small>Asia/Amman</small>
+          </label>
+          <label>
+            {c.deadline}
+            <Input
+              type="datetime-local"
+              name="due_at"
+              defaultValue={dueInput}
+              disabled={readOnly}
+            />
+            <small>{c.noDeadline} / Asia/Amman</small>
+          </label>
+          <label>
+            {c.maxFiles}
+            <Input
+              type="number"
+              name="max_submission_files"
+              min="1"
+              max="3"
+              step="1"
+              defaultValue={activity?.max_submission_files ?? 3}
+              disabled={readOnly}
+              required
+            />
+          </label>
+          <label>
+            {c.maxFileSize}
+            <Input
+              type="number"
+              name="max_submission_file_mib"
+              min="0.01"
+              max="10"
+              step="0.01"
+              defaultValue={(activity?.max_submission_file_bytes ?? 10485760) / 1048576}
+              disabled={readOnly}
+              required
+            />
+          </label>
+          <label>
+            {c.phaseEarlyEnd}
+            <Input
+              type="datetime-local"
+              name="phase_1_ends_at"
+              defaultValue={phaseEarlyInput}
+              disabled={readOnly}
+            />
+          </label>
+          <label>
+            {c.phaseMiddleEnd}
+            <Input
+              type="datetime-local"
+              name="phase_2_ends_at"
+              defaultValue={phaseMiddleInput}
+              disabled={readOnly}
+            />
+          </label>
+          <label>
+            {c.phaseEarlyBonus}
+            <Input
+              type="number"
+              name="phase_1_bonus_points"
+              min="0"
+              max="999999.99"
+              step="0.01"
+              defaultValue={activity?.phase_1_bonus_points ?? 0}
+              disabled={readOnly}
+              required
+            />
+          </label>
+          <label>
+            {c.phaseMiddleBonus}
+            <Input
+              type="number"
+              name="phase_2_bonus_points"
+              min="0"
+              max="999999.99"
+              step="0.01"
+              defaultValue={activity?.phase_2_bonus_points ?? 0}
+              disabled={readOnly}
+              required
+            />
+          </label>
+          <label>
+            {c.phaseLateBonus}
+            <Input
+              type="number"
+              name="phase_3_bonus_points"
+              min="0"
+              max="999999.99"
+              step="0.01"
+              defaultValue={activity?.phase_3_bonus_points ?? 0}
+              disabled={readOnly}
+              required
+            />
+            <small>{c.phaseScoringFormula}</small>
+          </label>
+        </div>
+        <label className="portal-check">
+          <input
+            type="checkbox"
+            name="approved"
+            defaultChecked={activity?.status === 'published'}
+            disabled={readOnly || (!canUnpublish && activity?.status === 'published')}
           />
+          {c.approved}
         </label>
-        <label>
-          {c.titleAr}
-          <Input
-            name="title_ar"
-            dir="rtl"
-            maxLength={200}
-            defaultValue={activity?.title_ar ?? ''}
-            required
-          />
-        </label>
-        <label>
-          {c.titleEn}
-          <Input
-            name="title_en"
-            dir="ltr"
-            maxLength={200}
-            defaultValue={activity?.title_en ?? ''}
-            required
-          />
-        </label>
-        <label>
-          {c.instructionsAr}
-          <textarea
-            name="instructions_ar"
-            dir="rtl"
-            rows={5}
-            defaultValue={activity?.instructions_ar ?? ''}
-          />
-        </label>
-        <label>
-          {c.instructionsEn}
-          <textarea
-            name="instructions_en"
-            dir="ltr"
-            rows={5}
-            defaultValue={activity?.instructions_en ?? ''}
-          />
-        </label>
-        <label>
-          {c.deadline}
-          <Input type="datetime-local" name="due_at" defaultValue={dueInput} />
-          <small>
-            {c.noDeadline} / {Intl.DateTimeFormat().resolvedOptions().timeZone}
-          </small>
-        </label>
-      </div>
-      <label className="portal-check">
-        <input type="checkbox" name="approved" />
-        {c.approved}
-      </label>
+      </fieldset>
       <p>
         {c.status}: {stateText(activity?.status ?? 'draft', c)}
       </p>
-      <Button disabled={busy}>{c.save}</Button>
+      {!readOnly && <Button disabled={busy || hasSubmissions}>{c.save}</Button>}
       <FormNotice
         message={message ? c[message] : ''}
         kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}
@@ -180,10 +332,12 @@ function RubricEditor({
   activity,
   data,
   reload,
+  readOnly = false,
 }: {
   activity: Row<'activities'>;
   data: PortalData;
   reload: () => void;
+  readOnly?: boolean;
 }) {
   const { c, arabic } = usePortalCopy();
   const [count, setCount] = useState(1);
@@ -239,7 +393,7 @@ function RubricEditor({
                   </li>
                 ))}
             </ul>
-            {r.status === 'draft' && (
+            {r.status === 'draft' && !readOnly && (
               <>
                 <DraftCriteria
                   rubric={r}
@@ -274,47 +428,49 @@ function RubricEditor({
             )}
           </div>
         ))}
-      <form onSubmit={create} aria-busy={busy}>
-        {Array.from({ length: count }, (_, i) => (
-          <div className="portal-criterion" key={i}>
-            <Input
-              name={`ar${i}`}
-              dir="rtl"
-              placeholder={c.criterionAr}
-              aria-label={`${c.criterionAr} ${i + 1}`}
-              maxLength={300}
-              required
-            />
-            <Input
-              name={`en${i}`}
-              dir="ltr"
-              placeholder={c.criterionEn}
-              aria-label={`${c.criterionEn} ${i + 1}`}
-              maxLength={300}
-              required
-            />
-            <Input
-              name={`max${i}`}
-              type="number"
-              min="0.01"
-              step="0.01"
-              max={activity.max_score}
-              placeholder={c.maximum}
-              aria-label={`${c.maximum} ${i + 1}`}
-              required
-            />
-          </div>
-        ))}
-        <Button
-          type="button"
-          variant="outline"
-          disabled={count >= 30 || busy}
-          onClick={() => setCount((v) => v + 1)}
-        >
-          {c.addCriterion}
-        </Button>
-        <Button disabled={busy}>{c.createRubric}</Button>
-      </form>
+      {!readOnly && (
+        <form onSubmit={create} aria-busy={busy}>
+          {Array.from({ length: count }, (_, i) => (
+            <div className="portal-criterion" key={i}>
+              <Input
+                name={`ar${i}`}
+                dir="rtl"
+                placeholder={c.criterionAr}
+                aria-label={`${c.criterionAr} ${i + 1}`}
+                maxLength={300}
+                required
+              />
+              <Input
+                name={`en${i}`}
+                dir="ltr"
+                placeholder={c.criterionEn}
+                aria-label={`${c.criterionEn} ${i + 1}`}
+                maxLength={300}
+                required
+              />
+              <Input
+                name={`max${i}`}
+                type="number"
+                min="0.01"
+                step="0.01"
+                max={activity.max_score}
+                placeholder={c.maximum}
+                aria-label={`${c.maximum} ${i + 1}`}
+                required
+              />
+            </div>
+          ))}
+          <Button
+            type="button"
+            variant="outline"
+            disabled={count >= 30 || busy}
+            onClick={() => setCount((v) => v + 1)}
+          >
+            {c.addCriterion}
+          </Button>
+          <Button disabled={busy}>{c.createRubric}</Button>
+        </form>
+      )}
       <FormNotice
         message={message ? c[message] : ''}
         kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}
@@ -470,16 +626,35 @@ function Review({
       <p>
         {c.status}: {stateText(submission.status, c)}
       </p>
-      {submission.object_path && submission.status !== 'uploading' && (
-        <Button
-          variant="outline"
-          onClick={() =>
-            void downloadNotebook(submission.object_path!).catch(() => setMessage('error'))
-          }
-        >
-          {c.download}
-        </Button>
-      )}
+      {submission.object_path &&
+        submission.status !== 'uploading' &&
+        submission.submission_mode === 'notebook' && (
+          <Button
+            variant="outline"
+            onClick={() =>
+              void downloadNotebook(submission.object_path!).catch(() => setMessage('error'))
+            }
+          >
+            {c.download}
+          </Button>
+        )}
+      {submission.submission_mode === 'files' &&
+        submission.status !== 'uploading' &&
+        data.submissionFiles
+          .filter((file) => file.submission_id === submission.id)
+          .map((file) => (
+            <Button
+              key={file.id}
+              variant="outline"
+              onClick={() =>
+                void downloadActivitySubmissionFile(file.storage_path, file.original_name).catch(
+                  () => setMessage('error'),
+                )
+              }
+            >
+              {c.downloadFile}: <bdi dir="auto">{file.original_name}</bdi>
+            </Button>
+          ))}
       {submission.status !== 'uploading' && (
         <form onSubmit={grade} aria-busy={busy}>
           {data.criteria
@@ -714,56 +889,95 @@ export function TeamPageLive() {
       <AdminPointAwards />
       <section id="activities" className="content-card">
         <h2>{c.manage}</h2>
-        {topics.map((topic, i) => {
-          const week = data.weeks.find((w) => w.week_number === i + 1);
-          return (
-            <div className="portal-actions" key={topic}>
-              <span>
-                <bdi>{new Intl.NumberFormat(arabic ? 'ar-JO' : 'en-GB').format(i + 1)}</bdi>.{' '}
-                <MixedText>
-                  {week ? (arabic ? week.title_ar : week.title_en) : arabic ? topicsAr[i]! : topic}
-                </MixedText>{' '}
-                — {stateText(week?.status, c)}
-              </span>
-              <Button
-                variant="outline"
-                onClick={async () => {
-                  try {
-                    const result = week
-                      ? await client()
-                          .from('academy_weeks')
-                          .update({ status: week.status === 'draft' ? 'published' : 'draft' })
-                          .eq('id', week.id)
-                      : await client()
-                          .from('academy_weeks')
-                          .insert({
-                            week_number: i + 1,
-                            kind: 'teaching',
-                            title_ar: topicsAr[i]!,
-                            title_en: topic,
-                          });
-                    if (result.error) throw result.error;
-                    reload();
-                  } catch {
-                    setMessage('error');
-                  }
-                }}
-              >
-                {week ? (week.status === 'draft' ? c.publish : c.draftSave) : c.createWeek}
-              </Button>
-            </div>
-          );
-        })}
+        {data.weeks
+          .filter((week) => week.week_number === 1)
+          .map((week) => {
+            return (
+              <div className="portal-actions" key={week.id}>
+                <span>
+                  <bdi>
+                    {new Intl.NumberFormat(arabic ? 'ar-JO' : 'en-GB').format(week.week_number)}
+                  </bdi>
+                  . <MixedText>{arabic ? week.title_ar : week.title_en}</MixedText> —{' '}
+                  {stateText(week.status, c)}
+                </span>
+              </div>
+            );
+          })}
         <ActivityEditor data={data} reload={reload} />
-        {data.activities.map((a) => (
-          <details key={a.id}>
-            <summary>
-              {arabic ? a.title_ar : a.title_en} — {stateText(a.status, c)}
-            </summary>
-            <ActivityEditor activity={a} data={data} reload={reload} />
-            <RubricEditor activity={a} data={data} reload={reload} />
-          </details>
-        ))}
+        {data.activities
+          .filter((activity) =>
+            data.weeks.some((week) => week.id === activity.week_id && week.week_number === 1),
+          )
+          .map((a) => (
+            <details key={a.id}>
+              <summary>
+                {arabic ? a.title_ar : a.title_en} —{' '}
+                {a.archived_at ? c.archived : stateText(a.status, c)}
+              </summary>
+              <ActivityEditor
+                activity={a}
+                data={data}
+                reload={reload}
+                readOnly={Boolean(a.archived_at)}
+                canUnpublish={
+                  !data.submissions.some((submission) => submission.activity_id === a.id)
+                }
+              />
+              {!a.archived_at && (
+                <RubricEditor
+                  activity={a}
+                  data={data}
+                  reload={reload}
+                  readOnly={data.submissions.some((submission) => submission.activity_id === a.id)}
+                />
+              )}
+              {!a.archived_at && (
+                <div className="portal-actions">
+                  {a.status === 'draft' &&
+                    !data.submissions.some((submission) => submission.activity_id === a.id) &&
+                    !data.rubrics.some(
+                      (rubric) => rubric.activity_id === a.id && rubric.status === 'published',
+                    ) && (
+                      <Button
+                        variant="outline"
+                        onClick={async () => {
+                          if (!window.confirm(c.deleteDraftConfirm)) return;
+                          try {
+                            const result = await client().rpc('delete_activity_draft', {
+                              p_activity_id: a.id,
+                            });
+                            if (result.error) throw result.error;
+                            reload();
+                          } catch {
+                            setMessage('error');
+                          }
+                        }}
+                      >
+                        {c.deleteDraftActivity}
+                      </Button>
+                    )}
+                  <Button
+                    variant="outline"
+                    onClick={async () => {
+                      if (!window.confirm(c.archiveConfirm)) return;
+                      try {
+                        const result = await client().rpc('archive_activity', {
+                          p_activity_id: a.id,
+                        });
+                        if (result.error) throw result.error;
+                        reload();
+                      } catch {
+                        setMessage('error');
+                      }
+                    }}
+                  >
+                    {c.archiveActivity}
+                  </Button>
+                </div>
+              )}
+            </details>
+          ))}
         <FormNotice
           message={message ? c[message] : ''}
           kind={message === 'saved' || message === 'submitted' ? 'success' : 'error'}

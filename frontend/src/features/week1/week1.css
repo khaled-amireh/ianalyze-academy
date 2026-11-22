@@ -248,3 +248,26 @@
     padding: 0.7rem;
   }
 }
+.week1-completed-title {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+.week1-completed-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid var(--success);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  color: var(--success);
+  background: var(--success-surface);
+  font-size: 0.8rem;
+  font-weight: 700;
+  vertical-align: middle;
+}
+.week1-completed-badge svg {
+  width: 1rem;
+  height: 1rem;
+}

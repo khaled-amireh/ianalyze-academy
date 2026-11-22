@@ -30,7 +30,7 @@ enabled = true
 port = 54324
 [storage]
 enabled = true
-file_size_limit = "1MiB"
+file_size_limit = "10MiB"
 [storage.s3_protocol]
 enabled = false
 [storage.analytics]
@@ -79,4 +79,9 @@ enabled = false
 [functions.notebook-submit]
 # Auth.getUser(token) + database role checks are mandatory inside the function.
 # Supports modern signing keys; this is not an anonymous endpoint.
+verify_jwt = false
+
+[functions.activity-submit]
+# Auth.getUser(token) + database role checks are mandatory inside the function.
+# Uploaded file bytes are verified with a service-only finalizer; no raw content is logged.
 verify_jwt = false

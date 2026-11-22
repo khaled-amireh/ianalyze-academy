@@ -9,6 +9,7 @@ import {
   finalUpdate,
   prePresentationUpdate,
   pathBUpdate,
+  phase2Update,
   verifyMergePreservation,
 } from './verify-merge-preservation.mjs';
 const root = new URL('../../', import.meta.url);
@@ -21,12 +22,14 @@ for (const [path, expected] of Object.entries(baseline)) {
   if (
     approved.replacedFrontendFiles.includes(path) ||
     mergeResolution.resolvedFiles[path] ||
-    pathBUpdate.files[path]
+    pathBUpdate.files[path] ||
+    phase2Update.files[path]
   )
     continue;
   assert.equal(
     hash(readFileSync(new URL(path, root))),
-    prePresentationUpdate.files[path]?.sha256 ??
+    phase2Update.files[path]?.sha256 ??
+      prePresentationUpdate.files[path]?.sha256 ??
       finalUpdate.files[path]?.sha256 ??
       qualityUpdate.files[path]?.sha256 ??
       authIntegration.files[path]?.sha256 ??
@@ -104,6 +107,7 @@ for (const path of changed)
   assert.ok(
     authIntegration.files[path] ||
       pathBUpdate.files[path] ||
+      phase2Update.files[path] ||
       prePresentationUpdate.files[path] ||
       finalUpdate.files[path] ||
       qualityUpdate.files[path] ||
